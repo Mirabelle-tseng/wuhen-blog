@@ -9,17 +9,42 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 <html lang="zh-TW">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			main {
+				width: 640px;
+			}
+			.hero h1 {
+				font-size: 2.4rem;
+				line-height: 1.45;
+				letter-spacing: 0;
+				text-wrap: balance;
+				margin-bottom: 1.2rem;
+			}
+			.hero p {
+				margin-bottom: 1.5em;
+			}
+			.hero p:last-child {
+				margin-bottom: 0;
+			}
+			@media (max-width: 720px) {
+				.hero h1 {
+					font-size: 1.75rem;
+				}
+			}
+		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1>減法思維，做有溫度的醫美</h1>
-			<p>
-				無痕美學診所位於台北大安區，以「減法思維」為核心，分享醫美衛教與真實診所日常。
-			</p>
-			<p>
-				我們相信美麗來自健康與自然。無痕美學診所提供專業的醫美諮詢與療程，並透過這個部落格分享實用的醫美衛教知識，幫助你做出更安心的選擇。
-			</p>
+			<div class="hero">
+				<h1>減法思維，做有溫度的醫美</h1>
+				<p>
+					無痕美學診所位於台北大安區，以「減法思維」為核心，分享醫美衛教與真實診所日常。
+				</p>
+				<p>
+					我們相信美麗來自健康與自然。無痕美學診所提供專業的醫美諮詢與療程，並透過這個部落格分享實用的醫美衛教知識，幫助你做出更安心的選擇。
+				</p>
+			</div>
 		</main>
 		<Footer />
 	</body>
