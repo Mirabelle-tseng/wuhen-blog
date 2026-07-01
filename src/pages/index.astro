@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import ClinicHero from '../assets/clinic-hero.jpg';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
@@ -26,6 +28,15 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 			.hero p:last-child {
 				margin-bottom: 0;
 			}
+			.hero-visual {
+				margin-bottom: 2.5rem;
+			}
+			.hero-visual img {
+				display: block;
+				width: 100%;
+				border-radius: 12px;
+				box-shadow: var(--box-shadow);
+			}
 			@media (max-width: 720px) {
 				.hero h1 {
 					font-size: 1.75rem;
@@ -37,6 +48,16 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		<Header />
 		<main>
 			<div class="hero">
+				<div class="hero-visual">
+					<Image
+						src={ClinicHero}
+						width={1280}
+						height={853}
+						alt="無痕美學診所的療程空間"
+						loading="eager"
+						fetchpriority="high"
+					/>
+				</div>
 				<h1>減法思維，做有溫度的醫美</h1>
 				<p>
 					無痕美學診所位於台北大安區，以「減法思維」為核心，分享醫美衛教與真實診所日常。
