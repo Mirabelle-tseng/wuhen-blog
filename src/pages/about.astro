@@ -1,15 +1,126 @@
 ---
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
-import Layout from '../layouts/BlogPost.astro';
+import { Image } from 'astro:assets';
+import DirectorPhoto from '../assets/director.jpg';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
 ---
 
-<Layout
-	title="關於我"
-	description="無痕美學診所位於台北大安區，由林菀玲院長帶領專業團隊，提供醫美諮詢與療程服務。"
-	pubDate={new Date('August 08 2021')}
-	heroImage={AboutHeroImage}
->
-	<p>
-		無痕美學診所位於台北大安區，由林菀玲院長帶領專業團隊，提供醫美諮詢與療程服務。我們秉持「減法思維」，重視自然、健康與安全，並透過這個部落格分享實用的醫美衛教知識。
-	</p>
-</Layout>
+<!doctype html>
+<html lang="zh-TW">
+	<head>
+		<BaseHead
+			title="關於我"
+			description="無痕美學診所位於台北大安區，由林菀玲醫師創立並主持，秉持「減法思維」提供醫美諮詢與療程服務。"
+		/>
+		<style>
+			main {
+				width: 720px;
+			}
+			.about-intro {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				gap: 3.5rem;
+				margin-bottom: 3.5rem;
+			}
+			.about-photo {
+				flex: 0 0 auto;
+			}
+			.about-photo img {
+				display: block;
+				width: 180px;
+				height: 270px;
+				object-fit: cover;
+				border-radius: 12px;
+				box-shadow: var(--box-shadow);
+			}
+			.about-intro-text {
+				flex: 1 1 380px;
+			}
+			.about-intro-text h1 {
+				font-size: 2.1rem;
+				line-height: 1.4;
+				letter-spacing: 0;
+				text-wrap: balance;
+				margin-bottom: 0.9rem;
+			}
+			.about-intro-text p {
+				margin-bottom: 0;
+			}
+			.about-section {
+				margin-bottom: 2.6rem;
+			}
+			.about-section:last-child {
+				margin-bottom: 0;
+			}
+			.about-section h2 {
+				font-size: 1.563em;
+				margin-bottom: 0.8rem;
+			}
+			.about-section p {
+				margin-bottom: 0;
+			}
+			@media (max-width: 720px) {
+				.about-intro {
+					flex-direction: column;
+					text-align: center;
+				}
+				.about-photo img {
+					width: 160px;
+					height: 240px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="about-intro">
+				<div class="about-photo">
+					<Image src={DirectorPhoto} width={440} height={660} alt="林菀玲醫師" />
+				</div>
+				<div class="about-intro-text">
+					<h1>關於無痕美學診所</h1>
+					<p>無痕美學診所位於台北大安區，由林菀玲醫師創立並主持。</p>
+				</div>
+			</div>
+
+			<div class="about-section">
+				<h2>為什麼叫「無痕」</h2>
+				<p>
+					「無痕」兩個字，是林醫師對醫美最初、也最堅定的想像——最好的改變，是讓你看起來更好，卻看不出動過什麼。不是換一張臉，而是把你本來就有的美，溫柔地擦亮。她希望走出診所的你，依然是你，只是更有光。這份初心，成了她成立無痕美學診所的起點。
+				</p>
+			</div>
+
+			<div class="about-section">
+				<h2>我們說的「減法」，不是減分量，是減去你不需要的</h2>
+				<p>
+					外界常把我們這樣的診所稱作「減法醫美」。但在無痕，減法從來不是「臉上少打幾分幾兩」——而是減去你當下其實不需要的治療。比起讓你做得更多，林醫師更在意的是：什麼是你現在真正需要的、什麼可以先等等、什麼根本不必做。願意對你說「這個你不需要」，才是我們理解的專業與誠實。
+				</p>
+			</div>
+
+			<div class="about-section">
+				<h2>十年以上的經驗，是技術最誠實的底氣</h2>
+				<p>
+					醫美的專業不是一蹴可幾，而是靠時間與大量臨床經驗一點一滴磨出來的。十餘年來，從一間診所的駐診醫師，到獨當一面的院長與經營者，林醫師走過的每一步，都是紮實的累積。對她而言，穩定與細膩，永遠比華麗的話術更重要。
+				</p>
+			</div>
+
+			<div class="about-section">
+				<h2>為了懂美，她連素描都去學</h2>
+				<p>
+					還是駐診醫師的時候，為了能真正和客人討論臉型與體態的美感，林醫師甚至自費去學素描。她在意每一個角度、每一道線條的比例——因為她相信，唯有先讀懂美，才能剛剛好地成就美。
+				</p>
+			</div>
+
+			<div class="about-section">
+				<h2>溫柔，是這裡最深的專業</h2>
+				<p>
+					比起冰冷的儀器與數字，林醫師更在意「人」。她待人溫和、輕聲細語，總是耐心聽你說完，再給出真正適合你的建議。專業而穩定的技術，配上讓人安心的溫度——我們希望，這裡不只是一間診所，而是一個能讓你放下防備、安心變美的地方。
+				</p>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
