@@ -34,6 +34,14 @@ const { title, description, image = FallbackImage } = Astro.props;
 
 <Font cssVariable="--font-atkinson" preload />
 
+<!-- Google Fonts: Noto Serif TC / Noto Sans TC -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+	rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500&family=Noto+Serif+TC:wght@500;600;700&display=swap"
+/>
+
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
 

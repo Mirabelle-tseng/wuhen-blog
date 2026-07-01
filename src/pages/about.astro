@@ -54,6 +54,10 @@ import Header from '../components/Header.astro';
 			.about-section:last-child {
 				margin-bottom: 0;
 			}
+			.about-section:not(:first-child) {
+				padding-top: 2.6rem;
+				border-top: 1px solid rgba(var(--gray-light), 0.6);
+			}
 			.about-section h2 {
 				font-size: 1.563em;
 				margin-bottom: 0.8rem;

@@ -13,7 +13,7 @@ export default defineConfig({
 			provider: fontProviders.local(),
 			name: 'Atkinson',
 			cssVariable: '--font-atkinson',
-			fallbacks: ['sans-serif'],
+			fallbacks: ['Noto Sans TC', 'sans-serif'],
 			options: {
 				variants: [
 					{
