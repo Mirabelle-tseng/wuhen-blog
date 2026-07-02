@@ -1,0 +1,78 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from './FormattedDate.astro';
+
+interface Props {
+	posts: CollectionEntry<'blog'>[];
+}
+
+const { posts } = Astro.props;
+---
+
+{
+	posts.length > 0 && (
+		<div class="related-posts">
+			<h2 class="related-title">你可能也有興趣的文章</h2>
+			<ul class="related-list">
+				{posts.map((post) => (
+					<li>
+						<a href={`/blog/${post.id}/`}>
+							<span class="related-post-title">{post.data.title}</span>
+							<span class="related-post-date">
+								<FormattedDate date={post.data.pubDate} />
+							</span>
+						</a>
+					</li>
+				))}
+			</ul>
+		</div>
+	)
+}
+
+<style>
+	.related-posts {
+		margin: 0 0 3rem;
+	}
+	.related-title {
+		font-size: 1.4rem;
+		margin-bottom: 1.2rem;
+		text-align: center;
+	}
+	.related-list {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		gap: 1rem;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.related-list a {
+		display: block;
+		height: 100%;
+		box-sizing: border-box;
+		padding: 1.2em 1.4em;
+		background: var(--bg-deep);
+		border-radius: 10px;
+		text-decoration: none;
+		transition:
+			transform 0.2s ease,
+			box-shadow 0.2s ease;
+	}
+	.related-list a:hover {
+		box-shadow: var(--box-shadow);
+		transform: translateY(-2px);
+	}
+	.related-post-title {
+		display: block;
+		margin-bottom: 0.5em;
+		color: rgb(var(--black));
+		font-family: var(--font-serif);
+		font-weight: 600;
+		line-height: 1.4;
+	}
+	.related-post-date {
+		display: block;
+		font-size: 0.85rem;
+		color: rgb(var(--gray));
+	}
+</style>
