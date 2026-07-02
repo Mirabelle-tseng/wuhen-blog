@@ -54,6 +54,13 @@ h3 {
 	font-family: var(--font-serif);
 	font-weight: 600;
 }
+.prose h2,
+.prose h3 {
+	margin-top: 2.75rem;
+}
+.prose h2 + h3 {
+	margin-top: 0.6rem;
+}
 h1 {
 	font-size: 3.052em;
 }
@@ -136,10 +143,18 @@ pre > code {
 	all: unset;
 }
 blockquote {
-	border-left: 4px solid var(--accent);
-	padding: 0 0 0 20px;
-	margin: 0;
-	font-size: 1.333em;
+	border-left: 3px solid var(--accent);
+	background: var(--bg-deep);
+	border-radius: 0 8px 8px 0;
+	padding: 1em 1.5em;
+	margin: 1.8em 0;
+	color: rgb(var(--gray-dark));
+}
+blockquote p {
+	margin-bottom: 0.8em;
+}
+blockquote p:last-child {
+	margin-bottom: 0;
 }
 hr {
 	border: none;
