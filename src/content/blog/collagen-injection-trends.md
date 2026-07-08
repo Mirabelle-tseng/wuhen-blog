@@ -2,6 +2,8 @@
 title: '韓國熱門膠原蛋白針趨勢解析：水光針、膠原增生劑、支撐型填充怎麼選？台灣醫美完整比較'
 description: '韓國很紅的膠原蛋白針，台灣打得到嗎？水光針跟玻尿酸填充有什麼不同？這篇是給消費者的完整比較指南——從療程差異、TFDA 合法狀態，到跨境醫美的三大注意事項。'
 pubDate: 'Jul 01 2026'
+heroImage: '../../assets/collagen-injection-trends.png'
+ogImage: '../../assets/collagen-injection-trends.png'
 ---
 
 近年韓國醫美趨勢，已經不只是追求單點變尖、變挺，或大幅度填充輪廓，而是更重視「皮膚本身看起來變好」。水光針、膠原蛋白增生劑、PDRN、skin booster、膚質管理等療程，都圍繞在肌膚光澤、保濕度、彈性、毛孔、細紋與自然緊緻感。

@@ -2,6 +2,8 @@
 title: '「TECAR 做了有什麼感覺」——研究告訴你，能量有沒有到達深層，差別有多大'
 description: '電療做了很表淺、深層還是不舒服？TECAR 用高頻電磁能量針對深層組織設計。這篇整理它的作用原理與兩篇學術研究，並附上研究限制與適合討論的方向。'
 pubDate: 'Jul 02 2026'
+heroImage: '../../assets/tecar-back4-research.png'
+ogImage: '../../assets/tecar-back4-research.png'
 ---
 
 大多數的肌肉疼痛、關節僵硬，源頭往往在深層組織——深層肌肉、關節囊、韌帶，這些地方的細胞代謝趨緩、循環變差，是許多人長期困擾難以改善的原因之一。
