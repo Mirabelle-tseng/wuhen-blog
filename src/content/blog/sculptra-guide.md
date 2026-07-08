@@ -3,6 +3,8 @@ title: Sculptra 舒顏萃適合誰？膠原增生劑完整解析
 description: Sculptra 舒顏萃是什麼？了解 PLLA 膠原刺激原理、適合族群、與玻尿酸的差異、療程規劃、限制與常見風險。
 pubDate: 2026-07-07
 tags: ["Sculptra舒顏萃", "膠原增生劑", "PLLA", "衛教資訊"]
+heroImage: '../../assets/sculptra-guide.png'
+ogImage: '../../assets/sculptra-guide.png'
 ---
 
 Sculptra 舒顏萃常被稱為「膠原蛋白針」，但它不是把現成膠原蛋白直接注入皮膚。其主要成分為聚左旋乳酸（PLLA），注射後透過組織反應逐步刺激膠原生成，讓改善隨時間漸進呈現。

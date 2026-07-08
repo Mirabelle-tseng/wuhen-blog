@@ -11,7 +11,8 @@ import ShareButtons from '../components/ShareButtons.astro';
 
 type Props = CollectionEntry<'blog'>['data'] & { slug: string };
 
-const { title, description, pubDate, updatedDate, heroImage, heroImageAlt, slug } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, heroImageAlt, ogImage, slug } =
+	Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
 
@@ -23,7 +24,7 @@ const relatedPosts = (await getCollection('blog'))
 
 <html lang="zh-TW">
 	<head>
-		<BaseHead title={title} description={description} />
+		<BaseHead title={title} description={description} image={ogImage ?? heroImage} />
 		<style>
 			main {
 				width: calc(100% - 2em);

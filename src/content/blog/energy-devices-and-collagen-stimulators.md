@@ -3,6 +3,8 @@ title: 電波音波與膠原蛋白針可以一起做嗎？
 description: 電波、音波與膠原增生注射能否搭配？本文解析治療層次、先後順序、間隔考量、適合族群與術前必問事項。
 pubDate: 2026-07-07
 tags: ["電波音波", "膠原蛋白針", "療程搭配", "衛教資訊"]
+heroImage: '../../assets/energy-devices-and-collagen-stimulators.png'
+ogImage: '../../assets/energy-devices-and-collagen-stimulators.png'
 ---
 
 電波、音波與俗稱「膠原蛋白針」的膠原增生注射（例如 [Sculptra 舒顏萃](/blog/sculptra-guide/)、[Radiesse 晶亮瓷](/blog/radiesse-guide/)），都常用於改善老化感，但作用方式不同。它們有機會被納入同一套分階段治療計畫，卻不代表每個人都適合在同一天完成，也沒有適用所有產品的固定先後順序。

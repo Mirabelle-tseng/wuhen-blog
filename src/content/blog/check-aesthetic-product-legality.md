@@ -3,6 +3,8 @@ title: 醫美療程術前必問：如何確認產品是否合法？
 description: 接受醫美注射或儀器療程前，如何確認產品是否合法？從許可證、外盒、批號、核准用途到醫療機構與施作者，一次掌握術前查核重點。
 pubDate: 2026-07-07
 tags: ["醫美合法性", "術前查核", "TFDA許可證", "衛教資訊"]
+heroImage: '../../assets/check-aesthetic-product-legality.png'
+ogImage: '../../assets/check-aesthetic-product-legality.png'
 ---
 
 「有許可證」不等於「任何部位、任何方式都可以使用」。確認醫美療程是否合法，至少要同時檢查產品、用途、醫療機構與施作者。價格或品牌知名度不能取代這些基本查核。

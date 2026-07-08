@@ -3,6 +3,8 @@ title: Radiesse 晶亮瓷是什麼？支撐型填充與膠原刺激比較
 description: Radiesse 晶亮瓷兼具即時支撐與膠原刺激特性。本文比較晶亮瓷、玻尿酸與其他膠原增生劑的效果、適合情境、限制與風險。
 pubDate: 2026-07-07
 tags: ["Radiesse晶亮瓷", "膠原增生劑", "填充注射", "衛教資訊"]
+heroImage: '../../assets/radiesse-guide.png'
+ogImage: '../../assets/radiesse-guide.png'
 ---
 
 Radiesse 晶亮瓷的主要成分為氫氧磷灰石鈣（CaHA）微粒，懸浮在凝膠載體中。施作後，凝膠能先提供一定程度的支撐與容積；隨著載體被吸收，CaHA 微粒則與後續的膠原與彈力蛋白生成反應有關。因此，它常被理解為兼具「填充支撐」與「膠原刺激」特性的注射材料。
