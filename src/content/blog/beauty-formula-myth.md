@@ -5,8 +5,8 @@ pubDate: 2026-07-24
 author: "林菀玲 醫師"
 category: "醫美衛教"
 tags: ["醫美觀念", "衛教資訊", "醫美諮詢", "資訊判讀"]
-heroImage: '../../assets/beauty-formula-myth.jpg'
-ogImage: '../../assets/beauty-formula-myth.jpg'
+heroImage: '../../assets/beauty-formula-myth.png'
+ogImage: '../../assets/beauty-formula-myth.png'
 draft: false
 ---
 
