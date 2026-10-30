@@ -568,10 +568,10 @@ const CONTACT = {
   director: "wuhenclinic@gmail.com",   // 院長信箱
   line:  "https://lin.ee/QTZzv7U",   // LINE 預約連結
   /* 島民登記（Google 表單＋試算表；只在部落格版啟用） */
-  islandForm: "",       // 表單送出網址：https://docs.google.com/forms/d/e/表單ID/formResponse
-  islandEntryName: "",  // 暱稱題的 entry.xxxx
-  islandEntryMsg: "",   // 留言題的 entry.xxxx
-  islandersCSV: ""      // 「公開名單」分頁發布成 CSV 的網址
+  islandForm: "https://docs.google.com/forms/d/e/1FAIpQLScU2rB-E6vO5eboiFk_YJ-wJnDCoMjUZHTPdA5e_61AN0FKIg/formResponse",       // 表單送出網址：https://docs.google.com/forms/d/e/表單ID/formResponse
+  islandEntryName: "entry.248760072",  // 暱稱題的 entry.xxxx
+  islandEntryMsg: "entry.1875378231",   // 留言題的 entry.xxxx
+  islandersCSV: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSpXcN_nHKcsjgsj-KwhC8CmOAO_I8KKNgpZz8uP4NOLSmi_JaIWFcZXGxhDLLeZeHD1jbLwubfk3tl/pub?gid=1861824541&single=true&output=csv"      // 「公開名單」分頁發布成 CSV 的網址
 };
 
 /* 天氣、稀有貓、節慶（網址結尾可預覽：#rain #fog #rare #fest-xmas 等） */
@@ -1406,9 +1406,9 @@ function regHTML(){
    <form id="regform" class="regform" novalidate>
     <label for="reg-name">島上顯示的暱稱</label>
     <input id="reg-name" type="text" maxlength="10" placeholder="例如：小美" value="${esc(islander.name)}" autocomplete="off">
-    <label for="reg-msg">想對無痕美學說的話 <small>（只有店經理看得到，不會公開）</small></label>
-    <textarea id="reg-msg" rows="3" maxlength="300" placeholder="寫下你的心得、建議，或想問的事"></textarea>
-    <p class="fine" style="margin:0">暱稱會公開顯示在島上，請不要填真實全名、電話或病歷資料。店經理審核通過後，你就會在島上散步。</p>
+    <label for="reg-msg">想留在島上的一句話 <small>（選填，審核通過後會公開；不想公開可以不填）</small></label>
+    <textarea id="reg-msg" rows="3" maxlength="300" placeholder="例如：逛完抽到上上籤，好開心！"></textarea>
+    <p class="fine" style="margin:0">暱稱和留言審核通過後會公開顯示在島上，請不要填真實全名、電話或病歷資料。</p>
     <p class="reg-err" id="reg-err" role="alert"></p>
     <button type="submit" class="cta gold">送出登記</button>
    </form>`}</div>`;
@@ -1418,9 +1418,9 @@ async function submitReg(){
   const n=document.getElementById('reg-name').value.trim().slice(0,10),m=document.getElementById('reg-msg').value.trim().slice(0,300),err=document.getElementById('reg-err');
   if(!n){err.textContent='請先填一個暱稱。';document.getElementById('reg-name').focus();return}
   const btn=document.querySelector('#regform button[type=submit]');btn.disabled=true;btn.textContent='送出中…';
-  const fd=new URLSearchParams();fd.append(CONTACT.islandEntryName,n);if(CONTACT.islandEntryMsg)fd.append(CONTACT.islandEntryMsg,m||'（未留言）');
+  const fd=new URLSearchParams();fd.append(CONTACT.islandEntryName,n);if(CONTACT.islandEntryMsg&&m)fd.append(CONTACT.islandEntryMsg,m);
   try{await fetch(CONTACT.islandForm,{method:'POST',mode:'no-cors',body:fd});
-    LS.set('wh-registered',{name:n,at:Date.now()});track('island_register');
+    LS.set('wh-registered',{name:n,msg:m,at:Date.now()});track('island_register');
     document.getElementById('reg').innerHTML=regDone(n);addIslanders([],true);
   }catch(_){err.textContent='送出失敗，請確認網路連線後再試一次。';btn.disabled=false;btn.textContent='送出登記'}
 }
@@ -1429,17 +1429,20 @@ const ISL=[];
 const ISL_AREAS=[[2.25,2.75,2.3,5.7],[3.1,5.7,2.25,2.75],[3.7,5.5,4.4,5.6],[7.85,8.9,3.85,4.9]];
 const ISL_LOOKS=[{top:'#E9C9C0',hair:'long'},{top:'#BFD6E6',hair:'short'},{top:'#F2E2B8',hair:'pony'},{top:'#C9D8C2',hair:'mid'},{top:'#D9CBE8',hair:'bob'},{top:'#F5D0B0',hair:'wave',hairc:'#5B3D2C'},{top:'#B7C7D9',hair:'short',glasses:true},{top:'#F1E3D3',hair:'bun'}];
 function hashStr(t){let h=2166136261;for(const c of t)h=Math.imul(h^c.codePointAt(0),16777619);return h>>>0}
-function parseCSV(txt){const out=[];for(const line of txt.split(/\r?\n/)){if(!line.trim())continue;let v=line;if(v.startsWith('"')){const m=v.match(/^"((?:[^"]|"")*)"/);v=m?m[1].replace(/""/g,'"'):v}else v=v.split(',')[0];out.push(v.trim())}return out}
+function parseCSV(txt){const rows=[];let row=[],cur='',q=false;for(let i=0;i<txt.length;i++){const c=txt[i];if(q){if(c==='"'){if(txt[i+1]==='"'){cur+='"';i++}else q=false}else cur+=c}else if(c==='"')q=true;else if(c===','){row.push(cur);cur=''}else if(c==='\n'||c==='\r'){if(c==='\r'&&txt[i+1]==='\n')i++;row.push(cur);rows.push(row);row=[];cur=''}else cur+=c}if(cur||row.length){row.push(cur);rows.push(row)}
+  const HEAD=['暱稱','留言','島民暱稱'];const out=[];
+  for(const r of rows){const cells=r.map(x=>x.trim()).filter(x=>x&&!HEAD.includes(x));if(cells.length)out.push({name:cells[0].slice(0,10),msg:(cells[1]||'').slice(0,60)})}
+  return out}
 function addIslanders(names,selfOnly){
   const layer=document.getElementById('islanders');if(!layer)return;
   const reg=LS.get('wh-registered',null);
-  const list=selfOnly?[]:names.map(n=>({name:n,self:false}));
-  if(reg&&!ISL.some(i=>i.self)&&!list.some(i=>i.name===reg.name))list.push({name:reg.name,self:true});
+  const list=selfOnly?[]:names.map(n=>({name:n.name,msg:n.msg,self:false}));
+  if(reg&&!ISL.some(i=>i.self)&&!list.some(i=>i.name===reg.name))list.push({name:reg.name,msg:reg.msg,self:true});
   list.forEach(it=>{
     const i=ISL.length,key='isl-'+i,h=hashStr(it.name+i),rr=rng(h%2147483646+1);
     const A=ISL_AREAS[h%ISL_AREAS.length],pts=[0,1,2].map(()=>[A[0]+rr()*(A[1]-A[0]),A[2]+rr()*(A[3]-A[2])]);
     const look=ISL_LOOKS[h%ISL_LOOKS.length];
-    NPCS[key]={name:it.self?it.name+'（你）':it.name,role:'島民',el:key,lines:[it.self?'這是你！其他人要等審核通過後才看得到你。':`${it.name} 已經登記成為島民，在島上定居了。`]};
+    NPCS[key]={name:esc(it.self?it.name+'（你）':it.name),role:'島民',el:key,lines:[it.self?'這是你！其他人要等審核通過後才看得到你。'+(it.msg?`<br><small>你的留言：「${esc(it.msg)}」</small>`:''):(it.msg?`「${esc(it.msg)}」`:`${esc(it.name)} 已經登記成為島民，在島上定居了。`)]};
     const g=document.createElementNS('http://www.w3.org/2000/svg','g');g.id=key;g.setAttribute('data-npc',key);g.setAttribute('role','button');g.setAttribute('tabindex','0');g.setAttribute('aria-label','島民 '+it.name);
     g.innerHTML='<g transform="scale(.72)">'+fig(look)+(it.self?'<circle cx="0" cy="-46" r="3.2" fill="#F2C14E" stroke="#fff" stroke-width="1"/>':'')+'</g>';
     const p0=iso(pts[0][0],pts[0][1]);g.setAttribute('transform',`translate(${p0[0]},${p0[1]})`);
@@ -1449,8 +1452,8 @@ function addIslanders(names,selfOnly){
 }
 async function loadIslanders(){
   if(!CONTACT.islandersCSV||!REG_ON()){addIslanders([],true);return}
-  try{const r=await fetch(CONTACT.islandersCSV,{cache:'no-store'});const rows=parseCSV(await r.text()).slice(1);
-    const uniq=[...new Set(rows.map(n=>n.slice(0,10)).filter(Boolean))];
+  try{const r=await fetch(CONTACT.islandersCSV,{cache:'no-store'});const rows=parseCSV(await r.text());
+    const seen=new Set(),uniq=rows.filter(x=>!seen.has(x.name)&&seen.add(x.name));
     for(let i=uniq.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[uniq[i],uniq[j]]=[uniq[j],uniq[i]]}
     addIslanders(uniq.slice(0,8),false);
   }catch(_){addIslanders([],true)}
