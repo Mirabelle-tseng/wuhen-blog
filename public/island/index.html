@@ -299,6 +299,10 @@ body.reading #yttag{opacity:0;pointer-events:none}
 @keyframes twk{50%{opacity:.3}}
 .dock-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
 .game-btn{background:rgba(176,141,87,.92);border-color:#E9CF9E}
+.dock-row .blog-btn{background:rgba(251,248,243,.95);color:var(--navy);border-color:var(--gold);text-decoration:none;font-weight:700}
+.blog-btn::before{content:"";width:12px;height:10px;border:2px solid var(--navy);border-top-width:3px;border-radius:1px 1px 2px 2px;box-sizing:border-box}
+.dock-row .blog-btn:hover{background:#fff}
+.blog-btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .game-btn::before{content:"";width:9px;height:9px;border-radius:50%;background:#FCE9B8;box-shadow:0 0 0 3px rgba(252,233,184,.35)}
 #game{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;background:linear-gradient(180deg,#A8C8E1 0%,#DCE9F1 60%,#F2EDE6 100%);padding-block:calc(env(safe-area-inset-top,0px) + 12px) calc(env(safe-area-inset-bottom,0px) + 0px);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));touch-action:manipulation;user-select:none;-webkit-user-select:none}
 .g-top{display:flex;justify-content:space-between;align-items:center}
@@ -524,9 +528,9 @@ body.reading #toast{bottom:auto;top:calc(env(safe-area-inset-top,0px) + 12px)}
   <button type="button" id="npctag" data-npc="doctor" aria-label="和林醫師說說話">林醫師</button>
 
   <nav class="dock" aria-label="空間列表">
-    <div class="dock-row"><button type="button" class="stamps" id="stamps"><span id="st-label">集章</span><span class="st-dots" id="st-dots"></span><span id="st-count">0／6</span></button><button type="button" class="stamps game-btn" data-game>防曬小遊戲</button></div>
+    <div class="dock-row"><button type="button" class="stamps" id="stamps"><span id="st-label">集章</span><span class="st-dots" id="st-dots"></span><span id="st-count">0／6</span></button><button type="button" class="stamps game-btn" data-game>防曬小遊戲</button><a class="stamps blog-btn" href="https://blog.wuhenclinic.tw/" target="_blank" rel="noopener">健康衛教部落格</a></div>
     <div class="chips" id="chips"></div>
-    <p class="legal">本站為衛教資訊，所有療程需經醫師面診評估，效果因個人膚況而異。無痕美學診所｜台北市大安區安和路一段86號2樓｜<a href="https://blog.wuhenclinic.tw/" style="color:inherit">健康衛教部落格</a><br>© 2026 無痕美學診所 版權所有，翻印必究。未經書面授權，請勿複製、轉載或改作本站內容與設計。</p>
+    <p class="legal">本站為衛教資訊，所有療程需經醫師面診評估，效果因個人膚況而異。無痕美學診所｜台北市大安區安和路一段86號2樓<br>© 2026 無痕美學診所 版權所有，翻印必究。未經書面授權，請勿複製、轉載或改作本站內容與設計。</p>
   </nav>
 </div>
 
@@ -1437,7 +1441,7 @@ function addIslanders(names,selfOnly){
     const look=ISL_LOOKS[h%ISL_LOOKS.length];
     NPCS[key]={name:it.self?it.name+'（你）':it.name,role:'島民',el:key,lines:[it.self?'這是你！其他人要等審核通過後才看得到你。':`${it.name} 已經登記成為島民，在島上定居了。`]};
     const g=document.createElementNS('http://www.w3.org/2000/svg','g');g.id=key;g.setAttribute('data-npc',key);g.setAttribute('role','button');g.setAttribute('tabindex','0');g.setAttribute('aria-label','島民 '+it.name);
-    g.innerHTML=fig(look)+(it.self?'<circle cx="0" cy="-44" r="2.6" fill="#F2C14E" stroke="#fff" stroke-width=".8"/>':'');
+    g.innerHTML='<g transform="scale(.72)">'+fig(look)+(it.self?'<circle cx="0" cy="-46" r="3.2" fill="#F2C14E" stroke="#fff" stroke-width="1"/>':'')+'</g>';
     const p0=iso(pts[0][0],pts[0][1]);g.setAttribute('transform',`translate(${p0[0]},${p0[1]})`);
     layer.appendChild(g);
     ISL.push({key,self:it.self,r:route(pts,.12+rr()*.12,2+rr()*4),off:rr()*20});lastDir[key]=1;
@@ -1448,7 +1452,7 @@ async function loadIslanders(){
   try{const r=await fetch(CONTACT.islandersCSV,{cache:'no-store'});const rows=parseCSV(await r.text()).slice(1);
     const uniq=[...new Set(rows.map(n=>n.slice(0,10)).filter(Boolean))];
     for(let i=uniq.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[uniq[i],uniq[j]]=[uniq[j],uniq[i]]}
-    addIslanders(uniq.slice(0,12),false);
+    addIslanders(uniq.slice(0,8),false);
   }catch(_){addIslanders([],true)}
 }
 const JIAO_SVG=(face)=>face==='flat'
