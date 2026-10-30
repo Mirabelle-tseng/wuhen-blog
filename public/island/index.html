@@ -1,0 +1,1698 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>無痕美學島｜無痕美學診所</title>
+<meta name="description" content="無痕美學診所的互動小島：七個空間點進去看衛教，防曬小遊戲、貓咖區、院長保養籤，逛完拿一張專屬島民證桌布。">
+<link rel="canonical" href="https://blog.wuhenclinic.tw/island/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://blog.wuhenclinic.tw/island/">
+<meta property="og:title" content="無痕美學島：我們把診所做成一座會動的小島">
+<meta property="og:description" content="無痕美學診所的互動小島：七個空間點進去看衛教，防曬小遊戲、貓咖區、院長保養籤，逛完拿一張專屬島民證桌布。">
+<meta property="og:image" content="https://blog.wuhenclinic.tw/island/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="無痕美學島：我們把診所做成一座會動的小島">
+<meta name="twitter:description" content="無痕美學診所的互動小島：七個空間點進去看衛教，防曬小遊戲、貓咖區、院長保養籤，逛完拿一張專屬島民證桌布。">
+<meta name="twitter:image" content="https://blog.wuhenclinic.tw/island/og.jpg">
+<meta name="copyright" content="© 2026 無痕美學診所 版權所有">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.5 system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HNBC1CDZC1"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-HNBC1CDZC1');</script>
+</head>
+<body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@500;700&display=swap">
+<style>
+/* Layout: one full-screen floating isometric clinic floor (2F) over the sea; rooms open a side drawer (desktop) or bottom sheet (phone). Single deliberate world whose sky follows the time of day. */
+:root{
+  --navy:#0E335F; --gold:#B08D57; --cream:#F2EDE6; --paper:#FBF8F3; --line:#E4DACB; --muted:#56657A;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  color-scheme:light;
+}
+html,body{height:100%}
+body{background:var(--cream);color:var(--navy);font-family:var(--sans);overflow:hidden;-webkit-font-smoothing:antialiased}
+
+#world{position:fixed;inset:0;overflow:hidden;
+  --water:#7FA6C4; --hdr:#0E335F; --cloud:.92; --glow:0; --star:0; --sun:#F7D9A0; --halo:.35; --dim:none;}
+#world[data-phase="dawn"]{--water:#9DB0C2;--hdr:#0E335F;--cloud:.9;--glow:.25;--star:0;--sun:#F6C9A0;--halo:.45;--dim:saturate(1.02)}
+#world[data-phase="day"]{--water:#7FA6C4;--hdr:#0E335F;--cloud:.92;--glow:0;--star:0;--sun:#F7E2B0;--halo:.3;--dim:none}
+#world[data-phase="dusk"]{--water:#66698A;--hdr:#FBF3E8;--cloud:.55;--glow:.7;--star:.25;--sun:#F0A779;--halo:.5;--dim:sepia(.18) brightness(.93)}
+#world[data-phase="night"]{--water:#102C4F;--hdr:#F2EDE6;--cloud:.18;--glow:1;--star:1;--sun:#F2EDE6;--halo:.18;--dim:brightness(.72) saturate(.85)}
+
+.sky{position:absolute;inset:0;opacity:0;transition:opacity 1.6s ease}
+.sky.dawn{background:linear-gradient(180deg,#EFC2A9 0%,#F4DCCB 45%,#F2EDE6 75%)}
+.sky.day{background:linear-gradient(180deg,#A8C8E1 0%,#D6E5EE 45%,#EEF0EC 75%)}
+.sky.dusk{background:linear-gradient(180deg,#3F3A66 0%,#B4697A 38%,#F0A46F 62%,#F7CF95 78%)}
+.sky.night{background:linear-gradient(180deg,#060F24 0%,#0D2347 50%,#2A2D5C 78%)}
+#world[data-phase="dawn"] .sky.dawn,#world[data-phase="day"] .sky.day,#world[data-phase="dusk"] .sky.dusk,#world[data-phase="night"] .sky.night{opacity:1}
+
+#scene{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:manipulation}
+#water{fill:var(--water);transition:fill 1.6s}
+.star{fill:#FFF8E6;opacity:var(--star);transition:opacity 1.6s}
+.twinkle{animation:tw 3.2s ease-in-out infinite}
+@keyframes tw{50%{opacity:calc(var(--star)*.3)}}
+.cloud{opacity:var(--cloud);transition:opacity 1.6s}
+.cloud-move{animation:drift linear infinite}
+@keyframes drift{from{transform:translateX(-520px)}to{transform:translateX(1320px)}}
+#sun{transition:transform 1.8s cubic-bezier(.3,.7,.2,1)}
+#sun .core{fill:var(--sun);transition:fill 1.6s}
+#sun .halo{fill:var(--sun);opacity:var(--halo);transition:fill 1.6s,opacity 1.6s}
+#bob{animation:bob 6s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-9px)}}
+#art{filter:var(--dim);transition:filter 1.6s}
+#shadow{transform-box:fill-box;transform-origin:center;animation:shadow 6s ease-in-out infinite}
+@keyframes shadow{50%{transform:scale(.93);opacity:.7}}
+.ripple{fill:none;stroke:#fff;stroke-width:1.2;transform-box:fill-box;transform-origin:center;animation:ripple 7s ease-out infinite;opacity:0}
+@keyframes ripple{0%{transform:scale(.55);opacity:.55}100%{transform:scale(1.45);opacity:0}}
+.glow{opacity:var(--glow);transition:opacity 1.6s;mix-blend-mode:screen;pointer-events:none}
+.spark{fill:#E9CF9E;animation:spark 4s ease-in-out infinite;opacity:0}
+@keyframes spark{40%,60%{opacity:.95}}
+.room{cursor:pointer}
+.floor{transition:stroke .25s,stroke-width .25s}
+.room.hot .floor,.room.active .floor{stroke:var(--gold);stroke-width:2.4}
+
+/* header */
+.top{transition:opacity .4s,color 1.6s;position:absolute;top:0;left:0;right:0;z-index:5;display:flex;flex-wrap:wrap;gap:10px 16px;align-items:flex-start;justify-content:space-between;
+  padding-block:calc(env(safe-area-inset-top,0px) + 16px) 0;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  color:var(--hdr);pointer-events:none}
+.brand{pointer-events:auto;min-width:0}
+.brand h1{margin:0;font:700 clamp(24px,4.4vw,34px)/1.15 var(--serif);letter-spacing:.06em;text-wrap:balance}
+.brand p{margin:6px 0 0;font-size:13px;letter-spacing:.04em;opacity:.85}
+.brand .addr{margin-top:2px;font-size:12px;opacity:.7}
+.clock{pointer-events:auto;display:flex;gap:2px;padding:3px;border-radius:999px;background:rgba(251,248,243,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(176,141,87,.35)}
+.clock button{font:500 12px var(--sans);color:var(--navy);background:none;border:0;border-radius:999px;padding:6px 10px;cursor:pointer;letter-spacing:.04em}
+.clock button[aria-pressed="true"]{background:var(--navy);color:var(--paper)}
+.clock button:focus-visible,.pin:focus-visible,.chip:focus-visible,#panel button:focus-visible,#panel a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+/* pins */
+#pins{position:absolute;inset:0;pointer-events:none;z-index:4}
+.pin{position:absolute;left:0;top:0;pointer-events:auto;border:0;background:none;padding:0;cursor:pointer;will-change:transform;transition:opacity .4s}
+.pin .face{display:flex;align-items:center;gap:6px;white-space:nowrap;font:700 13px/1 var(--serif);letter-spacing:.06em;color:var(--navy);
+  background:rgba(251,248,243,.95);border:1px solid var(--gold);border-radius:999px;padding:7px 12px 7px 9px;box-shadow:0 6px 16px rgba(14,51,95,.18);
+  animation:pinbob 3.4s ease-in-out infinite;position:relative}
+.pin .face::after{content:"";position:absolute;left:50%;bottom:-8px;width:1px;height:8px;background:var(--gold)}
+.pin .dia{width:7px;height:7px;background:var(--gold);transform:rotate(45deg) scaleY(.8)}
+.pin:hover .face,.pin.hot .face{background:var(--navy);color:var(--paper)}
+.pin.dim{opacity:0;pointer-events:none}
+@keyframes pinbob{50%{transform:translateY(-4px)}}
+
+/* dock */
+.dock{position:absolute;left:0;right:0;bottom:0;z-index:5;padding-block:0 calc(env(safe-area-inset-bottom,0px) + 10px);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:8px;align-items:center}
+.chips{display:flex;gap:8px;overflow-x:auto;max-width:100%;padding:2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;font:500 13px var(--sans);color:var(--navy);background:rgba(251,248,243,.88);border:1px solid rgba(176,141,87,.45);border-radius:999px;padding:8px 14px;cursor:pointer;letter-spacing:.04em;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.chip:hover{border-color:var(--gold);background:var(--paper)}
+.legal{margin:0;max-width:760px;text-align:center;font-size:11px;line-height:1.6;color:var(--paper);opacity:.9;text-shadow:0 1px 2px rgba(5,20,40,.5)}
+
+/* panel */
+#panel{position:fixed;z-index:20;background:var(--paper);color:var(--navy);display:flex;flex-direction:column;transition:transform .55s cubic-bezier(.2,.8,.2,1),visibility 0s .55s;visibility:hidden;box-shadow:0 -10px 40px rgba(14,51,95,.22)}
+#panel.open{visibility:visible;transition:transform .55s cubic-bezier(.2,.8,.2,1)}
+@media (min-width:761px){
+  #panel{top:0;right:0;bottom:0;width:min(430px,92vw);transform:translateX(104%);padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+  #panel.open{transform:none}
+  .p-in{padding-right:max(26px,env(safe-area-inset-right,0px));padding-left:26px}
+}
+@media (max-width:760px){
+  #panel{left:0;right:0;bottom:0;height:66%;border-radius:22px 22px 0 0;transform:translateY(104%);padding-bottom:env(safe-area-inset-bottom,0px)}
+  #panel.open{transform:none}
+  .p-in{padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+  .handle{display:block}
+  body.reading .top{opacity:0;pointer-events:none}
+  body.reading .top *{pointer-events:none}
+  .clock button{padding:6px 8px}
+}
+.handle{display:none;width:40px;height:4px;border-radius:4px;background:var(--line);margin:10px auto 0}
+.p-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding-block:18px 14px;border-bottom:1px solid var(--line)}
+.eyebrow{margin:0 0 6px;font-size:11px;letter-spacing:.18em;color:var(--gold);font-weight:700}
+.p-head h2{margin:0;font:700 24px/1.25 var(--serif);letter-spacing:.06em}
+.x{flex:0 0 auto;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--navy);font-size:20px;line-height:1;cursor:pointer}
+.p-body{flex:1;overflow-y:auto;padding-block:18px 24px;-webkit-overflow-scrolling:touch}
+.p-foot{display:flex;justify-content:space-between;gap:10px;padding-block:12px 14px;border-top:1px solid var(--line)}
+.p-foot button{font:500 13px var(--sans);color:var(--navy);background:none;border:0;padding:8px 2px;cursor:pointer;letter-spacing:.03em}
+.p-foot button:hover{color:var(--gold)}
+
+.lead{margin:0 0 6px;font:700 19px/1.55 var(--serif);letter-spacing:.03em;text-wrap:balance}
+.sub{margin:0 0 16px;font-size:14px;line-height:1.75;color:var(--muted)}
+.p-body p,.p-body li,.p-body dd{font-size:15px;line-height:1.8}
+.seg{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 18px}
+.seg button{font:500 14px var(--sans);padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--navy);cursor:pointer;letter-spacing:.04em}
+.seg button[aria-selected="true"]{background:var(--navy);border-color:var(--navy);color:var(--paper)}
+.facts{margin:0;display:grid;gap:14px}
+.facts dt{font-size:12px;letter-spacing:.14em;color:var(--gold);font-weight:700;margin-bottom:2px}
+.facts dd{margin:0}
+.dlist{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.dlist li{position:relative;padding-left:22px}
+.dlist li::before{content:"";position:absolute;left:3px;top:.72em;width:8px;height:8px;background:var(--gold);transform:rotate(45deg) scaleY(.75)}
+.steps{list-style:none;counter-reset:s;margin:0;padding:0;display:grid;gap:12px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start}
+.steps li::before{content:counter(s);width:28px;height:28px;border-radius:50%;border:1px solid var(--gold);color:var(--gold);font:700 13px/26px var(--serif);text-align:center}
+.steps b{display:block;font-weight:700}
+.steps span{color:var(--muted);font-size:14px}
+.box{margin:18px 0 0;padding:14px 16px;border:1px dashed rgba(176,141,87,.7);border-radius:12px;background:#fff}
+.box b{display:block;font-size:12px;letter-spacing:.14em;color:var(--gold);margin-bottom:4px}
+.box p{margin:0}
+.warn{border-style:solid;border-color:#E2B9A9;background:#FCF2EE}
+.warn b{color:#A4553D}
+.fine{margin:16px 0 0;font-size:12.5px !important;line-height:1.7 !important;color:var(--muted)}
+.cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-top:18px;min-height:46px;padding:0 22px;border-radius:999px;background:var(--navy);color:var(--paper);font:500 15px var(--sans);letter-spacing:.06em;text-decoration:none;border:0;cursor:pointer}
+.cta.ghost{background:#fff;color:var(--navy);border:1px solid var(--navy)}
+.cta.off{background:#E9E3D9;color:var(--muted);cursor:default}
+.ctas{display:flex;flex-wrap:wrap;gap:10px}
+.ctas .cta{margin-top:18px}
+.letter{font:500 16px/2 var(--serif);letter-spacing:.03em;margin:0}
+.sign{margin:12px 0 0;text-align:right;font:700 15px var(--serif);letter-spacing:.1em}
+.mail{display:flex;align-items:center;gap:8px;margin-top:18px;padding:10px 10px 10px 14px;border:1px solid var(--line);border-radius:12px;background:#fff;min-width:0}
+.mail code{flex:1;min-width:0;font:500 15px var(--sans);user-select:all;overflow-wrap:anywhere}
+.mail button{flex:0 0 auto;font:500 13px var(--sans);border:1px solid var(--gold);background:none;color:var(--navy);border-radius:999px;padding:6px 12px;cursor:pointer}
+
+.city{opacity:0;transition:opacity 1.8s ease}
+#world[data-phase="dawn"] .city.dawn,#world[data-phase="day"] .city.day,#world[data-phase="dusk"] .city.dusk,#world[data-phase="night"] .city.night{opacity:1}
+.bill{animation:flick 6s ease-in-out infinite}
+@keyframes flick{0%,100%{opacity:1}48%{opacity:1}50%{opacity:.55}52%{opacity:1}}
+.eye{transform-box:fill-box;transform-origin:center;animation:spin 90s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.brand .cityname{display:inline-flex;align-items:center;gap:7px;margin-top:8px;font:700 13px var(--serif);letter-spacing:.16em;padding:4px 10px;border-radius:999px;background:rgba(251,248,243,.18);border:1px solid rgba(176,141,87,.55)}
+.cityname .dia{width:6px;height:6px;background:var(--gold);transform:rotate(45deg)}
+[hidden]{display:none!important}
+/* eggs & npc */
+.city{pointer-events:none}
+#world[data-phase="dawn"] .city.dawn,#world[data-phase="day"] .city.day,#world[data-phase="dusk"] .city.dusk,#world[data-phase="night"] .city.night{pointer-events:auto}
+.egg{cursor:pointer;outline:none}
+.egg:hover>*:not(.egg-dot),.egg:focus-visible>*:not(.egg-dot){filter:brightness(1.18)}
+.egg-dot .dotc{fill:#E9CF9E;stroke:#fff;stroke-width:1.4}
+.egg-dot .ping{fill:none;stroke:#E9CF9E;stroke-width:2;transform-box:fill-box;transform-origin:center;animation:ping 2.2s ease-out infinite}
+@keyframes ping{0%{transform:scale(.6);opacity:1}100%{transform:scale(2.6);opacity:0}}
+.egg.found .egg-dot{display:none}
+[data-npc]{cursor:pointer}
+#bubble{position:fixed;left:0;top:0;z-index:6;pointer-events:none;max-width:min(240px,70vw);background:var(--paper);color:var(--navy);border:1px solid var(--gold);border-radius:14px;padding:9px 12px;font-size:13.5px;line-height:1.6;box-shadow:0 8px 22px rgba(14,51,95,.22)}
+#bubble b{display:block;font:700 11px var(--sans);letter-spacing:.14em;color:var(--gold);margin-bottom:2px}
+#bubble::after{content:"";position:absolute;left:50%;bottom:-6px;width:10px;height:10px;background:var(--paper);border-right:1px solid var(--gold);border-bottom:1px solid var(--gold);transform:translateX(-50%) rotate(45deg)}
+#npctag{position:fixed;left:0;top:0;z-index:4;border:0;padding:3px 8px;border-radius:999px;background:var(--gold);color:#fff;font:700 11px var(--serif);letter-spacing:.12em;box-shadow:0 4px 10px rgba(14,51,95,.25);transition:opacity .4s}
+#npctag:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+body.reading #npctag{opacity:0;pointer-events:none}
+
+.b-row{display:flex;gap:9px;align-items:center}
+.av{flex:0 0 auto;width:38px;height:38px;border-radius:50%;overflow:hidden;border:1.5px solid var(--gold);display:block}
+.av svg{width:100%;height:100%;display:block}
+.av-lg{width:72px;height:72px;border-width:2px}
+.dir-head{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.dir-name{margin:0;font:700 18px var(--serif);letter-spacing:.1em}
+#bubble{max-width:min(270px,74vw)}
+#bubble.act{pointer-events:auto}
+.b-cta{display:block;width:100%;margin-top:8px;font:500 14px var(--sans);letter-spacing:.06em;color:var(--paper);background:var(--navy);border:0;border-radius:999px;padding:8px 14px;cursor:pointer}
+.b-cta:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+#yttag{position:fixed;left:0;top:0;z-index:4;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--gold);padding:4px 10px;border-radius:999px;background:var(--navy);color:var(--paper);font:700 11.5px var(--serif);letter-spacing:.1em;box-shadow:0 4px 12px rgba(14,51,95,.3);transition:opacity .4s;cursor:pointer}
+#yttag .dot{width:7px;height:7px;border-radius:50%;background:#5ED39A;box-shadow:0 0 0 0 rgba(94,211,154,.6);animation:live 2s infinite}
+@keyframes live{70%{box-shadow:0 0 0 6px rgba(94,211,154,0)}}
+#yttag:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+body.reading #yttag{opacity:0;pointer-events:none}
+.chat-note{font-size:12px;line-height:1.7;color:var(--muted);background:#fff;border:1px dashed var(--line);border-radius:10px;padding:8px 12px;margin-bottom:14px}
+.chatlog{display:flex;flex-direction:column;gap:10px}
+.msg{display:flex;gap:8px;align-items:flex-end;max-width:100%}
+.msg .av{width:32px;height:32px;border-width:1px}
+.msg .mb{max-width:82%;padding:10px 13px;border-radius:16px;font-size:15px;line-height:1.7;overflow-wrap:anywhere;min-width:0}
+.msg.bot .mb{background:#fff;border:1px solid var(--line);border-bottom-left-radius:4px}
+.msg.me{justify-content:flex-end}
+.msg.me .mb{background:var(--navy);color:var(--paper);border-bottom-right-radius:4px}
+.typing{display:inline-flex;gap:4px;padding:4px 0}
+.typing i{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:typ 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes typ{0%,60%,100%{opacity:.25;transform:none}30%{opacity:1;transform:translateY(-3px)}}
+#chatopts{margin-top:14px}
+.opts{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.opts button{font:500 14.5px var(--sans);color:var(--navy);background:var(--paper);border:1px solid var(--gold);border-radius:999px;padding:9px 16px;cursor:pointer;text-align:right}
+.opts button:hover{background:var(--navy);color:var(--paper)}
+.ask{display:grid;gap:8px}
+.ask input,.ask textarea{font:400 15px var(--sans);color:var(--navy);background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 13px;width:100%;box-sizing:border-box;resize:vertical}
+.ask input:focus,.ask textarea:focus{outline:2px solid var(--gold);outline-offset:1px}
+.ask-row{display:flex;justify-content:flex-end;gap:8px}
+.ask .send{font:500 14px var(--sans);background:var(--navy);color:var(--paper);border:0;border-radius:999px;padding:9px 20px;cursor:pointer}
+.ask .skip{font:500 14px var(--sans);background:none;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:9px 16px;cursor:pointer}
+.sumcard b{display:block;font:700 14px var(--serif);color:var(--gold);letter-spacing:.08em;margin-bottom:4px}
+.sumcard pre{margin:0;font:400 14px/1.75 var(--sans);white-space:pre-wrap;user-select:all}
+.endcard{display:grid;gap:4px;padding:16px;border:1px solid var(--gold);border-radius:16px;background:#fff}
+.endcard .cta{margin-top:6px}
+.endcard .ctas .cta{margin-top:6px}
+.end-l{margin:14px 0 0;font-size:12px;letter-spacing:.14em;color:var(--gold);font-weight:700}
+.endcard .mail{margin-top:4px}
+.tail{transform-box:fill-box;transform-origin:100% 100%;animation:wag 1.6s ease-in-out infinite}
+@keyframes wag{50%{transform:rotate(14deg)}}
+#cat-kuro .tail{animation-duration:2.6s}
+.heart{position:fixed;z-index:40;pointer-events:none;color:#E8577A;font-size:18px;transform:translate(-50%,-100%);animation:hup 1.1s ease-out forwards}
+@keyframes hup{to{transform:translate(-50%,-260%) scale(1.4);opacity:0}}
+.catlist{display:grid;gap:10px}
+.catcard{display:grid;grid-template-columns:56px 1fr;gap:4px 12px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:14px;background:#fff}
+.cat-av{width:56px;height:56px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;grid-row:span 2}
+.cat-av svg{width:44px;height:auto}
+.cat-tx{min-width:0}
+.cat-tx b{font:700 16px var(--serif);letter-spacing:.08em;margin-right:8px}
+.cat-p{font-size:12px;color:var(--gold);letter-spacing:.06em}
+.cat-say{margin:4px 0 0;font-size:14px !important;line-height:1.7 !important;color:var(--muted)}
+.pet{justify-self:start;font:500 13px var(--sans);color:var(--navy);background:var(--paper);border:1px solid var(--gold);border-radius:999px;padding:6px 14px;cursor:pointer}
+.pet:hover{background:var(--navy);color:var(--paper)}
+#sun{cursor:pointer}
+#sun:focus-visible .core{stroke:var(--gold);stroke-width:3}
+.eyes-c,.zz{display:none}
+.sleep .eyes-o{display:none}
+.sleep .eyes-c,.sleep .zz{display:inline}
+.sleep .tail{animation:none}
+.zz{animation:zz 2.4s ease-in-out infinite}.zz2{animation-delay:.6s}
+@keyframes zz{0%{opacity:0;transform:translateY(2px)}40%{opacity:1}100%{opacity:0;transform:translateY(-4px)}}
+.goldglow{filter:drop-shadow(0 0 3px rgba(242,193,78,.95))}
+#world[data-weather="rain"] .sky{filter:brightness(.8) saturate(.65)}
+#world[data-weather="rain"] .cloud{opacity:1}
+#world[data-weather="rain"] #sun{opacity:.35}
+#world[data-weather="fog"] #cities{opacity:.5}
+#world[data-weather="fog"] #sun{opacity:.6}
+#world[data-fest="qixi"] .star{opacity:max(var(--star),.5)}
+#wx{pointer-events:none}
+.rd{animation:rd .6s linear infinite}
+@keyframes rd{from{transform:translate(0,-160px)}to{transform:translate(-50px,420px)}}
+.fogb{animation:fogd 36s linear infinite}
+@keyframes fogd{from{transform:translateX(-200px)}to{transform:translateX(260px)}}
+.sn{animation:snow 8s linear infinite}
+@keyframes snow{from{transform:translate(0,-120px)}to{transform:translate(30px,560px)}}
+#festsky{pointer-events:none}
+#festsky .fmoon{pointer-events:auto;cursor:pointer}
+#world[data-fest="midautumn"][data-phase="night"] #sun{opacity:0;pointer-events:none}
+.fw{animation:fw 3.4s ease-out infinite;opacity:0}
+@keyframes fw{0%{transform:scale(.2);opacity:0}10%{opacity:1}45%{transform:scale(1.15);opacity:.9}70%{opacity:0}100%{opacity:0}}
+.lantern{animation:lant 17s linear infinite}
+@keyframes lant{from{transform:translateY(80px);opacity:0}10%{opacity:1}90%{opacity:.9}to{transform:translateY(-520px);opacity:0}}
+.floatup{animation:fup 11s linear infinite}
+@keyframes fup{from{transform:translateY(40px);opacity:0}12%{opacity:.9}to{transform:translateY(-520px);opacity:0}}
+.bird{animation:bird 11s linear infinite}
+@keyframes bird{from{transform:translateX(-120px)}to{transform:translateX(920px)}}
+.twk{animation:twk 1.6s ease-in-out infinite}
+@keyframes twk{50%{opacity:.3}}
+.dock-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.game-btn{background:rgba(176,141,87,.92);border-color:#E9CF9E}
+.game-btn::before{content:"";width:9px;height:9px;border-radius:50%;background:#FCE9B8;box-shadow:0 0 0 3px rgba(252,233,184,.35)}
+#game{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;background:linear-gradient(180deg,#A8C8E1 0%,#DCE9F1 60%,#F2EDE6 100%);padding-block:calc(env(safe-area-inset-top,0px) + 12px) calc(env(safe-area-inset-bottom,0px) + 0px);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));touch-action:manipulation;user-select:none;-webkit-user-select:none}
+.g-top{display:flex;justify-content:space-between;align-items:center}
+.g-hud{display:flex;align-items:baseline;gap:8px;color:var(--navy)}
+.g-hud b{font:700 26px var(--serif);font-variant-numeric:tabular-nums;min-width:1.6em}
+.g-lb{font-size:12px;letter-spacing:.14em;color:var(--muted)}
+.g-meter{display:flex;align-items:center;gap:10px;margin-top:8px;font-size:12px;letter-spacing:.12em;color:var(--navy)}
+.g-meter i{flex:1;height:10px;border-radius:10px;background:rgba(255,255,255,.7);overflow:hidden;box-shadow:inset 0 0 0 1px rgba(14,51,95,.15)}
+.g-meter b{display:block;height:100%;width:0;background:linear-gradient(90deg,#F2C14E,#E8577A);transition:width .2s}
+.g-field{position:relative;flex:1;overflow:hidden;margin-top:8px}
+.g-sun{position:absolute;left:50%;top:-60px;width:120px;height:120px;margin-left:-60px;border-radius:50%;background:radial-gradient(circle,#FCE9B8 0 40%,rgba(252,233,184,0) 70%)}
+.uv{position:absolute;top:0;width:54px;height:54px;margin-left:-27px;border-radius:50%;border:0;padding:0;cursor:pointer;font:700 13px var(--sans);letter-spacing:.04em;color:#fff;background:radial-gradient(circle at 35% 30%,#B9A6FF,#6B4FD8 70%);box-shadow:0 0 0 4px rgba(142,124,240,.25),0 6px 14px rgba(60,40,140,.3);touch-action:manipulation}
+.uv.b{background:radial-gradient(circle at 35% 30%,#FFD98A,#E89A2E 70%);box-shadow:0 0 0 4px rgba(242,193,78,.3),0 6px 14px rgba(160,90,20,.3)}
+.uv.bonus{border-radius:14px;width:50px;height:60px;margin-left:-25px;background:#FFFFFF;color:var(--navy);box-shadow:0 0 0 3px var(--gold),0 6px 14px rgba(14,51,95,.25)}
+.uv.pop{animation:pop .3s ease-out forwards;pointer-events:none}
+@keyframes pop{to{opacity:0;scale:1.6}}
+.g-face{height:70px;display:flex;justify-content:center}
+.g-face svg{height:100%;width:auto}
+.g-face.hurt svg{animation:hurt .3s}
+@keyframes hurt{30%{transform:translateX(-4px)}70%{transform:translateX(4px)}}
+.g-card{box-sizing:border-box;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(360px,calc(100vw - 32px));max-height:calc(100% - 40px);overflow:auto;background:var(--paper);border:1px solid var(--gold);border-radius:20px;padding:22px 20px;box-shadow:0 18px 40px rgba(14,51,95,.3);text-align:center;color:var(--navy)}
+.g-card h3{margin:0 0 8px;font:700 22px var(--serif);letter-spacing:.08em}
+.g-card p{margin:0 0 10px;font-size:14.5px;line-height:1.75}
+.g-legend{display:flex;justify-content:center;gap:14px;margin:12px 0 14px;font-size:12.5px;color:var(--muted)}
+.g-legend span{display:flex;flex-direction:column;align-items:center;gap:4px}
+.g-legend i{width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#B9A6FF,#6B4FD8 70%)}
+.g-legend i.b{background:radial-gradient(circle at 35% 30%,#FFD98A,#E89A2E 70%)}
+.g-legend i.s{border-radius:7px;width:22px;height:28px;background:#fff;box-shadow:0 0 0 2px var(--gold)}
+.g-rank{display:inline-block;margin:4px 0 8px;padding:4px 16px;border-radius:999px;background:var(--navy);color:#E9CF9E;font:700 14px var(--serif);letter-spacing:.2em}
+.g-card .g-big{font:700 48px var(--serif);font-variant-numeric:tabular-nums;margin:0;line-height:1.1}
+.g-tip{background:#fff;border:1px dashed var(--gold);border-radius:12px;padding:10px 12px;text-align:left}
+.g-tip b{display:block;font-size:11px;letter-spacing:.16em;color:var(--gold)}
+.g-btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:6px}
+.g-btns .cta{margin-top:6px}
+body.gaming #toast,body.gaming #bubble{display:none!important}
+.b-x{position:absolute;top:4px;right:6px;width:24px;height:24px;border:0;background:none;color:var(--muted);font-size:16px;line-height:1;cursor:pointer;border-radius:50%}
+.b-x:focus-visible{outline:2px solid var(--gold)}
+#bubble.act{padding-right:26px}
+.av.mystery{position:relative;background:#2B3A4F}
+.av.mystery svg{filter:brightness(0) opacity(.55)}
+.av.mystery::after{content:"?";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#E9CF9E;font:700 20px var(--serif)}
+.guess{display:flex;gap:6px;margin-top:8px}
+.guess input{flex:1;min-width:0;font:500 14px var(--sans);color:var(--navy);background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 12px}
+.guess input:focus{outline:2px solid var(--gold);outline-offset:1px}
+.guess button{flex:0 0 auto;font:700 14px var(--serif);color:var(--paper);background:var(--navy);border:0;border-radius:999px;padding:7px 14px;cursor:pointer}
+.g-hint{margin:6px 0 0;font-size:12.5px;line-height:1.6;color:var(--muted)}
+.lineid{display:flex;align-items:center;gap:8px;margin-top:8px;padding:6px 6px 6px 12px;border:1px solid var(--line);border-radius:10px;background:#fff}
+.lineid code{flex:1;min-width:0;font:700 15px var(--sans);letter-spacing:.06em;user-select:all}
+.lineid button{font:500 12px var(--sans);border:1px solid var(--gold);background:none;color:var(--navy);border-radius:999px;padding:4px 10px;cursor:pointer}
+.b-btns{display:flex;gap:6px;margin-top:8px}
+.b-btns .b-cta{margin-top:0;text-align:center;text-decoration:none;flex:1}
+.b-cta.ghost{background:#fff;color:var(--navy);border:1px solid var(--navy)}
+/* toast */
+#toast{position:fixed;z-index:30;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 128px);width:min(380px,calc(100vw - 32px));display:flex;gap:10px;align-items:flex-start;background:var(--paper);color:var(--navy);border:1px solid var(--gold);border-radius:16px;padding:14px 12px 14px 16px;box-shadow:0 14px 34px rgba(14,51,95,.28)}
+#toast.show{animation:tin .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes tin{from{opacity:0;transform:translate(-50%,14px)}}
+body.reading #toast{bottom:auto;top:calc(env(safe-area-inset-top,0px) + 12px)}
+@media (min-width:761px){body.reading #toast{top:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 128px);left:calc((100vw - min(430px,92vw))/2)}}
+.t-body{flex:1;min-width:0;display:grid;gap:3px}
+.t-body b{font:700 16px/1.4 var(--serif);letter-spacing:.04em}
+.t-body span{font-size:14px;line-height:1.7;color:var(--muted)}
+.t-eye{margin:0;font-size:11px;font-weight:700;letter-spacing:.16em;color:var(--gold)}
+.t-x{flex:0 0 auto;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--navy);cursor:pointer;font-size:16px;line-height:1}
+
+/* stamps */
+.stamps{display:inline-flex;align-items:center;gap:10px;padding:6px 14px;border-radius:999px;border:1px solid rgba(176,141,87,.6);background:rgba(14,51,95,.72);color:var(--paper);font:500 12.5px var(--sans);letter-spacing:.08em;cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.st-dots{display:flex;gap:6px}
+.st-dots i{width:9px;height:9px;border:1px solid #E9CF9E;transform:rotate(45deg);transition:background .4s}
+.st-dots i.on{background:#E9CF9E}
+.stamps.full{background:var(--gold);border-color:var(--gold);animation:glowp 2s ease-in-out infinite}
+.stamps.full .st-dots i{border-color:#fff;background:#fff}
+@keyframes glowp{50%{box-shadow:0 0 0 6px rgba(176,141,87,.25)}}
+.stamps:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.chip.done::after{content:"";display:inline-block;width:6px;height:6px;margin-left:7px;vertical-align:2px;background:var(--gold);transform:rotate(45deg)}
+
+/* section heads in panel */
+.h3{margin:28px 0 12px;font:700 17px/1.4 var(--serif);letter-spacing:.06em;display:flex;align-items:center;gap:8px}
+.h3::before{content:"";width:8px;height:8px;background:var(--gold);transform:rotate(45deg)}
+.p-body>.h3:first-child{margin-top:0}
+
+/* quiz */
+.quiz{border:1px solid var(--line);border-radius:16px;background:#fff;padding:16px}
+.q-prog{display:flex;justify-content:space-between;font-size:12px;letter-spacing:.12em;color:var(--gold);font-weight:700;margin-bottom:8px}
+.q-bar{height:3px;background:var(--line);border-radius:3px;margin-bottom:14px;overflow:hidden}
+.q-bar i{display:block;height:100%;background:var(--gold);transition:width .4s}
+.q-q{margin:0 0 12px;font:700 17px/1.5 var(--serif)}
+.q-opts{display:grid;gap:8px}
+.q-opts button{text-align:left;font:500 15px var(--sans);color:var(--navy);background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer}
+.q-opts button:hover{border-color:var(--gold)}
+.note{position:relative;background:var(--navy);color:var(--paper);border-radius:16px;padding:20px 18px;box-shadow:inset 0 0 0 5px var(--navy),inset 0 0 0 6px rgba(233,207,158,.6)}
+.note .eyebrow{color:#E9CF9E}
+.note h4{margin:0 0 10px;font:700 21px/1.4 var(--serif);letter-spacing:.06em}
+.note blockquote{margin:0 0 14px;padding:12px 14px;background:rgba(251,248,243,.08);border-radius:10px;font:500 15.5px/1.85 var(--serif)}
+.note ul{margin:0;padding-left:1.2em;font-size:14px;line-height:1.8}
+.note .fine{color:rgba(242,237,230,.75)}
+.cta.gold{background:var(--gold);color:#fff}
+.q-again{margin-top:10px;background:none;border:0;color:var(--muted);font:500 13px var(--sans);text-decoration:underline;cursor:pointer;padding:6px 0}
+
+/* myths */
+.myths{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr))}
+.myth{display:grid;border:0;padding:0;background:none;text-align:left;cursor:pointer;perspective:900px;font:inherit;color:inherit}
+.m-face{grid-area:1/1;display:flex;flex-direction:column;gap:8px;min-height:132px;padding:15px;border-radius:14px;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:transform .6s cubic-bezier(.3,.7,.2,1)}
+.m-front{background:var(--navy);color:var(--paper)}
+.m-back{background:#fff;color:var(--navy);border:1px solid var(--gold);transform:rotateY(180deg)}
+.myth[aria-pressed="true"] .m-front{transform:rotateY(-180deg)}
+.myth[aria-pressed="true"] .m-back{transform:rotateY(0)}
+.m-tag{font-size:11px;font-weight:700;letter-spacing:.16em;color:#E9CF9E}
+.m-back .m-tag{color:var(--gold)}
+.m-q{font:700 16px/1.5 var(--serif);flex:1}
+.m-a{font-size:14px;line-height:1.75}
+.m-hint{font-size:12px;opacity:.7;letter-spacing:.06em}
+.myth:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:14px}
+
+/* reward */
+.step{display:flex;align-items:center;gap:8px;margin:26px 0 10px;font:700 16px var(--serif);letter-spacing:.06em}
+.step i{font-style:normal;width:24px;height:24px;border-radius:50%;background:var(--navy);color:var(--paper);font:700 12px/24px var(--sans);text-align:center}
+.drum-wrap{display:flex;flex-direction:column;align-items:center;gap:12px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#fff}
+.drum{position:relative;width:74px;height:96px}
+.drum .stk{position:absolute;bottom:58px;width:6px;height:44px;border-radius:3px;background:#D9B46A}
+.drum .stk:nth-child(1){left:20px;transform:rotate(-10deg)}.drum .stk:nth-child(2){left:30px;height:52px}.drum .stk:nth-child(3){left:40px;transform:rotate(8deg)}.drum .stk:nth-child(4){left:48px;height:40px;transform:rotate(14deg)}
+.drum .can{position:absolute;bottom:0;left:7px;width:60px;height:66px;border-radius:8px 8px 14px 14px;background:var(--navy);box-shadow:inset 0 0 0 3px var(--gold);display:flex;align-items:center;justify-content:center;color:#E9CF9E;font:700 16px var(--serif);letter-spacing:.1em;writing-mode:vertical-rl}
+.drum.shake{animation:shake .18s ease-in-out 6}
+@keyframes shake{25%{transform:rotate(-9deg)}75%{transform:rotate(9deg)}}
+.fortune{position:relative;padding:20px 18px 18px;border-radius:16px;background:linear-gradient(180deg,#FFFDF8,#F7EFE2);border:1px solid var(--gold);text-align:center;animation:fin .5s cubic-bezier(.2,.8,.2,1)}
+@keyframes fin{from{opacity:0;transform:translateY(10px) scale(.97)}}
+.f-rank{display:inline-block;padding:3px 14px;border-radius:999px;background:#A4553D;color:#fff;font:700 13px var(--serif);letter-spacing:.2em}
+.f-title{margin:10px 0 6px;font:700 15px var(--serif);color:var(--gold);letter-spacing:.2em}
+.f-poem{margin:0;font:700 21px/1.7 var(--serif);letter-spacing:.12em}
+.f-mean{margin:12px 0 0;font-size:14px !important;line-height:1.75 !important;color:var(--muted)}
+.f-tags{display:flex;justify-content:center;flex-wrap:wrap;gap:6px;margin-top:12px}
+.f-tags span{font-size:12px;padding:3px 10px;border-radius:999px;border:1px solid var(--line);background:#fff;letter-spacing:.06em}
+.f-no{margin:0 0 8px;font:700 13px var(--serif);letter-spacing:.3em;color:var(--muted)}
+.fortune.fest{background:linear-gradient(180deg,#FFF6EE,#F8E3D6);border-color:#A4553D}
+.fortune.fest .f-rank{background:var(--gold)}
+.jiao-wrap{gap:10px;text-align:center}
+.j-stick{margin:0}
+.j-stick span{display:inline-block;writing-mode:vertical-rl;padding:12px 7px;border-radius:6px;background:#E9CF9E;color:#5B3D2C;font:700 15px var(--serif);letter-spacing:.2em;box-shadow:inset 0 0 0 2px #B08D57}
+.j-ask{margin:0;font:700 16px/1.6 var(--serif)}
+.j-ask small{font:400 12.5px var(--sans);color:var(--muted)}
+.jiao{display:flex;gap:18px;justify-content:center;height:46px;align-items:flex-end}
+.jb{width:62px;display:block}
+.jb svg{width:100%;display:block}
+.jiao.toss .jb{animation:toss .75s cubic-bezier(.3,.6,.3,1)}
+.jiao.toss .jb:nth-child(2){animation-delay:.05s}
+@keyframes toss{0%{transform:none}40%{transform:translateY(-58px) rotate(380deg)}75%{transform:translateY(0) rotate(700deg)}88%{transform:translateY(-6px) rotate(715deg)}100%{transform:rotate(720deg)}}
+.j-dots{display:flex;gap:8px;justify-content:center}
+.j-dots i{width:12px;height:12px;border-radius:50%;border:1.5px solid #A4553D}
+.j-dots i.on{background:#A4553D}
+.j-msg{margin:0;font-size:14px;line-height:1.7;color:var(--navy);min-height:3.4em}
+.redraw{margin-top:10px;background:none;border:0;color:var(--muted);font:500 13px var(--sans);text-decoration:underline;cursor:pointer}
+.namebox{display:flex;gap:8px;align-items:center}
+.namebox input{flex:1;min-width:0;font:500 16px var(--sans);color:var(--navy);background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 13px}
+.namebox input:focus{outline:2px solid var(--gold);outline-offset:1px}
+.wallprev{display:block;width:min(100%,300px);aspect-ratio:9/16;margin:6px auto 0;border-radius:22px;overflow:hidden;box-shadow:0 14px 34px rgba(14,51,95,.25);background:var(--cream)}
+.wallprev img,.wallprev svg{display:block;width:100%;height:100%}
+.wall-msg{text-align:center}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (prefers-reduced-motion:reduce){
+  #bob,#shadow,.ripple,.cloud-move,.twinkle,.spark,.pin .face,.bill,.eye,.egg-dot .ping,.stamps.full,#yttag .dot,.typing i,.tail,.heart,.jiao.toss .jb,.drum.shake,.zz,.rd,.fogb,.sn,.fw,.lantern,.floatup,.bird,.twk{animation:none}
+  .rd,.sn{display:none}.fw{opacity:1}
+  .m-face{transition:none}
+  .ripple{opacity:.25}
+}
+</style>
+
+<div id="world" data-phase="day">
+  <div class="sky dawn"></div><div class="sky day"></div><div class="sky dusk"></div><div class="sky night"></div>
+  <svg id="scene" viewBox="40 20 720 660" preserveAspectRatio="xMidYMid meet" role="img" aria-label="無痕美學診所 2 樓的立體小島地圖，可點選七個空間">
+    <defs>
+      <radialGradient id="g-glow"><stop offset="0" stop-color="#FFD891" stop-opacity=".75"/><stop offset="1" stop-color="#FFD891" stop-opacity="0"/></radialGradient>
+      <linearGradient id="g-rockL" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1B4677"/><stop offset="1" stop-color="#0B2443"/></linearGradient>
+      <linearGradient id="g-rockR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#123A66"/><stop offset="1" stop-color="#081B35"/></linearGradient>
+    </defs>
+    <g id="stars"></g>
+    <g id="sun" data-sky role="button" tabindex="0" aria-label="太陽和月亮"><circle class="halo" r="48"/><circle class="core" r="24"/></g>
+    <g id="clouds"></g>
+    <g id="festsky"></g>
+    <g id="cities"></g>
+    <rect id="water" x="-3000" y="478" width="7000" height="4000"/>
+    <g id="sea"></g>
+    <g id="camera">
+      <g id="bob">
+        <g id="art"></g>
+        <g id="festdeco"></g>
+        <g id="glows"></g>
+        <g id="sparks"></g>
+        <g id="anchors"></g>
+      </g>
+    </g>
+    <g id="wx"></g>
+  </svg>
+
+  <header class="top">
+    <div class="brand">
+      <h1>無痕美學島</h1>
+      <p>會動的診所小島，逛完還能抽一支保養籤</p>
+      <p class="addr">安和路一段86號 2樓，七個空間，點進去逛逛</p>
+      <p class="cityname"><span class="dia"></span><span id="cityname">巴黎・白天</span></p>
+    </div>
+    <div class="clock" role="group" aria-label="島上的時間與城市">
+      <button type="button" data-ph="auto" aria-pressed="true">自動</button>
+      <button type="button" data-ph="dawn" aria-pressed="false" title="清晨・倫敦">清晨</button>
+      <button type="button" data-ph="day" aria-pressed="false" title="白天・巴黎">白天</button>
+      <button type="button" data-ph="dusk" aria-pressed="false" title="黃昏・台北">黃昏</button>
+      <button type="button" data-ph="night" aria-pressed="false" title="夜晚・紐約">夜晚</button>
+    </div>
+  </header>
+
+  <div id="pins"></div>
+  <div id="bubble" hidden></div>
+  <button type="button" id="npctag" data-npc="doctor" aria-label="和林醫師說說話">林醫師</button>
+
+  <nav class="dock" aria-label="空間列表">
+    <div class="dock-row"><button type="button" class="stamps" id="stamps"><span id="st-label">集章</span><span class="st-dots" id="st-dots"></span><span id="st-count">0／6</span></button><button type="button" class="stamps game-btn" data-game>防曬小遊戲</button></div>
+    <div class="chips" id="chips"></div>
+    <p class="legal">本站為衛教資訊，所有療程需經醫師面診評估，效果因個人膚況而異。無痕美學診所｜台北市大安區安和路一段86號2樓｜<a href="https://blog.wuhenclinic.tw/" style="color:inherit">健康衛教部落格</a><br>© 2026 無痕美學診所 版權所有，翻印必究。未經書面授權，請勿複製、轉載或改作本站內容與設計。</p>
+  </nav>
+</div>
+
+<div id="toast" role="status" hidden></div>
+<div id="game" role="dialog" aria-modal="true" aria-label="防曬大作戰" hidden>
+  <div class="g-top"><div class="g-hud"><span class="g-lb">時間</span><b id="g-time">20</b><span class="g-lb">擋下</span><b id="g-score">0</b></div><button type="button" class="t-x" data-gclose aria-label="離開遊戲">×</button></div>
+  <div class="g-meter"><span>曬傷值</span><i><b id="g-burn"></b></i></div>
+  <div class="g-field" id="g-field"><div class="g-sun" aria-hidden="true"></div></div>
+  <div class="g-face" aria-hidden="true"><svg viewBox="0 0 120 70"><ellipse cx="60" cy="74" rx="44" ry="40" fill="#F1D5C1"/><path d="M16,60 C14,24 106,24 104,60 C96,40 24,40 16,60Z" fill="#2B2420"/><circle cx="44" cy="56" r="3" fill="#2B2420"/><circle cx="76" cy="56" r="3" fill="#2B2420"/><ellipse id="g-blush1" cx="34" cy="64" rx="8" ry="5" fill="#E8577A" opacity="0"/><ellipse id="g-blush2" cx="86" cy="64" rx="8" ry="5" fill="#E8577A" opacity="0"/><path id="g-mouth" d="M52,66 Q60,72 68,66" fill="none" stroke="#B9605A" stroke-width="2.4" stroke-linecap="round"/></svg></div>
+  <div class="g-card" id="g-card"></div>
+</div>
+
+<aside id="panel" aria-hidden="true" aria-labelledby="p-title">
+  <div class="handle"></div>
+  <div class="p-head p-in">
+    <div style="min-width:0">
+      <p class="eyebrow" id="p-eyebrow"></p>
+      <h2 id="p-title"></h2>
+    </div>
+    <button class="x" id="p-close" type="button" aria-label="離開這個空間">×</button>
+  </div>
+  <div class="p-body p-in" id="p-body"></div>
+  <div class="p-foot p-in">
+    <button type="button" id="p-prev"></button>
+    <button type="button" id="p-next"></button>
+  </div>
+</aside>
+
+<script>
+/* ===== 聯絡資訊：拿到後填入即可 ===== */
+const CONTACT = {
+  email: "",
+  form:  "https://docs.google.com/forms/d/e/1FAIpQLSea1hlao3mLRO8y5GonWPifAEv0v8zfmZJJh0p_9qaH19PrQQ/viewform",   // 怡婷的留言表單
+  formEntry: "entry.67946239",   // 對談整理自動帶入的題目
+  director: "wuhenclinic@gmail.com",   // 院長信箱
+  line:  "https://lin.ee/QTZzv7U"    // LINE 預約連結，例如 "https://lin.ee/xxxx"
+};
+
+/* 天氣、稀有貓、節慶（網址結尾可預覽：#rain #fog #rare #fest-xmas 等） */
+var HASH0=location.hash.slice(1);
+var WEATHER=(HASH0==='rain'||HASH0==='fog')?HASH0:(()=>{const r=Math.random();return r<.15?'rain':(r<.28?'fog':'clear')})();
+var RARE=HASH0==='rare'||Math.random()<.06;
+var FEST=null;
+const TW=50, TH=25, OX=400, OY=110;
+const iso=(x,y,z=0)=>[OX+(x-y)*TW, OY+(x+y)*TH - z];
+const P=a=>a.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+const STK='stroke="rgba(14,51,95,.22)" stroke-width=".7" stroke-linejoin="round"';
+function shade(hex,p){let n=parseInt(hex.slice(1),16),r=n>>16,g=n>>8&255,b=n&255;const f=p<0?0:255,t=Math.abs(p);r=Math.round((f-r)*t+r);g=Math.round((f-g)*t+g);b=Math.round((f-b)*t+b);return `rgb(${r},${g},${b})`}
+const poly=(pts,fill,extra='')=>`<polygon points="${P(pts)}" fill="${fill}" ${extra}/>`;
+function box(x,y,z,w,d,h,c,o={}){
+  return poly([iso(x,y+d,z+h),iso(x+w,y+d,z+h),iso(x+w,y+d,z),iso(x,y+d,z)],shade(c,-.05),STK)
+   +poly([iso(x+w,y,z+h),iso(x+w,y+d,z+h),iso(x+w,y+d,z),iso(x+w,y,z)],shade(c,-.2),STK)
+   +poly([iso(x,y,z+h),iso(x+w,y,z+h),iso(x+w,y+d,z+h),iso(x,y+d,z+h)],o.top||shade(c,.12),STK);
+}
+function cyl(x,y,z,r,h,c){
+  const [cx,cy]=iso(x,y,z),rx=r*TW*1.414,ry=r*TH*1.414,t=cy-h;
+  return `<path d="M${cx-rx},${t} L${cx-rx},${cy} A${rx},${ry} 0 0 0 ${cx+rx},${cy} L${cx+rx},${t} Z" fill="${shade(c,-.12)}" ${STK}/><ellipse cx="${cx}" cy="${t}" rx="${rx}" ry="${ry}" fill="${shade(c,.1)}" ${STK}/>`;
+}
+function plant(x,y,s=1){
+  const [cx,cy]=iso(x,y,10*s);
+  return cyl(x,y,0,.11*s,10*s,'#E6D9C6')+`<circle cx="${cx-4*s}" cy="${cy-9*s}" r="${8*s}" fill="#7C9877"/><circle cx="${cx+5*s}" cy="${cy-12*s}" r="${7.5*s}" fill="#8EAA88"/><circle cx="${cx}" cy="${cy-18*s}" r="${7*s}" fill="#A3BC9B"/>`;
+}
+const wallY=(x0,x1,y,h)=>poly([iso(x0,y,h),iso(x1,y,h),iso(x1,y,0),iso(x0,y,0)],'#F7F1E7',STK)+poly([iso(x0,y-.07,h),iso(x1,y-.07,h),iso(x1,y,h),iso(x0,y,h)],'#FFFDF9',STK);
+const wallX=(x,y0,y1,h)=>poly([iso(x,y0,h),iso(x,y1,h),iso(x,y1,0),iso(x,y0,0)],'#E8DDCD',STK)+poly([iso(x-.07,y0,h),iso(x,y0,h),iso(x,y1,h),iso(x-.07,y1,h)],'#FFFDF9',STK);
+const onY=(x0,x1,y,z0,z1,fill,ex='')=>poly([iso(x0,y,z1),iso(x1,y,z1),iso(x1,y,z0),iso(x0,y,z0)],fill,ex);
+const onX=(x,y0,y1,z0,z1,fill,ex='')=>poly([iso(x,y0,z1),iso(x,y1,z1),iso(x,y1,z0),iso(x,y0,z0)],fill,ex);
+function floor(x,y,w,d,c,id){
+  let s=`<polygon class="floor" id="floor-${id}" points="${P([iso(x,y,.5),iso(x+w,y,.5),iso(x+w,y+d,.5),iso(x,y+d,.5)])}" fill="${c}" stroke="rgba(14,51,95,.15)" stroke-width=".8"/>`;
+  for(let i=1;i<w;i++){const a=iso(x+i,y,.5),b=iso(x+i,y+d,.5);s+=`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="rgba(14,51,95,.07)"/>`}
+  for(let j=1;j<d;j++){const a=iso(x,y+j,.5),b=iso(x+w,y+j,.5);s+=`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="rgba(14,51,95,.07)"/>`}
+  return s;
+}
+function fig(o){
+  const top=o.top||'#FFFFFF',hair=o.hairc||'#2B2420',lw=o.thin?2:3;
+  const back={pony:`<path d="M4,-31 Q10,-27 7,-19 Q5,-23 3,-26Z" fill="${hair}"/>`,long:`<path d="M-6.4,-30 C-7.6,-24 -7.2,-19 -6.6,-15 L6.6,-15 C7.2,-19 7.6,-24 6.4,-30Z" fill="${hair}"/>`,bun:`<circle cx="0" cy="-35.5" r="3.4" fill="${hair}"/>`,highpony:`<circle cx="0" cy="-35.4" r="2.6" fill="${hair}"/><path d="M1.2,-36.6 Q8.4,-36 7.2,-26.5 Q6.4,-23.5 5.2,-22.5 Q5.6,-28 2.4,-33.6Z" fill="${hair}"/><rect x="-.9" y="-34.4" width="2.4" height="1.2" rx=".5" fill="#E9A0A8"/>`,mid:`<path d="M-6.4,-30 C-7.4,-25 -7.2,-21 -6.8,-19 L6.8,-19 C7.2,-21 7.4,-25 6.4,-30Z" fill="${hair}"/>`,wave:`<path d="M-6.6,-30 C-8.4,-24 -6.4,-21 -7.8,-16 Q-4,-15 -2,-17 L2,-17 Q4,-15 7.8,-16 C6.4,-21 8.4,-24 6.6,-30Z" fill="${hair}"/>`,bob:`<path d="M-6.4,-30 C-7,-25 -6.6,-23 -6,-22.5 L6,-22.5 C6.6,-23 7,-25 6.4,-30Z" fill="${hair}"/>`,short:''}[o.hair]||'';
+  const item={tablet:`<rect x="1.5" y="-19" width="7.5" height="9.5" rx="1" fill="#0E335F" stroke="#B08D57" stroke-width=".6"/><rect x="2.6" y="-17.8" width="5.3" height="7" fill="#BFD6E6"/>`,
+    tray:`<rect x="-9" y="-16" width="11" height="2" rx=".8" fill="#C7CED6"/><rect x="-7" y="-18.4" width="2" height="2.4" fill="#9DB3C6"/><rect x="-4" y="-18" width="3" height="2" fill="#FFFFFF" stroke="#C7CED6" stroke-width=".4"/>`,
+    towel:`<rect x="2" y="-17" width="7" height="4" rx="1.5" fill="#FFFFFF" stroke="rgba(14,51,95,.25)" stroke-width=".5"/>`,
+    brush:`<line x1="5" y1="-12" x2="8.5" y2="-20" stroke="#B08D57" stroke-width="1.2" stroke-linecap="round"/><ellipse cx="8.8" cy="-21" rx="1.2" ry="1.8" fill="#E9C9C0"/>`,
+    cup:`<rect x="3" y="-16" width="4" height="4.6" rx=".8" fill="#FFFFFF" stroke="rgba(14,51,95,.3)" stroke-width=".5"/>`}[o.item]||'';
+  return `<rect x="-10" y="-42" width="20" height="44" fill="transparent"/>
+  <ellipse cx="0" cy="0" rx="7" ry="3" fill="rgba(14,51,95,.22)"/>${back}
+  <g><rect x="${-1-lw}" y="-9" width="${lw}" height="9" rx="1" fill="${o.legs||'#0E335F'}"/><rect x="1" y="-9" width="${lw}" height="9" rx="1" fill="${o.legs||'#0E335F'}"/></g>
+  <rect x="-6.5" y="-23" width="13" height="16" rx="5.5" fill="${top}" stroke="rgba(14,51,95,.25)" stroke-width=".7"/>
+  ${o.trim?`<rect x="-6.5" y="-23" width="13" height="2.6" rx="1.3" fill="${o.trim}"/>`:''}
+  ${o.vneck?`<path d="M-3,-23 L0,-19 L3,-23" fill="none" stroke="${o.vneck}" stroke-width="1.2"/>`:''}
+  <circle cx="0" cy="-28.5" r="5.6" fill="${o.skin||'#F1D5C1'}"/>
+  ${o.glow?'<ellipse cx="-1.6" cy="-30.6" rx="2" ry="1" fill="#fff" opacity=".55"/><ellipse cx="2.6" cy="-26.6" rx="1.1" ry=".6" fill="#fff" opacity=".45"/>':''}
+  <path d="M-5.9,-28.5 A5.9,5.9 0 0 1 5.9,-29.5 L5,-31 Q0,-36.5 -5,-31 Z" fill="${hair}"/>
+  ${o.hair==='short'?`<path d="M-5.9,-29 Q-6.2,-26 -5.2,-25.2 L-4.6,-29Z M5.9,-29 Q6.2,-26 5.2,-25.2 L4.6,-29Z" fill="${hair}"/>`:`<path d="M-5.9,-29.4 Q-6.9,-25 -5.9,-22.4 Q-5,-24.5 -4.7,-29Z M5.9,-29.4 Q6.9,-25 5.9,-22.4 Q5,-24.5 4.7,-29Z" fill="${hair}"/>`}
+  ${o.brow?`<path d="M-3.4,-30.4 Q-2.2,-31.2 -1,-30.6 M1,-30.6 Q2.2,-31.2 3.4,-30.4" fill="none" stroke="${hair}" stroke-width=".55" stroke-linecap="round"/>`:''}
+  ${o.eyes==='big'?'<circle cx="-2.1" cy="-28.4" r="1.05" fill="#2B2420"/><circle cx="2.1" cy="-28.4" r="1.05" fill="#2B2420"/><circle cx="-1.8" cy="-28.8" r=".38" fill="#fff"/><circle cx="2.4" cy="-28.8" r=".38" fill="#fff"/>':(o.eyes==='smile'?'<path d="M-3,-28.2 Q-2.1,-29.2 -1.2,-28.2 M1.2,-28.2 Q2.1,-29.2 3,-28.2" fill="none" stroke="#2B2420" stroke-width=".6" stroke-linecap="round"/>':(o.eyes==='deep'?'<ellipse cx="-2.1" cy="-28.3" rx=".95" ry=".8" fill="#4A3426"/><ellipse cx="2.1" cy="-28.3" rx=".95" ry=".8" fill="#4A3426"/><path d="M-3.2,-29 L-1,-29.2 M1,-29.2 L3.2,-29" stroke="#2B2420" stroke-width=".45"/><path d="M0,-28 L-.4,-26.4 L.3,-26.3" fill="none" stroke="#D7A98E" stroke-width=".4"/><circle cx="-1.8" cy="-28.6" r=".3" fill="#fff"/><circle cx="2.4" cy="-28.6" r=".3" fill="#fff"/>':'<circle cx="-2" cy="-28.3" r=".7" fill="#2B2420"/><circle cx="2" cy="-28.3" r=".7" fill="#2B2420"/>'))}
+  ${o.blush?'<circle cx="-3.5" cy="-26.6" r="1.1" fill="#F2A0A6" opacity=".6"/><circle cx="3.5" cy="-26.6" r="1.1" fill="#F2A0A6" opacity=".6"/>':''}
+  <path d="M-1,-25.6 Q0,-24.8 1,-25.6" fill="none" stroke="#B9605A" stroke-width=".5" stroke-linecap="round"/>
+  ${o.glasses?`<circle cx="-2.2" cy="-28.4" r="1.6" fill="none" stroke="#0E335F" stroke-width=".7"/><circle cx="2.2" cy="-28.4" r="1.6" fill="none" stroke="#0E335F" stroke-width=".7"/>`:''}
+  ${o.cap?'<rect x="-3.6" y="-36.2" width="7.2" height="3" rx="1" fill="#fff" stroke="rgba(14,51,95,.3)" stroke-width=".5"/>':''}
+  ${o.pin?`<rect x="2.4" y="-20" width="3" height="1.8" rx=".3" fill="${o.pin}"/>`:''}${item}`;
+}
+function person(kind){
+  const nurse=kind==='nurse';
+  const body=nurse?'#FFFFFF':(kind==='guest'?'#C9968B':'#0E335F');
+  return `<ellipse cx="0" cy="0" rx="7" ry="3" fill="rgba(14,51,95,.22)"/>
+  <g class="legs"><rect x="-4" y="-9" width="3" height="9" rx="1.2" fill="#0E335F"/><rect x="1" y="-9" width="3" height="9" rx="1.2" fill="#0E335F"/></g>
+  <rect x="-6.5" y="-23" width="13" height="16" rx="5.5" fill="${body}" stroke="rgba(14,51,95,.25)" stroke-width=".7"/>
+  ${nurse?'<path d="M-3,-23 L0,-19 L3,-23" fill="none" stroke="#0E335F" stroke-width="1.2"/>':''}
+  ${kind==='guest'?'<rect x="4" y="-17" width="5" height="7" rx="1" fill="#B08D57"/>':''}
+  ${kind==='staff'?'<rect x="-6.5" y="-23" width="13" height="3" rx="1.5" fill="#B08D57"/>':''}
+  <circle cx="0" cy="-28.5" r="5.6" fill="#F1D5C1"/>
+  <path d="M-5.9,-28.5 A5.9,5.9 0 0 1 5.9,-29.5 L5,-31 Q0,-36.5 -5,-31 Z" fill="#2B2420"/>
+  <circle cx="-5" cy="-27" r="2.6" fill="#2B2420"/>
+  ${nurse?'<rect x="-3.6" y="-36.2" width="7.2" height="3" rx="1" fill="#fff" stroke="rgba(14,51,95,.3)" stroke-width=".5"/>':''}`;
+}
+
+const AVATAR=`<svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#E9DFD2"/>
+<path d="M24,40 C19,58 16,76 19,100 L81,100 C84,76 81,58 76,40 C74,16 26,16 24,40Z" fill="#231C1A"/>
+<g fill="#231C1A"><circle cx="20" cy="62" r="7"/><circle cx="17" cy="77" r="7.5"/><circle cx="20" cy="92" r="7"/><circle cx="80" cy="60" r="7"/><circle cx="83" cy="75" r="7.5"/><circle cx="80" cy="90" r="7"/></g>
+<rect x="44" y="60" width="12" height="14" fill="#EBCBB6"/>
+<path d="M12,100 C14,82 28,73 50,73 C72,73 86,82 88,100Z" fill="#FFFFFF"/>
+<path d="M37,74 Q50,72 63,74 L58,100 L42,100Z" fill="#1E1A1F"/>
+<path d="M42,73 L50,88 L58,73Z" fill="#F3D9C6"/>
+<path d="M43,74 Q50,84 57,74" fill="none" stroke="#B08D57" stroke-width="1"/><circle cx="50" cy="83.5" r="2" fill="#D9B46A"/>
+<path d="M37,74 L45,100 M63,74 L55,100" stroke="#D8DEE5" stroke-width="1.4"/>
+<rect x="64" y="84" width="9" height="4" rx="1" fill="#B08D57"/>
+<ellipse cx="50" cy="46" rx="15.5" ry="17" fill="#F3D9C6"/>
+<path d="M33,44 C30,24 46,20 54,23 C66,25 71,34 67,47 C64,37 57,32 49,33 C42,35 38,41 35,53Z" fill="#231C1A"/>
+<path d="M35,40 C30,52 33,62 29,72 C37,64 38,52 37,44Z M66,40 C70,52 67,62 72,72 C64,64 63,52 64,44Z" fill="#231C1A"/>
+<path d="M41,47.5 Q44,44.5 47,47.5 M53,47.5 Q56,44.5 59,47.5" fill="none" stroke="#231C1A" stroke-width="1.8" stroke-linecap="round"/>
+<circle cx="40" cy="53.5" r="3.2" fill="#F2A9A0" opacity=".5"/><circle cx="60" cy="53.5" r="3.2" fill="#F2A9A0" opacity=".5"/>
+<path d="M44,55.5 Q50,62 56,55.5 Q50,58.5 44,55.5Z" fill="#FFFFFF" stroke="#C0605A" stroke-width="1"/></svg>`;
+function doctorFig(){return `<g transform="scale(1.12)"><rect x="-11" y="-46" width="22" height="48" fill="transparent"/>
+  <ellipse cx="0" cy="0" rx="7.5" ry="3" fill="rgba(14,51,95,.22)"/>
+  <path d="M-7.6,-35 C-10,-26 -9.4,-18 -8.6,-12.5 Q-6,-10.5 -3.5,-13 L3.5,-13 Q6,-10.5 8.6,-12.5 C9.4,-18 10,-26 7.6,-35Z" fill="${'#231C1A'}"/>
+  <g fill="#231C1A"><circle cx="-9" cy="-21" r="2.3"/><circle cx="-8.6" cy="-15" r="2.3"/><circle cx="9" cy="-21" r="2.3"/><circle cx="8.6" cy="-15" r="2.3"/></g>
+  <g><rect x="-4" y="-9" width="3" height="9" rx="1.2" fill="#1E1A1F"/><rect x="1" y="-9" width="3" height="9" rx="1.2" fill="#1E1A1F"/></g>
+  <path d="M-6,-25 L6,-25 L7,-6.5 L-7,-6.5Z" fill="#1E1A1F"/>
+  <path d="M-7.6,-23 Q-7.6,-25.6 -5,-25.6 L-2.6,-25.6 L-1.6,-6 L-8.7,-6Z" fill="#FFFFFF" stroke="rgba(14,51,95,.3)" stroke-width=".6"/>
+  <path d="M7.6,-23 Q7.6,-25.6 5,-25.6 L2.6,-25.6 L1.6,-6 L8.7,-6Z" fill="#FFFFFF" stroke="rgba(14,51,95,.3)" stroke-width=".6"/>
+  <path d="M-2.4,-25.6 L0,-21.2 L2.4,-25.6Z" fill="#F3D9C6"/><circle cx="0" cy="-22" r=".8" fill="#D9B46A"/>
+  <rect x="3.6" y="-20.5" width="3" height="1.8" rx=".3" fill="#B08D57"/>
+  <circle cx="-8" cy="-12" r="1.6" fill="#F3D9C6"/><circle cx="8" cy="-12" r="1.6" fill="#F3D9C6"/>
+  <ellipse cx="-8" cy="-13.7" rx="1.9" ry=".8" fill="none" stroke="#86C49B" stroke-width=".9"/>
+  <circle cx="0" cy="-33" r="7" fill="#F3D9C6"/>
+  <path d="M-7.4,-33 C-8,-42 6.5,-43 7.5,-34 C5.4,-38.4 1.4,-39 -1.8,-37.4 C-4.2,-36 -5.6,-33.6 -6.3,-29.5Z" fill="#231C1A"/>
+  <path d="M-7.2,-35 C-8.8,-28 -7,-24.5 -8.6,-20 Q-5.4,-24 -6,-30.5Z M7.2,-35 C8.8,-28 7,-24.5 8.6,-20 Q5.4,-24 6,-30.5Z" fill="#231C1A"/>
+  <path d="M-3.8,-32.4 Q-2.5,-33.8 -1.2,-32.4 M1.2,-32.4 Q2.5,-33.8 3.8,-32.4" fill="none" stroke="#231C1A" stroke-width=".85" stroke-linecap="round"/>
+  <circle cx="-4" cy="-30.4" r="1.1" fill="#F2A9A0" opacity=".6"/><circle cx="4" cy="-30.4" r="1.1" fill="#F2A9A0" opacity=".6"/>
+  <path d="M-1.7,-29.6 Q0,-27.6 1.7,-29.6Z" fill="#FFFFFF" stroke="#C0605A" stroke-width=".55"/></g>`}
+const ROOMS=[
+ {id:'lobby',name:'大廳櫃台',x:3,y:3,w:3,d:3,floor:'#F5EFE6',pz:58},
+ {id:'consult',name:'諮詢區',x:0,y:2,w:2,d:2,floor:'#EFE4D5',pz:56},
+ {id:'treatment',name:'治療室',x:2,y:0,w:2,d:2,floor:'#E9EEF2',pz:56},
+ {id:'recovery',name:'恢復室',x:4,y:0,w:2,d:2,floor:'#EDE6DB',pz:40},
+ {id:'powder',name:'化妝間',x:0,y:4,w:2,d:2,floor:'#F3E5E0',pz:40},
+ {id:'director',name:'院長辦公室',x:0,y:0,w:2,d:2,floor:'#D9C2A1',pz:82},
+ {id:'cats',name:'貓咖區',x:7.4,y:3.4,w:1.8,d:1.8,floor:'#F1E3D3',pz:14},
+];
+const R=Object.fromEntries(ROOMS.map(r=>[r.id,r]));
+const FURN={
+ director:()=>wallX(0,0,2,46)+wallY(0,2,0,46)
+   +onY(.72,1.36,0,20,38,'#BFD6E6','stroke="#FFFDF9" stroke-width="2"')+onY(1.03,1.05,0,20,38,'#FFFDF9')
+   +box(.05,.25,0,.22,1.1,42,'#A9845B')
+   +[[8,17],[21,30],[33,40]].map(([a,b],i)=>onX(.27,.32+i*.05,.62,a,b,'#0E335F')+onX(.27,.66,.95,a,b,'#B08D57')+onX(.27,.99,1.3-i*.06,a,b,'#F2EDE6')).join('')
+   +box(.7,.55,0,.95,.45,16,'#B58B60')+box(1.0,.62,16,.32,.22,2,'#0E335F')
+   +box(1.02,1.15,0,.3,.3,9,'#0E335F')+box(1.02,1.4,9,.3,.06,13,'#0E335F')
+   +box(1.58,.14,0,.2,.2,9,'#0E335F')+box(1.52,.1,9,.32,.28,20,'#B08D57')
+   +(()=>{const a=iso(1.58,.38,23),b=iso(1.79,.38,23);return `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#0E335F" stroke-width="2" stroke-linecap="round"/>`})()
+   +plant(1.75,1.68),
+ consult:()=>wallX(0,2,4,46)+wallY(0,2,2,16)
+   +onX(0,2.6,3.35,20,38,'#B08D57')+onX(0,2.66,3.29,23,35,'#F2EDE6')
+   +box(.1,2.45,0,.42,1.15,10,'#0E335F')+box(.1,2.45,10,.12,1.15,14,'#0E335F')
+   +cyl(1.02,3.0,0,.26,13,'#F7F2EA')+(()=>{const c=iso(1.02,3.0,13);return `<polygon points="${c[0]-8},${c[1]} ${c[0]},${c[1]-4} ${c[0]+8},${c[1]} ${c[0]},${c[1]+4}" fill="#0E335F"/>`})()
+   +box(1.45,2.85,0,.32,.32,9,'#B08D57')+box(1.71,2.85,9,.06,.32,13,'#B08D57')
+   +plant(.32,3.8),
+ treatment:()=>wallY(2,4,0,46)+wallX(2,0,2,16)
+   +onY(2.25,2.95,0,14,40,'#FFFFFF',STK)+onY(2.25,2.95,0,27,27.6,'#C7CED6')
+   +box(2.55,.55,0,.56,1.25,13,'#F6F6F3')+box(2.6,.6,13,.46,.26,4,'#FFFFFF')+box(2.55,1.28,13,.56,.32,2,'#9DB3C6')
+   +box(3.42,.32,0,.36,.36,30,'#0E335F')+box(3.42,.32,30,.36,.08,12,'#1E4C82')
+   +(()=>{const a=iso(3.45,.68,24),b=iso(3.15,1.05,14);return `<path d="M${a[0]},${a[1]} Q${a[0]-6},${b[1]+10} ${b[0]},${b[1]}" fill="none" stroke="#9AA6B4" stroke-width="1.6"/>`})()
+   +cyl(3.55,1.55,0,.13,11,'#B08D57'),
+ recovery:()=>wallY(4,6,0,46)+wallX(4,0,2,16)
+   +onY(4.6,5.4,0,18,38,'#C9DCE8','stroke="#FFFDF9" stroke-width="2"')
+   +[4.3,5.2].map(x=>box(x,.45,0,.5,.95,10,'#F1E8DA')+box(x,.45,10,.5,.2,16,'#F1E8DA')+box(x,.95,10,.5,.38,2,'#B08D57')).join('')
+   +cyl(5.0,1.32,0,.11,12,'#B58B60')+cyl(5.0,1.32,12,.04,5,'#FFFFFF')
+   +plant(5.75,1.7),
+ powder:()=>wallX(0,4,6,46)+wallY(0,2,4,16)
+   +onX(0,4.35,5.55,23,41,'#D8E7EF','stroke="#B08D57" stroke-width="1.6"')
+   +[4.5,4.8,5.1,5.4].map(y=>{const c=iso(0,y,44);return `<circle cx="${c[0]}" cy="${c[1]}" r="2.2" fill="#F7E3B5"/>`}).join('')
+   +box(.05,4.3,0,.42,1.3,18,'#FFFFFF',{top:'#EFE7DC'})
+   +cyl(.22,4.6,18,.04,7,'#B08D57')+cyl(.25,4.82,18,.05,5,'#E9C9C0')+cyl(.22,5.2,18,.035,9,'#0E335F')
+   +cyl(.86,4.95,0,.15,11,'#B08D57')+plant(1.72,5.72),
+};
+
+function lobbyBack(){
+  let s=box(3.08,3.08,0,.32,.32,56,'#0E335F');
+  const c=iso(3.24,3.4,40);
+  s+=`<circle cx="${c[0]}" cy="${c[1]}" r="5.5" fill="none" stroke="#B08D57" stroke-width="1.4"/><circle cx="${c[0]}" cy="${c[1]}" r="1.8" fill="#B08D57"/>`;
+  s+=plant(5.72,3.35);
+  return s;
+}
+function lobbyFront(){
+  let s=box(3.58,3.45,0,1.5,.38,20,'#0E335F',{top:'#B08D57'})+box(3.58,3.83,0,.38,.75,20,'#0E335F',{top:'#B08D57'});
+  s+=cyl(4.75,3.62,20,.05,8,'#F2EDE6');
+  const f=iso(4.75,3.62,28);s+=`<circle cx="${f[0]}" cy="${f[1]-3}" r="4" fill="#E9C9C0"/>`;
+  s+=poly([iso(5.2,5.2,.8),iso(5.92,5.2,.8),iso(5.92,5.92,.8),iso(5.2,5.92,.8)],'rgba(176,141,87,.55)');
+  s+=cyl(4.05,4.62,0,.18,8,'#B08D57');
+  s+=box(3.45,5.0,0,1.0,.42,10,'#E8DCCB')+box(3.45,5.0,10,1.0,.1,12,'#E8DCCB');
+  s+=plant(3.25,5.75);
+  return s;
+}
+
+function buildIsland(){
+  const m=.4, th=22;
+  let s='';
+  const Lb=iso(-m,6+m,-th),Fb=iso(6+m,6+m,-th),Rb=iso(6+m,-m,-th),tip=[Fb[0]+4,Fb[1]+150];
+  const jag=[[0,0],[-6,10],[-2,18],[-8,26],[-3,34],[-6,40]];
+  const L=[Lb,Fb,tip], Rr=[Fb,Rb,tip];
+  for(let i=jag.length-1;i>=1;i--){const t=i/jag.length;L.push([tip[0]+(Lb[0]-tip[0])*t+jag[i][0],tip[1]+(Lb[1]-tip[1])*t+jag[i][1]*.35])}
+  const jr=[[0,0],[6,10],[2,18],[8,26],[3,34],[6,40]];
+  const R2=[Fb,Rb];for(let i=1;i<jr.length;i++){const t=1-i/jr.length;R2.push([tip[0]+(Rb[0]-tip[0])*t+jr[i][0],tip[1]+(Rb[1]-tip[1])*t+jr[i][1]*.35])}R2.push(tip);
+  s+=`<polygon points="${P(L)}" fill="url(#g-rockL)"/><polygon points="${P(R2)}" fill="url(#g-rockR)"/>`;
+  s+=`<path d="M${Lb[0]+60},${Lb[1]+30} Q${Fb[0]-80},${Fb[1]+40} ${Fb[0]-10},${Fb[1]+70}" fill="none" stroke="#B08D57" stroke-opacity=".35" stroke-width="1.2"/>`;
+  s+=`<path d="M${Rb[0]-70},${Rb[1]+34} Q${Fb[0]+90},${Fb[1]+44} ${Fb[0]+12},${Fb[1]+92}" fill="none" stroke="#B08D57" stroke-opacity=".25" stroke-width="1.2"/>`;
+  s+=poly([iso(-m,6+m,0),iso(6+m,6+m,0),iso(6+m,6+m,-th),iso(-m,6+m,-th)],'#D9CBB4',STK);
+  s+=poly([iso(6+m,-m,0),iso(6+m,6+m,0),iso(6+m,6+m,-th),iso(6+m,-m,-th)],'#C2AF91',STK);
+  s+=poly([iso(-m,-m,0),iso(6+m,-m,0),iso(6+m,6+m,0),iso(-m,6+m,0)],'#E4DBCB','stroke="#B08D57" stroke-width="1.6" stroke-linejoin="round"');
+  ROOMS.filter(r=>r.id!=='cats').forEach(r=>{s+=`<g class="room" data-room="${r.id}">${floor(r.x,r.y,r.w,r.d,r.floor,r.id)}</g>`});
+  s+=poly([iso(2,2,.5),iso(6,2,.5),iso(6,3,.5),iso(3,3,.5),iso(3,6,.5),iso(2,6,.5)],'#E7DDCC','stroke="rgba(14,51,95,.12)" stroke-width=".8"');
+  {const a=iso(2.5,6,.6),b=iso(2.5,2.5,.6),c=iso(6,2.5,.6);s+=`<polyline points="${a} ${b} ${c}" fill="none" stroke="#B08D57" stroke-opacity=".65" stroke-width="1.4" stroke-dasharray="3 7" stroke-linecap="round"/>`}
+  ['director','consult','treatment','powder','recovery'].forEach(id=>{s+=`<g class="room" data-room="${id}">${FURN[id]()}</g>`});
+  ['bella','xiangyu','miqin','xiaojin'].forEach(k=>{const n=NPCS[k],[x,y]=iso(n.at[0],n.at[1]);s+=`<g id="npc-${k}" data-npc="${k}" role="button" tabindex="0" aria-label="和${n.name}說說話" transform="translate(${x.toFixed(1)},${y.toFixed(1)})${n.flip?' scale(-1,1)':''}">${fig(n.look)}</g>`});
+  s+=`<g class="room" data-room="lobby">${lobbyBack()}</g>`;
+  s+=`<g id="doctor" data-npc="doctor" role="button" tabindex="0" aria-label="和林醫師說說話">${doctorFig()}</g>`;
+  s+=`<g id="nurse" data-npc="nurse" role="button" tabindex="0" aria-label="和護理師詩晴說說話">${fig(NPCS.nurse.look)}</g>`;
+  s+=`<g class="room" data-room="lobby">${lobbyFront()}</g><g id="staff" data-npc="yiting" role="button" tabindex="0" aria-label="大廳櫃台的神秘店員">${fig(NPCS.yiting.look)}</g>`;
+  s+=`<g id="guest">${person('guest')}</g>`;
+  [[.6,6.28],[1.5,6.28],[2.4,6.28],[3.3,6.28],[4.1,6.28],[6.28,.6],[6.28,1.6],[6.28,2.6],[6.28,3.5],[6.28,5.1]].forEach(([x,y],i)=>{const c=iso(x,y,0);s+=`<ellipse cx="${c[0]}" cy="${c[1]-3}" rx="${8+(i%3)}" ry="${5+(i%2)}" fill="${i%2?'#8EAA88':'#7C9877'}"/>`});
+  s+=catIsland();
+  document.getElementById('art').innerHTML=s;
+  const st=iso(5.45,4.3);document.getElementById('staff').setAttribute('transform',`translate(${st[0]},${st[1]})`);
+
+  document.getElementById('glows').innerHTML=ROOMS.map(r=>{const c=iso(r.x+r.w/2,r.y+r.d/2,24);return `<circle class="glow" cx="${c[0]}" cy="${c[1]}" r="${r.id==='lobby'?80:58}" fill="url(#g-glow)"/>`}).join('');
+  document.getElementById('anchors').innerHTML=ROOMS.map(r=>{const c=iso(r.x+r.w/2,r.y+r.d/2,r.pz);return `<circle id="a-${r.id}" cx="${c[0]}" cy="${c[1]}" r="1" fill="transparent"/>`}).join('');
+  const sp=[[120,190],[690,180],[250,95],[560,90],[95,330],[715,330],[400,40]];
+  document.getElementById('sparks').innerHTML=sp.map(([x,y],i)=>`<path class="spark" style="animation-delay:${i*.6}s" d="M${x},${y-6} L${x+1.5},${y-1.5} L${x+6},${y} L${x+1.5},${y+1.5} L${x},${y+6} L${x-1.5},${y+1.5} L${x-6},${y} L${x-1.5},${y-1.5}Z"/>`).join('');
+}
+function catFig(c){
+  const ol=c.outline?'stroke="rgba(14,51,95,.35)" stroke-width=".5"':'';
+  return `<rect x="-11" y="-17" width="22" height="19" fill="transparent"/>
+  <ellipse cx="0" cy="0" rx="7" ry="2.2" fill="rgba(14,51,95,.2)"/>
+  <path class="tail" d="M-6.2,-5 Q-12.5,-7 -10.4,-14.6" fill="none" stroke="${c.body}" stroke-width="2.4" stroke-linecap="round"/>
+  <ellipse cx="-1" cy="-5" rx="6.6" ry="4.2" fill="${c.body}" ${ol}/>
+  ${c.patch?`<ellipse cx="-3" cy="-6.5" rx="2.8" ry="2" fill="${c.patch}"/>`:''}
+  ${c.stripe?`<path d="M-4,-8.8 L-3.4,-6 M-1.2,-9.2 L-.8,-6.4 M1.6,-8.8 L1.6,-6.2" stroke="${c.stripe}" stroke-width="1" stroke-linecap="round"/>`:''}
+  <rect x="-5.4" y="-3" width="2" height="3.4" rx="1" fill="${c.body}" ${ol}/><rect x="1.8" y="-3" width="2" height="3.4" rx="1" fill="${c.body}" ${ol}/>
+  <path d="M2.3,-11 L2.8,-15.6 L5.2,-12.4Z M5.9,-12.6 L8.7,-15.3 L8.9,-10.8Z" fill="${c.body}" ${ol}/>
+  <circle cx="5.6" cy="-9" r="4.3" fill="${c.body}" ${ol}/>
+  <path d="M3.1,-12 L3.3,-14.2 L4.4,-12.7Z M6.9,-12.7 L8.2,-14.1 L8.3,-11.8Z" fill="#F2A9A0"/>
+  <g class="eyes-o"><ellipse cx="4.3" cy="-9.4" rx=".75" ry=".8" fill="${c.eye}"/><ellipse cx="7.1" cy="-9.4" rx=".75" ry=".8" fill="${c.eye}"/></g>
+  <g class="eyes-c"><path d="M3.5,-9.3 Q4.3,-8.6 5.1,-9.3 M6.3,-9.3 Q7.1,-8.6 7.9,-9.3" fill="none" stroke="${c.body==='#2A2530'?'#9C8E7A':'#2B2420'}" stroke-width=".55" stroke-linecap="round"/></g>
+  ${(c.hat||FEST==='xmas')?'<path d="M1.8,-12.4 Q5.4,-19.8 11.2,-17.6 Q9.6,-15.6 9.8,-12.6 Z" fill="#D7263D"/><rect x="1.2" y="-13.6" width="9.4" height="2" rx="1" fill="#fff"/><circle cx="11.4" cy="-17.6" r="1.3" fill="#fff"/>':''}
+  <text class="zz" x="9" y="-15" font-size="5" font-weight="700" fill="#8E7CF0">z</text><text class="zz zz2" x="12" y="-19.5" font-size="4" font-weight="700" fill="#8E7CF0">z</text>
+  <path d="M5.2,-7.9 L5.7,-7.3 L6.2,-7.9" fill="none" stroke="#C0605A" stroke-width=".5"/>
+  <path d="M8.6,-8.2 L11,-8.6 M8.6,-7.6 L11,-7.2" stroke="rgba(14,51,95,.35)" stroke-width=".35"/>`;
+}
+function catIsland(){
+  const x0=7.4,y0=3.4,w=1.8,m=.18,th=14;let s='';
+  /* bridge */
+  s+=poly([iso(6.4,4.42,0),iso(x0-m,4.42,0),iso(x0-m,4.42,-4),iso(6.4,4.42,-4)],'#A8865C',STK);
+  s+=poly([iso(6.4,4.08,0),iso(x0-m,4.08,0),iso(x0-m,4.42,0),iso(6.4,4.42,0)],'#CBA978',STK);
+  for(let x=6.52;x<x0-m;x+=.14){const a=iso(x,4.08,0),b=iso(x,4.42,0);s+=`<line x1="${a[0].toFixed(1)}" y1="${a[1].toFixed(1)}" x2="${b[0].toFixed(1)}" y2="${b[1].toFixed(1)}" stroke="rgba(90,60,30,.35)" stroke-width=".7"/>`}
+  [4.08,4.42].forEach(y=>{[6.46,6.84,7.18].forEach(x=>{const a=iso(x,y,0),b=iso(x,y,9);s+=`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#8C6A44" stroke-width="1.4"/>`});
+    const a=iso(6.46,y,9),c=iso(6.82,y,6),b=iso(7.18,y,9);s+=`<path d="M${a[0]},${a[1]} Q${c[0]},${c[1]+3} ${b[0]},${b[1]}" fill="none" stroke="#B08D57" stroke-width="1"/>`});
+  /* rock + slab */
+  const L=iso(x0-m,y0+w+m,-th),F=iso(x0+w+m,y0+w+m,-th),Rr=iso(x0+w+m,y0-m,-th),tip=[F[0]+3,F[1]+78];
+  s+=`<polygon points="${P([L,F,tip])}" fill="url(#g-rockL)"/><polygon points="${P([F,Rr,tip])}" fill="url(#g-rockR)"/>`;
+  s+=poly([iso(x0-m,y0+w+m,0),iso(x0+w+m,y0+w+m,0),iso(x0+w+m,y0+w+m,-th),iso(x0-m,y0+w+m,-th)],'#D9CBB4',STK);
+  s+=poly([iso(x0+w+m,y0-m,0),iso(x0+w+m,y0+w+m,0),iso(x0+w+m,y0+w+m,-th),iso(x0+w+m,y0-m,-th)],'#C2AF91',STK);
+  s+=poly([iso(x0-m,y0-m,0),iso(x0+w+m,y0-m,0),iso(x0+w+m,y0+w+m,0),iso(x0-m,y0+w+m,0)],'#E4DBCB','stroke="#B08D57" stroke-width="1.4" stroke-linejoin="round"');
+  let r=floor(x0,y0,w,w,'#F1E3D3','cats');
+  r+=wallY(x0,x0+w,y0,30)+wallX(x0,y0,4.0,30);
+  r+=onY(x0+.85,x0+1.55,y0,13,25,'#BFD6E6','stroke="#FFFDF9" stroke-width="2"');
+  /* paw print on wall */
+  {const c=iso(x0+.45,y0,22);r+=`<g fill="#B08D57" opacity=".75"><ellipse cx="${c[0]}" cy="${c[1]+2}" rx="3.4" ry="2.6"/><circle cx="${c[0]-3.6}" cy="${c[1]-2.6}" r="1.3"/><circle cx="${c[0]-1.2}" cy="${c[1]-4.4}" r="1.3"/><circle cx="${c[0]+1.4}" cy="${c[1]-4.4}" r="1.3"/><circle cx="${c[0]+3.8}" cy="${c[1]-2.6}" r="1.3"/></g>`}
+  /* cat tree */
+  r+=box(x0+.08,y0+.08,0,.36,.36,3,'#B9876B')+cyl(x0+.26,y0+.26,3,.05,30,'#D9BC8E')+box(x0+.1,y0+.1,15,.32,.32,2.5,'#B9876B')+box(x0+.1,y0+.1,31,.32,.32,2.5,'#B9876B');
+  /* sofa */
+  r+=box(x0+.8,y0+.08,0,.82,.34,8,'#C08A6E')+box(x0+.8,y0+.08,8,.82,.1,9,'#C08A6E')+box(x0+.84,y0+.18,8,.22,.18,3,'#F2EDE6');
+  r+=`<g id="cat-kuro" data-npc="kuro" role="button" tabindex="0" aria-label="摸摸黑糖" transform="translate(${iso(x0+.26,y0+.26,33.5).map(v=>v.toFixed(1)).join(',')})">${catFig({body:'#2A2530',eye:'#F2C14E'})}</g>`;
+  /* rug, table, bowls */
+  r+=poly([iso(x0+.55,y0+.75,.6),iso(x0+1.35,y0+.75,.6),iso(x0+1.35,y0+1.45,.6),iso(x0+.55,y0+1.45,.6)],'rgba(176,141,87,.35)');
+  r+=cyl(x0+1.45,y0+.9,0,.04,9,'#8C6A44')+(()=>{const c=iso(x0+1.45,y0+.9,9);return `<ellipse cx="${c[0]}" cy="${c[1]}" rx="10" ry="5" fill="#E8DCCB" stroke="rgba(14,51,95,.2)" stroke-width=".6"/>`})()+cyl(x0+1.4,y0+.86,9,.035,3.5,'#FFFFFF')+cyl(x0+1.52,y0+.94,9,.035,3,'#B08D57');
+  [[x0+.22,y0+1.35,'#7FA6C4'],[x0+.22,y0+1.58,'#E9C9C0']].forEach(([x,y,c])=>{const p=iso(x,y,0);r+=`<ellipse cx="${p[0]}" cy="${p[1]}" rx="4.4" ry="2.2" fill="${c}" stroke="rgba(14,51,95,.25)" stroke-width=".5"/>`});
+  {const p=iso(x0+.9,y0+1.3,.8);r+=`<circle cx="${p[0]}" cy="${p[1]-2}" r="2.2" fill="#E8577A"/><path d="M${p[0]+2},${p[1]-2} q4,2 7,0" fill="none" stroke="#E8577A" stroke-width=".6"/>`}
+  r+=`<g id="cat-orange" data-npc="orange" role="button" tabindex="0" aria-label="摸摸橘子" transform="translate(${iso(7.95,4.45).join(',')})">${catFig({body:'#E6A35A',stripe:'#C9783A',eye:'#2B2420'})}</g>`;
+  r+=`<g id="cat-mochi" data-npc="mochi" role="button" tabindex="0" aria-label="摸摸麻糬" transform="translate(${iso(8.2,5.0).join(',')}) scale(-1,1)">${catFig({body:'#FFFFFF',patch:'#E9B98C',eye:'#5C8FBF',outline:true})}</g>`;
+  if(RARE)r+=`<g id="cat-gold" data-npc="gold" role="button" tabindex="0" aria-label="摸摸金色貓" transform="translate(${iso(8.6,4.2).join(',')})"><g class="goldglow">${catFig({body:'#E9C46A',stripe:'#C9A23E',eye:'#2B2420'})}</g></g>`;
+  r+=plant(x0+1.62,y0+1.62,.85);
+  s+=`<g class="room" data-room="cats">${r}</g>`;
+  return s;
+}
+const FEST_NAME={xmas:'聖誕節',newyear:'跨年',cny:'農曆新年',valentine:'情人節',mother:'母親節',qixi:'七夕',midautumn:'中秋節'};
+function heartPath(x,y,sz,fill,cls='',st=''){return `<path class="${cls}" style="${st}" d="M${x},${y+sz*.9} C${x-sz*1.4},${y} ${x-sz*.8},${y-sz} ${x},${y-sz*.3} C${x+sz*.8},${y-sz} ${x+sz*1.4},${y} ${x},${y+sz*.9}Z" fill="${fill}"/>`}
+function buildFest(){
+  const sky=document.getElementById('festsky'),deco=document.getElementById('festdeco');if(!FEST)return;
+  let a='',d='';
+  if(FEST==='xmas'){
+    const [cx,cy]=iso(.85,5.6,0);
+    d+=`<rect x="${cx-2.5}" y="${cy-8}" width="5" height="8" fill="#7A5230"/>`;
+    [[0,22,26,'#2F6B4F'],[12,18,23,'#367A59'],[22,13,20,'#3F8A64']].forEach(([dy,w,h,c])=>{d+=`<polygon points="${cx-w},${cy-8-dy} ${cx+w},${cy-8-dy} ${cx},${cy-8-dy-h}" fill="${c}"/>`});
+    [[-9,-14,'#D7263D'],[8,-17,'#E9CF9E'],[-4,-27,'#E9CF9E'],[6,-32,'#D7263D'],[-2,-40,'#5ED39A'],[11,-11,'#5ED39A']].forEach(([x,y,c],i)=>{d+=`<circle class="twk" style="animation-delay:${i*.4}s" cx="${cx+x}" cy="${cy+y}" r="2" fill="${c}"/>`});
+    const ty=cy-58;d+=`<polygon points="${cx},${ty-6} ${cx+1.8},${ty-1.8} ${cx+6},${ty-1.4} ${cx+2.8},${ty+1.6} ${cx+3.8},${ty+6} ${cx},${ty+3.6} ${cx-3.8},${ty+6} ${cx-2.8},${ty+1.6} ${cx-6},${ty-1.4} ${cx-1.8},${ty-1.8}" fill="#F2C14E"/>`;
+    [[3.6,5.0],[3.9,5.1]].forEach(([x,y],i)=>{const p=iso(x,y,10);d+=`<rect x="${p[0]-4}" y="${p[1]-7}" width="8" height="7" fill="${i?'#0E335F':'#D7263D'}"/><rect x="${p[0]-.8}" y="${p[1]-7}" width="1.6" height="7" fill="#E9CF9E"/>`});
+  }
+  if(FEST==='newyear'){
+    [[150,130,'#F2C14E'],[650,90,'#E8577A'],[320,40,'#3FC7D6'],[540,170,'#F2C14E'],[80,30,'#8E7CF0']].forEach(([x,y,c],i)=>{let r='';for(let k=0;k<12;k++){const t=k/12*Math.PI*2;r+=`<line x1="${x+Math.cos(t)*6}" y1="${y+Math.sin(t)*6}" x2="${x+Math.cos(t)*26}" y2="${y+Math.sin(t)*26}" stroke="${c}" stroke-width="2" stroke-linecap="round"/>`}
+      a+=`<g class="fw" style="animation-delay:${i*.7}s;transform-origin:${x}px ${y}px">${r}<circle cx="${x}" cy="${y}" r="3" fill="${c}"/></g>`});
+  }
+  if(FEST==='cny'){
+    [[-60,0],[60,-6],[760,-3],[870,-9],[150,-12],[680,-4]].forEach(([x,dl],i)=>{a+=`<g class="lantern" style="animation-delay:${-i*2.9}s"><g transform="translate(${x},420) scale(1.5)"><path d="M-9,-14 L9,-14 L7,10 L-7,10Z" fill="#E8653A"/><path d="M-9,-14 L9,-14 L7,10 L-7,10Z" fill="url(#g-glow)" opacity=".8"/><rect x="-5" y="6" width="10" height="4" fill="#F6C77D"/></g></g>`});
+    const p=iso(3.24,3.4,34);d+=`<g transform="translate(${p[0]},${p[1]})"><rect x="-8" y="-8" width="16" height="16" transform="rotate(45)" fill="#C8102E" stroke="#E9CF9E" stroke-width="1"/><text x="0" y="4" text-anchor="middle" font-size="11" font-weight="700" fill="#F2C14E" font-family="Noto Serif TC,serif">春</text></g>`;
+  }
+  if(FEST==='valentine'||FEST==='mother'){
+    for(let i=0;i<10;i++){const x=120+((i*137)%560),dl=-(i*1.3);a+=`<g class="floatup" style="animation-delay:${dl}s">${heartPath(x,520,5+(i%3)*2,['#E8577A','#F2A0A6','#D7263D'][i%3])}</g>`}
+  }
+  if(FEST==='mother'){const p=iso(4.3,3.62,20);d+=`<g transform="translate(${p[0]},${p[1]})"><path d="M0,0 L-4,-10 M0,0 L0,-12 M0,0 L4,-10" stroke="#5E8C5A" stroke-width="1.2"/><circle cx="-4" cy="-11" r="3.2" fill="#E8577A"/><circle cx="0" cy="-13" r="3.4" fill="#F2A0A6"/><circle cx="4" cy="-11" r="3.2" fill="#E8577A"/><rect x="-3" y="-3" width="6" height="4" fill="#E9CF9E"/></g>`}
+  if(FEST==='qixi'){
+    for(let i=0;i<5;i++)a+=`<g class="bird" style="animation-delay:${-i*2.2}s"><path transform="translate(0,${80+i*22})" d="M0,0 q5,-5 10,0 q5,-5 10,0" fill="none" stroke="#2B2420" stroke-width="1.6"/></g>`;
+    [[6.6,4.08],[7.0,4.08],[6.8,4.42]].forEach(([x,y])=>{const p=iso(x,y,10);d+=heartPath(p[0],p[1],3.2,'#E8577A')});
+  }
+  if(FEST==='midautumn'){
+    a+=`<g class="fmoon" data-sky role="button" tabindex="0" aria-label="中秋的月亮" transform="translate(640,80)"><circle r="54" fill="#FFF3C4" opacity=".25"/><circle r="40" fill="#FFF1C1"/><circle cx="-12" cy="-8" r="7" fill="#F2E2A6"/><circle cx="10" cy="10" r="9" fill="#F2E2A6"/><path d="M-4,8 q-3,-12 2,-14 q2,4 0,8 q6,-2 8,4 q-2,6 -10,2Z" fill="#E6D08F"/></g>`;
+    const t=iso(7.4+1.3,3.4+1.05,9.5);d+=`<circle cx="${t[0]}" cy="${t[1]-4}" r="4.6" fill="#C9D86B" stroke="#8FA24A" stroke-width=".6"/><circle cx="${t[0]+1}" cy="${t[1]-8.4}" r="1" fill="#6E8C3A"/>`;
+    const c=iso(4.6,3.62,20);d+=`<circle cx="${c[0]}" cy="${c[1]-4}" r="5" fill="#C9D86B" stroke="#8FA24A" stroke-width=".6"/><circle cx="${c[0]+7}" cy="${c[1]-3}" r="3.6" fill="#D9A55A"/>`;
+  }
+  sky.innerHTML=a;deco.innerHTML=d;
+}
+function buildWeather(){
+  const wx=document.getElementById('wx');let s='';
+  if(WEATHER==='rain'){for(let i=0;i<150;i++){const x=-400+((i*97)%1700),y=-500+((i*53)%900);s+=`<line class="rd" style="animation-delay:${-((i*37)%100)/100}s;animation-duration:${(.55+(i%4)*.08).toFixed(2)}s" x1="${x}" y1="${y}" x2="${x-5}" y2="${y+16}" stroke="rgba(225,236,250,.65)" stroke-width="1.2" stroke-linecap="round"/>`}}
+  else if(WEATHER==='fog'){s+=`<defs><filter id="fogf" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="22"/></filter></defs>`;[[-100,450,520,70],[500,500,560,80],[200,560,620,90],[900,430,480,60]].forEach(([x,y,rx,ry],i)=>{s+=`<ellipse class="fogb" style="animation-delay:${-i*9}s" cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="#FFFFFF" opacity=".55" filter="url(#fogf)"/>`})}
+  if(FEST==='xmas'&&WEATHER!=='rain'){for(let i=0;i<60;i++){const x=-300+((i*131)%1400),y=-400+((i*71)%700);s+=`<circle class="sn" style="animation-delay:${-((i*29)%100)/10}s;animation-duration:${(7+(i%5)).toFixed(0)}s" cx="${x}" cy="${y}" r="${1.2+(i%3)*.6}" fill="#FFFFFF" opacity=".85"/>`}}
+  wx.innerHTML=s;
+}
+function buildSky(){
+  let st='';
+  for(let i=0;i<70;i++){const x=-300+((i*137)%1400),y=-420+((i*89)%560),r=(i%5===0)?1.6:.9;st+=`<circle class="star${i%3?' twinkle':''}" style="animation-delay:${(i%7)*.4}s" cx="${x}" cy="${y}" r="${r}"/>`}
+  document.getElementById('stars').innerHTML=st;
+  const cl=[[-40,40,1,70],[200,-60,.8,95],[500,10,1.15,80],[-200,140,.7,110],[300,-180,.9,120]];
+  document.getElementById('clouds').innerHTML=cl.map(([x,y,s,d],i)=>`<g class="cloud"><g class="cloud-move" style="animation-duration:${d}s;animation-delay:-${i*21}s"><g transform="translate(${x},${y}) scale(${s})"><ellipse cx="0" cy="0" rx="46" ry="15" fill="#fff"/><ellipse cx="-16" cy="-10" rx="22" ry="16" fill="#fff"/><ellipse cx="14" cy="-14" rx="26" ry="19" fill="#fff"/></g></g></g>`).join('');
+  document.getElementById('sea').innerHTML=`<ellipse id="shadow" cx="402" cy="636" rx="230" ry="20" fill="rgba(5,20,40,.28)"/>`
+   +[0,2.3,4.6].map(d=>`<ellipse class="ripple" style="animation-delay:${d}s" cx="402" cy="636" rx="250" ry="26"/>`).join('')
+   +[[-80,540,90],[700,560,110],[180,700,70],[620,720,80]].map(([x,y,w])=>`<line x1="${x}" y1="${y}" x2="${x+w}" y2="${y}" stroke="#fff" stroke-opacity=".35" stroke-width="1.2" stroke-linecap="round"/>`).join('');
+}
+
+/* ===== four cities ===== */
+function rng(seed){return()=>(seed=(seed*16807)%2147483647)/2147483647}
+const HZ=478;
+function band(x0,x1,seed,minH,maxH,fill,o={}){
+  const r=rng(seed);let s='',x=x0;
+  while(x<x1){const w=14+r()*34,h=minH+r()*(maxH-minH);
+    s+=`<rect x="${x.toFixed(1)}" y="${(HZ-h).toFixed(1)}" width="${(w+.6).toFixed(1)}" height="${h.toFixed(1)}" fill="${fill}"/>`;
+    if(o.roof&&r()<.6)s+=`<polygon points="${x},${HZ-h} ${x+w/2},${HZ-h-6-r()*6} ${x+w},${HZ-h}" fill="${fill}"/>`;
+    if(o.win){for(let wy=HZ-h+5;wy<HZ-4;wy+=7)for(let wx=x+3;wx<x+w-3;wx+=6)if(r()<o.win)s+=`<rect x="${wx.toFixed(1)}" y="${wy.toFixed(1)}" width="2.4" height="3" fill="${o.wc}" opacity="${(.5+r()*.5).toFixed(2)}"/>`}
+    x+=w;}
+  return s;
+}
+function london(){
+  let s=band(-700,1500,11,14,46,'#CDB7B9',{roof:true});
+  s+=band(-700,40,23,30,62,'#AE9AA6',{roof:true})+band(830,1500,29,26,58,'#AE9AA6',{roof:true});
+  const c=95,f='#8C7B90';
+  s+=`<rect x="-260" y="430" width="${c-14+260}" height="48" fill="${f}"/>`;
+  for(let x=-250;x<c-20;x+=18)s+=`<polygon points="${x},430 ${x+4},416 ${x+8},430" fill="${f}"/>`;
+  const k1=s.length;
+  s+=`<rect x="${c-14}" y="250" width="28" height="228" fill="${f}"/><rect x="${c-17}" y="198" width="34" height="54" fill="${f}"/>
+    <circle cx="${c}" cy="224" r="11" fill="#F3DCCB"/><line x1="${c}" y1="224" x2="${c}" y2="216" stroke="${f}" stroke-width="1.6"/><line x1="${c}" y1="224" x2="${c+6}" y2="224" stroke="${f}" stroke-width="1.6"/>
+    <rect x="${c-13}" y="178" width="26" height="22" fill="${f}"/><polygon points="${c-16},180 ${c},118 ${c+16},180" fill="${f}"/>
+    <polygon points="${c-17},200 ${c-14},186 ${c-11},200" fill="${f}"/><polygon points="${c+11},200 ${c+14},186 ${c+17},200" fill="${f}"/>`;
+  s=s.slice(0,k1)+egg('bigben',s.slice(k1),c,108,[c-20,112,40,366]);
+  const ex=748,ey=372,er=92,e='#8C7B90';
+  s+=`<line x1="${ex}" y1="${ey}" x2="${ex-46}" y2="${HZ}" stroke="${e}" stroke-width="5"/><line x1="${ex}" y1="${ey}" x2="${ex+30}" y2="${HZ}" stroke="${e}" stroke-width="5"/>`;
+  let wheel=`<circle cx="${ex}" cy="${ey}" r="${er}" fill="none" stroke="${e}" stroke-width="4"/><circle cx="${ex}" cy="${ey}" r="${er-8}" fill="none" stroke="${e}" stroke-width="1.2"/>`;
+  for(let i=0;i<16;i++){const a=i/16*Math.PI*2;wheel+=`<line x1="${ex}" y1="${ey}" x2="${(ex+Math.cos(a)*er).toFixed(1)}" y2="${(ey+Math.sin(a)*er).toFixed(1)}" stroke="${e}" stroke-width=".8"/><ellipse cx="${(ex+Math.cos(a)*(er+5)).toFixed(1)}" cy="${(ey+Math.sin(a)*(er+5)).toFixed(1)}" rx="4" ry="3" fill="${e}"/>`}
+  const k2=s.length;
+  s+=`<g class="eye">${wheel}</g><circle cx="${ex}" cy="${ey}" r="6" fill="${e}"/>`;
+  s=s.slice(0,k2)+egg('eye',s.slice(k2),ex,ey-er-16,[ex-er,ey-er,2*er,2*er]);
+  const b='#9D8C9F';
+  [[960,0],[1060,1]].forEach(([x])=>{s+=`<rect x="${x}" y="360" width="26" height="118" fill="${b}"/><polygon points="${x-3},362 ${x+13},330 ${x+29},362" fill="${b}"/>`});
+  s+=`<rect x="986" y="374" width="74" height="7" fill="${b}"/><path d="M880,440 Q923,404 960,410 L960,420 Q923,416 880,450Z M1086,410 Q1123,404 1170,440 L1170,450 Q1123,416 1086,420Z" fill="${b}"/><rect x="986" y="418" width="74" height="6" fill="${b}"/>`;
+  return s;
+}
+function paris(){
+  let s=band(-700,1500,41,12,34,'#BCCAD6',{roof:true});
+  const h='#9AAEC0';
+  s+=band(-700,40,43,26,44,h)+band(140,250,47,22,36,h)+band(800,1500,53,24,44,h);
+  for(let x=-690;x<1500;x+=46)s+=`<rect x="${x}" y="${HZ-52+(x%3)*4}" width="3" height="8" fill="${h}"/>`;
+  const a=95,af='#7F97AE';
+  const k3=s.length;
+  s+=`<path fill-rule="evenodd" fill="${af}" d="M${a-44},398 h88 v80 h-30 v-34 a14,16 0 0 0 -28,0 v34 h-30 Z M${a-36},414 h14 v14 h-14Z M${a+22},414 h14 v14 h-14Z"/><rect x="${a-48}" y="384" width="96" height="16" fill="${af}"/>`;
+  s=s.slice(0,k3)+egg('arc',s.slice(k3),a,372);
+  const k4=s.length;
+  const c=705,f='#6E88A2';
+  s+=`<path fill="${f}" d="M${c-66},${HZ} Q${c-40},392 ${c-24},334 L${c-15},254 L${c-7},164 L${c-3},112 L${c},92 L${c+3},112 L${c+7},164 L${c+15},254 L${c+24},334 Q${c+40},392 ${c+66},${HZ} L${c+42},${HZ} Q${c},398 ${c-42},${HZ} Z"/>
+   <rect x="${c-32}" y="330" width="64" height="7" fill="${f}"/><rect x="${c-19}" y="250" width="38" height="5" fill="${f}"/><rect x="${c-9}" y="162" width="18" height="4" fill="${f}"/>`;
+  let lat='';for(let y=345;y<470;y+=12){const k=(y-334)/(HZ-334),w=24+42*k*k;lat+=`<line x1="${c-w+8}" y1="${y}" x2="${c-w*.55}" y2="${y+12}" /><line x1="${c+w-8}" y1="${y}" x2="${c+w*.55}" y2="${y+12}"/>`}
+  for(let y=262;y<330;y+=10){lat+=`<line x1="${c-14}" y1="${y}" x2="${c+14}" y2="${y+10}"/><line x1="${c+14}" y1="${y}" x2="${c-14}" y2="${y+10}"/>`}
+  s+=`<g stroke="#A9BDCF" stroke-width=".8" opacity=".7">${lat}</g>`;
+  s=s.slice(0,k4)+egg('eiffel',s.slice(k4),c,80,[c-40,90,80,388]);
+  return s;
+}
+function taipei(){
+  let s=`<path fill="#6A4E6B" d="M-700,${HZ} L-700,440 Q-560,392 -420,430 Q-300,400 -180,436 Q-60,404 60,438 Q200,388 330,432 Q470,380 600,420 Q720,370 860,428 Q1000,392 1140,432 Q1300,400 1500,436 L1500,${HZ}Z"/>`;
+  s=egg('ridge',s,720,394);
+  s+=band(-700,1500,61,10,40,'#4A3A58',{win:.18,wc:'#F6C77D'});
+  s+=band(170,330,67,20,58,'#3E3150',{win:.25,wc:'#F6C77D'})+band(560,1500,71,18,62,'#3E3150',{win:.25,wc:'#F6C77D'});
+  const c=95,f='#33284A';
+  const k5=s.length;
+  s+=`<rect x="${c-34}" y="442" width="68" height="36" fill="${f}"/><polygon points="${c-22},442 ${c+22},442 ${c+16},384 ${c-16},384" fill="${f}"/>`;
+  let y=384;for(let i=0;i<8;i++){s+=`<polygon points="${c-14},${y} ${c+14},${y} ${c+19},${y-22} ${c-19},${y-22}" fill="${f}"/><rect x="${c-18}" y="${y-22}" width="36" height="1.4" fill="#F6C77D" opacity=".7"/>`;y-=22}
+  s+=`<rect x="${c-10}" y="${y-14}" width="20" height="14" fill="${f}"/><rect x="${c-5}" y="${y-26}" width="10" height="12" fill="${f}"/><line x1="${c}" y1="${y-26}" x2="${c}" y2="${y-74}" stroke="${f}" stroke-width="2.4"/><circle cx="${c}" cy="${y-74}" r="1.6" fill="#F6C77D"/>`;
+  s=s.slice(0,k5)+egg('t101',s.slice(k5),c,126,[c-36,128,72,350]);
+  s+=[0,1,2,3,4].map(i=>`<line x1="${700-i*6}" y1="${490+i*9}" x2="${780+i*6}" y2="${490+i*9}" stroke="#F4B07A" stroke-opacity="${.55-i*.09}" stroke-width="2" stroke-linecap="round"/>`).join('');
+  return s;
+}
+function nyc(){
+  let s=band(-700,1500,81,24,70,'#16294A',{win:.3,wc:'#F6D79A'});
+  const r=rng(97),cols=['#E8577A','#3FC7D6','#F2C14E','#8E7CF0','#F28B5B','#5ED39A'];
+  const tower=(x,w,h,fill)=>{let t=`<rect x="${x}" y="${HZ-h}" width="${w}" height="${h}" fill="${fill}"/>`;
+    for(let wy=HZ-h+6;wy<HZ-6;wy+=8)for(let wx=x+4;wx<x+w-4;wx+=7)if(r()<.38)t+=`<rect x="${wx}" y="${wy}" width="2.6" height="3.4" fill="#F6D79A" opacity="${(.45+r()*.55).toFixed(2)}"/>`;
+    const n=1+Math.floor(r()*3);for(let i=0;i<n;i++){const bh=16+r()*28,by=HZ-h+18+r()*(h-60),bc=cols[Math.floor(r()*cols.length)];
+      t+=`<rect class="bill" style="animation-delay:${(r()*5).toFixed(1)}s" x="${x+3}" y="${by.toFixed(1)}" width="${w-6}" height="${bh.toFixed(1)}" rx="1.5" fill="${bc}"/><rect x="${x-3}" y="${(by-4).toFixed(1)}" width="${w+6}" height="${(bh+8).toFixed(1)}" fill="${bc}" opacity=".18"/>`}
+    return t};
+  const k6=s.length;
+  [[-420,60,250],[-350,48,300],[-292,70,210],[-212,54,330],[-150,62,270],[-80,46,350],[-26,58,300],[40,70,360],[118,44,240],[170,40,180]].forEach(([x,w,h])=>s+=tower(x,w,h,'#0D1E3A'));
+  s=s.slice(0,k6)+egg('bill',s.slice(k6),75,104);
+  const k7=s.length;
+  [[600,46,210],[652,56,300],[714,64,370],[784,48,280],[838,60,330],[904,52,250],[962,66,310],[1034,50,230],[1090,60,290],[1156,54,260]].forEach(([x,w,h])=>s+=tower(x,w,h,'#0D1E3A'));
+  s=s.slice(0,k7)+egg('tower',s.slice(k7),746,94);
+  s+=`<rect x="-3000" y="${HZ-60}" width="7000" height="60" fill="url(#g-haze)"/>`;
+  return s;
+}
+function egg(id,inner,dx,dy,hit){
+  const h=hit?`<rect x="${hit[0]}" y="${hit[1]}" width="${hit[2]}" height="${hit[3]}" fill="transparent"/>`:'';
+  return `<g class="egg${found.has(id)?' found':''}" data-egg="${id}" tabindex="0" role="button" aria-label="${EGGS[id].city}彩蛋：${EGGS[id].t}">${inner}${h}<g class="egg-dot" transform="translate(${dx},${dy})"><circle class="ping" r="7"/><circle class="dotc" r="4.6"/></g></g>`;
+}
+function buildCities(){
+  document.getElementById('cities').innerHTML=`<defs><linearGradient id="g-haze" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E8577A" stop-opacity="0"/><stop offset="1" stop-color="#E8577A" stop-opacity=".22"/></linearGradient></defs>`
+   +`<g class="city dawn">${london()}</g><g class="city day">${paris()}</g><g class="city dusk">${taipei()}</g><g class="city night">${nyc()}</g>`;
+}
+
+/* ===== content ===== */
+const ORDER=['lobby','consult','treatment','recovery','powder','director','cats'];
+const CONCERNS={
+ sag:{name:'鬆弛下垂',look:'法令紋變深、下顎線不再俐落、蘋果肌好像往下走了。',why:'膠原蛋白隨年齡慢慢流失，加上筋膜與脂肪墊位移，日曬和作息也有影響。',way:'常見的評估方向是電波、音波這類能量型設備；部分情況會搭配注射類療程。',think:'你在意的是「輪廓線條」還是「皮膚的緊實感」？描述得越具體，醫師越好判斷。'},
+ spot:{name:'斑點暗沉',look:'曬斑、雀斑、肝斑，或是整體膚色不均、氣色差。',why:'紫外線、荷爾蒙變化，以及痘痘或發炎後留下的色素沉澱。',way:'常見的評估方向是雷射與光療類療程，並搭配居家防曬與保養。不同的斑處理方式差很多，肝斑尤其不適合用力打。',think:'斑是最近才出現，還是好幾年了？懷孕、換藥或換保養品之後有沒有變化？'},
+ pore:{name:'毛孔痘疤',look:'毛孔粗大、凹洞痘疤、摸起來不平滑。',why:'出油旺盛、長期發炎造成組織受損，以及角質代謝變慢。',way:'常見的評估方向是飛梭雷射、微針這類療程，通常需要分次進行。',think:'現在還有在長痘嗎？正在發炎的痘痘，通常要先處理好再談痘疤。'},
+ dry:{name:'細紋乾燥',look:'乾燥細紋、上妝卡粉、皮膚常常覺得緊繃。',why:'皮膚屏障功能下降、冷氣與季節乾燥，以及年齡帶來的變化。',way:'常見的評估方向是保濕修護類的注射或導入療程；基礎保濕與防曬也要一起顧好。',think:'乾燥是全臉，還是集中在某些部位？平常用的保養品可以拍照帶來給醫師看。'}
+};
+const CARE={
+ energy:{name:'能量設備後',items:['當天可能微紅、微腫，通常會慢慢消退。','加強保濕，出門做好防曬。','幾天內先避開三溫暖、泡湯、烤箱等高溫環境，確切天數依醫師指示。']},
+ laser:{name:'雷射後',items:['依醫師指示使用修復型保養品。','酸類、A醇等刺激性保養先暫停，什麼時候恢復請問醫師。','物理性防曬，出門戴帽、撐傘。','如果有結痂，讓它自然脫落，不要摳。']},
+ inject:{name:'注射後',items:['當天避免按摩、用力揉注射部位。','飲酒與劇烈運動先暫停，時間依醫師指示。','可能出現小瘀青，通常會慢慢退。']}
+};
+const EGGS={
+ bigben:{city:'倫敦',t:'陰天也會曬',d:'倫敦常常是陰天，但薄薄的雲層擋不住大部分的紫外線。陰天出門，防曬一樣要擦。'},
+ eye:{city:'倫敦',t:'濕冷也會乾',d:'天氣濕冷、室內又開暖氣，皮膚反而容易乾燥緊繃。保濕可以跟著季節調整。'},
+ eiffel:{city:'巴黎',t:'曬黑是皮膚在自保',d:'曬黑是黑色素在保護皮膚，代表皮膚已經受到紫外線刺激。想要好氣色，防曬比曬太陽重要。'},
+ arc:{city:'巴黎',t:'出國洗臉變緊繃？',d:'有些地方的自來水礦物質含量比較高，洗完臉容易覺得緊繃。旅行時帶一瓶用慣的保濕品，比較安心。'},
+ t101:{city:'台北',t:'台灣的紫外線很強',d:'台灣夏天的紫外線指數常達「過量級」以上，上午 10 點到下午 2 點最強。出門前看一下紫外線指數，再決定怎麼防曬。'},
+ ridge:{city:'台北',t:'傍晚還要防曬嗎？',d:'傍晚的紫外線比中午弱很多，但還沒有完全消失。爬山看夕陽、在戶外待比較久，早上擦的防曬也可能被汗水帶走，記得補擦。'},
+ bill:{city:'紐約',t:'熬夜的臉藏不住',d:'長期睡不夠，隔天容易氣色暗沉、黑眼圈明顯。好好睡覺，是最基本也最省錢的保養。'},
+ tower:{city:'紐約',t:'螢幕藍光要擔心嗎？',d:'藍光對皮膚的影響還在研究中。比起手機螢幕，戶外的日曬仍是更主要的光老化來源。'}
+};
+const NPCS={
+ doctor:{name:'林菀玲醫師',role:'院長',el:'doctor',lines:['嗨，我是林醫師。今天有記得擦防曬嗎？','好的療程，是先聽懂你在意什麼。','不確定要不要做，就先不要做。來聊聊也很好。','我最常說的一句話：先把基礎保養顧好。','看起來自然，比看起來「有做」更重要。','偷偷告訴你，背景城市的地標可以點喔。','逛累了嗎？恢復室有沙發可以坐。','每個空間都逛完，我有準備一個小禮物給你。','下面有個防曬小遊戲，要不要來挑戰看看？','聽說月亮也會說話，晚上來點點看。']},
+ nurse:{name:'詩晴',role:'護理師',el:'nurse',look:{top:'#FFFFFF',vneck:'#0E335F',hair:'highpony',eyes:'smile',blush:true},lines:['我是詩晴，正在巡房中～','療程後有任何問題，隨時用 LINE 問我們。','冰敷記得用毛巾包著，不要直接貼皮膚喔。','多喝水，也是保養的一部分。']},
+ bella:{name:'Bella',role:'護理師',at:[3.32,1.0],look:{top:'#FFFFFF',vneck:'#0E335F',hair:'pony',item:'tray'},lines:['我是 Bella，治療室準備好囉。','療程前，我會再跟你確認一次注意事項。','器械每次使用後，都會清潔消毒。','有點緊張嗎？過程中不舒服，隨時跟我說。']},
+ xiangyu:{name:'祥毓',role:'美容師',at:[4.95,1.78],look:{top:'#EADFCF',trim:'#B08D57',hair:'mid',thin:true,legs:'#3A2F2A',item:'cup'},lines:['我是祥毓，歡迎來恢復室休息一下。','要不要喝杯溫水？','回家的保濕步驟有不懂的，都可以問我。','術後照護的細節，還是以醫師的指示為準喔。']},
+ miqin:{name:'米秦',role:'美容師',at:[1.0,4.62],flip:true,look:{top:'#EADFCF',trim:'#B08D57',hair:'mid',hairc:'#4A3428',eyes:'big',blush:true,item:'brush'},lines:['我是米秦，化妝間這邊請～','補妝前先洗手，刷具也要保持乾淨。','防曬是我每天出門前最重要的一步。','什麼時候可以上妝，離開前記得先問醫師。']},
+ xiaojin:{name:'小進',role:'美編',at:[1.58,3.62],look:{top:'#5E7B99',hair:'short',glasses:true,brow:true,item:'tablet',legs:'#2E3E52'},lines:['妳知道島上最亮的是什麼嗎？不是月亮，是剛走進來的妳。','妳有擦防曬嗎？不然怎麼會這麼耀眼。','這座島有七個空間，但我心裡只有一個位置。','妳抽到上上籤了嗎？我覺得遇見妳，就是我的上上籤。','我本來在畫平板，看到妳之後，就忘了要畫什麼。']},
+ orange:{name:'橘子',role:'貓店員',el:'cat-orange',persona:'橘貓，愛曬太陽、愛吃',lines:['喵～我最愛曬太陽。不過人類曬太陽，記得要擦防曬喔。','吃飽睡、睡飽吃，作息規律，毛和皮膚都會比較好。','我每天都去水碗報到。你今天水喝夠了嗎？']},
+ mochi:{name:'麻糬',role:'貓店員',el:'cat-mochi',persona:'白貓，黏人、愛撒嬌',lines:['白貓的耳朵很怕曬，曬太久會紅紅的。你的臉也一樣要防曬。','我一天理毛好多次，但你洗臉不要太用力搓喔。','摸摸我，放鬆一下。壓力大的時候，皮膚也會跟著鬧脾氣。']},
+ kuro:{name:'黑糖',role:'貓店員',el:'cat-kuro',persona:'黑貓，高冷、只在貓跳台上',lines:['哼，晚上才是我的時間。不過你別熬夜，早點睡。','別一直摸我的臉。你也是，手一直摸臉容易長痘痘。','保持乾淨是基本禮貌。今天卸妝卸乾淨了嗎？']},
+ gold:{name:'金金',role:'貓店員',el:'cat-gold',lines:['喵～我是很少出現的金色貓！遇到我，今天會是好運的一天。','偷偷告訴你：好運不能代替防曬喔。','你運氣真好。下次來，不一定還遇得到我。']},
+ yiting:{name:'怡婷',role:'店經理',el:'staff',look:{top:'#0E335F',trim:'#B08D57',hair:'wave',hairc:'#5B3D2C',skin:'#F6DECF',eyes:'deep',brow:true,glow:true,pin:'#E9CF9E'}}
+};
+const npcEl=k=>document.getElementById(NPCS[k].el||('npc-'+k));
+const AVATAR_YT=`<svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#E3E9F0"/>
+<path d="M25,40 C20,58 22,74 18,100 L82,100 C78,74 80,58 75,40 C73,17 27,17 25,40Z" fill="#5B3D2C"/>
+<g fill="#5B3D2C"><circle cx="21" cy="66" r="6"/><circle cx="19" cy="82" r="6.5"/><circle cx="79" cy="66" r="6"/><circle cx="81" cy="82" r="6.5"/></g>
+<rect x="44" y="60" width="12" height="14" fill="#EFD0BD"/>
+<path d="M12,100 C14,82 28,73 50,73 C72,73 86,82 88,100Z" fill="#0E335F"/>
+<path d="M41,73 L50,90 L59,73Z" fill="#FFFFFF"/><path d="M41,73 L50,90 L59,73" fill="none" stroke="#B08D57" stroke-width="1.6"/>
+<rect x="64" y="84" width="10" height="4.5" rx="1" fill="#E9CF9E"/>
+<path d="M34.5,46 C34.5,31 42,28.5 50,28.5 C58,28.5 65.5,31 65.5,46 C65.5,58 58,64.5 50,64.5 C42,64.5 34.5,58 34.5,46Z" fill="#F6DECF"/>
+<ellipse cx="43" cy="39" rx="5" ry="2.4" fill="#fff" opacity=".5"/><ellipse cx="57" cy="54" rx="3" ry="1.5" fill="#fff" opacity=".35"/>
+<path d="M33,47 C30,25 45,20 53,22 C65,23 71,32 67,47 C65,38 58,32 50,33 C44,35 39,38 36,52Z" fill="#5B3D2C"/>
+<path d="M39.5,42 Q43,40 46.5,41.6 M53.5,41.6 Q57,40 60.5,42" fill="none" stroke="#5B3D2C" stroke-width="1.5" stroke-linecap="round"/>
+<ellipse cx="43" cy="47" rx="2.6" ry="2.2" fill="#4A3426"/><ellipse cx="57" cy="47" rx="2.6" ry="2.2" fill="#4A3426"/>
+<circle cx="43.8" cy="46.2" r=".9" fill="#fff"/><circle cx="57.8" cy="46.2" r=".9" fill="#fff"/>
+<path d="M39.5,45 Q43,43.2 46.5,45 M53.5,45 Q57,43.2 60.5,45" fill="none" stroke="#2B2420" stroke-width="1.2" stroke-linecap="round"/>
+<path d="M50,47 L48.6,53.6 Q50,54.6 51.6,53.8" fill="none" stroke="#D7A98E" stroke-width="1"/>
+<circle cx="40" cy="54" r="3" fill="#F2A9A0" opacity=".35"/><circle cx="60" cy="54" r="3" fill="#F2A9A0" opacity=".35"/>
+<path d="M45,57.5 Q50,61.5 55,57.5" fill="none" stroke="#B9605A" stroke-width="1.6" stroke-linecap="round"/></svg>`;
+const QUIZ=[
+ {q:'照鏡子時，你最先注意到的是？',a:[['輪廓變鬆、線條往下','sag'],['斑點、膚色不均','spot'],['毛孔、凹凸不平','pore'],['乾燥、細紋、上妝卡粉','dry']]},
+ {q:'這個困擾大概多久了？',a:[['最近幾個月才注意到','最近幾個月才注意到'],['大概一兩年了','大概有一兩年了'],['好幾年了','已經好幾年了']]},
+ {q:'面診時，你最想先了解什麼？',a:[['為什麼會這樣','形成的原因'],['有哪些方式可以評估','有哪些評估方向'],['平常可以怎麼照顧','平常可以怎麼保養']]}
+];
+const MYTHS={
+ lobby:[['醫美做了就不能停，停了會老更快？','停止療程後，皮膚會回到原本自然老化的節奏，並不會因為停了而加速。要不要維持，可以依自己的需求決定。'],['看網路照片，就能判斷自己是什麼斑？','看起來很像的斑，可能是曬斑、肝斑或其他色素問題，處理方向差很多，需要醫師親自看過才能判斷。']],
+ consult:[['去諮詢一定會被推銷？','在無痕，第一次諮詢的目的是了解你。當天不需要決定任何療程，回家想清楚再說。'],['越貴的療程效果越好？','適不適合比價格重要。同一種療程，不同膚況的人感受也不一樣，所以才需要面診。']],
+ treatment:[['打電波，臉一定會變薄？','臉部凹陷等不適反應，多半和個人狀況、能量設定有關，不是電波必然的結果。醫師依臉型與皮膚狀態調整，是降低風險的關鍵。'],['雷射會讓皮膚越打越薄？','依醫師評估、間隔適當的雷射療程，並不是讓皮膚變薄的主要原因。術後短暫泛紅、乾燥比較常見，好好保濕防曬很重要。']],
+ recovery:[['冰敷越久越好？','冰敷可以舒緩不適，但敷太久或直接貼皮膚，可能造成凍傷。用毛巾包著、分段冰敷，時間依醫師指示。'],['結痂摳掉，會比較快好？','自己摳掉可能留下色素沉澱或疤痕。讓它自然脫落，是最安全的做法。']],
+ powder:[['療程後可以馬上化妝？','要看療程。有傷口、結痂或明顯泛紅時，先讓皮膚休息。什麼時候可以上妝，離開診所前問清楚。'],['防曬係數越高越好？','SPF 和 PA 代表不同的防護。比起追求最高係數，擦足夠的量、定時補擦更重要。']],
+ director:[['醫美就是要讓人看得出來？','我更希望你被朋友說「最近氣色真好」，而不是「你是不是去做了什麼」。'],['醫師都會建議做越多越好？','我常常建議病人先不要做。適合你、你也準備好了，再開始就好。']]
+};
+function mythHTML(id){const m=MYTHS[id];if(!m)return'';return `<h3 class="h3">是真的嗎？翻開看醫師怎麼說</h3><div class="myths">${m.map(([q,a])=>`<button type="button" class="myth" data-myth aria-pressed="false"><span class="m-face m-front"><span class="m-tag">迷思</span><span class="m-q">${q}</span><span class="m-hint">點我翻面 ↻</span></span><span class="m-face m-back"><span class="m-tag">醫師說</span><span class="m-a">${a}</span></span></button>`).join('')}</div>`}
+let quiz={step:0,ans:[]};
+function renderQuiz(){
+  const el=document.getElementById('quiz');if(!el)return;
+  if(quiz.step<QUIZ.length){
+    const Q=QUIZ[quiz.step];
+    el.className='quiz';
+    el.innerHTML=`<div class="q-prog"><span>第 ${quiz.step+1}／${QUIZ.length} 題</span><span>約 20 秒</span></div><div class="q-bar"><i style="width:${(quiz.step/QUIZ.length*100).toFixed(0)}%"></i></div><p class="q-q">${Q.q}</p><div class="q-opts">${Q.a.map((o,i)=>`<button type="button" data-qa="${i}">${o[0]}</button>`).join('')}</div>`;
+    return;
+  }
+  const c=CONCERNS[quiz.ans[0]],dur=quiz.ans[1],want=quiz.ans[2];
+  const line=`我最在意的是${c.name}，${dur}。今天想先了解${want}。`;
+  el.className='';
+  el.innerHTML=`<div class="note"><p class="eyebrow">我的面診小抄</p><h4>${c.name}</h4><blockquote id="notetext">「${line}」</blockquote><ul><li>${c.think}</li><li>平常用的保養品，拍照帶來就好</li><li>過去做過的療程、目前在用的藥</li></ul><p class="fine">這張小抄幫你整理想問的事，不是診斷。適合的方式，由醫師面診後再一起討論。</p></div>
+   <div class="ctas">${CONTACT.line?`<a class="cta gold" href="${esc(CONTACT.line)}" target="_blank" rel="noopener" data-copynote="${esc(line)}">複製小抄，用 LINE 預約</a>`:''}</div>
+   <p class="fine">可以截圖存下這張小抄，或分享給也在煩惱的朋友。</p>
+   <button type="button" class="q-again" data-qagain>重新測一次</button>`;
+  selectConcern(quiz.ans[0]);
+}
+function selectConcern(k){document.querySelectorAll('[data-c]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.c===k)));if(document.getElementById('concern'))renderConcern(k)}
+
+/* stamps, eggs, toast */
+let visited=new Set(),found=new Set();
+try{visited=new Set(JSON.parse(localStorage.getItem('wh-visited')||'[]'));found=new Set(JSON.parse(localStorage.getItem('wh-eggs')||'[]'))}catch(_){}
+function saveProg(){try{localStorage.setItem('wh-visited',JSON.stringify([...visited]));localStorage.setItem('wh-eggs',JSON.stringify([...found]))}catch(_){}}
+function renderStamps(){
+  document.getElementById('st-dots').innerHTML=ORDER.map(id=>`<i class="${visited.has(id)?'on':''}"></i>`).join('');
+  const full=visited.size>=ORDER.length,btn=document.getElementById('stamps');
+  btn.classList.toggle('full',full);
+  document.getElementById('st-label').textContent=full?'集滿了！打開小禮物':'集章';
+  document.getElementById('st-count').textContent=full?'':`${visited.size}／${ORDER.length}`;
+  btn.setAttribute('aria-label',full?`集滿 ${ORDER.length} 個章，打開院長的小禮物`:`集章進度 ${visited.size}／${ORDER.length}`);
+  document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('done',visited.has(c.dataset.room)));
+}
+function stamp(id){
+  if(visited.has(id))return;visited.add(id);saveProg();renderStamps();
+  if(visited.size===ORDER.length)toast(`<p class="t-eye">集章完成</p><b>${ORDER.length} 個章都集滿了</b><span>點下方金色的「打開小禮物」，院長有東西要給你。</span>`,8000);
+  else toast(`<p class="t-eye">集章 ${visited.size}／${ORDER.length}</p><b>${R[id].name}，蓋章！</b><span>全部空間都逛完後，就能打開院長準備的小禮物。</span>`,2600);
+}
+let toastT;
+function toast(html,ms=5000){const t=document.getElementById('toast');t.innerHTML=`<div class="t-body">${html}</div><button type="button" class="t-x" aria-label="關閉">×</button>`;t.hidden=false;t.classList.remove('show');void t.offsetWidth;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>{t.hidden=true},ms)}
+function openEgg(id){
+  const e=EGGS[id];const first=!found.has(id);found.add(id);saveProg();
+  document.querySelectorAll(`[data-egg="${id}"]`).forEach(g=>g.classList.add('found'));
+  const all=found.size===Object.keys(EGGS).length;
+  toast(`<p class="t-eye">${e.city}・城市彩蛋 ${found.size}／${Object.keys(EGGS).length}</p><b>${e.t}</b><span>${e.d}</span>${all&&first?'<span><b style="font-size:14px">8 個城市彩蛋全部找到了！</b>切換右上角的時段，可以再看一次四座城市。</span>':(!all?'<span>換個時段，其他城市也藏著彩蛋。</span>':'')}`,11000);
+}
+const sayIdx={};let bub={who:null,until:0};
+function say(who){
+  const b0=document.getElementById('bubble');b0.classList.remove('act');
+  if(who==='yiting'){ytBubble();return}
+  if(NPCS[who].role==='貓店員'){heart(npcEl(who));petCat(who)}
+  const n=NPCS[who];let line=null;
+  if(who==='doctor'){docTaps++;if(docTaps===10){line='你已經點我十次了！這麼喜歡聊天，找一天來診所，我們當面聊。';secretToast('chatty','話很多的林醫師')}}
+  if(!line&&n.role==='貓店員'&&world.dataset.phase==='night'){line=`${n.name}睡著了……呼嚕呼嚕。<br><small>晚上好好睡，皮膚才會好。</small>`;secretToast('sleepcat','夜晚睡著的貓')}
+  if(!line&&who==='gold')secretToast('gold','稀有的金色貓');
+  if(!line){sayIdx[who]=((sayIdx[who]??-1)+1)%n.lines.length;line=n.lines[sayIdx[who]]}
+  const b=document.getElementById('bubble');
+  b.innerHTML=who==='doctor'?`<div class="b-row"><span class="av">${AVATAR}</span><div><b>${n.name}</b>${line}</div></div>`:`<b>${n.role}・${n.name}</b>${line}`;
+  b.hidden=false;bub={who,until:performance.now()+5200};
+}
+const SECRETS={whoami:'猜出神秘店員',sky:'會說話的太陽和月亮',sleepcat:'夜晚睡著的貓',gold:'稀有的金色貓',chatty:'話很多的林醫師'};
+function secretToast(k,label){const st=new Set(LS.get('wh-secrets',[]));if(st.has(k))return;st.add(k);LS.set('wh-secrets',[...st]);
+  setTimeout(()=>toast(`<p class="t-eye">隱藏彩蛋 ${st.size}／${Object.keys(SECRETS).length}</p><b>${label}</b><span>${st.size<Object.keys(SECRETS).length?'島上還藏著其他秘密，換個時間再來逛逛。':`全部 ${Object.keys(SECRETS).length} 個隱藏彩蛋都找到了，你是真正的島民！`}</span>`,7000),600)}
+const MOON_LINES=['晚安，今天辛苦了。卸完妝、擦好保養，早點睡吧。','月亮都出來了，手機也該休息囉。','睡前少滑一點手機，明天的你會謝謝現在的你。'];
+const SUN_LINES=['我是太陽！今天紫外線不小，出門記得擦防曬。','曬太陽心情會變好，但也別忘了戴帽子、撐傘。','中午前後是我最強的時候，記得躲一下喔。'];
+let skyIdx=-1;
+function skyTalk(){const night=world.dataset.phase==='night';const L=night?MOON_LINES:SUN_LINES;skyIdx=(skyIdx+1)%L.length;
+  toast(`<div class="b-row"><span class="av">${night?AVATAR:SUN_AV}</span><div><p class="t-eye">${night?'月亮・林醫師的晚安語':'太陽'}</p><span style="color:var(--navy)">${L[skyIdx]}</span></div></div>`,6000);secretToast('sky','會說話的太陽和月亮')}
+const SUN_AV=`<svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#FCE9B8"/><circle cx="50" cy="50" r="26" fill="#F6C454"/><g stroke="#F6C454" stroke-width="6" stroke-linecap="round">${[0,1,2,3,4,5,6,7].map(i=>{const a=i*Math.PI/4;return `<line x1="${50+Math.cos(a)*34}" y1="${50+Math.sin(a)*34}" x2="${50+Math.cos(a)*44}" y2="${50+Math.sin(a)*44}"/>`}).join('')}</g><circle cx="42" cy="47" r="2.6" fill="#7A4B1E"/><circle cx="58" cy="47" r="2.6" fill="#7A4B1E"/><path d="M42,57 Q50,64 58,57" fill="none" stroke="#7A4B1E" stroke-width="2.6" stroke-linecap="round"/></svg>`;
+const GTIPS=['防曬要擦足夠的量，擦太少，防護效果會打折扣。','流汗、擦汗或游泳之後，記得補擦防曬。','陰天、冬天也有紫外線，防曬不要放假。','耳朵、脖子、手背也常被曬到，別忘了它們。','帽子、陽傘、太陽眼鏡，和防曬乳一起用更安心。','UVA 會穿透雲層和玻璃，坐窗邊也要留意。'];
+let G={on:false};
+const gEl=id=>document.getElementById(id);
+function openGame(){gEl('game').hidden=false;document.body.classList.add('gaming');gameIntro()}
+function closeGame(){G.on=false;gEl('game').hidden=true;document.body.classList.remove('gaming');gEl('g-field').querySelectorAll('.uv').forEach(e=>e.remove())}
+function gameIntro(){
+  gHud(20,0,0);
+  const best=LS.get('wh-best',0);
+  gEl('g-card').hidden=false;
+  gEl('g-card').innerHTML=`<h3>防曬大作戰</h3><p>紫外線從天上掉下來了！在它們碰到臉之前，點掉越多越好。</p>
+   <div class="g-legend"><span><i></i>UVA</span><span><i class="b"></i>UVB</span><span><i class="s"></i>防曬乳：降低曬傷值</span></div>
+   <p>限時 20 秒，曬傷值滿了就結束。${best?`<br>你的最高紀錄：<b>${best}</b>`:''}</p>
+   <div class="g-btns"><button type="button" class="cta gold" data-gstart>開始挑戰</button></div>`;
+}
+function gHud(left,score,burn){gEl('g-time').textContent=Math.ceil(left);gEl('g-score').textContent=score;gEl('g-burn').style.width=burn+'%';
+  const o=(burn/100*.85).toFixed(2);gEl('g-blush1').setAttribute('opacity',o);gEl('g-blush2').setAttribute('opacity',o);
+  gEl('g-mouth').setAttribute('d',burn>70?'M52,70 Q60,64 68,70':(burn>35?'M52,68 L68,68':'M52,66 Q60,72 68,66'))}
+function startGame(){
+  gEl('g-field').querySelectorAll('.uv').forEach(e=>e.remove());
+  gEl('g-card').hidden=true;
+  const now=performance.now();G={on:true,score:0,burn:0,drops:[],start:now,last:now,acc:0,bacc:0};
+  requestAnimationFrame(gameLoop);
+}
+function gSpawn(kind){
+  const el=document.createElement('button');el.type='button';
+  const uvb=Math.random()<.5;el.className='uv'+(kind==='bonus'?' bonus':(uvb?' b':''));
+  el.textContent=kind==='bonus'?'SPF':(uvb?'UVB':'UVA');el.setAttribute('aria-label',kind==='bonus'?'防曬乳':'紫外線');
+  el.style.left=(10+Math.random()*80)+'%';
+  const d={el,y:-64,kind,dead:false,v:kind==='bonus'?110:0};
+  el.style.transform='translateY(-64px)';
+  el.addEventListener('pointerdown',ev=>{ev.preventDefault();gHit(d)});
+  gEl('g-field').appendChild(el);G.drops.push(d);
+}
+function gHit(d){if(!G.on||d.dead)return;d.dead=true;if(d.kind==='bonus')G.burn=Math.max(0,G.burn-25);else G.score++;d.el.classList.add('pop');setTimeout(()=>d.el.remove(),320)}
+function gameLoop(now){
+  if(!G.on)return;
+  const dt=Math.min(.05,(now-G.last)/1000);G.last=now;
+  const left=Math.max(0,20-(now-G.start)/1000),p=1-left/20,H=gEl('g-field').clientHeight;
+  G.acc+=dt;const every=.8-.42*p;while(G.acc>every){G.acc-=every;gSpawn('uv')}
+  G.bacc+=dt;if(G.bacc>5.5){G.bacc=0;gSpawn('bonus')}
+  for(const d of G.drops){if(d.dead)continue;d.y+=(d.v||(150+200*p))*dt;d.el.style.transform=`translateY(${d.y.toFixed(1)}px)`;
+    if(d.y>H-30){d.dead=true;d.el.remove();if(d.kind!=='bonus'){G.burn=Math.min(100,G.burn+12);const f=document.querySelector('.g-face');f.classList.remove('hurt');void f.offsetWidth;f.classList.add('hurt')}}}
+  G.drops=G.drops.filter(d=>!d.dead);
+  gHud(left,G.score,G.burn);
+  if(left<=0||G.burn>=100){endGame(G.burn>=100);return}
+  requestAnimationFrame(gameLoop);
+}
+function endGame(burned){
+  G.on=false;gEl('g-field').querySelectorAll('.uv:not(.pop)').forEach(e=>e.remove());
+  const sc=G.score,best=Math.max(sc,LS.get('wh-best',0));LS.set('wh-best',best);
+  const rank=sc>=26?'防曬大師':sc>=18?'防曬達人':sc>=10?'防曬好手':'防曬新手';
+  const tip=GTIPS[Math.floor(Math.random()*GTIPS.length)];
+  gEl('g-card').hidden=false;
+  gEl('g-card').innerHTML=`<p class="t-eye" style="margin:0">${burned?'曬傷值滿了！':'時間到！'}</p><p class="g-big">${sc}</p><p style="margin:0 0 4px">擋下的紫外線</p><span class="g-rank">${rank}</span>
+   <p>${sc>=best&&sc>0?'刷新你的最高紀錄！':`最高紀錄：${best}`}</p>
+   <div class="g-tip"><b>林醫師的防曬小提醒</b>${tip}</div>
+   <p class="fine" style="margin-top:10px">截圖分享你的成績，看看朋友能擋下幾個。</p>
+   <div class="g-btns"><button type="button" class="cta gold" data-gstart>再玩一次</button><button type="button" class="cta ghost" data-gclose>回到島上</button></div>`;
+}
+/* ===== 猜猜我是誰 ===== */
+const YT_LINE='s8604922';
+const YT_KEYS=['店經理','店長','怡婷','小米'];
+const YT_HINTS=['提示一：我站在大廳櫃台，大家有事都會先來找我。','提示二：我是這間診所的「長」，但不是院長喔。','提示三：部落格上有個筆名就是我，跟一種穀物有關。'];
+let ytTries=0;
+const ytKnown=()=>LS.get('wh-yt',false);
+function bubbleOpen(html,who,ms){const b=document.getElementById('bubble');b.innerHTML=`<button type="button" class="b-x" data-bclose aria-label="關閉">×</button>${html}`;b.classList.add('act');b.hidden=false;bub={who,until:performance.now()+ms}}
+function ytBubble(){
+  if(ytKnown()){bubbleOpen(ytRevealHTML('嗨，又見面了！'),'yiting',20000);return}
+  bubbleOpen(`<div class="b-row"><span class="av mystery">${AVATAR_YT}</span><div><b>？？？</b>猜猜我是誰？說出我的名字或職稱，就告訴你一個小秘密。</div></div>
+   <form class="guess" id="guessform" novalidate><input id="guessin" type="text" maxlength="12" placeholder="輸入你的答案" autocomplete="off" aria-label="猜猜我是誰"><button type="submit">猜</button></form>
+   <p class="g-hint" id="ghint">${ytTries?YT_HINTS[Math.min(ytTries,YT_HINTS.length)-1]:'猜不到？猜錯會給你提示。'}</p>`,'yiting',30000);
+}
+function ytRevealHTML(lead){
+  return `<div class="b-row"><span class="av">${AVATAR_YT}</span><div><b>店經理・怡婷（小米）</b>${lead}我是店經理怡婷，大家也叫我小米。這是我的 LINE ID，加我聊聊吧：</div></div>
+   <div class="lineid"><code>${YT_LINE}</code><button type="button" data-copytext="${YT_LINE}">複製</button></div>
+   <div class="b-btns"><a class="b-cta" href="https://line.me/ti/p/~${YT_LINE}" target="_blank" rel="noopener">加 LINE 好友</a><button type="button" class="b-cta ghost" data-chat>與我對談</button></div>`;
+}
+function ytGuess(v){
+  const t=v.replace(/\s/g,'');if(!t)return;
+  if(YT_KEYS.some(k=>t.includes(k))){LS.set('wh-yt',true);bubbleOpen(ytRevealHTML('答對了！'),'yiting',30000);heart(npcEl('yiting'));secretToast('whoami','猜出神秘店員');return}
+  ytTries++;const h=document.getElementById('ghint'),i=document.getElementById('guessin');
+  if(h)h.textContent=`「${t.slice(0,8)}」不是喔～ ${YT_HINTS[Math.min(ytTries,YT_HINTS.length)-1]}`;
+  if(i){i.value='';i.focus()}
+}
+function heart(target){
+  const r=target.getBoundingClientRect(),h=document.createElement('div');h.className='heart';h.textContent='♥';
+  h.style.left=(r.left+r.width/2)+'px';h.style.top=(r.top)+'px';document.body.appendChild(h);setTimeout(()=>h.remove(),1100);
+}
+function follow(el,target,off){const r=target.getBoundingClientRect();el.style.transform=`translate(${(r.left+r.width/2).toFixed(1)}px,${(r.top-off).toFixed(1)}px) translate(-50%,-100%)`}
+function npcFollow(now){
+  follow(document.getElementById('npctag'),doctorEl(),4);
+  const b=document.getElementById('bubble');
+  if(!b.hidden){if(b.contains(document.activeElement))bub.until=Math.max(bub.until,now+8000);if(now>bub.until){b.hidden=true;return}
+    const r=npcEl(bub.who).getBoundingClientRect(),off=bub.who==='doctor'?24:6;
+    let x=r.left+r.width/2;const hw=b.offsetWidth/2;x=Math.max(hw+8,Math.min(innerWidth-hw-8,x));
+    b.style.transform=`translate(${x.toFixed(1)}px,${(r.top-off).toFixed(1)}px) translate(-50%,-100%)`}
+}
+
+/* ===== 怡婷對談 ===== */
+const CHAT_MENU=[['friend','我是院長的朋友，想和院長聊聊'],['sales','我是業務，想說明新儀器／Filler 或新產品'],['feedback','想對無痕美學說些建議']];
+let chat={data:{},busy:false};
+function timeGreet(){const h=new Date().getHours();
+  if(h>=5&&h<11)return'早安！今天的防曬擦了嗎？';
+  if(h>=11&&h<14)return'午安！吃過飯了嗎？';
+  if(h>=14&&h<18)return'午安～下午也辛苦了。';
+  if(h>=18&&h<22)return'晚安！今天過得還好嗎？';
+  return'這麼晚還沒睡呀？熬夜對皮膚不太好喔。';}
+const wait=ms=>new Promise(r=>setTimeout(r,reduce?0:ms));
+function log(){return document.getElementById('chatlog')}
+function scrollChat(){const b=document.getElementById('p-body');b.scrollTop=b.scrollHeight}
+function addMsg(who,html){const d=document.createElement('div');d.className='msg '+who;d.innerHTML=who==='bot'?`<span class="av">${AVATAR_YT}</span><div class="mb">${html}</div>`:`<div class="mb">${html}</div>`;log().appendChild(d);scrollChat();return d}
+async function bot(lines){
+  const tok=chat;if(!log())throw 0;setOpts('');
+  for(const t of lines){const ty=addMsg('bot','<span class="typing"><i></i><i></i><i></i></span>');await wait(450+Math.min(900,t.length*18));if(chat!==tok||!ty.isConnected)throw 0;ty.querySelector('.mb').innerHTML=t;scrollChat();await wait(160);if(chat!==tok)throw 0}
+}
+function setOpts(html){const o=document.getElementById('chatopts');if(o){o.innerHTML=html;scrollChat()}}
+function choose(opts){return new Promise(res=>{chat.resolve=res;setOpts(`<div class="opts">${opts.map((o,i)=>`<button type="button" data-opt="${i}">${esc(o)}</button>`).join('')}</div>`);chat.opts=opts})}
+function askText(ph,{long=false,optional=false}={}){return new Promise(res=>{chat.resolve=res;chat.opts=null;
+  setOpts(`<form class="ask" id="askform" novalidate>${long?`<textarea id="askinput" rows="3" maxlength="500" placeholder="${ph}"></textarea>`:`<input id="askinput" type="text" maxlength="30" placeholder="${ph}" autocomplete="off">`}<div class="ask-row">${optional?'<button type="button" class="skip" data-skip>先不留</button>':''}<button type="submit" class="send">送出</button></div></form>`);
+  const i=document.getElementById('askinput');try{i.focus({preventScroll:true})}catch(_){} })}
+function answer(v,shown){addMsg('me',esc(shown??v));const r=chat.resolve;chat.resolve=null;setOpts('');r&&r(v)}
+async function openChat(){
+  current='chat';chat={data:{},busy:false};
+  document.getElementById('p-eyebrow').textContent='店經理';
+  document.getElementById('p-title').textContent='與怡婷對談';
+  document.getElementById('p-body').innerHTML=`<div class="chat-note">這是預先設計好的對話，資料只留在你的裝置上，不會自動送出。請不要填寫身分證字號、病歷等個人資料。</div><div id="chatlog" class="chatlog"></div><div id="chatopts"></div>`;
+  document.querySelector('.p-foot').hidden=true;
+  panel.classList.add('open');document.body.classList.add('reading');panel.setAttribute('aria-hidden','false');
+  document.querySelectorAll('.room').forEach(r=>r.classList.remove('active'));pinsWrap.querySelectorAll('.pin').forEach(p=>p.classList.remove('dim'));
+  resetCam();
+  runChat().catch(()=>{});
+}
+async function runChat(){
+  const token=chat;
+  await bot([timeGreet(),'我是無痕美學診所的店經理怡婷。','今天想找我聊什麼呢？']);
+  if(chat!==token)return;
+  const pick=await choose(CHAT_MENU.map(m=>m[1]));if(chat!==token)return;
+  const flow=CHAT_MENU[pick][0];chat.data.flow=flow;const D=chat.data;
+  const TIMES=['平日上午','平日下午','平日晚上','週末'];
+  if(flow==='friend'){
+    await bot(['院長的朋友，歡迎歡迎！','想和院長聊些什麼呢？']);
+    const C=['敘舊、約吃飯','工作或合作的事','想請院長幫忙看看皮膚','其他'];D.topic=C[await choose(C)];
+    await bot(['好的，我來幫你們喬時間。','哪個時段比較方便？']);
+    D.time=TIMES[await choose(TIMES)];
+  }else if(flow==='sales'){
+    await bot(['您好，謝謝您跑一趟！','想跟我們介紹的是哪一類呢？']);
+    const C=['新儀器','Filler 填充劑','保養品等新產品','其他'];D.topic=C[await choose(C)];
+    await bot(['請問您是哪一家公司呢？']);
+    D.company=await askText('例如：○○醫療器材公司');
+    await bot(['產品已經取得衛福部許可證了嗎？']);
+    D.license=['已取得','申請中','不適用（非醫療器材／藥品）'][await choose(['已取得','申請中','不適用（非醫療器材／藥品）'])];
+    await bot(['了解。哪個時段方便來說明呢？']);
+    D.time=TIMES[await choose(TIMES)];
+  }else{
+    await bot(['謝謝你願意告訴我們！','想聊的是哪一部分呢？']);
+    const C=['環境與空間','服務與流程','療程體驗','其他'];D.cat=C[await choose(C)];
+    await bot(['想說什麼都可以寫下來，好的、不好的我都想聽。']);
+    D.msg=await askText('寫下你的建議…',{long:true});
+  }
+  if(chat!==token)return;
+  await bot([flow==='feedback'?'要留個稱呼讓我知道是誰嗎？不留也沒關係。':(flow==='sales'?'最後，請問怎麼稱呼您？':'最後，我要怎麼跟院長說是誰找她呢？')]);
+  D.name=await askText(flow==='sales'?'例如：陳經理':'例如：王小姐',{optional:flow==='feedback'});
+  if(chat!==token)return;
+  await bot([D.name?`謝謝你，${esc(D.name)}！我幫你整理好了：`:'謝謝你！我幫你整理好了：']);
+  const sum=chatSummary(D);
+  addMsg('bot',`<div class="sumcard"><b>${{friend:'想和院長聊聊',sales:'業務拜訪：產品說明',feedback:'給無痕美學的建議'}[flow]}</b><pre>${esc(sum.body)}</pre></div>`);
+  await bot([{friend:'在留言表單留下這段和聯絡方式，我會轉告院長，再跟你約時間。',sales:'在留言表單留下這段和聯絡方式，我看過後會跟您聯繫，到時再請您提供產品型錄。',feedback:'在留言表單留下這段就好，可以完全匿名。我會認真看，也會轉達給院長。'}[flow]]);
+  const formUrl=`${CONTACT.form}?usp=pp_url&${CONTACT.formEntry}=${encodeURIComponent(sum.body.split('\n').slice(1).join(' ／ '))}`;
+  setOpts(`<div class="endcard">
+    <a class="cta gold" href="${esc(formUrl)}" target="_blank" rel="noopener" data-copynote="${esc(sum.body)}">開啟留言表單，自動帶入整理</a>
+    <p class="fine">表單不用登入，只有我看得到。剛剛的整理會自動填好，補上聯絡方式後送出就可以，我上班時會一一回覆。</p>
+    <div class="ctas"><button type="button" class="cta ghost" data-copysum="${esc(sum.body)}">只複製整理內容</button>${flow==='friend'&&CONTACT.line?`<a class="cta ghost" href="${esc(CONTACT.line)}" target="_blank" rel="noopener" data-copynote="${esc(sum.body)}">或用 LINE 傳給我</a>`:''}</div>
+    <button type="button" class="q-again" data-chatagain>重新開始對話</button></div>`);
+}
+function chatSummary(D){
+  const L=[];
+  if(D.flow==='friend'){L.push('身分：院長的朋友',`想聊的：${D.topic}`,`方便時段：${D.time}`)}
+  else if(D.flow==='sales'){L.push('身分：廠商業務',`公司：${D.company}`,`想說明：${D.topic}`,`衛福部許可證：${D.license}`,`方便時段：${D.time}`)}
+  else{L.push(`建議類別：${D.cat}`,`內容：${D.msg||'（未填寫）'}`)}
+  L.push(`稱呼：${D.name||'（未留）'}`);
+  return {subject:{friend:'院長的朋友想約聊聊',sales:'廠商產品說明拜訪',feedback:'給無痕美學的建議'}[D.flow],body:'怡婷你好，\n'+L.join('\n')};
+}
+const FORTUNES=[
+ {rank:'上上籤',title:'晨光籤',poem:['出門之前擦防曬','十年之後謝自己'],mean:'今天最值得做的保養，就是出門前的那一層防曬。陰天也別省略。',city:'day'},
+ {rank:'大吉',title:'好眠籤',poem:['今晚早睡一小時','明早醒來好氣色'],mean:'睡眠是最基本也最省錢的保養。今晚試著早點關掉螢幕。',city:'night'},
+ {rank:'大吉',title:'水潤籤',poem:['溫水一杯慢慢喝','皮膚跟著笑開懷'],mean:'記得補充水分，保濕也跟著季節調整。',city:'dawn'},
+ {rank:'吉',title:'卸妝籤',poem:['今日之妝今日卸','毛孔輕鬆好呼吸'],mean:'再累也要好好卸妝，動作溫柔，不用用力搓。',city:'night'},
+ {rank:'吉',title:'放鬆籤',poem:['放下手機三分鐘','眉頭鬆了心也鬆'],mean:'壓力大時，皮膚也容易跟著鬧脾氣。給自己一點放空的時間。',city:'dusk'},
+ {rank:'小吉',title:'溫柔籤',poem:['洗臉輕柔不用力','皮膚記得你的好'],mean:'洗臉、擦保養品都輕輕來，皮膚屏障會謝謝你。',city:'dawn'},
+ {rank:'上上籤',title:'自信籤',poem:['鏡中的你剛剛好','照顧自己不比較'],mean:'保養是為了讓自己舒服，不是為了跟別人一樣。',city:'dusk'},
+ {rank:'大吉',title:'聆聽籤',poem:['心中疑問先問清','想清楚了再開始'],mean:'對療程有疑問，先和醫師聊清楚。不確定，就先不要做。',city:'day'},
+ {rank:'吉',title:'換季籤',poem:['換季保養跟著換','皮膚知道你用心'],mean:'天氣變了，保養的步驟和質地也可以跟著調整。',city:'dawn'},
+ {fest:'xmas',rank:'限定籤',title:'聖誕籤',poem:['冬日暖陽也要防','聖誕笑容最閃亮'],mean:'冬天的紫外線一樣在，出門玩也記得防曬。聖誕快樂！',city:'night'},
+ {fest:'newyear',rank:'限定籤',title:'跨年籤',poem:['新年願望先寫下','好好睡覺排第一'],mean:'新的一年，從規律作息開始。新年快樂！',city:'night'},
+ {fest:'cny',rank:'限定籤',title:'新春籤',poem:['新春團圓氣色好','吃喝之餘多喝水'],mean:'過年大魚大肉，記得多喝水，守歲也別熬太晚。新年恭喜！',city:'dusk'},
+ {fest:'valentine',rank:'限定籤',title:'情人籤',poem:['最美妝容是自信','最好保養是好眠'],mean:'約會前一晚，好好睡一覺最實在。情人節快樂！',city:'day'},
+ {fest:'mother',rank:'限定籤',title:'母親籤',poem:['媽媽辛苦常忘曬','今天換你提醒她'],mean:'母親節，提醒媽媽出門也要擦防曬。母親節快樂！',city:'dawn'},
+ {fest:'qixi',rank:'限定籤',title:'七夕籤',poem:['鵲橋相會靠緣分','好膚靠你天天顧'],mean:'緣分可遇不可求，保養靠的是每天的小習慣。七夕快樂！',city:'dusk'},
+ {fest:'midautumn',rank:'限定籤',title:'中秋籤',poem:['月圓人圓烤肉香','煙燻過後要洗淨'],mean:'中秋烤肉後，回家記得好好洗臉、卸妝。中秋快樂！',city:'night'}
+];
+/* 節慶期間：月日每年；農曆節日寫明年份 */
+const FESTS=[{k:'xmas',from:'12-20',to:'12-26'},{k:'newyear',from:'12-30',to:'01-03'},{k:'cny',y:2027,from:'02-04',to:'02-12'},{k:'valentine',from:'02-13',to:'02-15'},{k:'mother',y:2027,from:'05-03',to:'05-09'},{k:'qixi',y:2027,from:'08-06',to:'08-09'},{k:'midautumn',y:2027,from:'09-13',to:'09-16'}];
+function festNow(){const d=new Date(),md=`${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  for(const f of FESTS){if(f.y&&f.y!==d.getFullYear())continue;const ok=f.from<=f.to?(md>=f.from&&md<=f.to):(md>=f.from||md<=f.to);if(ok)return f.k}return null}
+const NUMS=['一','二','三','四','五','六','七','八','九'];
+function fnum(i){const F=FORTUNES[i];return F.fest?'限定':`第${NUMS[i]}籤`}
+const PH_BG={dawn:['#EFC2A9','#F4DCCB','#9DB0C2'],day:['#A8C8E1','#EEF0EC','#7FA6C4'],dusk:['#3F3A66','#F0A46F','#66698A'],night:['#060F24','#2A2D5C','#102C4F']};
+const PH_INK={dawn:'#0E335F',day:'#0E335F',dusk:'#FFF8EE',night:'#F2EDE6'};
+const LS={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(_){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(_){}}};
+const islander={first:LS.get('wh-first',null),no:LS.get('wh-no',null),name:LS.get('wh-name',''),fi:LS.get('wh-fortune',null),pets:LS.get('wh-pets',{})};
+if(!islander.first){const d=new Date();islander.first=`${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;LS.set('wh-first',islander.first)}
+if(!islander.no){islander.no=String(1000+Math.floor(Math.random()*9000));LS.set('wh-no',islander.no)}
+function petCat(k){islander.pets[k]=(islander.pets[k]||0)+1;LS.set('wh-pets',islander.pets)}
+function favCat(){let b=null,n=0;for(const k of CATS){if((islander.pets[k]||0)>n){n=islander.pets[k];b=k}}return b?NPCS[b].name:'還沒摸過貓'}
+function cleanClone(el){
+  const g=el.cloneNode(true);
+  g.querySelectorAll('.egg-dot,.zz,.eyes-c').forEach(e=>e.remove());
+  [g,...g.querySelectorAll('*')].forEach(e=>{[...e.attributes].forEach(a=>{if(a.name==='id'||a.name==='class'||a.name==='role'||a.name==='tabindex'||a.name==='style'||a.name.startsWith('data-')||a.name.startsWith('aria-'))e.removeAttribute(a.name)})});
+  return g.innerHTML;
+}
+function wallSVG(){
+  const F=FORTUNES[islander.fi??0],ph=F.city,[a,b,w]=PH_BG[ph],ink=PH_INK[ph];
+  const serif="'Noto Serif TC','Songti TC','PMingLiU',serif",sans="'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif";
+  const defs=document.querySelector('#scene defs').innerHTML+(document.querySelector('#cities defs')?.innerHTML||'');
+  const name=esc((islander.name||'島民').slice(0,10));
+  const rowsL=[['入島日',islander.first],['城市彩蛋',`${found.size}／${Object.keys(EGGS).length}`]],rowsR=[['逛島時段',CITY[world.dataset.phase]],['最常摸的貓',favCat()]];
+  const row=(x,y,[k,v])=>`<text x="${x}" y="${y}" font-family="${sans}" font-size="24" fill="#B08D57" letter-spacing="4">${k}</text><text x="${x}" y="${y+38}" font-family="${serif}" font-size="30" font-weight="700" fill="#0E335F" letter-spacing="2">${esc(v)}</text>`;
+  const av=AVATAR.replace('<svg ','<svg x="846" y="1552" width="128" height="128" ');
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+<defs><linearGradient id="wbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient><clipPath id="avc"><circle cx="910" cy="1616" r="64"/></clipPath>${defs}</defs>
+<rect width="1080" height="1920" fill="url(#wbg)"/>
+<text x="540" y="100" text-anchor="middle" font-family="${serif}" font-size="34" font-weight="700" letter-spacing="12" fill="${ink}">無痕美學島</text>
+<text x="540" y="545" text-anchor="middle" font-family="${serif}" font-size="30" font-weight="700" letter-spacing="10" fill="#B08D57">院長保養籤・${fnum(islander.fi??0)}・${F.rank}</text>
+<text x="540" y="630" text-anchor="middle" font-family="${serif}" font-size="68" font-weight="700" letter-spacing="8" fill="${ink}">${F.poem[0]}</text>
+<text x="540" y="716" text-anchor="middle" font-family="${serif}" font-size="68" font-weight="700" letter-spacing="8" fill="${ink}">${F.poem[1]}</text>
+<svg x="75" y="740" width="930" height="800" viewBox="40 60 720 620" overflow="visible">
+<g>${cleanClone(document.querySelector('#cities .city.'+ph))}</g>
+<rect x="-3000" y="478" width="7000" height="4000" fill="${w}"/>
+<g>${cleanClone(document.getElementById('art'))}</g></svg>
+<rect x="60" y="1500" width="960" height="350" rx="36" fill="#FBF8F3" fill-opacity=".96" stroke="#B08D57" stroke-width="3"/>
+<text x="110" y="1560" font-family="${sans}" font-size="24" font-weight="700" fill="#B08D57" letter-spacing="8">島民證・No.${islander.no}</text>
+<text x="110" y="1628" font-family="${serif}" font-size="58" font-weight="700" fill="#0E335F" letter-spacing="6">${name}</text>
+${row(110,1686,rowsL[0])}${row(410,1686,rowsR[0])}${row(110,1768,rowsL[1])}${row(410,1768,rowsR[1])}
+<g clip-path="url(#avc)">${av}</g><circle cx="910" cy="1616" r="64" fill="none" stroke="#B08D57" stroke-width="4"/>
+<text x="910" y="1716" text-anchor="middle" font-family="${sans}" font-size="20" fill="#0E335F" letter-spacing="2">林菀玲醫師</text><text x="910" y="1746" text-anchor="middle" font-family="${sans}" font-size="20" fill="#56657A" letter-spacing="2">簽發</text>
+<text x="540" y="1895" text-anchor="middle" font-family="${sans}" font-size="22" fill="#FFFFFF" fill-opacity=".85" letter-spacing="4">© 無痕美學診所｜台北市大安區安和路一段86號2樓</text>
+</svg>`;
+}
+let wallURL=null,wallBlob=null,wallT;
+function renderPNG(svg){return new Promise((res,rej)=>{const img=new Image(),url=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml;charset=utf-8'}));
+  img.onload=()=>{try{const c=document.createElement('canvas');c.width=1080;c.height=1920;c.getContext('2d').drawImage(img,0,0);URL.revokeObjectURL(url);c.toBlob(b=>b?res(b):rej(new Error('blob')),'image/png')}catch(e){rej(e)}};
+  img.onerror=()=>{URL.revokeObjectURL(url);rej(new Error('img'))};img.src=url})}
+async function refreshWall(){
+  const box=document.getElementById('wallprev');if(!box||islander.fi==null)return;
+  const svg=wallSVG();
+  try{const b=await renderPNG(svg);if(!document.getElementById('wallprev'))return;if(wallURL)URL.revokeObjectURL(wallURL);wallBlob=b;wallURL=URL.createObjectURL(b);box.innerHTML=`<img src="${wallURL}" alt="你的無痕美學島專屬桌布">`}
+  catch(_){wallBlob=null;box.innerHTML=svg.replace('<svg ','<svg aria-label="你的無痕美學島專屬桌布" ')}
+}
+function fortuneHTML(){const F=FORTUNES[islander.fi];return `<div class="fortune${F.fest?' fest':''}"><p class="f-no">${fnum(islander.fi)}</p><span class="f-rank">${F.rank}</span><p class="f-title">${F.title}</p><p class="f-poem">${F.poem[0]}<br>${F.poem[1]}</p><p class="f-mean">${F.mean}</p><div class="f-tags"><span>幸運城市：${CITY[F.city]}</span><span>林菀玲醫師 賜籤</span></div></div><div style="text-align:center"><button type="button" class="redraw" data-draw>再抽一支</button></div>`}
+function rewardRest(){
+  return `<p class="step"><i>2</i>寫上你的島民名字</p>
+   <div class="namebox"><input id="islander-name" type="text" maxlength="10" placeholder="例如：小美" value="${esc(islander.name)}" autocomplete="off"></div>
+   <p class="step"><i>3</i>你的島民證桌布</p>
+   <div class="wallprev" id="wallprev"></div>
+   <div class="ctas" style="justify-content:center"><button type="button" class="cta gold" data-dlwall>下載桌布</button></div>
+   <p class="fine wall-msg" id="wall-msg">每張都不一樣：籤詩、幸運城市、島民編號，還有你找到的彩蛋和最常摸的貓。</p>
+   <div class="ctas" style="justify-content:center">${lineCta()}</div>`;
+}
+const JIAO_SVG=(face)=>face==='flat'
+  ?`<svg viewBox="0 0 60 34" aria-hidden="true"><path d="M3,30 Q4,4 30,4 Q56,4 57,30 Z" fill="#E4876B" stroke="#8E2A1C" stroke-width="2"/><path d="M8,28 L52,28" stroke="#8E2A1C" stroke-width="1.2" opacity=".5"/></svg>`
+  :`<svg viewBox="0 0 60 34" aria-hidden="true"><defs><radialGradient id="jr" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#E0473A"/><stop offset="1" stop-color="#8E1E16"/></radialGradient></defs><path d="M3,30 Q4,4 30,4 Q56,4 57,30 Z" fill="url(#jr)" stroke="#6E160F" stroke-width="2"/><ellipse cx="22" cy="13" rx="9" ry="3.5" fill="#fff" opacity=".35"/></svg>`;
+let jiao={cand:null,streak:0,tries:0,busy:false};
+function pickFortune(){
+  const fk=festNow();
+  if(fk&&Math.random()<.5){const i=FORTUNES.findIndex(f=>f.fest===fk);if(i>=0&&i!==islander.fi)return i}
+  const pool=FORTUNES.map((f,i)=>f.fest?-1:i).filter(i=>i>=0&&i!==islander.fi);
+  return pool[Math.floor(Math.random()*pool.length)];
+}
+function jiaoHTML(msg){
+  const dots=[0,1,2].map(i=>`<i class="${i<jiao.streak?'on':''}"></i>`).join('');
+  return `<div class="drum-wrap jiao-wrap"><p class="j-stick"><span>${fnum(jiao.cand)}</span></p>
+   <p class="j-ask">擲筊看看：這支籤跟你有緣嗎？<br><small>連續擲出 3 次聖筊，就是你的籤</small></p>
+   <div class="jiao" id="jiao"><span class="jb" id="jb1">${JIAO_SVG('flat')}</span><span class="jb" id="jb2">${JIAO_SVG('round')}</span></div>
+   <div class="j-dots" aria-label="聖筊 ${jiao.streak}／3">${dots}</div>
+   <p class="j-msg" id="j-msg" role="status">${msg||'深呼吸，按下擲筊試試手氣。'}</p>
+   <button type="button" class="cta" data-throw ${jiao.busy?'disabled':''}>擲筊</button><button type="button" class="redraw" data-skipjiao>跳過擲筊，直接看籤</button></div>`;
+}
+async function drawFortune(){
+  const area=document.getElementById('fortune-area');if(!area)return;
+  area.innerHTML=`<div class="drum-wrap"><div class="drum shake" aria-hidden="true"><span class="stk"></span><span class="stk"></span><span class="stk"></span><span class="stk"></span><span class="can">保養籤</span></div><p class="fine" style="margin:0">搖籤中…</p></div>`;
+  await wait(1100);
+  if(!document.getElementById('fortune-area'))return;
+  jiao={cand:pickFortune(),streak:0,tries:0,busy:false};
+  area.innerHTML=jiaoHTML(`搖出了${fnum(jiao.cand)}。深呼吸，按下擲筊試試手氣。`);
+}
+function revealFortune(){
+  const area=document.getElementById('fortune-area');if(!area||jiao.cand==null)return;
+  islander.fi=jiao.cand;LS.set('wh-fortune',jiao.cand);jiao={cand:null,streak:0,tries:0,busy:false};
+  area.innerHTML=fortuneHTML();
+  if(!document.getElementById('wallprev'))document.getElementById('reward-rest').innerHTML=rewardRest();
+  refreshWall();
+}
+async function throwJiao(){
+  if(jiao.busy||jiao.cand==null)return;jiao.busy=true;
+  const area=document.getElementById('fortune-area');
+  const btn=area.querySelector('[data-throw]');if(btn)btn.disabled=true;
+  const j=document.getElementById('jiao');j.classList.remove('toss');void j.offsetWidth;j.classList.add('toss');
+  await wait(750);
+  if(!document.getElementById('jiao')){jiao.busy=false;return}
+  jiao.tries++;
+  let r=Math.random(),res=r<.62?'sheng':(r<.85?'xiao':'yin');
+  if(jiao.tries>=7)res='sheng';
+  const faces={sheng:Math.random()<.5?['flat','round']:['round','flat'],xiao:['flat','flat'],yin:['round','round']}[res];
+  document.getElementById('jb1').innerHTML=JIAO_SVG(faces[0]);document.getElementById('jb2').innerHTML=JIAO_SVG(faces[1]);
+  let msg;
+  if(res==='sheng'){jiao.streak++;msg=jiao.streak<3?`聖筊！一平一凸，已經 ${jiao.streak} 次了，再擲一次。`:'聖筊！連續三次，就是這支籤了。'}
+  else if(res==='xiao'){jiao.streak=0;msg='笑筊，兩面都是平的，像是在笑。重新數，再擲一次。'}
+  else{msg='陰筊，兩面都是凸的。這支好像不是你的籤，重新搖一支吧。'}
+  jiao.busy=false;
+  const dots=area.querySelector('.j-dots');if(dots)dots.innerHTML=[0,1,2].map(i=>`<i class="${i<jiao.streak?'on':''}"></i>`).join('');
+  document.getElementById('j-msg').textContent=msg;
+  if(res==='yin'){btn.outerHTML='<button type="button" class="cta" data-draw>重新搖籤</button>';return}
+  if(jiao.streak>=3){
+    btn.remove();area.querySelector('[data-skipjiao]')?.remove();await wait(900);
+    revealFortune();return;
+  }
+  if(btn)btn.disabled=false;
+}
+function openReward(){
+  current='reward';
+  document.getElementById('p-eyebrow').textContent=`集滿 ${ORDER.length} 個章`;
+  document.getElementById('p-title').textContent='給逛完全島的你';
+  document.getElementById('p-body').innerHTML=`<div class="dir-head"><span class="av av-lg">${AVATAR}</span><div><p class="eyebrow" style="margin:0 0 4px">院長的話</p><p class="dir-name">林菀玲 院長</p></div></div><p class="letter">謝謝你把整座島都逛完了。我準備了一支保養籤，和一張只屬於你的島民證。</p><p class="sign">林菀玲　院長</p>
+   <p class="step"><i>1</i>抽一支院長保養籤</p>
+   <div id="fortune-area">${islander.fi!=null?fortuneHTML():`<div class="drum-wrap"><div class="drum" aria-hidden="true"><span class="stk"></span><span class="stk"></span><span class="stk"></span><span class="stk"></span><span class="can">保養籤</span></div><button type="button" class="cta" data-draw>搖一搖，抽一支</button></div>`}</div>
+   <div id="reward-rest">${islander.fi!=null?rewardRest():''}</div>`;
+  document.getElementById('p-body').scrollTop=0;
+  document.querySelector('.p-foot').hidden=true;
+  panel.classList.add('open');document.body.classList.add('reading');panel.setAttribute('aria-hidden','false');
+  document.querySelectorAll('.room').forEach(r=>r.classList.remove('active'));
+  pinsWrap.querySelectorAll('.pin').forEach(p=>p.classList.remove('dim'));
+  resetCam();
+  if(islander.fi!=null)refreshWall();
+}
+async function downloadWall(btn){
+  const msg=document.getElementById('wall-msg');
+  if(!wallBlob){msg.textContent='桌布還在產生，請稍等一下再按。';refreshWall();return}
+  let dl=null;try{dl=window.claude?.use?await window.claude.use('downloads'):null}catch(_){}
+  if(!dl){try{const a=document.createElement('a');a.href=wallURL;a.download=`無痕美學島-島民證-${islander.no}.png`;document.body.appendChild(a);a.click();a.remove();msg.textContent='已開始下載！沒有反應的話，請長按上面的圖片儲存。'}catch(_){msg.textContent='這裡沒辦法直接下載。可以長按上面的圖片儲存，或直接截圖。'}return}
+  btn.disabled=true;
+  try{await dl.save({filename:`無痕美學島-島民證-${islander.no}.png`,data:wallBlob});msg.textContent='已存好！可以設成手機桌布了。'}
+  catch(e){const c=e&&e.code;msg.textContent=c==='declined'?'已取消下載。想存的時候再按一次就好。':(c==='rate_limited'?'下載視窗已經開著，請先完成或關閉它。':'這裡沒辦法直接下載。可以長按上面的圖片儲存，或直接截圖。')}
+  finally{btn.disabled=false}
+}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function lineCta(){return CONTACT.line?`<a class="cta" href="${esc(CONTACT.line)}" target="_blank" rel="noopener">用 LINE 預約諮詢</a>`:`<span class="cta off" aria-disabled="true">LINE 預約連結設定中</span>`}
+
+const CATS=['orange','mochi','kuro'];
+const CATLOOK={orange:{body:'#E6A35A',stripe:'#C9783A',eye:'#2B2420'},mochi:{body:'#FFFFFF',patch:'#E9B98C',eye:'#5C8FBF',outline:true},kuro:{body:'#2A2530',eye:'#F2C14E'}};
+const VIEW={
+ cats:()=>`<p class="lead">逛累了嗎？來貓咖坐一下。</p><p class="sub">喝口水、摸摸貓，放鬆一下再繼續逛。</p>
+   <div class="box"><b>先說清楚</b><p>這是島上的虛擬貓咖。無痕美學診所內沒有養貓，對貓過敏也可以放心來診所。</p></div>
+   <h3 class="h3">島上的三位貓店員</h3>
+   <div class="catlist">${CATS.map(k=>{const c=NPCS[k];return `<div class="catcard"><span class="cat-av"><svg viewBox="-12 -18 25 22" aria-hidden="true">${catFig(CATLOOK[k])}</svg></span><div class="cat-tx"><b>${c.name}</b><span class="cat-p">${c.persona}</span><p class="cat-say" id="say-${k}">${c.lines[0]}</p></div><button type="button" class="pet" data-pet="${k}">摸摸${c.name}</button></div>`}).join('')}</div>
+   <h3 class="h3">今天的貓咖菜單</h3>
+   <ul class="dlist"><li><b>一杯溫開水</b>：慢慢喝，療程後也很適合。</li><li><b>三分鐘放空</b>：放下手機，看看窗外的城市。</li><li><b>今晚早點睡</b>：從關掉螢幕開始。</li></ul>
+   <p class="fine">貓店員說的是一般保養常識，個人狀況請以醫師面診評估為準。</p>`,
+ lobby:()=>`<p class="lead">歡迎光臨。今天最在意的是哪一種膚況？</p><h3 class="h3">3 題小測驗，做一張面診小抄</h3><div id="quiz" class="quiz"></div><h3 class="h3">四種常見膚況</h3><p class="sub">選一個最接近的，櫃台先幫你整理重點。</p>
+   <div class="seg" role="tablist" aria-label="膚況">${Object.entries(CONCERNS).map(([k,v],i)=>`<button type="button" role="tab" data-c="${k}" aria-selected="${i===0}">${v.name}</button>`).join('')}</div>
+   <div id="concern" role="tabpanel"></div>`,
+ consult:()=>`<p class="lead">不確定該做什麼，就先來這裡坐坐。</p><p class="sub">第一次來，大概會這樣進行：</p>
+   <ol class="steps">
+    <li><div><b>LINE 留言預約</b><span>告訴我們方便的時間和想聊的困擾。</span></div></li>
+    <li><div><b>到院填寫資料</b><span>基本資料、過去療程與用藥、膚況問卷。</span></div></li>
+    <li><div><b>諮詢師陪你聊</b><span>了解你的需求、在意的地方與預算。</span></div></li>
+    <li><div><b>醫師親自面診</b><span>看過你的皮膚，再說明適合與不適合的選項。</span></div></li>
+    <li><div><b>回家想清楚再決定</b><span>需要的話，可以再約一次。</span></div></li>
+   </ol>
+   <div class="box"><b>先說好</b><p>當天不需要決定做任何療程。帶著問題來，帶著答案回家就好。</p></div>
+   <div class="ctas">${lineCta()}</div>`,
+ treatment:()=>`<p class="lead">門關上之後，你會遇到這些事。</p><p class="sub">我們希望你躺上床之前，心裡是清楚的。</p>
+   <ul class="dlist">
+    <li>療程前再確認一次同意書與注意事項，有疑問當下就問。</li>
+    <li>由醫師執行，或在醫師指示下由醫護人員操作。</li>
+    <li>一人一室，器械依規範清潔與消毒。</li>
+    <li>使用經衛福部核准的設備與產品。想知道今天用的是什麼，可以直接問我們產品名稱與核准字號。</li>
+    <li>過程中覺得不舒服，隨時可以喊停。</li>
+   </ul>
+   <p class="fine">療程內容與次數，依醫師面診評估決定。</p>`,
+ recovery:()=>`<p class="lead">回家之後，照顧才剛開始。</p><p class="sub">選你做過的療程類型：</p>
+   <div class="seg" role="tablist" aria-label="療程類型">${Object.entries(CARE).map(([k,v],i)=>`<button type="button" role="tab" data-k="${k}" aria-selected="${i===0}">${v.name}</button>`).join('')}</div>
+   <div id="care" role="tabpanel"></div>
+   <div class="box warn"><b>這些情況請立刻聯繫診所</b><p>紅、腫、熱、痛持續加劇，起水泡、發燒，或任何讓你擔心的變化。</p></div>
+   <p class="fine">以上是一般原則，每個人的照護細節以醫師當次的指示為準。</p>`,
+ powder:()=>`<p class="lead">療程後想補妝？先看這裡。</p><p class="sub">鏡子前的幾個小提醒：</p>
+   <ul class="dlist">
+    <li>什麼時候可以上妝，依療程不同。離開診所前，記得先問清楚。</li>
+    <li>補妝前先洗手，粉撲和刷具保持乾淨。</li>
+    <li>防曬優先，敏感時期物理性防曬比較溫和。</li>
+    <li>有傷口或結痂的地方，先不要上妝。</li>
+   </ul>
+   <div class="box"><b>小提醒</b><p>今天剛做完療程、又有重要行程？預約時先告訴我們，我們會一起把時間排開。</p></div>`,
+ director:()=>`<div class="dir-head"><span class="av av-lg">${AVATAR}</span><div><p class="eyebrow" style="margin:0 0 4px">院長信箱</p><p class="dir-name">林菀玲 院長</p></div></div>
+   <p class="letter">我是林菀玲醫師。<br>診所裡的每個空間，都是我希望你能安心走過的地方。有想法、建議，或想讓我知道的事，歡迎寫信給我，我會親自閱讀。</p>
+   <p class="sign">林菀玲　院長</p>
+   ${CONTACT.director?`<div class="mail"><code>${esc(CONTACT.director)}</code><button type="button" data-copytext="${esc(CONTACT.director)}">複製</button></div><div class="ctas"><a class="cta" href="mailto:${esc(CONTACT.director)}?subject=${encodeURIComponent('給院長的信')}">開啟郵件寫信</a></div>`:`<div class="mail"><code>院長信箱設定中，即將開放</code></div>`}
+   <div class="ctas"><button type="button" class="cta ghost" data-findyt>想先聊聊？去大廳櫃台找神秘店員</button></div>
+   <div class="box"><b>小提醒</b><p>醫療問題需要醫師看到你本人才能判斷，對談與信件以安排時間、一般說明為主。</p></div>`
+};
+function renderConcern(k){const c=CONCERNS[k];document.getElementById('concern').innerHTML=`<dl class="facts"><div><dt>常見樣子</dt><dd>${c.look}</dd></div><div><dt>可能的原因</dt><dd>${c.why}</dd></div><div><dt>醫師可能評估的方向</dt><dd>${c.way}</dd></div></dl><div class="box"><b>面診前想一想</b><p>${c.think}</p></div><p class="fine">實際適合的方式需由醫師面診評估，效果因個人膚況而異。</p><button type="button" class="cta" data-go="consult">到諮詢區找人聊聊</button>`}
+function renderCare(k){document.getElementById('care').innerHTML=`<ul class="dlist">${CARE[k].items.map(t=>`<li>${t}</li>`).join('')}</ul>`}
+
+/* ===== view box & camera ===== */
+const svg=document.getElementById('scene'),camera=document.getElementById('camera');
+let cam={s:1,tx:0,ty:0},camT={s:1,tx:0,ty:0};
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function fitView(){
+  const W=innerWidth,H=innerHeight,a=W/H,cx=400,cy=350,needW=740,needH=650;
+  let vw,vh; if(a>needW/needH){vh=needH;vw=vh*a}else{vw=needW;vh=vw/a}
+  const shift=a<.8?-vh*.02:0;
+  svg.setAttribute('viewBox',`${cx-vw/2} ${cy-vh/2+shift} ${vw} ${vh}`);
+}
+function focusRoom(id){
+  const r=R[id],c=iso(r.x+r.w/2,r.y+r.d/2,22),panel=document.getElementById('panel');
+  const W=innerWidth,H=innerHeight,side=W>760;
+  const sx=side?(W-panel.offsetWidth)/2:W/2, sy=side?H/2:(H-panel.offsetHeight)/2+20;
+  const pt=new DOMPoint(sx,sy).matrixTransform(svg.getScreenCTM().inverse());
+  const s=side?1.75:1.6;
+  camT={s,tx:pt.x-s*c[0],ty:pt.y-s*c[1]};
+  if(reduce)cam={...camT};
+}
+function resetCam(){camT={s:1,tx:0,ty:0};if(reduce)cam={...camT}}
+
+/* ===== walkers ===== */
+function route(pts,speed,pause){
+  const segs=[];let total=0;
+  for(let i=0;i<pts.length;i++){const a=pts[i],b=pts[(i+1)%pts.length],len=Math.hypot(b[0]-a[0],b[1]-a[1]);segs.push({a,b,len,dur:len/speed});total+=len/speed+pause}
+  return t=>{let u=t%total;for(const s of segs){if(u<pause)return{p:s.a,moving:false,dir:s.b[0]-s.a[0]-(s.b[1]-s.a[1])};u-=pause;if(u<s.dur){const k=u/s.dur;return{p:[s.a[0]+(s.b[0]-s.a[0])*k,s.a[1]+(s.b[1]-s.a[1])*k],moving:true,dir:(s.b[0]-s.a[0])-(s.b[1]-s.a[1])}}u-=s.dur}return{p:pts[0],moving:false,dir:1}};
+}
+const nurseR=route([[3.05,2.5],[5.6,2.5]],.5,1.6);
+const orangeR=WEATHER==='rain'?route([[8.25,3.74],[8.62,3.74]],.06,7):route([[7.95,4.45],[8.75,4.55],[8.55,4.95],[8.0,4.85]],.16,4.2);
+const mochiR=WEATHER==='rain'?route([[7.86,3.9],[7.86,4.2]],.05,8):route([[8.2,5.0],[8.9,4.15]],.13,6);
+const goldR=route([[8.6,4.2],[8.15,4.3],[8.4,4.6]],.1,5);
+const doctorR=route([[2.5,5.35],[2.5,2.95]],.32,3.4);
+const guestR=route([[5.78,5.78],[4.62,4.22]],.4,3.2);
+const doctorEl=()=>document.getElementById('doctor'),nurseEl=()=>document.getElementById('nurse'),guestEl=()=>document.getElementById('guest');
+let lastDir={nurse:1,guest:-1,doctor:1,orange:1,mochi:-1,gold:1};
+function placeWalker(el,key,st,t){
+  const [x,y]=iso(st.p[0],st.p[1]);
+  if(st.dir) lastDir[key]=st.dir>0?1:-1;
+  const b=st.moving?-Math.abs(Math.sin(t*9))*1.6:0;
+  el.setAttribute('transform',`translate(${x.toFixed(1)},${(y+b).toFixed(1)}) scale(${lastDir[key]},1)`);
+}
+
+/* ===== pins & loop ===== */
+const pinsWrap=document.getElementById('pins');
+function buildPins(){
+  pinsWrap.innerHTML=ROOMS.map(r=>`<button type="button" class="pin" data-room="${r.id}" aria-label="進入${r.name}"><span class="face"><span class="dia"></span>${r.name}</span></button>`).join('');
+  document.getElementById('chips').innerHTML=ORDER.map(id=>`<button type="button" class="chip" data-room="${id}">${R[id].name}</button>`).join('');
+}
+const anchorEls={};
+let lastNight=null,docTaps=0;
+function loop(now){
+  const t=now/1000;const isNight=world.dataset.phase==='night';
+  const k=reduce?1:.085;
+  cam.s+=(camT.s-cam.s)*k;cam.tx+=(camT.tx-cam.tx)*k;cam.ty+=(camT.ty-cam.ty)*k;
+  camera.setAttribute('transform',`translate(${cam.tx.toFixed(2)},${cam.ty.toFixed(2)}) scale(${cam.s.toFixed(4)})`);
+  if(!reduce){placeWalker(nurseEl(),'nurse',nurseR(t),t);placeWalker(guestEl(),'guest',guestR(t+4),t);placeWalker(doctorEl(),'doctor',doctorR(t+2),t);if(!isNight){placeWalker(npcEl('orange'),'orange',orangeR(t),t);placeWalker(npcEl('mochi'),'mochi',mochiR(t+7),t);if(RARE)placeWalker(npcEl('gold'),'gold',goldR(t+3),t)}}
+  if(isNight!==lastNight){lastNight=isNight;['orange','mochi','kuro','gold'].forEach(k=>{const el=document.getElementById('cat-'+k);if(el)el.classList.toggle('sleep',isNight)})}
+  npcFollow(now);
+  pinsWrap.querySelectorAll('.pin').forEach(p=>{
+    const a=anchorEls[p.dataset.room]||(anchorEls[p.dataset.room]=document.getElementById('a-'+p.dataset.room));
+    const b=a.getBoundingClientRect();
+    p.style.transform=`translate(${(b.left+b.width/2).toFixed(1)}px,${(b.top+b.height/2-8).toFixed(1)}px) translate(-50%,-100%)`;
+  });
+  requestAnimationFrame(loop);
+}
+
+/* ===== panel ===== */
+const panel=document.getElementById('panel');
+let current=null;
+function openRoom(id,fromHash){
+  if(!R[id])return;
+  current=id;
+  const i=ORDER.indexOf(id);
+  document.getElementById('p-eyebrow').textContent=`2F　第 ${i+1} 站／共 ${ORDER.length} 站`;
+  document.getElementById('p-title').textContent=R[id].name;
+  document.getElementById('p-body').innerHTML=VIEW[id]()+mythHTML(id);document.querySelector('.p-foot').hidden=false;
+  document.getElementById('p-body').scrollTop=0;
+  if(id==='lobby'){renderConcern('sag');renderQuiz()}
+  if(id==='recovery')renderCare('energy');
+  const prev=ORDER[(i-1+ORDER.length)%ORDER.length],next=ORDER[(i+1)%ORDER.length];
+  const pb=document.getElementById('p-prev'),nb=document.getElementById('p-next');
+  pb.textContent=`← ${R[prev].name}`;pb.dataset.go=prev;nb.textContent=`下一站：${R[next].name} →`;nb.dataset.go=next;
+  panel.classList.add('open');document.body.classList.add('reading');panel.setAttribute('aria-hidden','false');
+  document.querySelectorAll('.room').forEach(g=>g.classList.toggle('active',g.dataset.room===id));
+  pinsWrap.querySelectorAll('.pin').forEach(p=>p.classList.toggle('dim',p.dataset.room!==id));
+  focusRoom(id);stamp(id);
+  if(!fromHash&&location.hash!=='#'+id)location.hash=id;
+}
+function closeRoom(fromHash){
+  current=null;chat={data:{}};panel.classList.remove('open');document.body.classList.remove('reading');panel.setAttribute('aria-hidden','true');
+  document.querySelectorAll('.room').forEach(g=>g.classList.remove('active'));
+  pinsWrap.querySelectorAll('.pin').forEach(p=>p.classList.remove('dim'));
+  resetCam();
+  if(!fromHash&&location.hash)location.hash='';
+}
+
+/* ===== time of day ===== */
+const world=document.getElementById('world');
+let mode='auto';
+const SUN={dawn:[200,168],day:[560,20],dusk:[740,400],night:[230,30]};
+const CITY={dawn:'倫敦・清晨',day:'巴黎・白天',dusk:'台北・黃昏',night:'紐約・夜晚'};
+function autoPhase(){const h=new Date().getHours();return h>=5&&h<8?'dawn':h>=8&&h<16?'day':h>=16&&h<19?'dusk':'night'}
+function applyPhase(){
+  const ph=mode==='auto'?autoPhase():mode;
+  world.dataset.phase=ph;document.getElementById('cityname').textContent=CITY[ph]+(WEATHER==='rain'?'・下雨':WEATHER==='fog'?'・起霧':'');
+  const [x,y]=SUN[ph];document.getElementById('sun').style.transform=`translate(${x}px,${y}px)`;
+  document.querySelectorAll('.clock button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.ph===mode)));
+}
+
+/* ===== events ===== */
+document.addEventListener('click',e=>{
+  const go=e.target.closest('[data-go]');if(go){openRoom(go.dataset.go);return}
+  const c=e.target.closest('[data-c]');if(c){c.parentElement.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',String(b===c)));renderConcern(c.dataset.c);return}
+  const k=e.target.closest('[data-k]');if(k){k.parentElement.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',String(b===k)));renderCare(k.dataset.k);return}
+  const ph=e.target.closest('[data-ph]');if(ph){mode=ph.dataset.ph;applyPhase();return}
+  const cn=e.target.closest('[data-copynote]');if(cn){try{navigator.clipboard.writeText(cn.dataset.copynote).catch(()=>{})}catch(_){}cn.textContent='已複製小抄，正在開啟 LINE';return}
+  const op=e.target.closest('[data-opt]');if(op&&chat.resolve&&chat.opts){answer(+op.dataset.opt,chat.opts[+op.dataset.opt]);return}
+  if(e.target.closest('[data-skip]')&&chat.resolve){answer('','先不留');return}
+  if(e.target.closest('[data-chatagain]')){openChat();return}
+  if(e.target.closest('[data-bclose]')){document.getElementById('bubble').hidden=true;return}
+  if(e.target.closest('[data-findyt]')){closeRoom();setTimeout(()=>say('yiting'),450);return}
+  if(e.target.closest('[data-chat]')){document.getElementById('bubble').hidden=true;openChat();return}
+  const ct=e.target.closest('[data-copytext]');if(ct){try{navigator.clipboard.writeText(ct.dataset.copytext).then(()=>{ct.textContent='已複製'},()=>{})}catch(_){}return}
+  const cs=e.target.closest('[data-copysum]');if(cs){const t=cs.dataset.copysum;try{navigator.clipboard.writeText(t).then(()=>{cs.textContent='已複製'},()=>{cs.textContent='請手動選取上方內容'})}catch(_){cs.textContent='請手動選取上方內容'}return}
+  const qa=e.target.closest('[data-qa]');if(qa){const Q=QUIZ[quiz.step];quiz.ans.push(Q.a[+qa.dataset.qa][1]);quiz.step++;renderQuiz();return}
+  if(e.target.closest('[data-qagain]')){quiz={step:0,ans:[]};renderQuiz();return}
+  if(e.target.closest('[data-game]')){openGame();return}
+  if(e.target.closest('[data-gstart]')){startGame();return}
+  if(e.target.closest('[data-gclose]')){closeGame();return}
+  if(e.target.closest('[data-sky]')){skyTalk();return}
+  if(e.target.closest('[data-draw]')){drawFortune();return}
+  if(e.target.closest('[data-throw]')){throwJiao();return}
+  if(e.target.closest('[data-skipjiao]')){if(!jiao.busy)revealFortune();return}
+  const dw=e.target.closest('[data-dlwall]');if(dw){downloadWall(dw);return}
+  const pt=e.target.closest('[data-pet]');if(pt){const k=pt.dataset.pet,n=NPCS[k];petCat(k);sayIdx[k]=((sayIdx[k]??0)+1)%n.lines.length;document.getElementById('say-'+k).textContent=n.lines[sayIdx[k]];heart(pt);return}
+  const my=e.target.closest('[data-myth]');if(my){my.setAttribute('aria-pressed',String(my.getAttribute('aria-pressed')!=='true'));return}
+  if(e.target.closest('.t-x')){document.getElementById('toast').hidden=true;return}
+  const npc=e.target.closest('[data-npc]');if(npc){say(npc.dataset.npc);return}
+  const eg=e.target.closest('[data-egg]');if(eg){openEgg(eg.dataset.egg);return}
+  if(e.target.closest('#stamps')){
+    if(visited.size>=ORDER.length)openReward();
+    else{const miss=ORDER.filter(id=>!visited.has(id)).map(id=>R[id].name);toast(`<p class="t-eye">集章 ${visited.size}／${ORDER.length}</p><b>還差 ${miss.length} 個空間</b><span>${miss.join('、')}</span>`,5000)}
+    return}
+  if(e.target.id==='copymail'){
+    const btn=e.target,addr=document.getElementById('mailaddr');
+    const done=()=>{btn.textContent='已複製';setTimeout(()=>btn.textContent='複製',1600)};
+    const fallback=()=>{const r=document.createRange();r.selectNodeContents(addr);const s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='已選取'};
+    try{navigator.clipboard.writeText(CONTACT.email).then(done,fallback)}catch(_){fallback()}
+    return;
+  }
+  const rm=e.target.closest('[data-room]');if(rm){openRoom(rm.dataset.room);return}
+});
+document.getElementById('p-close').addEventListener('click',()=>closeRoom());
+document.addEventListener('input',e=>{if(e.target.id==='islander-name'){islander.name=e.target.value.trim();LS.set('wh-name',islander.name);clearTimeout(wallT);wallT=setTimeout(refreshWall,300)}});
+document.addEventListener('submit',e=>{if(e.target.id==='guessform'){e.preventDefault();ytGuess(document.getElementById('guessin').value);return}if(e.target.id==='askform'){e.preventDefault();const i=document.getElementById('askinput'),v=i.value.trim();if(!v){i.focus();i.placeholder='寫一點點也可以喔';return}answer(v)}});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey&&e.target.id==='askinput'&&e.target.tagName==='TEXTAREA'){e.preventDefault();document.getElementById('askform').requestSubmit()}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!gEl('game').hidden){closeGame();return}if(e.key==='Escape'&&current)closeRoom();if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('svg [data-egg],svg [data-npc],svg [data-sky]')){e.preventDefault();e.target.dispatchEvent(new MouseEvent('click',{bubbles:true}))}});
+['pointerover','pointerout'].forEach(ev=>document.addEventListener(ev,e=>{
+  const el=e.target.closest&&e.target.closest('[data-room]');if(!el)return;
+  const id=el.dataset.room,on=ev==='pointerover';
+  document.querySelectorAll(`.room[data-room="${id}"]`).forEach(g=>g.classList.toggle('hot',on));
+  pinsWrap.querySelectorAll(`.pin[data-room="${id}"]`).forEach(p=>p.classList.toggle('hot',on));
+}));
+addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(R[h])openRoom(h,true);else if(h==='yiting'){if(ytKnown())openChat();else say('yiting')}else if(current&&R[current])closeRoom(true)});
+addEventListener('resize',()=>{fitView();if(current&&R[current])focusRoom(current)});
+
+/* ===== boot ===== */
+FEST=HASH0.startsWith('fest-')&&FEST_NAME[HASH0.slice(5)]?HASH0.slice(5):festNow();
+world.dataset.weather=WEATHER;if(FEST)world.dataset.fest=FEST;
+buildSky();buildCities();buildIsland();buildFest();buildWeather();buildPins();renderStamps();fitView();applyPhase();
+if(FEST)setTimeout(()=>{if(!current)toast(`<p class="t-eye">${FEST_NAME[FEST]}限定</p><b>島上換裝了！</b><span>這幾天抽院長保養籤，有機會抽到${FEST_NAME[FEST]}限定籤。</span>`,7000)},1600);
+if(WEATHER!=='clear')setTimeout(()=>{if(!current)toast(WEATHER==='rain'?'<p class="t-eye">島上天氣</p><b>下雨了</b><span>貓店員都躲到沙發旁邊了。雨天紫外線比較弱，但還是有，防曬別放假。</span>':'<p class="t-eye">島上天氣</p><b>起霧了</b><span>城市看起來朦朦朧朧的。霧散了，紫外線一樣會回來。</span>',7000)},FEST?9500:1600);
+setInterval(()=>{if(mode==='auto')applyPhase()},60000);
+setTimeout(()=>{if(!found.size&&!current)toast('<p class="t-eye">小提示</p><b>島上藏著彩蛋</b><span>背景城市發亮的地標可以點，藏著肌膚冷知識。走廊上的林醫師也可以點點看。</span>',9000)},9000);
+if(reduce){const n=iso(4.2,2.5),g=iso(5.78,5.78);nurseEl().setAttribute('transform',`translate(${n[0]},${n[1]})`);{const d=iso(2.5,4.4);doctorEl().setAttribute('transform',`translate(${d[0]},${d[1]})`)}guestEl().setAttribute('transform',`translate(${g[0]},${g[1]}) scale(-1,1)`)}
+requestAnimationFrame(loop);
+{const h=location.hash.slice(1);if(R[h])requestAnimationFrame(()=>openRoom(h,true));else if(h==='yiting')setTimeout(()=>{if(ytKnown())openChat();else say('yiting')},800)}
+</script>
+
+</body>
+</html>
