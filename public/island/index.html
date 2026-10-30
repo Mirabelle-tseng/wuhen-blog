@@ -767,6 +767,7 @@ function buildIsland(){
   s+=poly([iso(2,2,.5),iso(6,2,.5),iso(6,3,.5),iso(3,3,.5),iso(3,6,.5),iso(2,6,.5)],'#E7DDCC','stroke="rgba(14,51,95,.12)" stroke-width=".8"');
   {const a=iso(2.5,6,.6),b=iso(2.5,2.5,.6),c=iso(6,2.5,.6);s+=`<polyline points="${a} ${b} ${c}" fill="none" stroke="#B08D57" stroke-opacity=".65" stroke-width="1.4" stroke-dasharray="3 7" stroke-linecap="round"/>`}
   ['director','consult','treatment','powder','recovery'].forEach(id=>{s+=`<g class="room" data-room="${id}">${FURN[id]()}</g>`});
+  {const p=iso(.62,1.55);s+=`<g id="cat-cutie" data-npc="cutie" role="button" tabindex="0" aria-label="摸摸院長的愛貓小可愛" transform="translate(${p[0].toFixed(1)},${p[1].toFixed(1)}) scale(1.3)">${catFig(CATLOOK.cutie)}</g>`}
   ['bella','xiangyu','miqin','xiaojin'].forEach(k=>{const n=NPCS[k],[x,y]=iso(n.at[0],n.at[1]);s+=`<g id="npc-${k}" data-npc="${k}" role="button" tabindex="0" aria-label="和${n.name}說說話" transform="translate(${x.toFixed(1)},${y.toFixed(1)})${n.flip?' scale(-1,1)':''}">${fig(n.look)}</g>`});
   s+=`<g class="room" data-room="lobby">${lobbyBack()}</g>`;
   s+=`<g id="doctor" data-npc="doctor" role="button" tabindex="0" aria-label="和林醫師說說話">${doctorFig()}</g>`;
@@ -788,13 +789,14 @@ function catFig(c){
   const ol=c.outline?'stroke="rgba(14,51,95,.35)" stroke-width=".5"':'';
   return `<rect x="-11" y="-17" width="22" height="19" fill="transparent"/>
   <ellipse cx="0" cy="0" rx="7" ry="2.2" fill="rgba(14,51,95,.2)"/>
-  <path class="tail" d="M-6.2,-5 Q-12.5,-7 -10.4,-14.6" fill="none" stroke="${c.body}" stroke-width="2.4" stroke-linecap="round"/>
-  <ellipse cx="-1" cy="-5" rx="6.6" ry="4.2" fill="${c.body}" ${ol}/>
+  <path class="tail" d="M-6.2,-5 Q-12.5,-7 -10.4,-14.6" fill="none" stroke="${c.point||c.body}" stroke-width="${c.fluffy?3.6:2.4}" stroke-linecap="round"/>
+  <ellipse cx="-1" cy="-5" rx="${c.fluffy?7.2:6.6}" ry="${c.fluffy?4.8:4.2}" fill="${c.body}" ${ol}/>
   ${c.patch?`<ellipse cx="-3" cy="-6.5" rx="2.8" ry="2" fill="${c.patch}"/>`:''}
   ${c.stripe?`<path d="M-4,-8.8 L-3.4,-6 M-1.2,-9.2 L-.8,-6.4 M1.6,-8.8 L1.6,-6.2" stroke="${c.stripe}" stroke-width="1" stroke-linecap="round"/>`:''}
   <rect x="-5.4" y="-3" width="2" height="3.4" rx="1" fill="${c.body}" ${ol}/><rect x="1.8" y="-3" width="2" height="3.4" rx="1" fill="${c.body}" ${ol}/>
-  <path d="M2.3,-11 L2.8,-15.6 L5.2,-12.4Z M5.9,-12.6 L8.7,-15.3 L8.9,-10.8Z" fill="${c.body}" ${ol}/>
-  <circle cx="5.6" cy="-9" r="4.3" fill="${c.body}" ${ol}/>
+  <path d="M2.3,-11 L2.8,-15.6 L5.2,-12.4Z M5.9,-12.6 L8.7,-15.3 L8.9,-10.8Z" fill="${c.point||c.body}" ${ol}/>
+  <circle cx="5.6" cy="-9" r="${c.fluffy?4.7:4.3}" fill="${c.body}" ${ol}/>
+  ${c.point?`<ellipse cx="5.7" cy="-9.4" rx="3.1" ry="2.3" fill="${c.point}" opacity=".55"/><path d="M2,-6.4 Q5.6,-3.6 9.2,-6.4" fill="none" stroke="#B08D57" stroke-width="1"/><circle cx="5.6" cy="-4.9" r=".9" fill="#F2C14E"/>`:''}
   <path d="M3.1,-12 L3.3,-14.2 L4.4,-12.7Z M6.9,-12.7 L8.2,-14.1 L8.3,-11.8Z" fill="#F2A9A0"/>
   <g class="eyes-o"><ellipse cx="4.3" cy="-9.4" rx=".75" ry=".8" fill="${c.eye}"/><ellipse cx="7.1" cy="-9.4" rx=".75" ry=".8" fill="${c.eye}"/></g>
   <g class="eyes-c"><path d="M3.5,-9.3 Q4.3,-8.6 5.1,-9.3 M6.3,-9.3 Q7.1,-8.6 7.9,-9.3" fill="none" stroke="${c.body==='#2A2530'?'#9C8E7A':'#2B2420'}" stroke-width=".55" stroke-linecap="round"/></g>
@@ -833,7 +835,7 @@ function catIsland(){
   [[x0+.22,y0+1.35,'#7FA6C4'],[x0+.22,y0+1.58,'#E9C9C0']].forEach(([x,y,c])=>{const p=iso(x,y,0);r+=`<ellipse cx="${p[0]}" cy="${p[1]}" rx="4.4" ry="2.2" fill="${c}" stroke="rgba(14,51,95,.25)" stroke-width=".5"/>`});
   {const p=iso(x0+.9,y0+1.3,.8);r+=`<circle cx="${p[0]}" cy="${p[1]-2}" r="2.2" fill="#E8577A"/><path d="M${p[0]+2},${p[1]-2} q4,2 7,0" fill="none" stroke="#E8577A" stroke-width=".6"/>`}
   r+=`<g id="cat-orange" data-npc="orange" role="button" tabindex="0" aria-label="摸摸橘子" transform="translate(${iso(7.95,4.45).join(',')})">${catFig({body:'#E6A35A',stripe:'#C9783A',eye:'#2B2420'})}</g>`;
-  r+=`<g id="cat-mochi" data-npc="mochi" role="button" tabindex="0" aria-label="摸摸麻糬" transform="translate(${iso(8.2,5.0).join(',')}) scale(-1,1)">${catFig({body:'#FFFFFF',patch:'#E9B98C',eye:'#5C8FBF',outline:true})}</g>`;
+  r+=`<g id="cat-mochi" data-npc="mochi" role="button" tabindex="0" aria-label="摸摸白芳" transform="translate(${iso(8.2,5.0).join(',')}) scale(-1,1)">${catFig({body:'#FFFFFF',patch:'#E9B98C',eye:'#5C8FBF',outline:true})}</g>`;
   if(RARE)r+=`<g id="cat-gold" data-npc="gold" role="button" tabindex="0" aria-label="摸摸金色貓" transform="translate(${iso(8.6,4.2).join(',')})"><g class="goldglow">${catFig({body:'#E9C46A',stripe:'#C9A23E',eye:'#2B2420'})}</g></g>`;
   r+=plant(x0+1.62,y0+1.62,.85);
   s+=`<g class="room" data-room="cats">${r}</g>`;
@@ -1019,7 +1021,8 @@ const NPCS={
  miqin:{name:'米秦',role:'美容師',at:[1.0,4.62],flip:true,look:{top:'#EADFCF',trim:'#B08D57',hair:'mid',hairc:'#4A3428',eyes:'big',blush:true,item:'brush'},lines:['我是米秦，化妝間這邊請～','補妝前先洗手，刷具也要保持乾淨。','防曬是我每天出門前最重要的一步。','什麼時候可以上妝，離開前記得先問醫師。']},
  xiaojin:{name:'小進',role:'美編',at:[1.58,3.62],look:{top:'#5E7B99',hair:'short',glasses:true,brow:true,item:'tablet',legs:'#2E3E52'},lines:['妳知道島上最亮的是什麼嗎？不是月亮，是剛走進來的妳。','妳有擦防曬嗎？不然怎麼會這麼耀眼。','這座島有七個空間，但我心裡只有一個位置。','妳抽到上上籤了嗎？我覺得遇見妳，就是我的上上籤。','我本來在畫平板，看到妳之後，就忘了要畫什麼。']},
  orange:{name:'橘子',role:'貓店員',el:'cat-orange',persona:'橘貓，愛曬太陽、愛吃',lines:['喵～我最愛曬太陽。不過人類曬太陽，記得要擦防曬喔。','吃飽睡、睡飽吃，作息規律，毛和皮膚都會比較好。','我每天都去水碗報到。你今天水喝夠了嗎？']},
- mochi:{name:'麻糬',role:'貓店員',el:'cat-mochi',persona:'白貓，黏人、愛撒嬌',lines:['白貓的耳朵很怕曬，曬太久會紅紅的。你的臉也一樣要防曬。','我一天理毛好多次，但你洗臉不要太用力搓喔。','摸摸我，放鬆一下。壓力大的時候，皮膚也會跟著鬧脾氣。']},
+ mochi:{name:'白芳',role:'貓店員',el:'cat-mochi',persona:'白貓，性格高傲',lines:['本喵叫白芳。要摸之前，先說一聲。','白貓的耳朵很怕曬，所以本喵都待在室內。你出門也要防曬，懂嗎？','哼，臉不要用力搓。看看本喵，理毛都很優雅。','本喵允許你摸一下。就一下。']},
+ cutie:{name:'小可愛',role:'院長的愛貓',el:'cat-cutie',persona:'布偶貓，院長的愛貓，平常待在院長辦公室',lines:['喵～我是小可愛，院長的愛貓，平常都在院長辦公室陪她。','院長每天都說「先把基礎保養顧好」，我都聽到會背了。','布偶貓的毛很怕打結，就像皮膚怕乾燥，每天都要好好照顧喔。','偷偷告訴你，院長最喜歡我了。']},
  kuro:{name:'黑糖',role:'貓店員',el:'cat-kuro',persona:'黑貓，高冷、只在貓跳台上',lines:['哼，晚上才是我的時間。不過你別熬夜，早點睡。','別一直摸我的臉。你也是，手一直摸臉容易長痘痘。','保持乾淨是基本禮貌。今天卸妝卸乾淨了嗎？']},
  gold:{name:'金金',role:'貓店員',el:'cat-gold',lines:['喵～我是很少出現的金色貓！遇到我，今天會是好運的一天。','偷偷告訴你：好運不能代替防曬喔。','你運氣真好。下次來，不一定還遇得到我。']},
  yiting:{name:'怡婷',role:'店經理',el:'staff',look:{top:'#0E335F',trim:'#B08D57',hair:'wave',hairc:'#5B3D2C',skin:'#F6DECF',eyes:'deep',brow:true,glow:true,pin:'#E9CF9E'}}
@@ -1107,10 +1110,10 @@ const sayIdx={};let bub={who:null,until:0};
 function say(who){
   const b0=document.getElementById('bubble');b0.classList.remove('act');
   if(who==='yiting'){ytBubble();return}
-  if(NPCS[who].role==='貓店員'){heart(npcEl(who));petCat(who)}
+  if(NPCS[who].role==='貓店員'||who==='cutie'){heart(npcEl(who));petCat(who)}
   const n=NPCS[who];let line=null;
   if(who==='doctor'){docTaps++;if(docTaps===10){line='你已經點我十次了！這麼喜歡聊天，找一天來診所，我們當面聊。';secretToast('chatty','話很多的林醫師')}}
-  if(!line&&n.role==='貓店員'&&world.dataset.phase==='night'){line=`${n.name}睡著了……呼嚕呼嚕。<br><small>晚上好好睡，皮膚才會好。</small>`;secretToast('sleepcat','夜晚睡著的貓')}
+  if(!line&&(n.role==='貓店員'||who==='cutie')&&world.dataset.phase==='night'){line=`${n.name}睡著了……呼嚕呼嚕。<br><small>晚上好好睡，皮膚才會好。</small>`;secretToast('sleepcat','夜晚睡著的貓')}
   if(!line&&who==='gold')secretToast('gold','稀有的金色貓');
   if(!line){sayIdx[who]=((sayIdx[who]??-1)+1)%n.lines.length;line=n.lines[sayIdx[who]]}
   const b=document.getElementById('bubble');
@@ -1547,12 +1550,12 @@ async function downloadWall(btn){
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function lineCta(){return CONTACT.line?`<a class="cta" href="${esc(CONTACT.line)}" target="_blank" rel="noopener">用 LINE 預約諮詢</a>`:`<span class="cta off" aria-disabled="true">LINE 預約連結設定中</span>`}
 
-const CATS=['orange','mochi','kuro'];
-const CATLOOK={orange:{body:'#E6A35A',stripe:'#C9783A',eye:'#2B2420'},mochi:{body:'#FFFFFF',patch:'#E9B98C',eye:'#5C8FBF',outline:true},kuro:{body:'#2A2530',eye:'#F2C14E'}};
+const CATS=['orange','mochi','kuro','cutie'];
+const CATLOOK={cutie:{body:'#F5EEE2',point:'#9C7A62',eye:'#4F8FD6',fluffy:true,outline:true},orange:{body:'#E6A35A',stripe:'#C9783A',eye:'#2B2420'},mochi:{body:'#FFFFFF',patch:'#E9B98C',eye:'#5C8FBF',outline:true},kuro:{body:'#2A2530',eye:'#F2C14E'}};
 const VIEW={
  cats:()=>`<p class="lead">逛累了嗎？來貓咖坐一下。</p><p class="sub">喝口水、摸摸貓，放鬆一下再繼續逛。</p>
    <div class="box"><b>先說清楚</b><p>這是島上的虛擬貓咖。無痕美學診所內沒有養貓，對貓過敏也可以放心來診所。</p></div>
-   <h3 class="h3">島上的三位貓店員</h3>
+   <h3 class="h3">島上的四隻貓</h3>
    <div class="catlist">${CATS.map(k=>{const c=NPCS[k];return `<div class="catcard"><span class="cat-av"><svg viewBox="-12 -18 25 22" aria-hidden="true">${catFig(CATLOOK[k])}</svg></span><div class="cat-tx"><b>${c.name}</b><span class="cat-p">${c.persona}</span><p class="cat-say" id="say-${k}">${c.lines[0]}</p></div><button type="button" class="pet" data-pet="${k}">摸摸${c.name}</button></div>`}).join('')}</div>
    <h3 class="h3">今天的貓咖菜單</h3>
    <ul class="dlist"><li><b>一杯溫開水</b>：慢慢喝，療程後也很適合。</li><li><b>三分鐘放空</b>：放下手機，看看窗外的城市。</li><li><b>今晚早點睡</b>：從關掉螢幕開始。</li></ul>
@@ -1658,7 +1661,7 @@ function loop(now){
   cam.s+=(camT.s-cam.s)*k;cam.tx+=(camT.tx-cam.tx)*k;cam.ty+=(camT.ty-cam.ty)*k;
   camera.setAttribute('transform',`translate(${cam.tx.toFixed(2)},${cam.ty.toFixed(2)}) scale(${cam.s.toFixed(4)})`);
   if(!reduce){placeWalker(nurseEl(),'nurse',nurseR(t),t);placeWalker(guestEl(),'guest',guestR(t+4),t);placeWalker(doctorEl(),'doctor',doctorR(t+2),t);if(!isNight){placeWalker(npcEl('orange'),'orange',orangeR(t),t);placeWalker(npcEl('mochi'),'mochi',mochiR(t+7),t);if(RARE)placeWalker(npcEl('gold'),'gold',goldR(t+3),t)}for(const it of ISL){const el=document.getElementById(it.key);if(el)placeWalker(el,it.key,it.r(t+it.off),t)}}
-  if(isNight!==lastNight){lastNight=isNight;['orange','mochi','kuro','gold'].forEach(k=>{const el=document.getElementById('cat-'+k);if(el)el.classList.toggle('sleep',isNight)})}
+  if(isNight!==lastNight){lastNight=isNight;['orange','mochi','kuro','gold','cutie'].forEach(k=>{const el=document.getElementById('cat-'+k);if(el)el.classList.toggle('sleep',isNight)})}
   npcFollow(now);
   pinsWrap.querySelectorAll('.pin').forEach(p=>{
     const a=anchorEls[p.dataset.room]||(anchorEls[p.dataset.room]=document.getElementById('a-'+p.dataset.room));
