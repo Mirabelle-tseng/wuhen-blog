@@ -37,6 +37,59 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 				border-radius: 12px;
 				box-shadow: var(--box-shadow);
 			}
+			.island-card {
+				display: grid;
+				grid-template-columns: 1fr;
+				margin: 2.5rem 0 0;
+				border: 1px solid #e4dacb;
+				border-radius: 16px;
+				overflow: hidden;
+				background: #fbf8f3;
+				box-shadow: var(--box-shadow);
+				text-decoration: none;
+				color: inherit;
+				transition: transform 0.2s ease, box-shadow 0.2s ease;
+			}
+			.island-card:hover {
+				transform: translateY(-2px);
+			}
+			.island-card img {
+				display: block;
+				width: 100%;
+				height: auto;
+				aspect-ratio: 1200 / 630;
+			}
+			.island-card .ic-body {
+				padding: 1.2rem 1.4rem 1.4rem;
+			}
+			.island-card .ic-eye {
+				margin: 0 0 0.3rem;
+				font-size: 0.8rem;
+				letter-spacing: 0.2em;
+				color: #b08d57;
+				font-weight: 700;
+			}
+			.island-card h2 {
+				margin: 0 0 0.5rem;
+				font-size: 1.4rem;
+				line-height: 1.4;
+				color: #0e335f;
+			}
+			.island-card .ic-text {
+				margin: 0 0 1rem;
+				font-size: 0.98rem;
+				line-height: 1.75;
+			}
+			.island-card .ic-cta {
+				display: inline-block;
+				padding: 0.55rem 1.3rem;
+				border-radius: 999px;
+				background: #0e335f;
+				color: #fbf8f3;
+				font-weight: 700;
+				font-size: 0.95rem;
+				letter-spacing: 0.06em;
+			}
 			@media (max-width: 720px) {
 				.hero h1 {
 					font-size: 1.75rem;
@@ -66,6 +119,15 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 					我們相信美麗來自健康與自然。無痕美學診所提供專業的醫美諮詢與療程，並透過這個部落格分享實用的醫美衛教知識，幫助你做出更安心的選擇。
 				</p>
 			</div>
+			<a class="island-card" href="/island/">
+				<img src="/island/og.jpg" width="1200" height="630" alt="無痕美學島：做成一座會動小島的無痕美學診所" loading="lazy" />
+				<div class="ic-body">
+					<p class="ic-eye">無痕美學島　開島了</p>
+					<h2>我們把診所做成一座會動的小島</h2>
+					<p class="ic-text">七個空間點進去看衛教，玩防曬小遊戲、摸貓咖的貓店員，逛完全島抽一支院長保養籤，拿一張專屬島民證桌布。</p>
+					<span class="ic-cta">開始逛島 →</span>
+				</div>
+			</a>
 		</main>
 		<Footer />
 	</body>

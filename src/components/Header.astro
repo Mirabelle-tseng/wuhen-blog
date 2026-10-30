@@ -10,6 +10,7 @@ import HeaderLink from './HeaderLink.astro';
 			<HeaderLink href="/">首頁</HeaderLink>
 			<HeaderLink href="/blog">我的文章</HeaderLink>
 			<HeaderLink href="/about">關於我</HeaderLink>
+			<HeaderLink href="/island/">無痕美學島</HeaderLink>
 		</div>
 		<div class="social-links">
 			<a href="https://www.wuhenclinic.tw/" target="_blank" rel="noopener noreferrer">
@@ -104,6 +105,36 @@ import HeaderLink from './HeaderLink.astro';
 	@media (max-width: 720px) {
 		.social-links {
 			display: none;
+		}
+		h2 {
+			white-space: nowrap;
+			font-size: 0.95em;
+		}
+		.internal-links {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: flex-end;
+		}
+		.internal-links a {
+			padding: 0.9em 0.3em;
+			font-size: 0.92em;
+		}
+	}
+	@media (max-width: 480px) {
+		.internal-links a[href='/'] {
+			display: none;
+		}
+	}
+	@media (max-width: 380px) {
+		header {
+			padding: 0 0.6em;
+		}
+		h2 {
+			font-size: 0.88em;
+		}
+		.internal-links a {
+			padding: 0.9em 0.22em;
+			font-size: 0.84em;
 		}
 	}
 </style>
