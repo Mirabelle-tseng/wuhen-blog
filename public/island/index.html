@@ -560,6 +560,8 @@ var HASH0=location.hash.slice(1);
 var WEATHER=(HASH0==='rain'||HASH0==='fog')?HASH0:(()=>{const r=Math.random();return r<.15?'rain':(r<.28?'fog':'clear')})();
 var RARE=HASH0==='rare'||Math.random()<.06;
 var FEST=null;
+/* GA4 事件（部落格版才會送出；Claude 頁面上沒有 gtag 則略過） */
+function track(name,params){try{if(typeof gtag==='function')gtag('event',name,params||{})}catch(_){}}
 const TW=50, TH=25, OX=400, OY=110;
 const iso=(x,y,z=0)=>[OX+(x-y)*TW, OY+(x+y)*TH - z];
 const P=a=>a.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
@@ -1050,7 +1052,7 @@ function renderQuiz(){
    <div class="ctas">${CONTACT.line?`<a class="cta gold" href="${esc(CONTACT.line)}" target="_blank" rel="noopener" data-copynote="${esc(line)}">複製小抄，用 LINE 預約</a>`:''}</div>
    <p class="fine">可以截圖存下這張小抄，或分享給也在煩惱的朋友。</p>
    <button type="button" class="q-again" data-qagain>重新測一次</button>`;
-  selectConcern(quiz.ans[0]);
+  selectConcern(quiz.ans[0]);track('island_quiz_complete',{concern:quiz.ans[0]});
 }
 function selectConcern(k){document.querySelectorAll('[data-c]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.c===k)));if(document.getElementById('concern'))renderConcern(k)}
 
@@ -1069,13 +1071,14 @@ function renderStamps(){
 }
 function stamp(id){
   if(visited.has(id))return;visited.add(id);saveProg();renderStamps();
+  if(visited.size===ORDER.length)track('island_stamps_complete');
   if(visited.size===ORDER.length)toast(`<p class="t-eye">集章完成</p><b>${ORDER.length} 個章都集滿了</b><span>點下方金色的「打開小禮物」，院長有東西要給你。</span>`,8000);
   else toast(`<p class="t-eye">集章 ${visited.size}／${ORDER.length}</p><b>${R[id].name}，蓋章！</b><span>全部空間都逛完後，就能打開院長準備的小禮物。</span>`,2600);
 }
 let toastT;
 function toast(html,ms=5000){const t=document.getElementById('toast');t.innerHTML=`<div class="t-body">${html}</div><button type="button" class="t-x" aria-label="關閉">×</button>`;t.hidden=false;t.classList.remove('show');void t.offsetWidth;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>{t.hidden=true},ms)}
 function openEgg(id){
-  const e=EGGS[id];const first=!found.has(id);found.add(id);saveProg();
+  const e=EGGS[id];const first=!found.has(id);found.add(id);saveProg();if(first)track('island_egg_found',{egg:id});
   document.querySelectorAll(`[data-egg="${id}"]`).forEach(g=>g.classList.add('found'));
   const all=found.size===Object.keys(EGGS).length;
   toast(`<p class="t-eye">${e.city}・城市彩蛋 ${found.size}／${Object.keys(EGGS).length}</p><b>${e.t}</b><span>${e.d}</span>${all&&first?'<span><b style="font-size:14px">8 個城市彩蛋全部找到了！</b>切換右上角的時段，可以再看一次四座城市。</span>':(!all?'<span>換個時段，其他城市也藏著彩蛋。</span>':'')}`,11000);
@@ -1095,7 +1098,7 @@ function say(who){
   b.hidden=false;bub={who,until:performance.now()+5200};
 }
 const SECRETS={whoami:'猜出神秘店員',sky:'會說話的太陽和月亮',sleepcat:'夜晚睡著的貓',gold:'稀有的金色貓',chatty:'話很多的林醫師'};
-function secretToast(k,label){const st=new Set(LS.get('wh-secrets',[]));if(st.has(k))return;st.add(k);LS.set('wh-secrets',[...st]);
+function secretToast(k,label){const st=new Set(LS.get('wh-secrets',[]));if(st.has(k))return;st.add(k);LS.set('wh-secrets',[...st]);track('island_secret_found',{secret:k});
   setTimeout(()=>toast(`<p class="t-eye">隱藏彩蛋 ${st.size}／${Object.keys(SECRETS).length}</p><b>${label}</b><span>${st.size<Object.keys(SECRETS).length?'島上還藏著其他秘密，換個時間再來逛逛。':`全部 ${Object.keys(SECRETS).length} 個隱藏彩蛋都找到了，你是真正的島民！`}</span>`,7000),600)}
 const MOON_LINES=['晚安，今天辛苦了。卸完妝、擦好保養，早點睡吧。','月亮都出來了，手機也該休息囉。','睡前少滑一點手機，明天的你會謝謝現在的你。'];
 const SUN_LINES=['我是太陽！今天紫外線不小，出門記得擦防曬。','曬太陽心情會變好，但也別忘了戴帽子、撐傘。','中午前後是我最強的時候，記得躲一下喔。'];
@@ -1121,6 +1124,7 @@ function gHud(left,score,burn){gEl('g-time').textContent=Math.ceil(left);gEl('g-
   const o=(burn/100*.85).toFixed(2);gEl('g-blush1').setAttribute('opacity',o);gEl('g-blush2').setAttribute('opacity',o);
   gEl('g-mouth').setAttribute('d',burn>70?'M52,70 Q60,64 68,70':(burn>35?'M52,68 L68,68':'M52,66 Q60,72 68,66'))}
 function startGame(){
+  track('island_game_start');
   gEl('g-field').querySelectorAll('.uv').forEach(e=>e.remove());
   gEl('g-card').hidden=true;
   const now=performance.now();G={on:true,score:0,burn:0,drops:[],start:now,last:now,acc:0,bacc:0};
@@ -1152,7 +1156,7 @@ function gameLoop(now){
 }
 function endGame(burned){
   G.on=false;gEl('g-field').querySelectorAll('.uv:not(.pop)').forEach(e=>e.remove());
-  const sc=G.score,best=Math.max(sc,LS.get('wh-best',0));LS.set('wh-best',best);
+  const sc=G.score,best=Math.max(sc,LS.get('wh-best',0));LS.set('wh-best',best);track('island_game_end',{score:sc});
   const rank=sc>=26?'防曬大師':sc>=18?'防曬達人':sc>=10?'防曬好手':'防曬新手';
   const tip=GTIPS[Math.floor(Math.random()*GTIPS.length)];
   gEl('g-card').hidden=false;
@@ -1182,7 +1186,7 @@ function ytRevealHTML(lead){
 }
 function ytGuess(v){
   const t=v.replace(/\s/g,'');if(!t)return;
-  if(YT_KEYS.some(k=>t.includes(k))){LS.set('wh-yt',true);bubbleOpen(ytRevealHTML('答對了！'),'yiting',30000);heart(npcEl('yiting'));secretToast('whoami','猜出神秘店員');return}
+  if(YT_KEYS.some(k=>t.includes(k))){LS.set('wh-yt',true);track('island_whoami_solved',{tries:ytTries+1});bubbleOpen(ytRevealHTML('答對了！'),'yiting',30000);heart(npcEl('yiting'));secretToast('whoami','猜出神秘店員');return}
   ytTries++;const h=document.getElementById('ghint'),i=document.getElementById('guessin');
   if(h)h.textContent=`「${t.slice(0,8)}」不是喔～ ${YT_HINTS[Math.min(ytTries,YT_HINTS.length)-1]}`;
   if(i){i.value='';i.focus()}
@@ -1225,6 +1229,7 @@ function askText(ph,{long=false,optional=false}={}){return new Promise(res=>{cha
   const i=document.getElementById('askinput');try{i.focus({preventScroll:true})}catch(_){} })}
 function answer(v,shown){addMsg('me',esc(shown??v));const r=chat.resolve;chat.resolve=null;setOpts('');r&&r(v)}
 async function openChat(){
+  track('island_chat_open');
   current='chat';chat={data:{},busy:false};
   document.getElementById('p-eyebrow').textContent='店經理';
   document.getElementById('p-title').textContent='與怡婷對談';
@@ -1267,7 +1272,7 @@ async function runChat(){
   D.name=await askText(flow==='sales'?'例如：陳經理':'例如：王小姐',{optional:flow==='feedback'});
   if(chat!==token)return;
   await bot([D.name?`謝謝你，${esc(D.name)}！我幫你整理好了：`:'謝謝你！我幫你整理好了：']);
-  const sum=chatSummary(D);
+  const sum=chatSummary(D);track('island_chat_complete',{flow});
   addMsg('bot',`<div class="sumcard"><b>${{friend:'想和院長聊聊',sales:'業務拜訪：產品說明',feedback:'給無痕美學的建議'}[flow]}</b><pre>${esc(sum.body)}</pre></div>`);
   await bot([{friend:'在留言表單留下這段和聯絡方式，我會轉告院長，再跟你約時間。',sales:'在留言表單留下這段和聯絡方式，我看過後會跟您聯繫，到時再請您提供產品型錄。',feedback:'在留言表單留下這段就好，可以完全匿名。我會認真看，也會轉達給院長。'}[flow]]);
   const formUrl=`${CONTACT.form}?usp=pp_url&${CONTACT.formEntry}=${encodeURIComponent(sum.body.split('\n').slice(1).join(' ／ '))}`;
@@ -1315,7 +1320,7 @@ const LS={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.par
 const islander={first:LS.get('wh-first',null),no:LS.get('wh-no',null),name:LS.get('wh-name',''),fi:LS.get('wh-fortune',null),pets:LS.get('wh-pets',{})};
 if(!islander.first){const d=new Date();islander.first=`${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;LS.set('wh-first',islander.first)}
 if(!islander.no){islander.no=String(1000+Math.floor(Math.random()*9000));LS.set('wh-no',islander.no)}
-function petCat(k){islander.pets[k]=(islander.pets[k]||0)+1;LS.set('wh-pets',islander.pets)}
+function petCat(k){track('island_cat_pet',{cat:k});islander.pets[k]=(islander.pets[k]||0)+1;LS.set('wh-pets',islander.pets)}
 function favCat(){let b=null,n=0;for(const k of CATS){if((islander.pets[k]||0)>n){n=islander.pets[k];b=k}}return b?NPCS[b].name:'還沒摸過貓'}
 function cleanClone(el){
   const g=el.cloneNode(true);
@@ -1400,7 +1405,7 @@ async function drawFortune(){
 }
 function revealFortune(){
   const area=document.getElementById('fortune-area');if(!area||jiao.cand==null)return;
-  islander.fi=jiao.cand;LS.set('wh-fortune',jiao.cand);jiao={cand:null,streak:0,tries:0,busy:false};
+  islander.fi=jiao.cand;LS.set('wh-fortune',jiao.cand);track('island_fortune',{fortune:fnum(jiao.cand)+'・'+FORTUNES[jiao.cand].title});jiao={cand:null,streak:0,tries:0,busy:false};
   area.innerHTML=fortuneHTML();
   if(!document.getElementById('wallprev'))document.getElementById('reward-rest').innerHTML=rewardRest();
   refreshWall();
@@ -1451,9 +1456,9 @@ async function downloadWall(btn){
   const msg=document.getElementById('wall-msg');
   if(!wallBlob){msg.textContent='桌布還在產生，請稍等一下再按。';refreshWall();return}
   let dl=null;try{dl=window.claude?.use?await window.claude.use('downloads'):null}catch(_){}
-  if(!dl){try{const a=document.createElement('a');a.href=wallURL;a.download=`無痕美學島-島民證-${islander.no}.png`;document.body.appendChild(a);a.click();a.remove();msg.textContent='已開始下載！沒有反應的話，請長按上面的圖片儲存。'}catch(_){msg.textContent='這裡沒辦法直接下載。可以長按上面的圖片儲存，或直接截圖。'}return}
+  if(!dl){try{const a=document.createElement('a');a.href=wallURL;a.download=`無痕美學島-島民證-${islander.no}.png`;document.body.appendChild(a);a.click();a.remove();track('island_wallpaper_download');msg.textContent='已開始下載！沒有反應的話，請長按上面的圖片儲存。'}catch(_){msg.textContent='這裡沒辦法直接下載。可以長按上面的圖片儲存，或直接截圖。'}return}
   btn.disabled=true;
-  try{await dl.save({filename:`無痕美學島-島民證-${islander.no}.png`,data:wallBlob});msg.textContent='已存好！可以設成手機桌布了。'}
+  try{await dl.save({filename:`無痕美學島-島民證-${islander.no}.png`,data:wallBlob});track('island_wallpaper_download');msg.textContent='已存好！可以設成手機桌布了。'}
   catch(e){const c=e&&e.code;msg.textContent=c==='declined'?'已取消下載。想存的時候再按一次就好。':(c==='rate_limited'?'下載視窗已經開著，請先完成或關閉它。':'這裡沒辦法直接下載。可以長按上面的圖片儲存，或直接截圖。')}
   finally{btn.disabled=false}
 }
@@ -1586,6 +1591,7 @@ const panel=document.getElementById('panel');
 let current=null;
 function openRoom(id,fromHash){
   if(!R[id])return;
+  if(current!==id)track('island_room_open',{room:id});
   current=id;
   const i=ORDER.indexOf(id);
   document.getElementById('p-eyebrow').textContent=`2F　第 ${i+1} 站／共 ${ORDER.length} 站`;
@@ -1626,6 +1632,8 @@ function applyPhase(){
 
 /* ===== events ===== */
 document.addEventListener('click',e=>{
+  const lk=e.target.closest&&e.target.closest('a[href]');
+  if(lk){const h=lk.getAttribute('href');if(h.includes('lin.ee'))track('island_line_booking_click');else if(h.includes('line.me/ti/p'))track('island_line_add_friend');else if(h.includes('docs.google.com/forms'))track('island_form_click');else if(h.startsWith('mailto:'))track('island_mail_click');}
   const go=e.target.closest('[data-go]');if(go){openRoom(go.dataset.go);return}
   const c=e.target.closest('[data-c]');if(c){c.parentElement.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',String(b===c)));renderConcern(c.dataset.c);return}
   const k=e.target.closest('[data-k]');if(k){k.parentElement.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',String(b===k)));renderCare(k.dataset.k);return}
