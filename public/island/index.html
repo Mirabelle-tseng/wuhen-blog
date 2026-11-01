@@ -1688,6 +1688,14 @@ let cam={s:1,tx:0,ty:0},camT={s:1,tx:0,ty:0};
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 function fitView(){
   const W=innerWidth,H=innerHeight,a=W/H,cx=400,cy=350,needW=740,needH=650;
+  if(a<.8){
+    const tEl=document.querySelector('.top'),dEl=document.querySelector('.dock');
+    const top=(tEl?tEl.getBoundingClientRect().bottom:0)+40,bot=(dEl?dEl.getBoundingClientRect().top:H)-6;
+    const band=Math.max(bot-top,H*.35),X0=40,X1=760,Y0=28,Y1=590;
+    const k=Math.min(W/(X1-X0),band/(Y1-Y0)),vw=W/k,vh=H/k;
+    svg.setAttribute('viewBox',`${(X0+X1)/2-vw/2} ${(Y0+Y1)/2-(top+band/2)/k} ${vw} ${vh}`);
+    return;
+  }
   let vw,vh; if(a>needW/needH){vh=needH;vw=vh*a}else{vw=needW;vh=vw/a}
   const shift=a<.8?-vh*.02:0;
   svg.setAttribute('viewBox',`${cx-vw/2} ${cy-vh/2+shift} ${vw} ${vh}`);
@@ -1856,6 +1864,7 @@ addEventListener('resize',()=>{fitView();if(current&&R[current])focusRoom(curren
 FEST=HASH0.startsWith('fest-')&&FEST_NAME[HASH0.slice(5)]?HASH0.slice(5):festNow();
 world.dataset.weather=WEATHER;if(FEST)world.dataset.fest=FEST;
 buildSky();buildCities();buildIsland();buildFest();buildWeather();buildPins();renderStamps();fitView();applyPhase();
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{fitView()});
 if(FEST)setTimeout(()=>{if(!current)toast(`<p class="t-eye">${FEST_NAME[FEST]}限定</p><b>島上換裝了！</b><span>這幾天抽院長保養籤，有機會抽到${FEST_NAME[FEST]}限定籤。</span>`,7000)},1600);
 if(WEATHER!=='clear')setTimeout(()=>{if(!current)toast(WEATHER==='rain'?'<p class="t-eye">島上天氣</p><b>下雨了</b><span>貓店員都躲到沙發旁邊了。雨天紫外線比較弱，但還是有，防曬別放假。</span>':'<p class="t-eye">島上天氣</p><b>起霧了</b><span>城市看起來朦朦朧朧的。霧散了，紫外線一樣會回來。</span>',7000)},FEST?9500:1600);
 setInterval(()=>{if(mode==='auto')applyPhase()},60000);
