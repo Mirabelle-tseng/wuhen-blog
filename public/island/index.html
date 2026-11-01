@@ -56,7 +56,7 @@ body{background:var(--cream);color:var(--navy);font-family:var(--sans);overflow:
 .sky.night{background:linear-gradient(180deg,#060F24 0%,#0D2347 50%,#2A2D5C 78%)}
 #world[data-phase="dawn"] .sky.dawn,#world[data-phase="day"] .sky.day,#world[data-phase="dusk"] .sky.dusk,#world[data-phase="night"] .sky.night{opacity:1}
 
-#scene{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:manipulation}
+#scene{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
 #water{fill:var(--water);transition:fill 1.6s}
 .star{fill:#FFF8E6;opacity:var(--star);transition:opacity 1.6s}
 .twinkle{animation:tw 3.2s ease-in-out infinite}
@@ -198,6 +198,7 @@ body{background:var(--cream);color:var(--navy);font-family:var(--sans);overflow:
 .egg.found .egg-dot{display:none}
 [data-npc]{cursor:pointer}
 #bubble{position:fixed;left:0;top:0;z-index:6;pointer-events:none;max-width:min(240px,70vw);background:var(--paper);color:var(--navy);border:1px solid var(--gold);border-radius:14px;padding:9px 12px;font-size:13.5px;line-height:1.6;box-shadow:0 8px 22px rgba(14,51,95,.22)}
+#zoomout{position:fixed;right:14px;z-index:6;min-height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--gold);background:var(--paper);color:var(--navy);font:700 14px var(--sans);letter-spacing:.06em;box-shadow:0 6px 16px rgba(14,51,95,.25);cursor:pointer}#zoomout:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 #bubble{transform-origin:0 0}#bubble.below::after{bottom:auto;top:-6px;transform:translateX(-50%) rotate(225deg)}
 #bubble b{display:block;font:700 11px var(--sans);letter-spacing:.14em;color:var(--gold);margin-bottom:2px}
 #bubble::after{content:"";position:absolute;left:50%;bottom:-6px;width:10px;height:10px;background:var(--paper);border-right:1px solid var(--gold);border-bottom:1px solid var(--gold);transform:translateX(-50%) rotate(45deg)}
@@ -531,6 +532,7 @@ body.reading #toast{bottom:auto;top:calc(env(safe-area-inset-top,0px) + 12px)}
   </header>
 
   <div id="pins"></div>
+  <button type="button" id="zoomout" hidden>回到全島</button>
   <div id="bubble" hidden></div>
   <button type="button" id="npctag" data-npc="doctor" aria-label="和林醫師說說話">林醫師</button>
 
@@ -1720,6 +1722,26 @@ function focusRoom(id){
   if(reduce)cam={...camT};
 }
 function resetCam(){camT={s:1,tx:0,ty:0};if(reduce)cam={...camT}}
+/* pinch to zoom & drag the island itself (the page stays put) */
+{const pts=new Map();let g=null,moved=false;
+ const toSvg=(x,y)=>new DOMPoint(x,y).matrixTransform(svg.getScreenCTM().inverse());
+ const begin=()=>{const a=[...pts.values()];
+   if(a.length>=2){const d=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y),m=toSvg((a[0].x+a[1].x)/2,(a[0].y+a[1].y)/2);g={d,s0:camT.s,W:{x:(m.x-camT.tx)/camT.s,y:(m.y-camT.ty)/camT.s}}}
+   else if(a.length===1){g={p:toSvg(a[0].x,a[0].y),tx:camT.tx,ty:camT.ty,x:a[0].x,y:a[0].y,s:camT.s}}else g=null};
+ svg.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse')return;if(!pts.size)moved=false;pts.set(e.pointerId,{x:e.clientX,y:e.clientY});begin()});
+ svg.addEventListener('pointermove',e=>{if(!pts.has(e.pointerId)||!g)return;pts.set(e.pointerId,{x:e.clientX,y:e.clientY});const a=[...pts.values()];
+   if(a.length>=2&&g.d){const d=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y),m=toSvg((a[0].x+a[1].x)/2,(a[0].y+a[1].y)/2);
+     const s2=Math.min(3.2,Math.max(1,g.s0*d/g.d));
+     camT={s:s2,tx:m.x-g.W.x*s2,ty:m.y-g.W.y*s2};cam={...camT};moved=true}
+   else if(a.length===1&&g.p&&g.s>1.02){if(!moved&&Math.hypot(e.clientX-g.x,e.clientY-g.y)<8)return;moved=true;
+     const p=toSvg(e.clientX,e.clientY);camT={s:camT.s,tx:g.tx+p.x-g.p.x,ty:g.ty+p.y-g.p.y};cam={...camT}}});
+ const end=e=>{if(!pts.delete(e.pointerId))return;if(!pts.size&&camT.s<1.04&&!current){camT={s:1,tx:0,ty:0}}begin()};
+ document.getElementById('zoomout').addEventListener('click',()=>{camT={s:1,tx:0,ty:0};if(reduce)cam={...camT}});
+ svg.addEventListener('pointerup',end);svg.addEventListener('pointercancel',end);
+ svg.addEventListener('click',e=>{if(moved){e.stopPropagation();e.preventDefault();moved=false}},true);
+ ['gesturestart','gesturechange'].forEach(t=>document.addEventListener(t,e=>e.preventDefault(),{passive:false}));
+ document.addEventListener('touchmove',e=>{if(e.touches.length>1)e.preventDefault()},{passive:false});
+}
 
 /* ===== walkers ===== */
 function route(pts,speed,pause){
@@ -1754,6 +1776,7 @@ function loop(now){
   const t=now/1000;const isNight=world.dataset.phase==='night';
   const k=reduce?1:.085;
   cam.s+=(camT.s-cam.s)*k;cam.tx+=(camT.tx-cam.tx)*k;cam.ty+=(camT.ty-cam.ty)*k;
+  {const zb=document.getElementById('zoomout'),show=camT.s>1.05&&!current;if(zb.hidden===show){zb.hidden=!show;if(show){const d=document.querySelector('.dock');zb.style.top=((d?d.getBoundingClientRect().top:innerHeight)-52)+'px'}}}
   camera.setAttribute('transform',`translate(${cam.tx.toFixed(2)},${cam.ty.toFixed(2)}) scale(${cam.s.toFixed(4)})`);
   if(!reduce){placeWalker(nurseEl(),'nurse',nurseR(t),t);placeWalker(guestEl(),'guest',guestR(t+4),t);placeWalker(doctorEl(),'doctor',doctorR(t+2),t);if(!isNight){placeWalker(npcEl('orange'),'orange',orangeR(t),t);placeWalker(npcEl('mochi'),'mochi',mochiR(t+7),t);if(RARE)placeWalker(npcEl('gold'),'gold',goldR(t+3),t)}for(const it of ISL){const el=document.getElementById(it.key);if(el)placeWalker(el,it.key,it.r(t+it.off),t)}}
   if(isNight!==lastNight){lastNight=isNight;['orange','mochi','kuro','gold','cutie'].forEach(k=>{const el=document.getElementById('cat-'+k);if(el)el.classList.toggle('sleep',isNight)})}
