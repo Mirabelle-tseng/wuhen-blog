@@ -699,7 +699,7 @@ const ROOMS=[
  {id:'powder',name:'化妝間',x:0,y:4,w:2,d:2,floor:'#F3E5E0',pz:40},
  {id:'director',name:'院長辦公室',x:0,y:0,w:2,d:2,floor:'#D9C2A1',pz:82},
  {id:'cats',name:'貓咖區',x:7.4,y:3.4,w:1.8,d:1.8,floor:'#F1E3D3',pz:14},
- {id:'dock',name:'碼頭',x:1.3,y:7.0,w:1.2,d:.8,floor:'#D6B88C',pz:24},
+ {id:'dock',name:'碼頭',title:'第一次來無痕？',x:1.3,y:7.0,w:1.2,d:.8,floor:'#D6B88C',pz:24},
 ];
 const R=Object.fromEntries(ROOMS.map(r=>[r.id,r]));
 const FURN={
@@ -1616,7 +1616,7 @@ function lineCta(){return CONTACT.line?`<a class="cta" href="${esc(CONTACT.line)
 const CATS=['orange','mochi','kuro','cutie'];
 const CATLOOK={cutie:{body:'#F5EEE2',point:'#9C7A62',eye:'#4F8FD6',fluffy:true,outline:true},orange:{body:'#E6A35A',stripe:'#C9783A',eye:'#2B2420'},mochi:{body:'#FFFFFF',patch:'#E9B98C',eye:'#5C8FBF',outline:true},kuro:{body:'#2A2530',eye:'#F2C14E'}};
 const VIEW={
- dock:()=>`<p class="lead">第一次來無痕？先在碼頭看看怎麼來。</p><p class="sub">到診所之後的流程，可以到諮詢區看。</p>
+ dock:()=>`<p class="lead">先在碼頭看看怎麼來、出發前要準備什麼。</p><p class="sub">到診所之後的流程，可以到諮詢區看。</p>
    <h3 class="h3">怎麼來</h3>
    <dl class="facts"><div><dt>地址</dt><dd>台北市大安區安和路一段86號2樓</dd></div><div><dt>捷運</dt><dd>信義安和站 1 號出口，步行約 3–5 分鐘，7-11 轉角。</dd></div><div><dt>停車</dt><dd>從文昌街 205 號轉進，中信銀行大樓後門有地下停車場；對面也有平面停車場。</dd></div><div><dt>門診時間</dt><dd>週一至週六 10:00–18:00，週日休診</dd></div></dl>
    <div class="ctas"><a class="cta ghost" href="https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E5%8C%97%E5%B8%82%E5%A4%A7%E5%AE%89%E5%8D%80%E5%AE%89%E5%92%8C%E8%B7%AF%E4%B8%80%E6%AE%B586%E8%99%9F" target="_blank" rel="noopener" data-read="google-map">用 Google 地圖導航</a></div>
@@ -1765,7 +1765,7 @@ function openRoom(id,fromHash){
   current=id;
   const i=ORDER.indexOf(id);
   document.getElementById('p-eyebrow').textContent=`2F　第 ${i+1} 站／共 ${ORDER.length} 站`;
-  document.getElementById('p-title').textContent=R[id].name;
+  document.getElementById('p-title').textContent=R[id].title||R[id].name;
   document.getElementById('p-body').innerHTML=VIEW[id]()+mythHTML(id)+readHTML(id);document.querySelector('.p-foot').hidden=false;
   document.getElementById('p-body').scrollTop=0;
   if(id==='lobby'){renderConcern('sag');renderQuiz()}
