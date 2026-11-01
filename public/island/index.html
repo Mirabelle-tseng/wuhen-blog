@@ -198,6 +198,7 @@ body{background:var(--cream);color:var(--navy);font-family:var(--sans);overflow:
 .egg.found .egg-dot{display:none}
 [data-npc]{cursor:pointer}
 #bubble{position:fixed;left:0;top:0;z-index:6;pointer-events:none;max-width:min(240px,70vw);background:var(--paper);color:var(--navy);border:1px solid var(--gold);border-radius:14px;padding:9px 12px;font-size:13.5px;line-height:1.6;box-shadow:0 8px 22px rgba(14,51,95,.22)}
+#bubble{transform-origin:0 0}#bubble.below::after{bottom:auto;top:-6px;transform:translateX(-50%) rotate(225deg)}
 #bubble b{display:block;font:700 11px var(--sans);letter-spacing:.14em;color:var(--gold);margin-bottom:2px}
 #bubble::after{content:"";position:absolute;left:50%;bottom:-6px;width:10px;height:10px;background:var(--paper);border-right:1px solid var(--gold);border-bottom:1px solid var(--gold);transform:translateX(-50%) rotate(45deg)}
 #npctag{position:fixed;left:0;top:0;z-index:4;border:0;padding:3px 8px;border-radius:999px;background:var(--gold);color:#fff;font:700 11px var(--serif);letter-spacing:.12em;box-shadow:0 4px 10px rgba(14,51,95,.25);transition:opacity .4s}
@@ -1282,13 +1283,22 @@ function heart(target){
   h.style.left=(r.left+r.width/2)+'px';h.style.top=(r.top)+'px';document.body.appendChild(h);setTimeout(()=>h.remove(),1100);
 }
 function follow(el,target,off){const r=target.getBoundingClientRect();el.style.transform=`translate(${(r.left+r.width/2).toFixed(1)}px,${(r.top-off).toFixed(1)}px) translate(-50%,-100%)`}
+function nearNpc(x,y){let best=null,bd=34;
+  document.querySelectorAll('#scene [data-npc]').forEach(el=>{const r=el.getBoundingClientRect();if(!r.width)return;
+    const dx=Math.max(r.left-x,0,x-r.right),dy=Math.max(r.top-y,0,y-r.bottom),d=Math.hypot(dx,dy);if(d<bd){bd=d;best=el}});
+  return best}
 function npcFollow(now){
   follow(document.getElementById('npctag'),doctorEl(),4);
   const b=document.getElementById('bubble');
   if(!b.hidden){if(b.contains(document.activeElement))bub.until=Math.max(bub.until,now+8000);if(now>bub.until){b.hidden=true;return}
     const r=npcEl(bub.who).getBoundingClientRect(),off=bub.who==='doctor'?24:6;
-    let x=r.left+r.width/2;const hw=b.offsetWidth/2;x=Math.max(hw+8,Math.min(innerWidth-hw-8,x));
-    b.style.transform=`translate(${x.toFixed(1)}px,${(r.top-off).toFixed(1)}px) translate(-50%,-100%)`}
+    const vv=window.visualViewport,vs=vv?vv.scale||1:1,vl=vv?vv.offsetLeft:0,vt=vv?vv.offsetTop:0,vw=vv?vv.width:innerWidth,vh=vv?vv.height:innerHeight;
+    const hw=b.offsetWidth/vs/2,bh=b.offsetHeight/vs;
+    let x=r.left+r.width/2;x=Math.max(vl+hw+6/vs,Math.min(vl+vw-hw-6/vs,x));
+    let y=r.top-off,below=false;if(y-bh<vt+6/vs){y=r.bottom+10/vs;below=true}
+    y=Math.max(vt+6/vs,Math.min(vt+vh-bh-6/vs,below?y:y-bh))+(below?0:bh);
+    b.classList.toggle('below',below);
+    b.style.transform=`translate(${x.toFixed(1)}px,${y.toFixed(1)}px) scale(${(1/vs).toFixed(3)}) translate(-50%,${below?'0':'-100%'})`}
 }
 
 /* ===== 怡婷對談 ===== */
@@ -1691,7 +1701,7 @@ function fitView(){
   if(a<.8){
     const tEl=document.querySelector('.top'),dEl=document.querySelector('.dock');
     const top=(tEl?tEl.getBoundingClientRect().bottom:0)+40,bot=(dEl?dEl.getBoundingClientRect().top:H)-6;
-    const band=Math.max(bot-top,H*.35),X0=40,X1=760,Y0=28,Y1=590;
+    const band=Math.max(bot-top,H*.35),X0=55,X1=735,Y0=28,Y1=530;
     const k=Math.min(W/(X1-X0),band/(Y1-Y0)),vw=W/k,vh=H/k;
     svg.setAttribute('viewBox',`${(X0+X1)/2-vw/2} ${(Y0+Y1)/2-(top+band/2)/k} ${vw} ${vh}`);
     return;
@@ -1831,7 +1841,7 @@ document.addEventListener('click',e=>{
   const pt=e.target.closest('[data-pet]');if(pt){const k=pt.dataset.pet,n=NPCS[k];petCat(k);sayIdx[k]=((sayIdx[k]??0)+1)%n.lines.length;document.getElementById('say-'+k).textContent=n.lines[sayIdx[k]];heart(pt);return}
   const my=e.target.closest('[data-myth]');if(my){my.setAttribute('aria-pressed',String(my.getAttribute('aria-pressed')!=='true'));return}
   if(e.target.closest('.t-x')){document.getElementById('toast').hidden=true;return}
-  const npc=e.target.closest('[data-npc]');if(npc){say(npc.dataset.npc);return}
+  const npc=e.target.closest('[data-npc]')||(!e.target.closest('[data-egg],[data-sky]')&&e.target.closest('#scene')?nearNpc(e.clientX,e.clientY):null);if(npc){say(npc.dataset.npc);return}
   const eg=e.target.closest('[data-egg]');if(eg){openEgg(eg.dataset.egg);return}
   if(e.target.closest('#stamps')){
     if(visited.size>=ORDER.length)openReward();
