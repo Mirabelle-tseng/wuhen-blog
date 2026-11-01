@@ -365,6 +365,11 @@ body.gaming #toast,body.gaming #bubble{display:none!important}
 .reg-err{margin:0;color:#A4553D;font-size:13px;min-height:1em}
 .reg-done b{font:700 17px var(--serif);color:var(--gold)}
 .reg-done p{margin:6px 0 0;font-size:14px;line-height:1.75}
+.reads{display:grid;gap:8px}
+.read-a{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--navy);text-decoration:none;font-size:14.5px;line-height:1.55}
+.read-a span{color:var(--gold);font-weight:700;flex:0 0 auto}
+.read-a:hover{border-color:var(--gold)}
+.read-a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 /* toast */
 #toast{position:fixed;z-index:30;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 128px);width:min(380px,calc(100vw - 32px));display:flex;gap:10px;align-items:flex-start;background:var(--paper);color:var(--navy);border:1px solid var(--gold);border-radius:16px;padding:14px 12px 14px 16px;box-shadow:0 14px 34px rgba(14,51,95,.28)}
 #toast.show{animation:tin .45s cubic-bezier(.2,.8,.2,1)}
@@ -1187,7 +1192,8 @@ function endGame(burned){
    <p>${sc>=best&&sc>0?'刷新你的最高紀錄！':`最高紀錄：${best}`}</p>
    <div class="g-tip"><b>林醫師的防曬小提醒</b>${tip}</div>
    <p class="fine" style="margin-top:10px">截圖分享你的成績，看看朋友能擋下幾個。</p>
-   <div class="g-btns"><button type="button" class="cta gold" data-gstart>再玩一次</button><button type="button" class="cta ghost" data-gclose>回到島上</button></div>`;
+   <div class="g-btns"><button type="button" class="cta" data-share="game">分享成績給朋友</button><button type="button" class="cta gold" data-gstart>再玩一次</button><button type="button" class="cta ghost" data-gclose>回到島上</button></div>`;
+  shareData.game={text:`我在無痕美學島的防曬大作戰擋下了 ${sc} 個紫外線，拿到「${rank}」！你能贏我嗎？`};
 }
 /* ===== 猜猜我是誰 ===== */
 const YT_LINE='s8604922';
@@ -1214,6 +1220,35 @@ function ytGuess(v){
   if(h)h.textContent=`「${t.slice(0,8)}」不是喔～ ${YT_HINTS[Math.min(ytTries,YT_HINTS.length)-1]}`;
   if(i){i.value='';i.focus()}
 }
+/* ===== 分享 ===== */
+const SITE='https://blog.wuhenclinic.tw/island/';
+let shareData={};
+async function shareIt(kind){
+  const d=shareData[kind];if(!d)return;
+  const url=`${SITE}?utm_source=share&utm_medium=${kind}`;const text=`${d.text}\n${url}`;
+  track('island_share',{kind});
+  try{if(navigator.share){const data={title:'無痕美學島',text};
+      if(d.blob&&navigator.canShare){const f=new File([d.blob],d.fname||'island.png',{type:'image/png'});if(navigator.canShare({files:[f]}))data.files=[f]}
+      await navigator.share(data);return}}catch(e){if(e&&e.name==='AbortError')return}
+  window.open('https://line.me/R/share?text='+encodeURIComponent(text),'_blank','noopener');
+}
+/* ===== 延伸閱讀 ===== */
+const POSTS={
+ rf:['rf-radiofrequency-research','電波拉皮做了沒效果？研究和廣告說的哪裡不一樣'],
+ combo:['energy-devices-and-collagen-stimulators','電波音波與膠原蛋白針可以一起做嗎？'],
+ booster:['skin-booster-vs-ha-filler','水光針是什麼？跟玻尿酸填充差在哪？'],
+ collagen:['collagen-injection-trends','韓國熱門膠原蛋白針趨勢解析'],
+ legal:['check-aesthetic-product-legality','術前必問：如何確認產品是否合法？'],
+ tecar:['tecar-back4-research','TECAR 做了有什麼感覺？'],
+ relation:['medspa-doctor-patient-relationship','便宜沒關係？貴就一定好？醫美是一段醫病關係'],
+ myth:['beauty-formula-myth','別人變美的方法，為什麼不一定適合妳？'],
+ drama:['downtime-drama-review','《假面美顏》觀後感'],
+ korea:['korea-medical-tax-refund-risks','韓國醫美退稅取消後的跨國醫美風險']
+};
+const ROOM_READ={lobby:['myth','collagen'],consult:['relation','myth'],treatment:['legal','tecar'],recovery:['combo','rf'],powder:['booster'],director:['relation','drama'],cats:['korea']};
+const CONCERN_READ={sag:'rf',dry:'booster',spot:'myth',pore:'collagen'};
+const postLink=k=>`<a class="read-a" href="/blog/${POSTS[k][0]}/" target="_blank" rel="noopener" data-read="${POSTS[k][0]}">${POSTS[k][1]}<span aria-hidden="true">→</span></a>`;
+function readHTML(id){const L=ROOM_READ[id];if(!L||!location.hostname.endsWith('wuhenclinic.tw')&&location.hostname!=='localhost')return'';return `<h3 class="h3">延伸閱讀・健康衛教部落格</h3><div class="reads">${L.map(postLink).join('')}</div>`}
 function heart(target){
   const r=target.getBoundingClientRect(),h=document.createElement('div');h.className='heart';h.textContent='♥';
   h.style.left=(r.left+r.width/2)+'px';h.style.top=(r.top)+'px';document.body.appendChild(h);setTimeout(()=>h.remove(),1100);
@@ -1386,16 +1421,16 @@ function renderPNG(svg){return new Promise((res,rej)=>{const img=new Image(),url
 async function refreshWall(){
   const box=document.getElementById('wallprev');if(!box||islander.fi==null)return;
   const svg=wallSVG();
-  try{const b=await renderPNG(svg);if(!document.getElementById('wallprev'))return;if(wallURL)URL.revokeObjectURL(wallURL);wallBlob=b;wallURL=URL.createObjectURL(b);box.innerHTML=`<img src="${wallURL}" alt="你的無痕美學島專屬桌布">`}
+  try{const b=await renderPNG(svg);if(!document.getElementById('wallprev'))return;if(wallURL)URL.revokeObjectURL(wallURL);wallBlob=b;wallURL=URL.createObjectURL(b);shareData.wall={text:`我拿到無痕美學島的島民證了！No.${islander.no}，你也來上島吧。`,blob:b,fname:`無痕美學島-島民證-${islander.no}.png`};box.innerHTML=`<img src="${wallURL}" alt="你的無痕美學島專屬桌布">`}
   catch(_){wallBlob=null;box.innerHTML=svg.replace('<svg ','<svg aria-label="你的無痕美學島專屬桌布" ')}
 }
-function fortuneHTML(){const F=FORTUNES[islander.fi];return `<div class="fortune${F.fest?' fest':''}"><p class="f-no">${fnum(islander.fi)}</p><span class="f-rank">${F.rank}</span><p class="f-title">${F.title}</p><p class="f-poem">${F.poem[0]}<br>${F.poem[1]}</p><p class="f-mean">${F.mean}</p><div class="f-tags"><span>幸運城市：${CITY[F.city]}</span><span>林菀玲醫師 賜籤</span></div></div><div style="text-align:center"><button type="button" class="redraw" data-draw>再抽一支</button></div>`}
+function fortuneHTML(){const F=FORTUNES[islander.fi];shareData.fortune={text:`我在無痕美學島抽到${fnum(islander.fi)}・${F.rank}「${F.title}」：${F.poem[0]}，${F.poem[1]}。你也來抽一支！`};return `<div class="fortune${F.fest?' fest':''}"><p class="f-no">${fnum(islander.fi)}</p><span class="f-rank">${F.rank}</span><p class="f-title">${F.title}</p><p class="f-poem">${F.poem[0]}<br>${F.poem[1]}</p><p class="f-mean">${F.mean}</p><div class="f-tags"><span>幸運城市：${CITY[F.city]}</span><span>林菀玲醫師 賜籤</span></div></div><div style="text-align:center"><button type="button" class="redraw" data-draw>再抽一支</button></div><div class="ctas" style="justify-content:center;margin-top:0"><button type="button" class="cta ghost" data-share="fortune">分享這支籤給朋友</button></div>`}
 function rewardRest(){
   return `<p class="step"><i>2</i>寫上你的島民名字</p>
    <div class="namebox"><input id="islander-name" type="text" maxlength="10" placeholder="例如：小美" value="${esc(islander.name)}" autocomplete="off"></div>
    <p class="step"><i>3</i>你的島民證桌布</p>
    <div class="wallprev" id="wallprev"></div>
-   <div class="ctas" style="justify-content:center"><button type="button" class="cta gold" data-dlwall>下載桌布</button></div>
+   <div class="ctas" style="justify-content:center"><button type="button" class="cta gold" data-dlwall>下載桌布</button><button type="button" class="cta ghost" data-share="wall">分享我的島民證</button></div>
    <p class="fine wall-msg" id="wall-msg">每張都不一樣：籤詩、幸運城市、島民編號，還有你找到的彩蛋和最常摸的貓。</p>
    ${regHTML()}
    <div class="ctas" style="justify-content:center">${lineCta()}</div>`;
@@ -1602,7 +1637,7 @@ const VIEW={
    <div class="ctas"><button type="button" class="cta ghost" data-findyt>想先聊聊？去大廳櫃台找神秘店員</button></div>
    <div class="box"><b>小提醒</b><p>醫療問題需要醫師看到你本人才能判斷，對談與信件以安排時間、一般說明為主。</p></div>`
 };
-function renderConcern(k){const c=CONCERNS[k];document.getElementById('concern').innerHTML=`<dl class="facts"><div><dt>常見樣子</dt><dd>${c.look}</dd></div><div><dt>可能的原因</dt><dd>${c.why}</dd></div><div><dt>醫師可能評估的方向</dt><dd>${c.way}</dd></div></dl><div class="box"><b>面診前想一想</b><p>${c.think}</p></div><p class="fine">實際適合的方式需由醫師面診評估，效果因個人膚況而異。</p><button type="button" class="cta" data-go="consult">到諮詢區找人聊聊</button>`}
+function renderConcern(k){const c=CONCERNS[k];document.getElementById('concern').innerHTML=`<dl class="facts"><div><dt>常見樣子</dt><dd>${c.look}</dd></div><div><dt>可能的原因</dt><dd>${c.why}</dd></div><div><dt>醫師可能評估的方向</dt><dd>${c.way}</dd></div></dl><div class="box"><b>面診前想一想</b><p>${c.think}</p></div><p class="fine">實際適合的方式需由醫師面診評估，效果因個人膚況而異。</p><button type="button" class="cta" data-go="consult">到諮詢區找人聊聊</button>${CONCERN_READ[k]&&(location.hostname.endsWith('wuhenclinic.tw')||location.hostname==='localhost')?`<div class="reads" style="margin-top:14px">${postLink(CONCERN_READ[k])}</div>`:''}`}
 function renderCare(k){document.getElementById('care').innerHTML=`<ul class="dlist">${CARE[k].items.map(t=>`<li>${t}</li>`).join('')}</ul>`}
 
 /* ===== view box & camera ===== */
@@ -1681,7 +1716,7 @@ function openRoom(id,fromHash){
   const i=ORDER.indexOf(id);
   document.getElementById('p-eyebrow').textContent=`2F　第 ${i+1} 站／共 ${ORDER.length} 站`;
   document.getElementById('p-title').textContent=R[id].name;
-  document.getElementById('p-body').innerHTML=VIEW[id]()+mythHTML(id);document.querySelector('.p-foot').hidden=false;
+  document.getElementById('p-body').innerHTML=VIEW[id]()+mythHTML(id)+readHTML(id);document.querySelector('.p-foot').hidden=false;
   document.getElementById('p-body').scrollTop=0;
   if(id==='lobby'){renderConcern('sag');renderQuiz()}
   if(id==='recovery')renderCare('energy');
@@ -1718,7 +1753,7 @@ function applyPhase(){
 /* ===== events ===== */
 document.addEventListener('click',e=>{
   const lk=e.target.closest&&e.target.closest('a[href]');
-  if(lk){const h=lk.getAttribute('href');if(h.includes('lin.ee'))track('island_line_booking_click');else if(h.includes('line.me/ti/p'))track('island_line_add_friend');else if(h.includes('docs.google.com/forms'))track('island_form_click');else if(h.startsWith('mailto:'))track('island_mail_click');}
+  if(lk){const h=lk.getAttribute('href');if(lk.dataset.read)track('island_article_click',{article:lk.dataset.read});if(h.includes('lin.ee'))track('island_line_booking_click');else if(h.includes('line.me/ti/p'))track('island_line_add_friend');else if(h.includes('docs.google.com/forms'))track('island_form_click');else if(h.startsWith('mailto:'))track('island_mail_click');}
   const go=e.target.closest('[data-go]');if(go){openRoom(go.dataset.go);return}
   const c=e.target.closest('[data-c]');if(c){c.parentElement.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',String(b===c)));renderConcern(c.dataset.c);return}
   const k=e.target.closest('[data-k]');if(k){k.parentElement.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',String(b===k)));renderCare(k.dataset.k);return}
@@ -1734,6 +1769,7 @@ document.addEventListener('click',e=>{
   const cs=e.target.closest('[data-copysum]');if(cs){const t=cs.dataset.copysum;try{navigator.clipboard.writeText(t).then(()=>{cs.textContent='已複製'},()=>{cs.textContent='請手動選取上方內容'})}catch(_){cs.textContent='請手動選取上方內容'}return}
   const qa=e.target.closest('[data-qa]');if(qa){const Q=QUIZ[quiz.step];quiz.ans.push(Q.a[+qa.dataset.qa][1]);quiz.step++;renderQuiz();return}
   if(e.target.closest('[data-qagain]')){quiz={step:0,ans:[]};renderQuiz();return}
+  const sh=e.target.closest('[data-share]');if(sh){shareIt(sh.dataset.share);return}
   if(e.target.closest('[data-game]')){openGame();return}
   if(e.target.closest('[data-gstart]')){startGame();return}
   if(e.target.closest('[data-gclose]')){closeGame();return}
