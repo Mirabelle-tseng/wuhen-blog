@@ -1233,7 +1233,7 @@ async function shareIt(kind){
   window.open('https://line.me/R/share?text='+encodeURIComponent(text),'_blank','noopener');
 }
 /* ===== 延伸閱讀 ===== */
-const POSTS={
+const POSTS={aftercare:['aftercare-basics','醫美療程後怎麼照顧？術後原則整理'],makeup:['makeup-after-treatment','醫美療程後多久可以化妝？'],
  rf:['rf-radiofrequency-research','電波拉皮做了沒效果？研究和廣告說的哪裡不一樣'],
  combo:['energy-devices-and-collagen-stimulators','電波音波與膠原蛋白針可以一起做嗎？'],
  booster:['skin-booster-vs-ha-filler','水光針是什麼？跟玻尿酸填充差在哪？'],
@@ -1245,7 +1245,7 @@ const POSTS={
  drama:['downtime-drama-review','《假面美顏》觀後感'],
  korea:['korea-medical-tax-refund-risks','韓國醫美退稅取消後的跨國醫美風險']
 };
-const ROOM_READ={lobby:['myth','collagen'],consult:['relation','myth'],treatment:['legal','tecar'],recovery:['combo','rf'],powder:['booster'],director:['relation','drama'],cats:['korea']};
+const ROOM_READ={lobby:['myth','collagen'],consult:['relation','myth'],treatment:['legal','tecar'],recovery:['aftercare','combo'],powder:['makeup','booster'],director:['relation','drama'],cats:['korea']};
 const CONCERN_READ={sag:'rf',dry:'booster',spot:'myth',pore:'collagen'};
 const postLink=k=>`<a class="read-a" href="/blog/${POSTS[k][0]}/" target="_blank" rel="noopener" data-read="${POSTS[k][0]}">${POSTS[k][1]}<span aria-hidden="true">→</span></a>`;
 function readHTML(id){const L=ROOM_READ[id];if(!L||!location.hostname.endsWith('wuhenclinic.tw')&&location.hostname!=='localhost')return'';return `<h3 class="h3">延伸閱讀・健康衛教部落格</h3><div class="reads">${L.map(postLink).join('')}</div>`}
