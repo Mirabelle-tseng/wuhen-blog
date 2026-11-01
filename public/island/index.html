@@ -4,19 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>無痕美學島｜無痕美學診所</title>
-<meta name="description" content="無痕美學診所的互動小島：七個空間點進去看衛教，防曬小遊戲、貓咖區、院長保養籤，逛完拿一張專屬島民證桌布。">
+<meta name="description" content="無痕美學診所的互動小島：八個空間點進去看衛教，防曬小遊戲、貓咖區、院長保養籤，逛完拿一張專屬島民證桌布。">
 <link rel="canonical" href="https://blog.wuhenclinic.tw/island/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://blog.wuhenclinic.tw/island/">
 <meta property="og:title" content="無痕美學島：我們把診所做成一座會動的小島">
-<meta property="og:description" content="無痕美學診所的互動小島：七個空間點進去看衛教，防曬小遊戲、貓咖區、院長保養籤，逛完拿一張專屬島民證桌布。">
+<meta property="og:description" content="無痕美學診所的互動小島：八個空間點進去看衛教，防曬小遊戲、貓咖區、院長保養籤，逛完拿一張專屬島民證桌布。">
 <meta property="og:image" content="https://blog.wuhenclinic.tw/island/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="zh_TW">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="無痕美學島：我們把診所做成一座會動的小島">
-<meta name="twitter:description" content="無痕美學診所的互動小島：七個空間點進去看衛教，防曬小遊戲、貓咖區、院長保養籤，逛完拿一張專屬島民證桌布。">
+<meta name="twitter:description" content="無痕美學診所的互動小島：八個空間點進去看衛教，防曬小遊戲、貓咖區、院長保養籤，逛完拿一張專屬島民證桌布。">
 <meta name="twitter:image" content="https://blog.wuhenclinic.tw/island/og.jpg">
 <meta name="copyright" content="© 2026 無痕美學診所 版權所有">
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -97,6 +97,7 @@ body{background:var(--cream);color:var(--navy);font-family:var(--sans);overflow:
 
 /* pins */
 #pins{position:absolute;inset:0;pointer-events:none;z-index:4}
+.boat{animation:boatbob 4s ease-in-out infinite}@keyframes boatbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 .pin{position:absolute;left:0;top:0;pointer-events:auto;border:0;background:none;padding:0;cursor:pointer;will-change:transform;transition:opacity .4s}
 .pin .face{display:flex;align-items:center;gap:6px;white-space:nowrap;font:700 13px/1 var(--serif);letter-spacing:.06em;color:var(--navy);
   background:rgba(251,248,243,.95);border:1px solid var(--gold);border-radius:999px;padding:7px 12px 7px 9px;box-shadow:0 6px 16px rgba(14,51,95,.18);
@@ -478,7 +479,7 @@ body.reading #toast{bottom:auto;top:calc(env(safe-area-inset-top,0px) + 12px)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 @media (prefers-reduced-motion:reduce){
-  #bob,#shadow,.ripple,.cloud-move,.twinkle,.spark,.pin .face,.bill,.eye,.egg-dot .ping,.stamps.full,#yttag .dot,.typing i,.tail,.heart,.jiao.toss .jb,.drum.shake,.zz,.rd,.fogb,.sn,.fw,.lantern,.floatup,.bird,.twk{animation:none}
+  #bob,#shadow,.ripple,.cloud-move,.twinkle,.spark,.pin .face,.bill,.eye,.egg-dot .ping,.stamps.full,#yttag .dot,.typing i,.tail,.heart,.jiao.toss .jb,.drum.shake,.zz,.rd,.fogb,.sn,.fw,.lantern,.floatup,.bird,.twk,.boat{animation:none}
   .rd,.sn{display:none}.fw{opacity:1}
   .m-face{transition:none}
   .ripple{opacity:.25}
@@ -487,7 +488,7 @@ body.reading #toast{bottom:auto;top:calc(env(safe-area-inset-top,0px) + 12px)}
 
 <div id="world" data-phase="day">
   <div class="sky dawn"></div><div class="sky day"></div><div class="sky dusk"></div><div class="sky night"></div>
-  <svg id="scene" viewBox="40 20 720 660" preserveAspectRatio="xMidYMid meet" role="img" aria-label="無痕美學診所 2 樓的立體小島地圖，可點選七個空間">
+  <svg id="scene" viewBox="40 20 720 660" preserveAspectRatio="xMidYMid meet" role="img" aria-label="無痕美學診所 2 樓的立體小島地圖，可點選八個空間">
     <defs>
       <radialGradient id="g-glow"><stop offset="0" stop-color="#FFD891" stop-opacity=".75"/><stop offset="1" stop-color="#FFD891" stop-opacity="0"/></radialGradient>
       <linearGradient id="g-rockL" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1B4677"/><stop offset="1" stop-color="#0B2443"/></linearGradient>
@@ -516,7 +517,7 @@ body.reading #toast{bottom:auto;top:calc(env(safe-area-inset-top,0px) + 12px)}
     <div class="brand">
       <h1>無痕美學島</h1>
       <p>會動的診所小島，逛完還能抽一支保養籤</p>
-      <p class="addr">安和路一段86號 2樓，七個空間，點進去逛逛</p>
+      <p class="addr">安和路一段86號 2樓，八個空間，點進去逛逛</p>
       <p class="cityname"><span class="dia"></span><span id="cityname">巴黎・白天</span></p>
     </div>
     <div class="clock" role="group" aria-label="島上的時間與城市">
@@ -698,6 +699,7 @@ const ROOMS=[
  {id:'powder',name:'化妝間',x:0,y:4,w:2,d:2,floor:'#F3E5E0',pz:40},
  {id:'director',name:'院長辦公室',x:0,y:0,w:2,d:2,floor:'#D9C2A1',pz:82},
  {id:'cats',name:'貓咖區',x:7.4,y:3.4,w:1.8,d:1.8,floor:'#F1E3D3',pz:14},
+ {id:'dock',name:'碼頭',x:1.3,y:7.0,w:1.2,d:.8,floor:'#D6B88C',pz:24},
 ];
 const R=Object.fromEntries(ROOMS.map(r=>[r.id,r]));
 const FURN={
@@ -768,7 +770,7 @@ function buildIsland(){
   s+=poly([iso(-m,6+m,0),iso(6+m,6+m,0),iso(6+m,6+m,-th),iso(-m,6+m,-th)],'#D9CBB4',STK);
   s+=poly([iso(6+m,-m,0),iso(6+m,6+m,0),iso(6+m,6+m,-th),iso(6+m,-m,-th)],'#C2AF91',STK);
   s+=poly([iso(-m,-m,0),iso(6+m,-m,0),iso(6+m,6+m,0),iso(-m,6+m,0)],'#E4DBCB','stroke="#B08D57" stroke-width="1.6" stroke-linejoin="round"');
-  ROOMS.filter(r=>r.id!=='cats').forEach(r=>{s+=`<g class="room" data-room="${r.id}">${floor(r.x,r.y,r.w,r.d,r.floor,r.id)}</g>`});
+  ROOMS.filter(r=>r.id!=='cats'&&r.id!=='dock').forEach(r=>{s+=`<g class="room" data-room="${r.id}">${floor(r.x,r.y,r.w,r.d,r.floor,r.id)}</g>`});
   s+=poly([iso(2,2,.5),iso(6,2,.5),iso(6,3,.5),iso(3,3,.5),iso(3,6,.5),iso(2,6,.5)],'#E7DDCC','stroke="rgba(14,51,95,.12)" stroke-width=".8"');
   {const a=iso(2.5,6,.6),b=iso(2.5,2.5,.6),c=iso(6,2.5,.6);s+=`<polyline points="${a} ${b} ${c}" fill="none" stroke="#B08D57" stroke-opacity=".65" stroke-width="1.4" stroke-dasharray="3 7" stroke-linecap="round"/>`}
   ['director','consult','treatment','powder','recovery'].forEach(id=>{s+=`<g class="room" data-room="${id}">${FURN[id]()}</g>`});
@@ -780,6 +782,7 @@ function buildIsland(){
   s+=`<g class="room" data-room="lobby">${lobbyFront()}</g><g id="staff" data-npc="yiting" role="button" tabindex="0" aria-label="大廳櫃台的神秘店員">${fig(NPCS.yiting.look)}</g>`;
   s+=`<g id="guest">${person('guest')}</g>`;
   [[.6,6.28],[1.5,6.28],[2.4,6.28],[3.3,6.28],[4.1,6.28],[6.28,.6],[6.28,1.6],[6.28,2.6],[6.28,3.5],[6.28,5.1]].forEach(([x,y],i)=>{const c=iso(x,y,0);s+=`<ellipse cx="${c[0]}" cy="${c[1]-3}" rx="${8+(i%3)}" ry="${5+(i%2)}" fill="${i%2?'#8EAA88':'#7C9877'}"/>`});
+  s+=dockArea();
   s+=catIsland();
   s+='<g id="islanders"></g>';
   document.getElementById('art').innerHTML=s;
@@ -809,6 +812,31 @@ function catFig(c){
   <text class="zz" x="9" y="-15" font-size="5" font-weight="700" fill="#8E7CF0">z</text><text class="zz zz2" x="12" y="-19.5" font-size="4" font-weight="700" fill="#8E7CF0">z</text>
   <path d="M5.2,-7.9 L5.7,-7.3 L6.2,-7.9" fill="none" stroke="#C0605A" stroke-width=".5"/>
   <path d="M8.6,-8.2 L11,-8.6 M8.6,-7.6 L11,-7.2" stroke="rgba(14,51,95,.35)" stroke-width=".35"/>`;
+}
+function dockArea(){
+  const x0=1.3,y0=7.0,w=1.2,d=.8,th=5;let s='';
+  /* walkway from island edge */
+  s+=poly([iso(1.7,6.18,0),iso(2.1,6.18,0),iso(2.1,y0,0),iso(1.7,y0,0)],'#CBA978',STK);
+  s+=poly([iso(2.1,6.18,0),iso(2.1,y0,0),iso(2.1,y0,-3),iso(2.1,6.18,-3)],'#A8865C',STK);
+  for(let y=6.3;y<y0;y+=.14){const a=iso(1.7,y,0),b=iso(2.1,y,0);s+=`<line x1="${a[0].toFixed(1)}" y1="${a[1].toFixed(1)}" x2="${b[0].toFixed(1)}" y2="${b[1].toFixed(1)}" stroke="rgba(90,60,30,.35)" stroke-width=".7"/>`}
+  [1.7,2.1].forEach(x=>{[6.3,6.65].forEach(y=>{const a=iso(x,y,0),b=iso(x,y,8);s+=`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#8C6A44" stroke-width="1.4"/>`});
+    const a=iso(x,6.3,8),c=iso(x,6.48,5),b=iso(x,6.65,8);s+=`<path d="M${a[0]},${a[1]} Q${c[0]},${c[1]+3} ${b[0]},${b[1]}" fill="none" stroke="#B08D57" stroke-width="1"/>`});
+  /* platform */
+  let r='';
+  r+=poly([iso(x0,y0+d,0),iso(x0+w,y0+d,0),iso(x0+w,y0+d,-th),iso(x0,y0+d,-th)],'#A8865C',STK);
+  r+=poly([iso(x0+w,y0,0),iso(x0+w,y0+d,0),iso(x0+w,y0+d,-th),iso(x0+w,y0,-th)],'#8C6A44',STK);
+  r+=`<polygon class="floor" id="floor-dock" points="${P([iso(x0,y0,0),iso(x0+w,y0,0),iso(x0+w,y0+d,0),iso(x0,y0+d,0)])}" fill="#D6B88C" stroke="#B08D57" stroke-width="1.2" stroke-linejoin="round"/>`;
+  for(let x=x0+.12;x<x0+w;x+=.12){const a=iso(x,y0,0),b=iso(x,y0+d,0);r+=`<line x1="${a[0].toFixed(1)}" y1="${a[1].toFixed(1)}" x2="${b[0].toFixed(1)}" y2="${b[1].toFixed(1)}" stroke="rgba(90,60,30,.28)" stroke-width=".6"/>`}
+  [[x0,y0+d],[x0+w,y0+d],[x0+w,y0]].forEach(([x,y])=>{r+=cyl(x,y,-th,.05,th+7,'#7A5A38')});
+  /* lamp post */
+  r+=cyl(x0+.15,y0+.15,0,.03,30,'#0E335F');{const c=iso(x0+.15,y0+.15,30);r+=`<circle class="twk" cx="${c[0]}" cy="${c[1]-2}" r="3.2" fill="#F2C14E"/><path d="M${c[0]-4},${c[1]-4} L${c[0]+4},${c[1]-4} L${c[0]},${c[1]-9}Z" fill="#0E335F"/>`}
+  /* rope coil + crate */
+  r+=box(x0+.85,y0+.1,0,.22,.22,8,'#B58B60');
+  {const c=iso(x0+.95,y0+.6,0);r+=`<ellipse cx="${c[0]}" cy="${c[1]-1.5}" rx="5" ry="2.6" fill="none" stroke="#C9A36A" stroke-width="1.6"/><ellipse cx="${c[0]}" cy="${c[1]-1.5}" rx="2.6" ry="1.3" fill="none" stroke="#C9A36A" stroke-width="1.2"/>`}
+  /* little boat floating beside, bobbing */
+  {const c=iso(x0+w+.5,y0+.6,-2);r+=`<g class="boat"><g transform="translate(${c[0].toFixed(1)},${c[1].toFixed(1)})"><ellipse cx="0" cy="6" rx="20" ry="4" fill="rgba(255,255,255,.55)"/><path d="M-19,-2 L19,-2 L13,6 L-13,6Z" fill="#0E335F"/><path d="M-19,-2 L19,-2 L18,0 L-18,0Z" fill="#B08D57"/><line x1="0" y1="-2" x2="0" y2="-26" stroke="#7A5A38" stroke-width="1.4"/><path d="M1,-25 L14,-6 L1,-6Z" fill="#FFFDF9" stroke="rgba(14,51,95,.25)" stroke-width=".6"/><path d="M-1,-22 L-10,-6 L-1,-6Z" fill="#F2EDE6" stroke="rgba(14,51,95,.25)" stroke-width=".6"/><path d="M0,-26 L6,-24 L0,-22Z" fill="#B08D57"/></g></g>`}
+  s+=`<g class="room" data-room="dock">${r}</g>`;
+  return s;
 }
 function catIsland(){
   const x0=7.4,y0=3.4,w=1.8,m=.18,th=14;let s='';
@@ -996,7 +1024,7 @@ function buildCities(){
 }
 
 /* ===== content ===== */
-const ORDER=['lobby','consult','treatment','recovery','powder','director','cats'];
+const ORDER=['dock','lobby','consult','treatment','recovery','powder','director','cats'];
 const CONCERNS={
  sag:{name:'鬆弛下垂',look:'法令紋變深、下顎線不再俐落、蘋果肌好像往下走了。',why:'膠原蛋白隨年齡慢慢流失，加上筋膜與脂肪墊位移，日曬和作息也有影響。',way:'常見的評估方向是電波、音波這類能量型設備；部分情況會搭配注射類療程。',think:'你在意的是「輪廓線條」還是「皮膚的緊實感」？描述得越具體，醫師越好判斷。'},
  spot:{name:'斑點暗沉',look:'曬斑、雀斑、肝斑，或是整體膚色不均、氣色差。',why:'紫外線、荷爾蒙變化，以及痘痘或發炎後留下的色素沉澱。',way:'常見的評估方向是雷射與光療類療程，並搭配居家防曬與保養。不同的斑處理方式差很多，肝斑尤其不適合用力打。',think:'斑是最近才出現，還是好幾年了？懷孕、換藥或換保養品之後有沒有變化？'},
@@ -1588,6 +1616,20 @@ function lineCta(){return CONTACT.line?`<a class="cta" href="${esc(CONTACT.line)
 const CATS=['orange','mochi','kuro','cutie'];
 const CATLOOK={cutie:{body:'#F5EEE2',point:'#9C7A62',eye:'#4F8FD6',fluffy:true,outline:true},orange:{body:'#E6A35A',stripe:'#C9783A',eye:'#2B2420'},mochi:{body:'#FFFFFF',patch:'#E9B98C',eye:'#5C8FBF',outline:true},kuro:{body:'#2A2530',eye:'#F2C14E'}};
 const VIEW={
+ dock:()=>`<p class="lead">第一次來無痕？先在碼頭看看怎麼來。</p><p class="sub">到診所之後的流程，可以到諮詢區看。</p>
+   <h3 class="h3">怎麼來</h3>
+   <dl class="facts"><div><dt>地址</dt><dd>台北市大安區安和路一段86號2樓</dd></div><div><dt>捷運</dt><dd>信義安和站 1 號出口，步行約 3–5 分鐘，7-11 轉角。</dd></div><div><dt>停車</dt><dd>從文昌街 205 號轉進，中信銀行大樓後門有地下停車場；對面也有平面停車場。</dd></div><div><dt>門診時間</dt><dd>週一至週六 10:00–18:00，週日休診</dd></div></dl>
+   <div class="ctas"><a class="cta ghost" href="https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E5%8C%97%E5%B8%82%E5%A4%A7%E5%AE%89%E5%8D%80%E5%AE%89%E5%92%8C%E8%B7%AF%E4%B8%80%E6%AE%B586%E8%99%9F" target="_blank" rel="noopener" data-read="google-map">用 Google 地圖導航</a></div>
+   <h3 class="h3">出發前準備</h3>
+   <ul class="dlist">
+    <li>有在吃的藥、保健食品，或最近做過的療程，面診時告訴醫師。</li>
+    <li>想問的問題，先記在手機裡。</li>
+    <li>皮膚最近有傷口、過敏或曬傷，預約時先告訴我們。</li>
+    <li>想當天就做療程的話，預約時先說，我們會預留時間。</li>
+   </ul>
+   <h3 class="h3">常見問題</h3>
+   <dl class="facts"><div><dt>需要先預約嗎？</dt><dd>無痕是預約制，請先用 LINE 預約時間。</dd></div><div><dt>可以帶朋友一起來嗎？</dt><dd>可以，預約時告訴我們人數就好。</dd></div><div><dt>諮詢完一定要做療程嗎？</dt><dd>不用，可以回家想清楚再決定。</dd></div></dl>
+   <div class="ctas">${lineCta()}<button type="button" class="cta ghost" data-go="consult">看到院後的流程 →</button></div>`,
  cats:()=>`<p class="lead">逛累了嗎？來貓咖坐一下。</p><p class="sub">喝口水、摸摸貓，放鬆一下再繼續逛。</p>
    <div class="box"><b>先說清楚</b><p>這是島上的虛擬貓咖。無痕美學診所內沒有養貓，對貓過敏也可以放心來診所。</p></div>
    <h3 class="h3">島上的四隻貓</h3>
