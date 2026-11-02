@@ -205,6 +205,9 @@ body{background:var(--cream);color:var(--navy);font-family:var(--sans);overflow:
 #npctag{position:fixed;left:0;top:0;z-index:4;border:0;padding:3px 8px;border-radius:999px;background:var(--gold);color:#fff;font:700 11px var(--serif);letter-spacing:.12em;box-shadow:0 4px 10px rgba(14,51,95,.25);transition:opacity .4s}
 #npctag:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
 body.reading #npctag{opacity:0;pointer-events:none}
+.isl-tag{position:fixed;left:0;top:0;z-index:4;border:1px solid var(--gold);padding:2px 7px;border-radius:999px;background:rgba(251,248,243,.92);color:var(--navy);font:700 10.5px var(--sans);letter-spacing:.06em;white-space:nowrap;box-shadow:0 3px 8px rgba(14,51,95,.2);cursor:pointer;transition:opacity .4s}
+.isl-tag.me{background:var(--gold);color:#fff}
+body.reading .isl-tag,body.gaming .isl-tag{opacity:0;pointer-events:none}
 
 .b-row{display:flex;gap:9px;align-items:center}
 .av{flex:0 0 auto;width:38px;height:38px;border-radius:50%;overflow:hidden;border:1.5px solid var(--gold);display:block}
@@ -1291,6 +1294,7 @@ function nearNpc(x,y){let best=null,bd=34;
   return best}
 function npcFollow(now){
   follow(document.getElementById('npctag'),doctorEl(),4);
+  ISL.forEach(it=>{if(it.tag){const el=document.getElementById(it.key);if(el)follow(it.tag,el,3)}});
   const b=document.getElementById('bubble');
   if(!b.hidden){if(b.contains(document.activeElement))bub.until=Math.max(bub.until,now+8000);if(now>bub.until){b.hidden=true;return}
     const r=npcEl(bub.who).getBoundingClientRect(),off=bub.who==='doctor'?24:6;
@@ -1522,10 +1526,11 @@ function addIslanders(names,selfOnly){
     const look=ISL_LOOKS[h%ISL_LOOKS.length];
     NPCS[key]={name:esc(it.self?it.name+'（你）':it.name),role:'島民',el:key,lines:[it.self?'這是你！其他人要等審核通過後才看得到你。'+(it.msg?`<br><small>你的留言：「${esc(it.msg)}」</small>`:''):(it.msg?`「${esc(it.msg)}」`:`${esc(it.name)} 已經登記成為島民，在島上定居了。`)]};
     const g=document.createElementNS('http://www.w3.org/2000/svg','g');g.id=key;g.setAttribute('data-npc',key);g.setAttribute('role','button');g.setAttribute('tabindex','0');g.setAttribute('aria-label','島民 '+it.name);
-    g.innerHTML='<g transform="scale(.72)">'+fig(look)+(it.self?'<circle cx="0" cy="-46" r="3.2" fill="#F2C14E" stroke="#fff" stroke-width="1"/>':'')+'</g>';
+    g.innerHTML='<g transform="scale(.9)">'+fig(look)+(it.self?'<circle cx="0" cy="-46" r="3.2" fill="#F2C14E" stroke="#fff" stroke-width="1"/>':'')+'</g>';
     const p0=iso(pts[0][0],pts[0][1]);g.setAttribute('transform',`translate(${p0[0]},${p0[1]})`);
     layer.appendChild(g);
-    ISL.push({key,self:it.self,r:route(pts,.12+rr()*.12,2+rr()*4),off:rr()*20});lastDir[key]=1;
+    const tg=document.createElement('button');tg.type='button';tg.className='isl-tag'+(it.self?' me':'');tg.dataset.npc=key;tg.textContent=it.self?'你':it.name;tg.setAttribute('aria-label','和島民 '+it.name+' 打招呼');document.body.appendChild(tg);
+    ISL.push({key,tag:tg,self:it.self,r:route(pts,.12+rr()*.12,2+rr()*4),off:rr()*20});lastDir[key]=1;
   });
 }
 async function loadIslanders(){
