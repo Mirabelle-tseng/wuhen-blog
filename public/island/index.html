@@ -1070,7 +1070,7 @@ const NPCS={
  cutie:{name:'小可愛',role:'院長的愛貓',el:'cat-cutie',persona:'布偶貓，院長的愛貓，平常待在院長辦公室',lines:['喵～我是小可愛，院長的愛貓，平常都在院長辦公室陪她。','院長每天都說「先把基礎保養顧好」，我都聽到會背了。','布偶貓的毛很怕打結，就像皮膚怕乾燥，每天都要好好照顧喔。','偷偷告訴你，院長最喜歡我了。']},
  kuro:{name:'黑糖',role:'貓店員',el:'cat-kuro',persona:'黑貓，高冷、只在貓跳台上',lines:['哼，晚上才是我的時間。不過你別熬夜，早點睡。','別一直摸我的臉。你也是，手一直摸臉容易長痘痘。','保持乾淨是基本禮貌。今天卸妝卸乾淨了嗎？']},
  gold:{name:'金金',role:'貓店員',el:'cat-gold',lines:['喵～我是很少出現的金色貓！遇到我，今天會是好運的一天。','偷偷告訴你：好運不能代替防曬喔。','你運氣真好。下次來，不一定還遇得到我。']},
- zhan:{name:'詹老闆',role:'咖啡豆烘焙師',at:[5.22,4.95],look:{top:'#3B2A20',vneck:'#F2EDE6',hair:'short',quiff:true,stubble:true,thin:true,hairc:'#1E1814',skin:'#EBC7AE',eyes:'deep',brow:true,glow:true,legs:'#2B2420',item:'cup'},lines:['我是詹老闆，無痕美學選用的是我們杜克勞的咖啡豆。','想喝拿鐵還是美式？冰的、熱的，都可以跟櫃台說。','豆子在基隆的烘豆廠烘好，再送來診所。','我的店叫杜克勞，名字來自把咖啡樹苗帶到加勒比海的法國軍官。']},
+ zhan:{name:'杜克勞・詹',role:'咖啡豆烘焙師',at:[5.22,4.95],look:{top:'#3B2A20',vneck:'#F2EDE6',hair:'short',quiff:true,stubble:true,thin:true,hairc:'#1E1814',skin:'#EBC7AE',eyes:'deep',brow:true,glow:true,legs:'#2B2420',item:'cup'},lines:['我是杜克勞・詹，無痕美學選用的是我們杜克勞的咖啡豆。','想喝拿鐵還是美式？冰的、熱的，都可以跟櫃台說。','豆子在基隆的烘豆廠烘好，再送來診所。','我的店叫杜克勞，名字來自把咖啡樹苗帶到加勒比海的法國軍官。']},
  yiting:{name:'怡婷',role:'店經理',el:'staff',look:{top:'#0E335F',trim:'#B08D57',hair:'wave',hairc:'#5B3D2C',skin:'#F6DECF',eyes:'deep',brow:true,glow:true,pin:'#E9CF9E'}}
 };
 const npcEl=k=>document.getElementById(NPCS[k].el||('npc-'+k));
@@ -1665,7 +1665,7 @@ const VIEW={
    <div class="seg" role="tablist" aria-label="膚況">${Object.entries(CONCERNS).map(([k,v],i)=>`<button type="button" role="tab" data-c="${k}" aria-selected="${i===0}">${v.name}</button>`).join('')}</div>
    <div id="concern" role="tabpanel"></div>
    <h3 class="h3">大廳的咖啡</h3>
-   <p class="sub"><b>無痕美學選用杜克勞咖啡。</b>烘豆的是詹老闆，豆子在他基隆的烘豆廠烘好，再送到診所。</p>
+   <p class="sub"><b>無痕美學選用杜克勞咖啡。</b>烘豆的是杜克勞・詹，豆子在他基隆的烘豆廠烘好，再送到診所。</p>
    <p class="sub">來診所時可以跟櫃台點一杯：拿鐵或美式，冰的、熱的都可以。先在這裡選選看？</p>
    <div class="seg" aria-label="點一杯咖啡">${['冰拿鐵','熱拿鐵','冰美式','熱美式'].map(d=>`<button type="button" data-coffee="${d}">${d}</button>`).join('')}</div>
    <p id="coffee-out" class="sub" aria-live="polite"></p>
@@ -1854,7 +1854,7 @@ function applyPhase(){
 /* ===== events ===== */
 document.addEventListener('click',e=>{
   const cf=e.target.closest('[data-coffee]');if(cf){const d=cf.dataset.coffee;document.querySelectorAll('[data-coffee]').forEach(b=>b.setAttribute('aria-pressed',b===cf));
-    const o=document.getElementById('coffee-out');if(o)o.innerHTML=`<b>詹老闆：</b>一杯${esc(d)}，記下來了！到診所時跟櫃台說一聲就好。`;track('island_coffee_pick',{drink:d});return}
+    const o=document.getElementById('coffee-out');if(o)o.innerHTML=`<b>杜克勞・詹：</b>一杯${esc(d)}，記下來了！到診所時跟櫃台說一聲就好。`;track('island_coffee_pick',{drink:d});return}
   const lk=e.target.closest&&e.target.closest('a[href]');
   if(lk){const h=lk.getAttribute('href');if(lk.dataset.read)track('island_article_click',{article:lk.dataset.read});if(h.includes('lin.ee'))track('island_line_booking_click');else if(h.includes('line.me/ti/p'))track('island_line_add_friend');else if(h.includes('docs.google.com/forms'))track('island_form_click');else if(h.startsWith('mailto:'))track('island_mail_click');}
   const go=e.target.closest('[data-go]');if(go){openRoom(go.dataset.go);return}
