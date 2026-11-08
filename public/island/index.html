@@ -640,6 +640,7 @@ function fig(o){
   ${o.glow?'<ellipse cx="-1.6" cy="-30.6" rx="2" ry="1" fill="#fff" opacity=".55"/><ellipse cx="2.6" cy="-26.6" rx="1.1" ry=".6" fill="#fff" opacity=".45"/>':''}
   <path d="M-5.9,-28.5 A5.9,5.9 0 0 1 5.9,-29.5 L5,-31 Q0,-36.5 -5,-31 Z" fill="${hair}"/>
   ${o.hair==='short'?`<path d="M-5.9,-29 Q-6.2,-26 -5.2,-25.2 L-4.6,-29Z M5.9,-29 Q6.2,-26 5.2,-25.2 L4.6,-29Z" fill="${hair}"/>`:`<path d="M-5.9,-29.4 Q-6.9,-25 -5.9,-22.4 Q-5,-24.5 -4.7,-29Z M5.9,-29.4 Q6.9,-25 5.9,-22.4 Q5,-24.5 4.7,-29Z" fill="${hair}"/>`}
+  ${o.quiff?`<path d="M-5.8,-30.6 Q-4.6,-37.8 2.6,-37 Q6.8,-36 5.9,-30.4 Q3.6,-33.4 -1.2,-32.6 Q-4.2,-32.2 -5.8,-30.6Z" fill="${hair}"/>`:''}${o.stubble?'<path d="M-3.4,-25.2 Q0,-22.6 3.4,-25.2" fill="none" stroke="rgba(43,36,32,.16)" stroke-width=".9" stroke-linecap="round"/>':''}
   ${o.brow?`<path d="M-3.4,-30.4 Q-2.2,-31.2 -1,-30.6 M1,-30.6 Q2.2,-31.2 3.4,-30.4" fill="none" stroke="${hair}" stroke-width=".55" stroke-linecap="round"/>`:''}
   ${o.eyes==='big'?'<circle cx="-2.1" cy="-28.4" r="1.05" fill="#2B2420"/><circle cx="2.1" cy="-28.4" r="1.05" fill="#2B2420"/><circle cx="-1.8" cy="-28.8" r=".38" fill="#fff"/><circle cx="2.4" cy="-28.8" r=".38" fill="#fff"/>':(o.eyes==='smile'?'<path d="M-3,-28.2 Q-2.1,-29.2 -1.2,-28.2 M1.2,-28.2 Q2.1,-29.2 3,-28.2" fill="none" stroke="#2B2420" stroke-width=".6" stroke-linecap="round"/>':(o.eyes==='deep'?'<ellipse cx="-2.1" cy="-28.3" rx=".95" ry=".8" fill="#4A3426"/><ellipse cx="2.1" cy="-28.3" rx=".95" ry=".8" fill="#4A3426"/><path d="M-3.2,-29 L-1,-29.2 M1,-29.2 L3.2,-29" stroke="#2B2420" stroke-width=".45"/><path d="M0,-28 L-.4,-26.4 L.3,-26.3" fill="none" stroke="#D7A98E" stroke-width=".4"/><circle cx="-1.8" cy="-28.6" r=".3" fill="#fff"/><circle cx="2.4" cy="-28.6" r=".3" fill="#fff"/>':'<circle cx="-2" cy="-28.3" r=".7" fill="#2B2420"/><circle cx="2" cy="-28.3" r=".7" fill="#2B2420"/>'))}
   ${o.blush?'<circle cx="-3.5" cy="-26.6" r="1.1" fill="#F2A0A6" opacity=".6"/><circle cx="3.5" cy="-26.6" r="1.1" fill="#F2A0A6" opacity=".6"/>':''}
@@ -748,6 +749,11 @@ function lobbyBack(){
   const c=iso(3.24,3.4,40);
   s+=`<circle cx="${c[0]}" cy="${c[1]}" r="5.5" fill="none" stroke="#B08D57" stroke-width="1.4"/><circle cx="${c[0]}" cy="${c[1]}" r="1.8" fill="#B08D57"/>`;
   s+=plant(5.72,3.35);
+  /* coffee corner */
+  s+=box(5.5,4.55,0,.42,.6,18,'#6B4A33',{top:'#E2CBA6'});
+  s+=box(5.58,4.6,18,.24,.26,11,'#2E3E52',{top:'#3E5068'});
+  {const m=iso(5.7,4.73,24);s+=`<rect x="${(m[0]-2).toFixed(1)}" y="${(m[1]-1).toFixed(1)}" width="4" height="2.4" rx=".6" fill="#B08D57"/>`}
+  [[5.64,4.98],[5.78,5.03]].forEach(([x,y])=>{s+=cyl(x,y,18,.05,4,'#FFFDF9')});
   return s;
 }
 function lobbyFront(){
@@ -781,7 +787,7 @@ function buildIsland(){
   {const a=iso(2.5,6,.6),b=iso(2.5,2.5,.6),c=iso(6,2.5,.6);s+=`<polyline points="${a} ${b} ${c}" fill="none" stroke="#B08D57" stroke-opacity=".65" stroke-width="1.4" stroke-dasharray="3 7" stroke-linecap="round"/>`}
   ['director','consult','treatment','powder','recovery'].forEach(id=>{s+=`<g class="room" data-room="${id}">${FURN[id]()}</g>`});
   {const p=iso(.62,1.55);s+=`<g id="cat-cutie" data-npc="cutie" role="button" tabindex="0" aria-label="摸摸院長的愛貓小可愛" transform="translate(${p[0].toFixed(1)},${p[1].toFixed(1)}) scale(1.3)">${catFig(CATLOOK.cutie)}</g>`}
-  ['bella','xiangyu','miqin','xiaojin'].forEach(k=>{const n=NPCS[k],[x,y]=iso(n.at[0],n.at[1]);s+=`<g id="npc-${k}" data-npc="${k}" role="button" tabindex="0" aria-label="和${n.name}說說話" transform="translate(${x.toFixed(1)},${y.toFixed(1)})${n.flip?' scale(-1,1)':''}">${fig(n.look)}</g>`});
+  ['bella','xiangyu','miqin','xiaojin','zhan'].forEach(k=>{const n=NPCS[k],[x,y]=iso(n.at[0],n.at[1]);s+=`<g id="npc-${k}" data-npc="${k}" role="button" tabindex="0" aria-label="和${n.name}說說話" transform="translate(${x.toFixed(1)},${y.toFixed(1)})${n.flip?' scale(-1,1)':''}">${fig(n.look)}</g>`});
   s+=`<g class="room" data-room="lobby">${lobbyBack()}</g>`;
   s+=`<g id="doctor" data-npc="doctor" role="button" tabindex="0" aria-label="和林醫師說說話">${doctorFig()}</g>`;
   s+=`<g id="nurse" data-npc="nurse" role="button" tabindex="0" aria-label="和護理師詩晴說說話">${fig(NPCS.nurse.look)}</g>`;
@@ -1064,6 +1070,7 @@ const NPCS={
  cutie:{name:'小可愛',role:'院長的愛貓',el:'cat-cutie',persona:'布偶貓，院長的愛貓，平常待在院長辦公室',lines:['喵～我是小可愛，院長的愛貓，平常都在院長辦公室陪她。','院長每天都說「先把基礎保養顧好」，我都聽到會背了。','布偶貓的毛很怕打結，就像皮膚怕乾燥，每天都要好好照顧喔。','偷偷告訴你，院長最喜歡我了。']},
  kuro:{name:'黑糖',role:'貓店員',el:'cat-kuro',persona:'黑貓，高冷、只在貓跳台上',lines:['哼，晚上才是我的時間。不過你別熬夜，早點睡。','別一直摸我的臉。你也是，手一直摸臉容易長痘痘。','保持乾淨是基本禮貌。今天卸妝卸乾淨了嗎？']},
  gold:{name:'金金',role:'貓店員',el:'cat-gold',lines:['喵～我是很少出現的金色貓！遇到我，今天會是好運的一天。','偷偷告訴你：好運不能代替防曬喔。','你運氣真好。下次來，不一定還遇得到我。']},
+ zhan:{name:'詹老闆',role:'咖啡豆烘焙師',at:[5.22,4.95],look:{top:'#3B2A20',vneck:'#F2EDE6',hair:'short',quiff:true,stubble:true,thin:true,hairc:'#1E1814',skin:'#EBC7AE',eyes:'deep',brow:true,glow:true,legs:'#2B2420',item:'cup'},lines:['我是詹老闆，無痕美學選用的是我們杜克勞的咖啡豆。','想喝拿鐵還是美式？冰的、熱的，都可以跟櫃台說。','豆子在基隆的烘豆廠烘好，再送來診所。','我的店叫杜克勞，名字來自把咖啡樹苗帶到加勒比海的法國軍官。']},
  yiting:{name:'怡婷',role:'店經理',el:'staff',look:{top:'#0E335F',trim:'#B08D57',hair:'wave',hairc:'#5B3D2C',skin:'#F6DECF',eyes:'deep',brow:true,glow:true,pin:'#E9CF9E'}}
 };
 const npcEl=k=>document.getElementById(NPCS[k].el||('npc-'+k));
@@ -1656,7 +1663,13 @@ const VIEW={
    <p class="fine">貓店員說的是一般保養常識，個人狀況請以醫師面診評估為準。</p>`,
  lobby:()=>`<p class="lead">歡迎光臨。今天最在意的是哪一種膚況？</p><h3 class="h3">3 題小測驗，做一張面診小抄</h3><div id="quiz" class="quiz"></div><h3 class="h3">四種常見膚況</h3><p class="sub">選一個最接近的，櫃台先幫你整理重點。</p>
    <div class="seg" role="tablist" aria-label="膚況">${Object.entries(CONCERNS).map(([k,v],i)=>`<button type="button" role="tab" data-c="${k}" aria-selected="${i===0}">${v.name}</button>`).join('')}</div>
-   <div id="concern" role="tabpanel"></div>`,
+   <div id="concern" role="tabpanel"></div>
+   <h3 class="h3">大廳的咖啡</h3>
+   <p class="sub"><b>無痕美學選用杜克勞咖啡。</b>烘豆的是詹老闆，豆子在他基隆的烘豆廠烘好，再送到診所。</p>
+   <p class="sub">來診所時可以跟櫃台點一杯：拿鐵或美式，冰的、熱的都可以。先在這裡選選看？</p>
+   <div class="seg" aria-label="點一杯咖啡">${['冰拿鐵','熱拿鐵','冰美式','熱美式'].map(d=>`<button type="button" data-coffee="${d}">${d}</button>`).join('')}</div>
+   <p id="coffee-out" class="sub" aria-live="polite"></p>
+   <div class="ctas"><a class="cta ghost" href="https://www.declieu.com.tw/" target="_blank" rel="noopener" data-read="declieu">杜克勞咖啡官網</a></div>`,
  consult:()=>`<p class="lead">不確定該做什麼，就先來這裡坐坐。</p><p class="sub">第一次來，大概會這樣進行：</p>
    <ol class="steps">
     <li><div><b>LINE 留言預約</b><span>告訴我們方便的時間和想聊的困擾。</span></div></li>
@@ -1840,6 +1853,8 @@ function applyPhase(){
 
 /* ===== events ===== */
 document.addEventListener('click',e=>{
+  const cf=e.target.closest('[data-coffee]');if(cf){const d=cf.dataset.coffee;document.querySelectorAll('[data-coffee]').forEach(b=>b.setAttribute('aria-pressed',b===cf));
+    const o=document.getElementById('coffee-out');if(o)o.innerHTML=`<b>詹老闆：</b>一杯${esc(d)}，記下來了！到診所時跟櫃台說一聲就好。`;track('island_coffee_pick',{drink:d});return}
   const lk=e.target.closest&&e.target.closest('a[href]');
   if(lk){const h=lk.getAttribute('href');if(lk.dataset.read)track('island_article_click',{article:lk.dataset.read});if(h.includes('lin.ee'))track('island_line_booking_click');else if(h.includes('line.me/ti/p'))track('island_line_add_friend');else if(h.includes('docs.google.com/forms'))track('island_form_click');else if(h.startsWith('mailto:'))track('island_mail_click');}
   const go=e.target.closest('[data-go]');if(go){openRoom(go.dataset.go);return}
