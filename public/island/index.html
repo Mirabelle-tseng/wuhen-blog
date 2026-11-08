@@ -207,6 +207,11 @@ body{background:var(--cream);color:var(--navy);font-family:var(--sans);overflow:
 body.reading #npctag{opacity:0;pointer-events:none}
 .isl-tag{position:fixed;left:0;top:0;z-index:4;border:1px solid var(--gold);padding:2px 7px;border-radius:999px;background:rgba(251,248,243,.92);color:var(--navy);font:700 10.5px var(--sans);letter-spacing:.06em;white-space:nowrap;box-shadow:0 3px 8px rgba(14,51,95,.2);cursor:pointer;transition:opacity .4s}
 .isl-tag.me{background:var(--gold);color:#fff}
+#shouttag{position:fixed;left:0;top:0;z-index:4;border:0;padding:3px 9px;border-radius:999px;background:#7A5A38;color:#fff;font:700 11px var(--serif);letter-spacing:.1em;box-shadow:0 4px 10px rgba(14,51,95,.25);cursor:pointer;transition:opacity .4s}
+body.reading #shouttag,body.gaming #shouttag{opacity:0;pointer-events:none}
+.shouts{list-style:none;margin:0 0 6px;padding:0;display:grid;gap:10px}
+.shouts li{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:15px;line-height:1.6;color:var(--navy)}
+.shouts li b{display:block;font:700 12px var(--sans);letter-spacing:.08em;color:#8A6A3A;margin-bottom:2px}
 body.reading .isl-tag,body.gaming .isl-tag{opacity:0;pointer-events:none}
 
 .b-row{display:flex;gap:9px;align-items:center}
@@ -536,6 +541,7 @@ body.reading #toast{bottom:auto;top:calc(env(safe-area-inset-top,0px) + 12px)}
 
   <div id="pins"></div>
   <button type="button" id="zoomout" hidden>回到全島</button>
+  <button type="button" id="shouttag" data-shout="1">島民大聲說</button>
   <div id="bubble" hidden></div>
   <button type="button" id="npctag" data-npc="doctor" aria-label="和林醫師說說話">林醫師</button>
 
@@ -884,6 +890,14 @@ function catIsland(){
   if(RARE)r+=`<g id="cat-gold" data-npc="gold" role="button" tabindex="0" aria-label="摸摸金色貓" transform="translate(${iso(8.6,4.2).join(',')})"><g class="goldglow">${catFig({body:'#E9C46A',stripe:'#C9A23E',eye:'#2B2420'})}</g></g>`;
   r+=plant(x0+1.62,y0+1.62,.85);
   s+=`<g class="room" data-room="cats">${r}</g>`;
+  /* 島民大聲說 告示板 */
+  {const a=iso(7.62,5.02,0),b=iso(7.98,5.02,0);let t='';
+   [a,b].forEach(q=>{t+=`<line x1="${q[0].toFixed(1)}" y1="${q[1].toFixed(1)}" x2="${q[0].toFixed(1)}" y2="${(q[1]-26).toFixed(1)}" stroke="#7A5A38" stroke-width="1.8"/>`});
+   const cx=(a[0]+b[0])/2,cy=(a[1]+b[1])/2-28;
+   t+=`<rect x="${(cx-17).toFixed(1)}" y="${(cy-11).toFixed(1)}" width="34" height="19" rx="2.5" fill="#C9A36A" stroke="#7A5A38" stroke-width="1.2"/>`;
+   t+=`<text x="${cx.toFixed(1)}" y="${(cy-2.6).toFixed(1)}" text-anchor="middle" font-size="5.6" font-weight="700" fill="#3B2A20" font-family="'Noto Sans TC',sans-serif">島民</text><text x="${cx.toFixed(1)}" y="${(cy+4.4).toFixed(1)}" text-anchor="middle" font-size="5.6" font-weight="700" fill="#3B2A20" font-family="'Noto Sans TC',sans-serif">大聲說</text>`;
+   t+=`<path d="M${(cx+13).toFixed(1)},${(cy-13).toFixed(1)} l3,-4 l1.5,3" fill="none" stroke="#B08D57" stroke-width="1.1" stroke-linecap="round"/>`;
+   s+=`<g id="shoutboard" data-shout="1" role="button" tabindex="0" aria-label="打開島民大聲說告示板" style="cursor:pointer"><rect x="${(cx-22).toFixed(1)}" y="${(cy-18).toFixed(1)}" width="44" height="48" fill="transparent"/>${t}</g>`}
   return s;
 }
 const FEST_NAME={xmas:'聖誕節',newyear:'跨年',cny:'農曆新年',valentine:'情人節',mother:'母親節',qixi:'七夕',midautumn:'中秋節'};
@@ -1301,6 +1315,7 @@ function nearNpc(x,y){let best=null,bd=34;
   return best}
 function npcFollow(now){
   follow(document.getElementById('npctag'),doctorEl(),4);
+  {const sb=document.getElementById('shoutboard'),tg=document.getElementById('shouttag');if(sb&&tg){const r=sb.getBoundingClientRect();tg.style.transform=`translate(${(r.left+r.width/2-tg.offsetWidth/2).toFixed(1)}px,${(r.bottom+2).toFixed(1)}px)`}}
   ISL.forEach(it=>{if(it.tag){const el=document.getElementById(it.key);if(el)follow(it.tag,el,3)}});
   const b=document.getElementById('bubble');
   if(!b.hidden){if(b.contains(document.activeElement))bub.until=Math.max(bub.until,now+8000);if(now>bub.until){b.hidden=true;return}
@@ -1540,9 +1555,48 @@ function addIslanders(names,selfOnly){
     ISL.push({key,tag:tg,self:it.self,r:route(pts,.12+rr()*.12,2+rr()*4),off:rr()*20});lastDir[key]=1;
   });
 }
+let SHOUTS=null;
+function shoutHTML(){
+  const reg=LS.get('wh-registered',null);
+  const list=SHOUTS==null?'<p class="sub">告示板讀取中…</p>':SHOUTS.length?`<ul class="shouts">${SHOUTS.map(x=>`<li><b>${esc(x.name)}</b>「${esc(x.msg)}」</li>`).join('')}</ul>`:'<p class="sub">還沒有人說話，當第一個吧！</p>';
+  return `<p class="lead">島民在這裡大聲說。</p><p class="sub">每則留言都經過審核才會公開。</p>${list}
+   <h3 class="h3">我也要說</h3>${!REG_ON()?'<p class="sub">請到 blog.wuhenclinic.tw/island 留言。</p>':`<div id="shoutbox">
+   <form id="shoutform" class="regform" novalidate>
+    ${reg?`<p class="sub" style="margin:0">以「${esc(reg.name)}」的身分留言</p>`:`<label for="shout-name">你的暱稱</label><input id="shout-name" type="text" maxlength="10" placeholder="例如：小美" value="${esc(islander.name||'')}" autocomplete="off"><p class="fine" style="margin:0">第一次留言，會同時幫你登記成島民。</p>`}
+    <label for="shout-msg">想大聲說的話</label>
+    <textarea id="shout-msg" rows="3" maxlength="120" placeholder="例如：凍膜凍膜第一名！"></textarea>
+    <p class="fine" style="margin:0">審核通過後會公開在告示板上，請不要填真實全名、電話或病歷資料。</p>
+    <p class="reg-err" id="shout-err" role="alert"></p>
+    <button type="submit" class="cta gold">送出</button>
+   </form></div>`}`}
+function openShout(fromHash){
+  current='shout';
+  document.getElementById('p-eyebrow').textContent='貓咖區旁';
+  document.getElementById('p-title').textContent='島民大聲說';
+  document.getElementById('p-body').innerHTML=shoutHTML();document.querySelector('.p-foot').hidden=true;
+  document.getElementById('p-body').scrollTop=0;
+  panel.classList.add('open');document.body.classList.add('reading');panel.setAttribute('aria-hidden','false');
+  document.querySelectorAll('.room').forEach(g=>g.classList.toggle('active',g.dataset.room==='cats'));
+  pinsWrap.querySelectorAll('.pin').forEach(p=>p.classList.toggle('dim',p.dataset.room!=='cats'));
+  focusRoom('cats');track('island_shout_open');
+  if(!fromHash&&location.hash!=='#shout')location.hash='shout';
+}
+async function submitShout(){
+  const reg=LS.get('wh-registered',null),err=document.getElementById('shout-err');
+  const n=reg?reg.name:(document.getElementById('shout-name').value.trim().slice(0,10)),m=document.getElementById('shout-msg').value.trim().slice(0,120);
+  if(!n){err.textContent='請先填一個暱稱。';document.getElementById('shout-name').focus();return}
+  if(!m){err.textContent='寫一句想說的話吧。';document.getElementById('shout-msg').focus();return}
+  const btn=document.querySelector('#shoutform button[type=submit]');btn.disabled=true;btn.textContent='送出中…';
+  const fd=new URLSearchParams();fd.append(CONTACT.islandEntryName,n);fd.append(CONTACT.islandEntryMsg,m);
+  try{await fetch(CONTACT.islandForm,{method:'POST',mode:'no-cors',body:fd});
+    if(!reg){LS.set('wh-registered',{name:n,msg:m,at:Date.now()});addIslanders([],true);track('island_register')}
+    track('island_shout');
+    document.getElementById('shoutbox').innerHTML=`<div class="reg-done"><b>送出了！</b><p>審核通過後，「${esc(m)}」會出現在告示板上。</p></div>`;
+  }catch(_){err.textContent='送出失敗，請確認網路連線後再試一次。';btn.disabled=false;btn.textContent='送出'}
+}
 async function loadIslanders(){
   if(!CONTACT.islandersCSV||!REG_ON()){addIslanders([],true);return}
-  try{const r=await fetch(CONTACT.islandersCSV,{cache:'no-store'});const rows=parseCSV(await r.text());
+  try{const r=await fetch(CONTACT.islandersCSV,{cache:'no-store'});const rows=parseCSV(await r.text());SHOUTS=rows.filter(x=>x.msg).reverse();if(current==='shout'&&!document.getElementById('shoutbox')?.querySelector('.reg-done')){const st=document.getElementById('p-body').scrollTop;document.getElementById('p-body').innerHTML=shoutHTML();document.getElementById('p-body').scrollTop=st}
     const seen=new Set(),uniq=rows.filter(x=>!seen.has(x.name)&&seen.add(x.name));
     for(let i=uniq.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[uniq[i],uniq[j]]=[uniq[j],uniq[i]]}
     addIslanders(uniq.slice(0,8),false);
@@ -1853,6 +1907,7 @@ function applyPhase(){
 
 /* ===== events ===== */
 document.addEventListener('click',e=>{
+  if(e.target.closest('[data-shout]')){openShout();return}
   const cf=e.target.closest('[data-coffee]');if(cf){const d=cf.dataset.coffee;document.querySelectorAll('[data-coffee]').forEach(b=>b.setAttribute('aria-pressed',b===cf));
     const o=document.getElementById('coffee-out');if(o)o.innerHTML=`<b>杜克勞・詹：</b>一杯${esc(d)}，記下來了！到診所時跟櫃台說一聲就好。`;track('island_coffee_pick',{drink:d});return}
   const lk=e.target.closest&&e.target.closest('a[href]');
@@ -1901,16 +1956,16 @@ document.addEventListener('click',e=>{
 });
 document.getElementById('p-close').addEventListener('click',()=>closeRoom());
 document.addEventListener('input',e=>{if(e.target.id==='islander-name'){islander.name=e.target.value.trim();LS.set('wh-name',islander.name);clearTimeout(wallT);wallT=setTimeout(refreshWall,300)}});
-document.addEventListener('submit',e=>{if(e.target.id==='regform'){e.preventDefault();submitReg();return}if(e.target.id==='guessform'){e.preventDefault();ytGuess(document.getElementById('guessin').value);return}if(e.target.id==='askform'){e.preventDefault();const i=document.getElementById('askinput'),v=i.value.trim();if(!v){i.focus();i.placeholder='寫一點點也可以喔';return}answer(v)}});
+document.addEventListener('submit',e=>{if(e.target.id==='shoutform'){e.preventDefault();submitShout();return}if(e.target.id==='regform'){e.preventDefault();submitReg();return}if(e.target.id==='guessform'){e.preventDefault();ytGuess(document.getElementById('guessin').value);return}if(e.target.id==='askform'){e.preventDefault();const i=document.getElementById('askinput'),v=i.value.trim();if(!v){i.focus();i.placeholder='寫一點點也可以喔';return}answer(v)}});
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey&&e.target.id==='askinput'&&e.target.tagName==='TEXTAREA'){e.preventDefault();document.getElementById('askform').requestSubmit()}});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!gEl('game').hidden){closeGame();return}if(e.key==='Escape'&&current)closeRoom();if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('svg [data-egg],svg [data-npc],svg [data-sky]')){e.preventDefault();e.target.dispatchEvent(new MouseEvent('click',{bubbles:true}))}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!gEl('game').hidden){closeGame();return}if(e.key==='Escape'&&current)closeRoom();if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('svg [data-shout],svg [data-egg],svg [data-npc],svg [data-sky]')){e.preventDefault();e.target.dispatchEvent(new MouseEvent('click',{bubbles:true}))}});
 ['pointerover','pointerout'].forEach(ev=>document.addEventListener(ev,e=>{
   const el=e.target.closest&&e.target.closest('[data-room]');if(!el)return;
   const id=el.dataset.room,on=ev==='pointerover';
   document.querySelectorAll(`.room[data-room="${id}"]`).forEach(g=>g.classList.toggle('hot',on));
   pinsWrap.querySelectorAll(`.pin[data-room="${id}"]`).forEach(p=>p.classList.toggle('hot',on));
 }));
-addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(R[h])openRoom(h,true);else if(h==='yiting'){if(ytKnown())openChat();else say('yiting')}else if(current&&R[current])closeRoom(true)});
+addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(h==='shout')openShout(true);else if(R[h])openRoom(h,true);else if(h==='yiting'){if(ytKnown())openChat();else say('yiting')}else if(current)closeRoom(true)});
 addEventListener('resize',()=>{fitView();if(current&&R[current])focusRoom(current)});
 
 /* ===== boot ===== */
@@ -1925,7 +1980,7 @@ setTimeout(()=>{if(!found.size&&!current)toast('<p class="t-eye">小提示</p><b
 if(reduce){const n=iso(4.2,2.5),g=iso(5.78,5.78);nurseEl().setAttribute('transform',`translate(${n[0]},${n[1]})`);{const d=iso(2.5,4.4);doctorEl().setAttribute('transform',`translate(${d[0]},${d[1]})`)}guestEl().setAttribute('transform',`translate(${g[0]},${g[1]}) scale(-1,1)`)}
 loadIslanders();
 requestAnimationFrame(loop);
-{const h=location.hash.slice(1);if(R[h])requestAnimationFrame(()=>openRoom(h,true));else if(h==='yiting')setTimeout(()=>{if(ytKnown())openChat();else say('yiting')},800)}
+{const h=location.hash.slice(1);if(h==='shout')requestAnimationFrame(()=>openShout(true));else if(R[h])requestAnimationFrame(()=>openRoom(h,true));else if(h==='yiting')setTimeout(()=>{if(ytKnown())openChat();else say('yiting')},800)}
 </script>
 
 </body>
