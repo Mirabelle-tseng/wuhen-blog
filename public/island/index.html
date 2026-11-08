@@ -97,7 +97,7 @@ body{background:var(--cream);color:var(--navy);font-family:var(--sans);overflow:
 
 /* pins */
 #pins{position:absolute;inset:0;pointer-events:none;z-index:4}
-.boat{animation:boatbob 4s ease-in-out infinite}@keyframes boatbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.float{animation:floaty 3.6s ease-in-out infinite}.float-slow{animation:floaty 5s ease-in-out infinite}@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-2.5px)}}
 .pin{position:absolute;left:0;top:0;pointer-events:auto;border:0;background:none;padding:0;cursor:pointer;will-change:transform;transition:opacity .4s}
 .pin .face{display:flex;align-items:center;gap:6px;white-space:nowrap;font:700 13px/1 var(--serif);letter-spacing:.06em;color:var(--navy);
   background:rgba(251,248,243,.95);border:1px solid var(--gold);border-radius:999px;padding:7px 12px 7px 9px;box-shadow:0 6px 16px rgba(14,51,95,.18);
@@ -489,7 +489,7 @@ body.reading #toast{bottom:auto;top:calc(env(safe-area-inset-top,0px) + 12px)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 @media (prefers-reduced-motion:reduce){
-  #bob,#shadow,.ripple,.cloud-move,.twinkle,.spark,.pin .face,.bill,.eye,.egg-dot .ping,.stamps.full,#yttag .dot,.typing i,.tail,.heart,.jiao.toss .jb,.drum.shake,.zz,.rd,.fogb,.sn,.fw,.lantern,.floatup,.bird,.twk,.boat{animation:none}
+  #bob,#shadow,.ripple,.cloud-move,.twinkle,.spark,.pin .face,.bill,.eye,.egg-dot .ping,.stamps.full,#yttag .dot,.typing i,.tail,.heart,.jiao.toss .jb,.drum.shake,.zz,.rd,.fogb,.sn,.fw,.lantern,.floatup,.bird,.twk,.float,.float-slow{animation:none}
   .rd,.sn{display:none}.fw{opacity:1}
   .m-face{transition:none}
   .ripple{opacity:.25}
@@ -712,7 +712,7 @@ const ROOMS=[
  {id:'powder',name:'化妝間',x:0,y:4,w:2,d:2,floor:'#F3E5E0',pz:40},
  {id:'director',name:'院長辦公室',x:0,y:0,w:2,d:2,floor:'#D9C2A1',pz:82},
  {id:'cats',name:'貓咖區',x:7.4,y:3.4,w:1.8,d:1.8,floor:'#F1E3D3',pz:14},
- {id:'dock',name:'碼頭',title:'第一次來無痕？',x:1.3,y:7.0,w:1.2,d:.8,floor:'#D6B88C',pz:24},
+ {id:'dock',name:'漂浮大門',title:'第一次來無痕？',x:1.3,y:7.0,w:1.2,d:.8,floor:'#F3ECE1',pz:78},
 ];
 const R=Object.fromEntries(ROOMS.map(r=>[r.id,r]));
 const FURN={
@@ -798,7 +798,6 @@ function buildIsland(){
   s+=`<g id="doctor" data-npc="doctor" role="button" tabindex="0" aria-label="和林醫師說說話">${doctorFig()}</g>`;
   s+=`<g id="nurse" data-npc="nurse" role="button" tabindex="0" aria-label="和護理師詩晴說說話">${fig(NPCS.nurse.look)}</g>`;
   s+=`<g class="room" data-room="lobby">${lobbyFront()}</g><g id="staff" data-npc="yiting" role="button" tabindex="0" aria-label="大廳櫃台的神秘店員">${fig(NPCS.yiting.look)}</g>`;
-  s+=`<g id="guest">${person('guest')}</g>`;
   [[.6,6.28],[1.5,6.28],[2.4,6.28],[3.3,6.28],[4.1,6.28],[6.28,.6],[6.28,1.6],[6.28,2.6],[6.28,3.5],[6.28,5.1]].forEach(([x,y],i)=>{const c=iso(x,y,0);s+=`<ellipse cx="${c[0]}" cy="${c[1]-3}" rx="${8+(i%3)}" ry="${5+(i%2)}" fill="${i%2?'#8EAA88':'#7C9877'}"/>`});
   s+=dockArea();
   s+=catIsland();
@@ -832,28 +831,30 @@ function catFig(c){
   <path d="M8.6,-8.2 L11,-8.6 M8.6,-7.6 L11,-7.2" stroke="rgba(14,51,95,.35)" stroke-width=".35"/>`;
 }
 function dockArea(){
-  const x0=1.3,y0=7.0,w=1.2,d=.8,th=5;let s='';
-  /* walkway from island edge */
-  s+=poly([iso(1.7,6.18,0),iso(2.1,6.18,0),iso(2.1,y0,0),iso(1.7,y0,0)],'#CBA978',STK);
-  s+=poly([iso(2.1,6.18,0),iso(2.1,y0,0),iso(2.1,y0,-3),iso(2.1,6.18,-3)],'#A8865C',STK);
-  for(let y=6.3;y<y0;y+=.14){const a=iso(1.7,y,0),b=iso(2.1,y,0);s+=`<line x1="${a[0].toFixed(1)}" y1="${a[1].toFixed(1)}" x2="${b[0].toFixed(1)}" y2="${b[1].toFixed(1)}" stroke="rgba(90,60,30,.35)" stroke-width=".7"/>`}
-  [1.7,2.1].forEach(x=>{[6.3,6.65].forEach(y=>{const a=iso(x,y,0),b=iso(x,y,8);s+=`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#8C6A44" stroke-width="1.4"/>`});
-    const a=iso(x,6.3,8),c=iso(x,6.48,5),b=iso(x,6.65,8);s+=`<path d="M${a[0]},${a[1]} Q${c[0]},${c[1]+3} ${b[0]},${b[1]}" fill="none" stroke="#B08D57" stroke-width="1"/>`});
-  /* platform */
+  const x0=1.3,y0=7.0,w=1.2,d=.8,th=4;let s='';
+  /* floating stepping stones from the island edge */
+  [[1.9,6.3,.2],[1.86,6.58,.18],[1.92,6.84,.16]].forEach(([x,y,r],i)=>{const c=iso(x,y,0);
+    s+=`<g class="float" style="animation-delay:${(i*.5).toFixed(1)}s"><path d="M${(c[0]-r*48).toFixed(1)},${c[1].toFixed(1)} L${c[0].toFixed(1)},${(c[1]+r*60).toFixed(1)} L${(c[0]+r*48).toFixed(1)},${c[1].toFixed(1)}Z" fill="#1E3F6B"/><ellipse cx="${c[0].toFixed(1)}" cy="${c[1].toFixed(1)}" rx="${(r*50).toFixed(1)}" ry="${(r*25).toFixed(1)}" fill="#EFE6D8" stroke="#B08D57" stroke-width=".8"/></g>`});
   let r='';
-  r+=poly([iso(x0,y0+d,0),iso(x0+w,y0+d,0),iso(x0+w,y0+d,-th),iso(x0,y0+d,-th)],'#A8865C',STK);
-  r+=poly([iso(x0+w,y0,0),iso(x0+w,y0+d,0),iso(x0+w,y0+d,-th),iso(x0+w,y0,-th)],'#8C6A44',STK);
-  r+=`<polygon class="floor" id="floor-dock" points="${P([iso(x0,y0,0),iso(x0+w,y0,0),iso(x0+w,y0+d,0),iso(x0,y0+d,0)])}" fill="#D6B88C" stroke="#B08D57" stroke-width="1.2" stroke-linejoin="round"/>`;
-  for(let x=x0+.12;x<x0+w;x+=.12){const a=iso(x,y0,0),b=iso(x,y0+d,0);r+=`<line x1="${a[0].toFixed(1)}" y1="${a[1].toFixed(1)}" x2="${b[0].toFixed(1)}" y2="${b[1].toFixed(1)}" stroke="rgba(90,60,30,.28)" stroke-width=".6"/>`}
-  [[x0,y0+d],[x0+w,y0+d],[x0+w,y0]].forEach(([x,y])=>{r+=cyl(x,y,-th,.05,th+7,'#7A5A38')});
-  /* lamp post */
-  r+=cyl(x0+.15,y0+.15,0,.03,30,'#0E335F');{const c=iso(x0+.15,y0+.15,30);r+=`<circle class="twk" cx="${c[0]}" cy="${c[1]-2}" r="3.2" fill="#F2C14E"/><path d="M${c[0]-4},${c[1]-4} L${c[0]+4},${c[1]-4} L${c[0]},${c[1]-9}Z" fill="#0E335F"/>`}
-  /* rope coil + crate */
-  r+=box(x0+.85,y0+.1,0,.22,.22,8,'#B58B60');
-  {const c=iso(x0+.95,y0+.6,0);r+=`<ellipse cx="${c[0]}" cy="${c[1]-1.5}" rx="5" ry="2.6" fill="none" stroke="#C9A36A" stroke-width="1.6"/><ellipse cx="${c[0]}" cy="${c[1]-1.5}" rx="2.6" ry="1.3" fill="none" stroke="#C9A36A" stroke-width="1.2"/>`}
-  /* little boat floating beside, bobbing */
-  {const c=iso(x0+w+.5,y0+.6,-2);r+=`<g class="boat"><g transform="translate(${c[0].toFixed(1)},${c[1].toFixed(1)})"><ellipse cx="0" cy="6" rx="20" ry="4" fill="rgba(255,255,255,.55)"/><path d="M-19,-2 L19,-2 L13,6 L-13,6Z" fill="#0E335F"/><path d="M-19,-2 L19,-2 L18,0 L-18,0Z" fill="#B08D57"/><line x1="0" y1="-2" x2="0" y2="-26" stroke="#7A5A38" stroke-width="1.4"/><path d="M1,-25 L14,-6 L1,-6Z" fill="#FFFDF9" stroke="rgba(14,51,95,.25)" stroke-width=".6"/><path d="M-1,-22 L-10,-6 L-1,-6Z" fill="#F2EDE6" stroke="rgba(14,51,95,.25)" stroke-width=".6"/><path d="M0,-26 L6,-24 L0,-22Z" fill="#B08D57"/></g></g>`}
-  s+=`<g class="room" data-room="dock">${r}</g>`;
+  /* floating platform with rocky underside */
+  {const a=iso(x0,y0+d,-th),b=iso(x0+w,y0+d,-th),c=iso(x0+w,y0,-th),tip=iso(x0+w*.55,y0+d*.6,-th-46);
+   r+=`<path d="M${a} L${b} L${tip}Z" fill="#16365F"/><path d="M${b} L${c} L${tip}Z" fill="#0E2A4D"/>`}
+  r+=poly([iso(x0,y0+d,0),iso(x0+w,y0+d,0),iso(x0+w,y0+d,-th),iso(x0,y0+d,-th)],'#D8CBB6',STK);
+  r+=poly([iso(x0+w,y0,0),iso(x0+w,y0+d,0),iso(x0+w,y0+d,-th),iso(x0+w,y0,-th)],'#C4B59C',STK);
+  r+=`<polygon class="floor" id="floor-dock" points="${P([iso(x0,y0,0),iso(x0+w,y0,0),iso(x0+w,y0+d,0),iso(x0,y0+d,0)])}" fill="#F3ECE1" stroke="#B08D57" stroke-width="1.2" stroke-linejoin="round"/>`;
+  {const a=iso(x0+.6,y0+.12,.5),b=iso(x0+.6,y0+d-.08,.5);r+=`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#B08D57" stroke-width="5" stroke-opacity=".35" stroke-linecap="round"/>`}
+  /* the gate */
+  const gx1=x0+.16,gx2=x0+w-.16,gy=y0+.42,H=54;
+  r+=box(gx1-.07,gy-.07,0,.14,.14,H,'#0E335F',{top:'#B08D57'});
+  r+=box(gx2-.07,gy-.07,0,.14,.14,H,'#0E335F',{top:'#B08D57'});
+  {const a=iso(gx1-.16,gy,H+2),b=iso(gx2+.16,gy,H+2),a2=iso(gx1-.16,gy,H+7),b2=iso(gx2+.16,gy,H+7);
+   r+=`<polygon points="${a} ${b} ${b2} ${a2}" fill="#0E335F" stroke="#B08D57" stroke-width="1"/>`;
+   const m=iso((gx1+gx2)/2,gy,H-6);
+   r+=`<g transform="translate(${m[0].toFixed(1)},${m[1].toFixed(1)}) skewY(26.57)"><rect x="-16" y="-8" width="32" height="14" rx="2" fill="#F2EDE6" stroke="#B08D57" stroke-width="1.2"/><text x="0" y="2" text-anchor="middle" font-size="8" font-weight="700" fill="#0E335F" font-family="'Noto Serif TC',serif">無痕</text></g>`;
+   const g1=iso(gx1,gy,H+9),g2=iso(gx2,gy,H+9);r+=`<circle class="twk" cx="${g1[0]}" cy="${g1[1]}" r="2.4" fill="#F2C14E"/><circle class="twk" cx="${g2[0]}" cy="${g2[1]}" r="2.4" fill="#F2C14E" style="animation-delay:.7s"/>`}
+  /* glow inside the gate */
+  {const c=iso((gx1+gx2)/2,gy,18);r+=`<ellipse cx="${c[0]}" cy="${c[1]}" rx="15" ry="20" fill="#F2C14E" opacity=".16"/>`}
+  s+=`<g class="room float-slow" data-room="dock">${r}</g>`;
   return s;
 }
 function catIsland(){
@@ -1506,18 +1507,18 @@ const REG_ON=()=>!!(CONTACT.islandForm&&CONTACT.islandEntryName)&&(/wuhenclinic\
 function regHTML(){
   if(!REG_ON())return '';
   const r=LS.get('wh-registered',null);
-  return `<p class="step"><i>4</i>登記成為島民，住進島上</p><div class="reg" id="reg">${r?regDone(r.name):`
+  return `<p class="step"><i>4</i>登記成為島民</p><div class="reg" id="reg">${r?regDone(r.name):`
    <form id="regform" class="regform" novalidate>
     <label for="reg-name">島上顯示的暱稱</label>
     <input id="reg-name" type="text" maxlength="10" placeholder="例如：小美" value="${esc(islander.name)}" autocomplete="off">
     <label for="reg-msg">想留在島上的一句話 <small>（選填，審核通過後會公開；不想公開可以不填）</small></label>
     <textarea id="reg-msg" rows="3" maxlength="300" placeholder="例如：逛完抽到上上籤，好開心！"></textarea>
-    <p class="fine" style="margin:0">暱稱和留言審核通過後會公開顯示在島上，請不要填真實全名、電話或病歷資料。</p>
+    <p class="fine" style="margin:0">暱稱和留言審核通過後，會公開在「島民大聲說」告示板上，請不要填真實全名、電話或病歷資料。</p>
     <p class="reg-err" id="reg-err" role="alert"></p>
     <button type="submit" class="cta gold">送出登記</button>
    </form>`}</div>`;
 }
-function regDone(n){return `<div class="reg-done"><b>登記完成！</b><p>「${esc(n)}」已經送出。你自己的島上已經看得到你，其他人要等審核通過後才看得到。</p></div>`}
+function regDone(n){return `<div class="reg-done"><b>登記完成！</b><p>「${esc(n)}」已經送出。審核通過後，你的留言會出現在貓咖區旁的「島民大聲說」告示板上。</p></div>`}
 async function submitReg(){
   const n=document.getElementById('reg-name').value.trim().slice(0,10),m=document.getElementById('reg-msg').value.trim().slice(0,300),err=document.getElementById('reg-err');
   if(!n){err.textContent='請先填一個暱稱。';document.getElementById('reg-name').focus();return}
@@ -1537,7 +1538,7 @@ function parseCSV(txt){const rows=[];let row=[],cur='',q=false;for(let i=0;i<txt
   const HEAD=['暱稱','留言','島民暱稱'];const out=[];
   for(const r of rows){const cells=r.map(x=>x.trim()).filter(x=>x&&!HEAD.includes(x));if(cells.length)out.push({name:cells[0].slice(0,10),msg:(cells[1]||'').slice(0,60)})}
   return out}
-function addIslanders(names,selfOnly){
+function addIslanders(names,selfOnly){return;
   const layer=document.getElementById('islanders');if(!layer)return;
   const reg=LS.get('wh-registered',null);
   const list=selfOnly?[]:names.map(n=>({name:n.name,msg:n.msg,self:false}));
@@ -1694,7 +1695,7 @@ function lineCta(){return CONTACT.line?`<a class="cta" href="${esc(CONTACT.line)
 const CATS=['orange','mochi','kuro','cutie'];
 const CATLOOK={cutie:{body:'#F5EEE2',point:'#9C7A62',eye:'#4F8FD6',fluffy:true,outline:true},orange:{body:'#E6A35A',stripe:'#C9783A',eye:'#2B2420'},mochi:{body:'#FFFFFF',patch:'#E9B98C',eye:'#5C8FBF',outline:true},kuro:{body:'#2A2530',eye:'#F2C14E'}};
 const VIEW={
- dock:()=>`<p class="lead">先在碼頭看看怎麼來、出發前要準備什麼。</p><p class="sub">到診所之後的流程，可以到諮詢區看。</p>
+ dock:()=>`<p class="lead">穿過大門之前，先看看怎麼來、出發前要準備什麼。</p><p class="sub">到診所之後的流程，可以到諮詢區看。</p>
    <h3 class="h3">怎麼來</h3>
    <dl class="facts"><div><dt>地址</dt><dd>台北市大安區安和路一段86號2樓</dd></div><div><dt>捷運</dt><dd>信義安和站 1 號出口，步行約 3–5 分鐘，7-11 轉角。</dd></div><div><dt>停車</dt><dd>從文昌街 205 號轉進，中信銀行大樓後門有地下停車場；對面也有平面停車場。</dd></div><div><dt>門診時間</dt><dd>週一至週六 10:00–18:00，週日休診</dd></div></dl>
    <div class="ctas"><a class="cta ghost" href="https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E5%8C%97%E5%B8%82%E5%A4%A7%E5%AE%89%E5%8D%80%E5%AE%89%E5%92%8C%E8%B7%AF%E4%B8%80%E6%AE%B586%E8%99%9F" target="_blank" rel="noopener" data-read="google-map">用 Google 地圖導航</a></div>
@@ -1850,7 +1851,7 @@ function loop(now){
   cam.s+=(camT.s-cam.s)*k;cam.tx+=(camT.tx-cam.tx)*k;cam.ty+=(camT.ty-cam.ty)*k;
   {const zb=document.getElementById('zoomout'),show=camT.s>1.05&&!current;if(zb.hidden===show){zb.hidden=!show;if(show){const d=document.querySelector('.dock');zb.style.top=((d?d.getBoundingClientRect().top:innerHeight)-52)+'px'}}}
   camera.setAttribute('transform',`translate(${cam.tx.toFixed(2)},${cam.ty.toFixed(2)}) scale(${cam.s.toFixed(4)})`);
-  if(!reduce){placeWalker(nurseEl(),'nurse',nurseR(t),t);placeWalker(guestEl(),'guest',guestR(t+4),t);placeWalker(doctorEl(),'doctor',doctorR(t+2),t);if(!isNight){placeWalker(npcEl('orange'),'orange',orangeR(t),t);placeWalker(npcEl('mochi'),'mochi',mochiR(t+7),t);if(RARE)placeWalker(npcEl('gold'),'gold',goldR(t+3),t)}for(const it of ISL){const el=document.getElementById(it.key);if(el)placeWalker(el,it.key,it.r(t+it.off),t)}}
+  if(!reduce){placeWalker(nurseEl(),'nurse',nurseR(t),t);placeWalker(doctorEl(),'doctor',doctorR(t+2),t);if(!isNight){placeWalker(npcEl('orange'),'orange',orangeR(t),t);placeWalker(npcEl('mochi'),'mochi',mochiR(t+7),t);if(RARE)placeWalker(npcEl('gold'),'gold',goldR(t+3),t)}for(const it of ISL){const el=document.getElementById(it.key);if(el)placeWalker(el,it.key,it.r(t+it.off),t)}}
   if(isNight!==lastNight){lastNight=isNight;['orange','mochi','kuro','gold','cutie'].forEach(k=>{const el=document.getElementById('cat-'+k);if(el)el.classList.toggle('sleep',isNight)})}
   npcFollow(now);
   pinsWrap.querySelectorAll('.pin').forEach(p=>{
