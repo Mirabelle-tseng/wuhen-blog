@@ -689,6 +689,7 @@ function fig(o){
   ${o.pin?`<rect x="2.4" y="-20" width="3" height="1.8" rx=".3" fill="${o.pin}"/>`:''}
   ${o.bonnet?`<path d="M-6.4,-31 Q-6,-37.8 0,-38 Q6,-37.8 6.4,-31 Q3,-34.6 0,-34.6 Q-3,-34.6 -6.4,-31Z" fill="#FFFDF9" stroke="rgba(14,51,95,.3)" stroke-width=".5"/><path d="M-6.4,-31 q.9,-1.4 1.8,-.6 q.9,-1.4 1.8,-.6" fill="none" stroke="rgba(14,51,95,.25)" stroke-width=".4"/><path d="M3.2,-36.4 l2.6,-1.6 l-.2,3.2Z M3.2,-36.4 l-.6,-2.8 l2.8,1.2Z" fill="${o.bonnet}"/><circle cx="3.4" cy="-36.4" r=".9" fill="${o.bonnet}"/>`:''}
   ${o.hat?`<ellipse cx="0" cy="-33.6" rx="10.4" ry="2.6" fill="${o.hat}" stroke="rgba(14,51,95,.3)" stroke-width=".5"/><path d="M-5,-34 Q-4.6,-39.6 0,-39.8 Q4.6,-39.6 5,-34Z" fill="${o.hat}" stroke="rgba(14,51,95,.3)" stroke-width=".5"/><path d="M-5,-35.4 Q0,-34 5,-35.4" fill="none" stroke="${o.hatband||'#B08D57'}" stroke-width="1.2"/><circle cx="-4.2" cy="-36.2" r="1.6" fill="${o.rose||'#C8546A'}"/><circle cx="-2.4" cy="-35.6" r="1.2" fill="#F2B8C2"/>${o.feather?`<path d="M3,-36 C6,-42 11,-41.6 12,-38.4 C9,-40 6,-38.6 4,-35.4Z" fill="${o.feather}"/>`:''}`:''}
+  ${FEST==='xmas'?'<g transform="translate(-3.4,-19.4)"><path d="M0,0 q-2.4,-1.6 -3.4,.4 q1.6,.2 1.2,1.4 q1.4,-.6 2.2,-1.8Z M0,0 q2.4,-1.6 3.4,.4 q-1.6,.2 -1.2,1.4 q-1.4,-.6 -2.2,-1.8Z" fill="#2F6B4F"/><circle cx="-.6" cy="-.4" r=".8" fill="#D7263D"/><circle cx=".6" cy="-.2" r=".8" fill="#D7263D"/></g>':''}
   ${o.tiara?'<path d="M-3.6,-34.2 L-2.4,-36.6 L-1.2,-34.8 L0,-37.4 L1.2,-34.8 L2.4,-36.6 L3.6,-34.2Z" fill="#D9B46A" stroke="#B08D57" stroke-width=".3"/><circle cx="0" cy="-36.2" r=".55" fill="#F2B8C2"/>':''}${item}`;
 }
 function person(kind){
@@ -960,6 +961,20 @@ function buildFest(){
     [[-9,-14,'#D7263D'],[8,-17,'#E9CF9E'],[-4,-27,'#E9CF9E'],[6,-32,'#D7263D'],[-2,-40,'#5ED39A'],[11,-11,'#5ED39A']].forEach(([x,y,c],i)=>{d+=`<circle class="twk" style="animation-delay:${i*.4}s" cx="${cx+x}" cy="${cy+y}" r="2" fill="${c}"/>`});
     const ty=cy-58;d+=`<polygon points="${cx},${ty-6} ${cx+1.8},${ty-1.8} ${cx+6},${ty-1.4} ${cx+2.8},${ty+1.6} ${cx+3.8},${ty+6} ${cx},${ty+3.6} ${cx-3.8},${ty+6} ${cx-2.8},${ty+1.6} ${cx-6},${ty-1.4} ${cx-1.8},${ty-1.8}" fill="#F2C14E"/>`;
     [[3.6,5.0],[3.9,5.1]].forEach(([x,y],i)=>{const p=iso(x,y,10);d+=`<rect x="${p[0]-4}" y="${p[1]-7}" width="8" height="7" fill="${i?'#0E335F':'#D7263D'}"/><rect x="${p[0]-.8}" y="${p[1]-7}" width="1.6" height="7" fill="#E9CF9E"/>`});
+    /* grand tree in lobby corner */
+    {const [tx,ty]=iso(2.5,5.55,0);d+=`<rect x="${tx-3.5}" y="${ty-12}" width="7" height="12" fill="#B08D57"/>`;
+     [[0,34,30,'#24573F'],[16,28,27,'#2F6B4F'],[30,22,25,'#367A59'],[43,15,22,'#3F8A64']].forEach(([dy,w,h,c])=>{d+=`<polygon points="${tx-w},${ty-12-dy} ${tx+w},${ty-12-dy} ${tx},${ty-12-dy-h}" fill="${c}"/>`});
+     d+=`<path d="M${tx-26},${ty-20} Q${tx},${ty-12} ${tx+24},${ty-28} M${tx-20},${ty-36} Q${tx},${ty-28} ${tx+18},${ty-46} M${tx-13},${ty-52} Q${tx},${ty-45} ${tx+11},${ty-60}" fill="none" stroke="#E9CF9E" stroke-width="1.4"/>`;
+     [[-18,-24,'#D7263D'],[14,-30,'#E9CF9E'],[-8,-40,'#E9CF9E'],[10,-44,'#D7263D'],[-4,-56,'#D7263D'],[6,-62,'#E9CF9E'],[20,-18,'#E9CF9E'],[-22,-16,'#E9CF9E']].forEach(([x,y,c],i)=>{d+=`<circle class="twk" style="animation-delay:${(i*.35).toFixed(2)}s" cx="${tx+x}" cy="${ty+y}" r="2.6" fill="${c}" stroke="rgba(14,51,95,.25)" stroke-width=".4"/>`});
+     const sy=ty-12-43-22-2;d+=`<polygon points="${tx},${sy-8} ${tx+2.4},${sy-2.4} ${tx+8},${sy-1.8} ${tx+3.7},${sy+2.1} ${tx+5},${sy+8} ${tx},${sy+4.8} ${tx-5},${sy+8} ${tx-3.7},${sy+2.1} ${tx-8},${sy-1.8} ${tx-2.4},${sy-2.4}" fill="#F2C14E" stroke="#B08D57" stroke-width=".6"/>`;
+     [[2.3,5.85,'#D7263D'],[2.8,5.75,'#0E335F'],[2.2,5.5,'#E9CF9E']].forEach(([x,y,c])=>{const p=iso(x,y,0);d+=`<rect x="${p[0]-5}" y="${p[1]-9}" width="10" height="9" fill="${c}" stroke="rgba(14,51,95,.25)" stroke-width=".5"/><rect x="${p[0]-1}" y="${p[1]-9}" width="2" height="9" fill="${c==='#E9CF9E'?'#D7263D':'#E9CF9E'}"/><path d="M${p[0]},${p[1]-9} q-3,-4 -5,-1 q3,1 5,1 q2,-.2 5,-1 q-2,-3 -5,1Z" fill="${c==='#E9CF9E'?'#D7263D':'#E9CF9E'}"/>`})}
+    /* wreaths on palace walls */
+    [[0,1.72,34,'x'],[0,3,30,'x'],[3,0,30,'y'],[5,0,24,'y'],[1.7,0,34,'y']].forEach(([x,y,z])=>{const c=iso(x,y,z);d+=`<g transform="translate(${c[0].toFixed(1)},${c[1].toFixed(1)})"><circle r="6.2" fill="none" stroke="#2F6B4F" stroke-width="3.4"/><circle r="6.2" fill="none" stroke="#3F8A64" stroke-width="1.2" stroke-dasharray="2 2.4"/>${[0,1,2,3,4,5].map(i=>{const a=i/6*Math.PI*2;return `<circle cx="${(Math.cos(a)*6.2).toFixed(1)}" cy="${(Math.sin(a)*6.2).toFixed(1)}" r="1" fill="${i%2?'#E9CF9E':'#D7263D'}"/>`}).join('')}<path d="M0,5.6 l-3,4.4 l2,.2 Z M0,5.6 l3,4.4 l-2,.2Z" fill="#D7263D"/><circle cx="0" cy="5.8" r="1.4" fill="#D7263D"/></g>`});
+    /* garland along the island's front edges */
+    {const m=.4,edge=(a,b,n)=>{let t='';for(let i=0;i<n;i++){const p0=iso(a[0]+(b[0]-a[0])*i/n,a[1]+(b[1]-a[1])*i/n,0),p1=iso(a[0]+(b[0]-a[0])*(i+1)/n,a[1]+(b[1]-a[1])*(i+1)/n,0),mx=(p0[0]+p1[0])/2,my=(p0[1]+p1[1])/2+9;
+       t+=`<path d="M${p0[0].toFixed(1)},${(p0[1]+2).toFixed(1)} Q${mx.toFixed(1)},${my.toFixed(1)} ${p1[0].toFixed(1)},${(p1[1]+2).toFixed(1)}" fill="none" stroke="#2F6B4F" stroke-width="3.2" stroke-linecap="round"/><circle class="twk" style="animation-delay:${(i*.27).toFixed(2)}s" cx="${mx.toFixed(1)}" cy="${(my-3.6).toFixed(1)}" r="2.2" fill="${i%2?'#E9CF9E':'#D7263D'}"/><circle cx="${p0[0].toFixed(1)}" cy="${(p0[1]+2).toFixed(1)}" r="1.6" fill="#B08D57"/>`}return t};
+     d+=edge([-m,6+m],[6+m,6+m],10)+edge([6+m,6+m],[6+m,-m],10)}
+
   }
   if(FEST==='newyear'){
     [[150,130,'#F2C14E'],[650,90,'#E8577A'],[320,40,'#3FC7D6'],[540,170,'#F2C14E'],[80,30,'#8E7CF0']].forEach(([x,y,c],i)=>{let r='';for(let k=0;k<12;k++){const t=k/12*Math.PI*2;r+=`<line x1="${x+Math.cos(t)*6}" y1="${y+Math.sin(t)*6}" x2="${x+Math.cos(t)*26}" y2="${y+Math.sin(t)*26}" stroke="${c}" stroke-width="2" stroke-linecap="round"/>`}
@@ -1126,7 +1141,7 @@ const NPCS={
  bella:{name:'Bella',role:'護理師',at:[3.32,1.0],look:{top:'#FFFFFF',gown:'#FFFFFF',gtrim:'#6E8FB8',puff:'#FFFFFF',ruff:true,bonnet:'#0E335F',hair:'pony',item:'tray'},lines:['我是 Bella，治療室準備好囉。','療程前，我會再跟你確認一次注意事項。','器械每次使用後，都會清潔消毒。','有點緊張嗎？過程中不舒服，隨時跟我說。']},
  xiangyu:{name:'祥毓',role:'美容師',at:[4.95,1.78],look:{top:'#E8C4C0',gown:'#E8C4C0',gtrim:'#B08D57',puff:'#F3DCD8',ruff:true,pearls:true,hat:'#F6E7E3',rose:'#C8546A',curls:true,hair:'mid',hairc:'#6B4A3A',item:'cup'},lines:['我是祥毓，歡迎來恢復室休息一下。','要不要喝杯溫水？','回家的保濕步驟有不懂的，都可以問我。','術後照護的細節，還是以醫師的指示為準喔。']},
  miqin:{name:'米秦',role:'美容師',at:[1.0,4.62],flip:true,look:{top:'#C9B6DF',gown:'#C9B6DF',gtrim:'#D9B46A',puff:'#E2D6EF',ruff:true,bonnet:'#C8546A',curls:true,hair:'mid',hairc:'#4A3428',eyes:'big',blush:true,item:'brush'},lines:['我是米秦，化妝間這邊請～','補妝前先洗手，刷具也要保持乾淨。','防曬是我每天出門前最重要的一步。','什麼時候可以上妝，離開前記得先問醫師。']},
- xiaojin:{name:'小進',role:'美編',at:[1.58,3.62],look:{top:'#2E4A6E',coat:true,jabot:true,hair:'short',glasses:true,brow:true,item:'tablet',legs:'#F2EDE6'},lines:['妳知道島上最亮的是什麼嗎？不是月亮，是剛走進來的妳。','妳有擦防曬嗎？不然怎麼會這麼耀眼。','這座島有七個空間，但我心裡只有一個位置。','妳抽到上上籤了嗎？我覺得遇見妳，就是我的上上籤。','我本來在畫平板，看到妳之後，就忘了要畫什麼。']},
+ xiaojin:{name:'小進',xlines:['聖誕老人問我想要什麼禮物，我說：剛走進來的妳。','聖誕樹上最亮的那顆星，好像跑到妳眼睛裡了。','今年的願望清單只有一行：陪妳逛完這座島。','麋鹿今天會遲到，因為牠們也停下來看妳。','妳不用掛在聖誕襪裡，妳本身就是禮物。','天氣冷，記得保濕。手要是冷了，我口袋借妳。'],role:'美編',at:[1.58,3.62],look:{top:'#2E4A6E',coat:true,jabot:true,hair:'short',glasses:true,brow:true,item:'tablet',legs:'#F2EDE6'},lines:['妳知道島上最亮的是什麼嗎？不是月亮，是剛走進來的妳。','妳有擦防曬嗎？不然怎麼會這麼耀眼。','這座島有七個空間，但我心裡只有一個位置。','妳抽到上上籤了嗎？我覺得遇見妳，就是我的上上籤。','我本來在畫平板，看到妳之後，就忘了要畫什麼。']},
  orange:{name:'橘子',role:'貓店員',el:'cat-orange',persona:'橘貓，愛曬太陽、愛吃',lines:['喵～我最愛曬太陽。不過人類曬太陽，記得要擦防曬喔。','吃飽睡、睡飽吃，作息規律，毛和皮膚都會比較好。','我每天都去水碗報到。你今天水喝夠了嗎？']},
  mochi:{name:'白芳',role:'貓店員',el:'cat-mochi',persona:'白貓，性格高傲',lines:['本喵叫白芳。要摸之前，先說一聲。','白貓的耳朵很怕曬，所以本喵都待在室內。你出門也要防曬，懂嗎？','哼，臉不要用力搓。看看本喵，理毛都很優雅。','本喵允許你摸一下。就一下。']},
  cutie:{name:'小可愛',role:'院長的愛貓',el:'cat-cutie',persona:'布偶貓，院長的愛貓，平常待在院長辦公室',lines:['喵～我是小可愛，院長的愛貓，平常都在院長辦公室陪她。','院長每天都說「先把基礎保養顧好」，我都聽到會背了。','布偶貓的毛很怕打結，就像皮膚怕乾燥，每天都要好好照顧喔。','偷偷告訴你，院長最喜歡我了。']},
@@ -1223,6 +1238,7 @@ function say(who){
   if(who==='doctor'){docTaps++;if(docTaps===10){line='你已經點我十次了！這麼喜歡聊天，找一天來診所，我們當面聊。';secretToast('chatty','話很多的林醫師')}}
   if(!line&&(n.role==='貓店員'||who==='cutie')&&world.dataset.phase==='night'){line=`${n.name}睡著了……呼嚕呼嚕。<br><small>晚上好好睡，皮膚才會好。</small>`;secretToast('sleepcat','夜晚睡著的貓')}
   if(!line&&who==='gold')secretToast('gold','稀有的金色貓');
+  if(!line&&FEST==='xmas'&&n.xlines){const k=who+'-x';sayIdx[k]=((sayIdx[k]??-1)+1)%n.xlines.length;line=n.xlines[sayIdx[k]]}
   if(!line){sayIdx[who]=((sayIdx[who]??-1)+1)%n.lines.length;line=n.lines[sayIdx[who]]}
   const b=document.getElementById('bubble');
   b.innerHTML=who==='doctor'?`<div class="b-row"><span class="av">${AVATAR}</span><div><b>${n.name}</b>${line}</div></div>`:`<b>${n.role}・${n.name}</b>${line}`;
@@ -1533,7 +1549,7 @@ const FORTUNES=[
  {fest:'midautumn',rank:'限定籤',title:'中秋籤',poem:['月圓人圓烤肉香','煙燻過後要洗淨'],mean:'中秋烤肉後，回家記得好好洗臉、卸妝。中秋快樂！',city:'night'}
 ];
 /* 節慶期間：月日每年；農曆節日寫明年份 */
-const FESTS=[{k:'xmas',from:'12-20',to:'12-26'},{k:'newyear',from:'12-30',to:'01-03'},{k:'cny',y:2027,from:'02-04',to:'02-12'},{k:'valentine',from:'02-13',to:'02-15'},{k:'mother',y:2027,from:'05-03',to:'05-09'},{k:'qixi',y:2027,from:'08-06',to:'08-09'},{k:'midautumn',y:2027,from:'09-13',to:'09-16'}];
+const FESTS=[{k:'xmas',from:'12-01',to:'12-26'},{k:'newyear',from:'12-30',to:'01-03'},{k:'cny',y:2027,from:'02-04',to:'02-12'},{k:'valentine',from:'02-13',to:'02-15'},{k:'mother',y:2027,from:'05-03',to:'05-09'},{k:'qixi',y:2027,from:'08-06',to:'08-09'},{k:'midautumn',y:2027,from:'09-13',to:'09-16'}];
 function festNow(){const d=new Date(),md=`${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
   for(const f of FESTS){if(f.y&&f.y!==d.getFullYear())continue;const ok=f.from<=f.to?(md>=f.from&&md<=f.to):(md>=f.from||md<=f.to);if(ok)return f.k}return null}
 const NUMS=['一','二','三','四','五','六','七','八','九'];
