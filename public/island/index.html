@@ -355,6 +355,18 @@ body.reading #yttag{opacity:0;pointer-events:none}
 .g-legend i{width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#B9A6FF,#6B4FD8 70%)}
 .g-legend i.b{border-radius:6px;height:14px;margin-top:6px;background:#F2B8C2;box-shadow:inset 0 0 0 1.5px #C8546A}
 .g-legend i.s{border-radius:7px;width:22px;height:28px;background:#fff;box-shadow:0 0 0 2px var(--gold)}
+.lb-tabs{display:flex;justify-content:center;gap:6px;margin:6px 0 10px}
+.lb-tabs button{min-height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--navy);font:700 13px var(--sans);cursor:pointer}
+.lb-tabs button[aria-pressed=true]{background:var(--navy);color:#E9CF9E;border-color:var(--navy)}
+.lb{list-style:none;margin:0 0 10px;padding:0;text-align:left;max-height:46vh;overflow:auto}
+.lb li{display:grid;grid-template-columns:30px 14px 1fr auto;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(--line);font-size:14px}
+.lb li b{font:700 15px var(--serif);color:#8A6A3A;text-align:center}.lb li:nth-child(1) b{color:#C9A464;font-size:18px}
+.lb li i{width:12px;height:12px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(14,51,95,.25)}
+.lb li span:last-child{font:700 14px var(--sans);font-variant-numeric:tabular-nums}
+.lb li.me{background:#FBF3E4;border-radius:10px}
+.lb-form{display:flex;gap:8px;margin:8px 0 4px}.lb-form input{flex:1;min-width:0;min-height:42px;border:1px solid var(--line);border-radius:10px;padding:0 12px;font:16px var(--sans);color:var(--navy)}
+.lb-form button{min-height:42px;padding:0 14px;border-radius:10px;border:0;background:var(--gold);color:#fff;font:700 14px var(--sans);cursor:pointer;white-space:nowrap}
+.lb-msg{min-height:1.2em;margin:2px 0 0;font-size:13px;color:#B23A48}.lb-msg.ok{color:#2F6B4F}
 .g-rank{display:inline-block;margin:4px 0 8px;padding:4px 16px;border-radius:999px;background:var(--navy);color:#E9CF9E;font:700 14px var(--serif);letter-spacing:.2em}
 .g-card .g-big{font:700 48px var(--serif);font-variant-numeric:tabular-nums;margin:0;line-height:1.1}
 .g-tip{background:#fff;border:1px dashed var(--gold);border-radius:12px;padding:10px 12px;text-align:left}
@@ -602,6 +614,9 @@ const CONTACT = {
   islandForm: "https://docs.google.com/forms/d/e/1FAIpQLScU2rB-E6vO5eboiFk_YJ-wJnDCoMjUZHTPdA5e_61AN0FKIg/formResponse",       // 表單送出網址：https://docs.google.com/forms/d/e/表單ID/formResponse
   islandEntryName: "entry.248760072",  // 暱稱題的 entry.xxxx
   islandEntryMsg: "entry.1875378231",   // 留言題的 entry.xxxx
+  rankForm: "https://docs.google.com/forms/d/e/1FAIpQLSfjXKOn1nvSMdetusW0KpozCOLbfhQbauV6mxngq8V0IxiDgQ/formResponse",
+  rankName: "entry.439708661", rankScore: "entry.270775091", rankCat: "entry.709660828",
+  rankCSV: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRhYEsmvZrfso_C_cgfIj-x_PjTTkNIohmhMoNlzBzZTjj2I_yklwfhjCGEIU8Icm3vNaRXiA_cWYg8/pub?output=csv",
   islandersCSV: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSpXcN_nHKcsjgsj-KwhC8CmOAO_I8KKNgpZz8uP4NOLSmi_JaIWFcZXGxhDLLeZeHD1jbLwubfk3tl/pub?gid=1861824541&single=true&output=csv"      // 「公開名單」分頁發布成 CSV 的網址
 };
 
@@ -1299,7 +1314,7 @@ function gameIntro(){
    <p style="margin-bottom:4px">選一隻貓：</p>
    <div class="g-cats">${CATS.map(k=>`<button type="button" data-gcat="${k}" aria-pressed="${k===gCat}"><i style="background:${CATLOOK[k].body}"></i>${esc(NPCS[k].name)}</button>`).join('')}</div>
    <p class="fine">手機按下方 ◀ ▶，或按住畫面左右兩邊；電腦用方向鍵。${best?`<br>你的最高紀錄：地下 <b>${best}</b> 樓`:''}</p>
-   <div class="g-btns"><button type="button" class="cta gold" data-gstart>開始</button></div>`;
+   <div class="g-btns"><button type="button" class="cta gold" data-gstart>開始</button><button type="button" class="cta ghost" data-gboard>看排行榜</button></div>`;
 }
 function gHud(floor,hp){gEl('g-floor').textContent=floor;gEl('g-hp').style.width=(hp*10)+'%'}
 function gSize(){const cv=gEl('g-cv'),r=cv.getBoundingClientRect(),dpr=Math.min(2,devicePixelRatio||1);cv.width=Math.round(r.width*dpr);cv.height=Math.round(r.height*dpr);return {W:r.width,H:r.height,dpr}}
@@ -1376,6 +1391,38 @@ function gDraw(){
   x.restore()}
   if(G.flash>0){x.fillStyle=`rgba(107,79,216,${(G.flash*1.2).toFixed(2)})`;x.fillRect(0,0,W,H)}
 }
+/* ===== 貓咪下樓梯排行榜 ===== */
+const RANK={rows:null,mine:[],tab:'month'};
+const BADW=['幹','靠北','靠杯','操','屌','雞巴','機掰','雞掰','屁眼','賤','婊','妓','死','殺','去死','白癡','白痴','智障','垃圾','腦殘','色情','約砲','援交','做愛','性交','奶子','fuck','shit','bitch','dick','pussy','sex','porn','nigg','http','www','.com','line'];
+function rankClean(n){n=(n||'').replace(/[\s​]+/g,'').slice(0,8);const low=n.toLowerCase();if(!n)return '';if(BADW.some(w=>low.includes(w)))return null;if(/\d{6,}/.test(n)||/@/.test(n))return null;return n}
+async function rankLoad(force){if(RANK.rows&&!force)return RANK.rows;
+  try{const r=await fetch(CONTACT.rankCSV+'&t='+Math.floor(Date.now()/60000),{cache:'no-store'});const txt=await r.text();const rows=[];let row=[],cur='',q=false;
+    for(let i=0;i<txt.length;i++){const c=txt[i];if(q){if(c==='"'){if(txt[i+1]==='"'){cur+='"';i++}else q=false}else cur+=c}else if(c==='"')q=true;else if(c===','){row.push(cur);cur=''}else if(c==='\n'||c==='\r'){if(c==='\r'&&txt[i+1]==='\n')i++;row.push(cur);rows.push(row);row=[];cur=''}else cur+=c}
+    if(cur||row.length){row.push(cur);rows.push(row)}
+    RANK.rows=rows.slice(1).map(r=>{const m=(r[0]||'').match(/(\d{4})\/(\d{1,2})\//);return {name:rankClean(r[1]),score:Math.min(999,parseInt(r[2],10)||0),cat:r[3]||'',ym:m?m[1]+'-'+m[2].padStart(2,'0'):''}}).filter(x=>x.name&&x.score>0)}
+  catch(_){RANK.rows=RANK.rows||[]}
+  return RANK.rows}
+function rankTop(tab){const now=new Date(),ym=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
+  const all=[...(RANK.rows||[]),...RANK.mine].filter(x=>tab==='all'||x.ym===ym),best={};
+  all.forEach(x=>{const k=x.name.toLowerCase();if(!best[k]||x.score>best[k].score)best[k]=x});
+  return Object.values(best).sort((a,b)=>b.score-a.score).slice(0,10)}
+function rankList(){const top=rankTop(RANK.tab),me=(LS.get('wh-rank-name','')||'').toLowerCase();
+  if(RANK.rows==null)return '<p class="fine">排行榜讀取中…</p>';
+  if(!top.length)return `<p class="fine">${RANK.tab==='month'?'這個月':'目前'}還沒有人上榜，當第一名吧！</p>`;
+  return `<ol class="lb">${top.map((x,i)=>`<li class="${x.name.toLowerCase()===me?'me':''}"><b>${i+1}</b><i style="background:${CATLOOK[x.cat]?CATLOOK[x.cat].body:'#E9CF9E'}"></i><span>${esc(x.name)}</span><span>地下 ${x.score} 樓</span></li>`).join('')}</ol>`}
+function rankBoxHTML(){return `<div class="lb-tabs" role="group" aria-label="排行榜期間"><button type="button" data-lbtab="month" aria-pressed="${RANK.tab==='month'}">本月排行</button><button type="button" data-lbtab="all" aria-pressed="${RANK.tab==='all'}">總排行</button></div><div id="lb-list">${rankList()}</div>`}
+function rankRefresh(){const l=document.getElementById('lb-list');if(l)l.innerHTML=rankList();document.querySelectorAll('[data-lbtab]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lbtab===RANK.tab))}
+function showBoard(){gEl('g-card').hidden=false;gEl('g-card').innerHTML=`<h3>貓咪下樓梯排行榜</h3>${rankBoxHTML()}<p class="fine">同一個暱稱只算最好的一次。新成績約幾分鐘後會出現在所有人的排行榜上。</p><div class="g-btns"><button type="button" class="cta gold" data-gstart>開始挑戰</button><button type="button" class="cta ghost" data-gclose>回到島上</button></div>`;rankLoad(true).then(rankRefresh);track('island_rank_view')}
+async function rankSubmit(){const inp=document.getElementById('lb-name'),msg=document.getElementById('lb-msg'),btn=document.getElementById('lb-send');
+  const n=rankClean(inp.value);if(n===''){msg.className='lb-msg';msg.textContent='先填一個暱稱吧。';inp.focus();return}
+  if(n===null){msg.className='lb-msg';msg.textContent='這個暱稱不能用，換一個吧。';inp.focus();return}
+  if(G.sent){return}G.sent=true;btn.disabled=true;btn.textContent='送出中…';
+  const fd=new URLSearchParams();fd.append(CONTACT.rankName,n);fd.append(CONTACT.rankScore,String(G.floor));fd.append(CONTACT.rankCat,gCat);
+  try{await fetch(CONTACT.rankForm,{method:'POST',mode:'no-cors',body:fd});
+    LS.set('wh-rank-name',n);const now=new Date();RANK.mine.push({name:n,score:G.floor,cat:gCat,ym:now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')});
+    msg.className='lb-msg ok';msg.textContent='上榜了！';btn.textContent='已送出';track('island_rank_submit',{score:G.floor});
+    const box=document.getElementById('lb-box');if(box)box.innerHTML=rankBoxHTML();rankLoad().then(rankRefresh)}
+  catch(_){G.sent=false;btn.disabled=false;btn.textContent='送出成績';msg.className='lb-msg';msg.textContent='送出失敗，請確認網路連線後再試一次。'}}
 function endGame(why){
   G.on=false;
   const sc=G.floor,best=Math.max(sc,LS.get('wh-best-stairs',0));LS.set('wh-best-stairs',best);track('island_game_end',{score:sc,cat:gCat});
@@ -1384,8 +1431,11 @@ function endGame(why){
   gEl('g-card').hidden=false;
   gEl('g-card').innerHTML=`<p class="t-eye" style="margin:0">${why==='fall'?`${esc(nm)}掉下去了！`:`${esc(nm)}被紫外線曬累了！`}</p><p class="g-big">地下 ${sc} 樓</p><span class="g-rank">${rank}</span>
    <p>${sc>=best&&sc>0?'刷新你的最高紀錄！':`最高紀錄：地下 ${best} 樓`}${G.spf?`<br>撿到 ${G.spf} 瓶防曬乳`:''}</p>
+   ${sc>0?`<form class="lb-form" id="lb-f" novalidate><label for="lb-name" class="sr">排行榜暱稱</label><input id="lb-name" maxlength="8" placeholder="輸入暱稱登上排行榜" value="${esc(LS.get('wh-rank-name','')||(LS.get('wh-registered',null)||{}).name||'')}" autocomplete="off"><button type="submit" id="lb-send">送出成績</button></form><p class="lb-msg" id="lb-msg" role="status"></p>`:''}
+   <div id="lb-box">${rankBoxHTML()}</div>
    <div class="g-tip"><b>林醫師的防曬小提醒</b>${tip}</div>
    <div class="g-btns"><button type="button" class="cta" data-share="game">分享成績給朋友</button><button type="button" class="cta gold" data-gstart>再玩一次</button><button type="button" class="cta ghost" data-gclose>回到島上</button></div>`;
+  G.sent=false;rankLoad(true).then(rankRefresh);
   shareData.game={text:`我在無痕美學島陪${nm}下樓梯，一路跑到地下 ${sc} 樓，拿到「${rank}」！你能跑多深？`};
 }
 {const setP=(ev,on)=>{const b=ev.target.closest('[data-gdir]');if(b){ev.preventDefault();gDirs.b=on?+b.dataset.gdir:0;b.classList.toggle('on',on);return true}};
@@ -2083,6 +2133,8 @@ document.addEventListener('click',e=>{
   if(e.target.closest('[data-qagain]')){quiz={step:0,ans:[]};renderQuiz();return}
   const sh=e.target.closest('[data-share]');if(sh){shareIt(sh.dataset.share);return}
   if(e.target.closest('[data-game]')){openGame();return}
+  if(e.target.closest('[data-gboard]')){showBoard();return}
+  {const lt=e.target.closest('[data-lbtab]');if(lt){RANK.tab=lt.dataset.lbtab;rankRefresh();return}}
   {const gc=e.target.closest('[data-gcat]');if(gc){gCat=gc.dataset.gcat;LS.set('wh-gcat',gCat);document.querySelectorAll('[data-gcat]').forEach(b=>b.setAttribute('aria-pressed',b===gc));return}}
   if(e.target.closest('[data-gstart]')){startGame();return}
   if(e.target.closest('[data-gclose]')){closeGame();return}
@@ -2111,7 +2163,7 @@ document.addEventListener('click',e=>{
 });
 document.getElementById('p-close').addEventListener('click',()=>closeRoom());
 document.addEventListener('input',e=>{if(e.target.id==='islander-name'){islander.name=e.target.value.trim();LS.set('wh-name',islander.name);clearTimeout(wallT);wallT=setTimeout(refreshWall,300)}});
-document.addEventListener('submit',e=>{if(e.target.id==='shoutform'){e.preventDefault();submitShout();return}if(e.target.id==='regform'){e.preventDefault();submitReg();return}if(e.target.id==='guessform'){e.preventDefault();ytGuess(document.getElementById('guessin').value);return}if(e.target.id==='askform'){e.preventDefault();const i=document.getElementById('askinput'),v=i.value.trim();if(!v){i.focus();i.placeholder='寫一點點也可以喔';return}answer(v)}});
+document.addEventListener('submit',e=>{if(e.target.id==='lb-f'){e.preventDefault();rankSubmit();return}if(e.target.id==='shoutform'){e.preventDefault();submitShout();return}if(e.target.id==='regform'){e.preventDefault();submitReg();return}if(e.target.id==='guessform'){e.preventDefault();ytGuess(document.getElementById('guessin').value);return}if(e.target.id==='askform'){e.preventDefault();const i=document.getElementById('askinput'),v=i.value.trim();if(!v){i.focus();i.placeholder='寫一點點也可以喔';return}answer(v)}});
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey&&e.target.id==='askinput'&&e.target.tagName==='TEXTAREA'){e.preventDefault();document.getElementById('askform').requestSubmit()}});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!gEl('game').hidden){closeGame();return}if(e.key==='Escape'&&current)closeRoom();if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('svg [data-shout],svg [data-egg],svg [data-npc],svg [data-sky]')){e.preventDefault();e.target.dispatchEvent(new MouseEvent('click',{bubbles:true}))}});
 ['pointerover','pointerout'].forEach(ev=>document.addEventListener(ev,e=>{
