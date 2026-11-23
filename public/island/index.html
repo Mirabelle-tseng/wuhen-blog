@@ -294,6 +294,8 @@ body.reading #yttag{opacity:0;pointer-events:none}
 .fogb{animation:fogd 36s linear infinite}
 @keyframes fogd{from{transform:translateX(-200px)}to{transform:translateX(260px)}}
 .sn{animation:snow 8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}.spin{animation:spin 6s linear infinite;transform-box:fill-box;transform-origin:center}
+.bigflake{animation:spin 40s linear infinite;transform-box:fill-box;transform-origin:center}
 @keyframes snow{from{transform:translate(0,-120px)}to{transform:translate(30px,560px)}}
 #festsky{pointer-events:none}
 #festsky .fmoon{pointer-events:auto;cursor:pointer}
@@ -498,7 +500,7 @@ body.reading #toast{bottom:auto;top:calc(env(safe-area-inset-top,0px) + 12px)}
 
 @media (prefers-reduced-motion:reduce){
   #bob,#shadow,.ripple,.cloud-move,.twinkle,.spark,.pin .face,.bill,.eye,.egg-dot .ping,.stamps.full,#yttag .dot,.typing i,.tail,.heart,.jiao.toss .jb,.drum.shake,.zz,.rd,.fogb,.sn,.fw,.lantern,.floatup,.bird,.twk,.float,.float-slow,.chand{animation:none}
-  .rd,.sn{display:none}.fw{opacity:1}
+  .rd,.sn{display:none}.spin,.bigflake{animation:none}.fw{opacity:1}
   .m-face{transition:none}
   .ripple{opacity:.25}
 }
@@ -955,6 +957,7 @@ function buildFest(){
   const sky=document.getElementById('festsky'),deco=document.getElementById('festdeco');if(!FEST)return;
   let a='',d='';
   if(FEST==='xmas'){
+    [[-180,120,4.2],[120,40,2.6],[260,190,3.4],[540,70,2.2],[880,150,3.8],[1060,40,2.4],[-60,300,2.4],[1150,300,3]].forEach(([x,y,sc],i)=>{a+=`<g transform="translate(${x},${y}) scale(${sc})"><g class="bigflake" style="animation-duration:${30+i*6}s;animation-direction:${i%2?'reverse':'normal'}">${FLAKE('#FFFFFF',.28)}</g></g>`});
     const [cx,cy]=iso(.85,5.6,0);
     d+=`<rect x="${cx-2.5}" y="${cy-8}" width="5" height="8" fill="#7A5230"/>`;
     [[0,22,26,'#2F6B4F'],[12,18,23,'#367A59'],[22,13,20,'#3F8A64']].forEach(([dy,w,h,c])=>{d+=`<polygon points="${cx-w},${cy-8-dy} ${cx+w},${cy-8-dy} ${cx},${cy-8-dy-h}" fill="${c}"/>`});
@@ -1003,9 +1006,11 @@ function buildWeather(){
   const wx=document.getElementById('wx');let s='';
   if(WEATHER==='rain'){for(let i=0;i<150;i++){const x=-400+((i*97)%1700),y=-500+((i*53)%900);s+=`<line class="rd" style="animation-delay:${-((i*37)%100)/100}s;animation-duration:${(.55+(i%4)*.08).toFixed(2)}s" x1="${x}" y1="${y}" x2="${x-5}" y2="${y+16}" stroke="rgba(225,236,250,.65)" stroke-width="1.2" stroke-linecap="round"/>`}}
   else if(WEATHER==='fog'){s+=`<defs><filter id="fogf" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="22"/></filter></defs>`;[[-100,450,520,70],[500,500,560,80],[200,560,620,90],[900,430,480,60]].forEach(([x,y,rx,ry],i)=>{s+=`<ellipse class="fogb" style="animation-delay:${-i*9}s" cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="#FFFFFF" opacity=".55" filter="url(#fogf)"/>`})}
+  if(FEST==='xmas'&&WEATHER!=='rain'){for(let i=0;i<26;i++){const x=-260+((i*173)%1380),y=-420+((i*89)%720),sc=(.5+(i%4)*.22).toFixed(2);s+=`<g class="sn" style="animation-delay:${-((i*37)%100)/10}s;animation-duration:${(9+(i%5)).toFixed(0)}s"><g transform="translate(${x},${y}) scale(${sc})"><g class="spin" style="animation-duration:${(5+(i%4)*2)}s">${FLAKE('#FFFFFF',.9)}</g></g></g>`}}
   if(FEST==='xmas'&&WEATHER!=='rain'){for(let i=0;i<60;i++){const x=-300+((i*131)%1400),y=-400+((i*71)%700);s+=`<circle class="sn" style="animation-delay:${-((i*29)%100)/10}s;animation-duration:${(7+(i%5)).toFixed(0)}s" cx="${x}" cy="${y}" r="${1.2+(i%3)*.6}" fill="#FFFFFF" opacity=".85"/>`}}
   wx.innerHTML=s;
 }
+function FLAKE(c,o){let t=`<g stroke="${c}" stroke-opacity="${o}" stroke-width="1.4" stroke-linecap="round" fill="none">`;for(let k=0;k<6;k++){t+=`<g transform="rotate(${k*60})"><line x1="0" y1="0" x2="0" y2="-9"/><line x1="0" y1="-5" x2="-2.6" y2="-7.6"/><line x1="0" y1="-5" x2="2.6" y2="-7.6"/></g>`}return t+`<circle r="1.4" fill="${c}" fill-opacity="${o}" stroke="none"/></g>`}
 function buildSky(){
   let st='';
   for(let i=0;i<70;i++){const x=-300+((i*137)%1400),y=-420+((i*89)%560),r=(i%5===0)?1.6:.9;st+=`<circle class="star${i%3?' twinkle':''}" style="animation-delay:${(i%7)*.4}s" cx="${x}" cy="${y}" r="${r}"/>`}
@@ -1107,9 +1112,30 @@ function egg(id,inner,dx,dy,hit){
   const h=hit?`<rect x="${hit[0]}" y="${hit[1]}" width="${hit[2]}" height="${hit[3]}" fill="transparent"/>`:'';
   return `<g class="egg${found.has(id)?' found':''}" data-egg="${id}" tabindex="0" role="button" aria-label="${EGGS[id].city}彩蛋：${EGGS[id].t}">${inner}${h}<g class="egg-dot" transform="translate(${dx},${dy})"><circle class="ping" r="7"/><circle class="dotc" r="4.6"/></g></g>`;
 }
+function xmTree(x,base,h,cols,star){const w=h*.42;let t='';
+  [[0,1],[.3,.8],[.56,.6]].forEach(([o,k],i)=>{const y0=base-h*o,ww=w*k;t+=`<polygon points="${x-ww},${y0} ${x+ww},${y0} ${x},${y0-h*.5}" fill="${['#1F4D38','#26593F','#2F6B4F'][i]}"/>`});
+  t+=`<rect x="${x-w*.08}" y="${base}" width="${w*.16}" height="${HZ-base}" fill="#5B3D2C"/>`;
+  for(let i=0;i<26;i++){const fy=(i%13)/13,yy=base-h*.05-fy*h*.92,half=w*(1-fy)*.92,xx=x+((i*37)%100/100*2-1)*half;t+=`<circle class="twk" style="animation-delay:${((i*13)%20)/10}s" cx="${xx.toFixed(1)}" cy="${yy.toFixed(1)}" r="${(h/90).toFixed(1)}" fill="${cols[i%cols.length]}"/>`}
+  if(star){const sy=base-h*1.08,r=h*.07;t+=`<polygon points="${[0,1,2,3,4,5,6,7,8,9].map(k=>{const a=-Math.PI/2+k*Math.PI/5,rr=k%2?r*.45:r;return (x+Math.cos(a)*rr).toFixed(1)+','+(sy+Math.sin(a)*rr).toFixed(1)}).join(' ')}" fill="#F6D36B"/><circle cx="${x}" cy="${sy}" r="${r*1.8}" fill="#F6D36B" opacity=".18"/>`}
+  return t}
+function xmLights(x0,x1,y,sag,cols,n){let t=`<path d="M${x0},${y} Q${(x0+x1)/2},${y+sag} ${x1},${y}" fill="none" stroke="rgba(30,30,40,.45)" stroke-width="1"/>`;
+  for(let i=1;i<n;i++){const k=i/n,xx=x0+(x1-x0)*k,yy=y+2*sag*k*(1-k);t+=`<circle class="twk" style="animation-delay:${(i%7)*.3}s" cx="${xx.toFixed(1)}" cy="${(yy+2).toFixed(1)}" r="2.2" fill="${cols[i%cols.length]}"/>`}return t}
+function xmCity(k){const W=['#F6D36B','#E8577A','#7FD1A8','#FFFFFF'];let t='';
+  if(k==='london'){t+=xmTree(865,HZ-24,130,['#F6D36B','#FFFFFF','#E8577A'],true);
+    t+=`<g transform="translate(95,224)"><circle r="15" fill="none" stroke="#2F6B4F" stroke-width="4"/><circle r="15" fill="none" stroke="#D7263D" stroke-width="1.4" stroke-dasharray="3 5"/></g>`;
+    t+=xmLights(-260,40,HZ-62,18,W,14)+xmLights(830,1200,HZ-58,20,W,16)}
+  if(k==='paris'){const c=705;[[92,0],[112,3],[164,7],[254,15],[334,24],[392,40],[440,52]].forEach(([y,w])=>{[-1,1].forEach(sd=>{t+=`<circle class="twk" style="animation-delay:${(y%9)/5}s" cx="${c+sd*w}" cy="${y}" r="2.4" fill="#F6D36B"/>`})});
+    for(let y=120;y<460;y+=26){const k2=(y-92)/(HZ-92),w=3+60*k2*k2;t+=`<circle class="twk" style="animation-delay:${(y%11)/6}s" cx="${c-w*.6}" cy="${y}" r="1.8" fill="#FFF3C4"/><circle class="twk" style="animation-delay:${(y%7)/5}s" cx="${c+w*.6}" cy="${y}" r="1.8" fill="#FFF3C4"/>`}
+    t+=xmTree(-70,HZ-36,110,['#F6D36B','#FFFFFF'],true)+xmLights(-700,40,HZ-44,16,['#F6D36B','#FFFFFF'],18)+xmLights(800,1300,HZ-54,18,['#F6D36B','#FFFFFF'],16)}
+  if(k==='taipei'){const c=95;let y=384;for(let i=0;i<8;i++){t+=`<rect x="${c-18}" y="${y-22}" width="36" height="1.8" fill="${['#D7263D','#7FD1A8','#F6D36B'][i%3]}" class="twk" style="animation-delay:${i*.25}s"/>`;y-=22}
+    t+=xmTree(845,HZ-30,150,['#F6D36B','#E8577A','#7FD1A8','#FFFFFF'],true)+xmLights(170,330,HZ-70,16,W,10)+xmLights(560,900,HZ-74,20,W,16)}
+  if(k==='nyc'){t+=xmTree(895,HZ-20,190,['#E8577A','#3FC7D6','#F2C14E','#8E7CF0','#5ED39A','#FFFFFF'],true);
+    t+=`<ellipse cx="895" cy="${HZ-6}" rx="70" ry="7" fill="#DCEBFA" opacity=".55"/>`;
+    t+=xmLights(-420,230,HZ-120,26,['#E8577A','#3FC7D6','#F2C14E','#5ED39A'],24)+xmLights(600,1210,HZ-130,30,['#E8577A','#3FC7D6','#F2C14E','#5ED39A'],24)}
+  return `<g pointer-events="none">${t}</g>`}
 function buildCities(){
   document.getElementById('cities').innerHTML=`<defs><linearGradient id="g-haze" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E8577A" stop-opacity="0"/><stop offset="1" stop-color="#E8577A" stop-opacity=".22"/></linearGradient></defs>`
-   +`<g class="city dawn">${london()}</g><g class="city day">${paris()}</g><g class="city dusk">${taipei()}</g><g class="city night">${nyc()}</g>`;
+   +`<g class="city dawn">${london()}${FEST==='xmas'?xmCity('london'):''}</g><g class="city day">${paris()}${FEST==='xmas'?xmCity('paris'):''}</g><g class="city dusk">${taipei()}${FEST==='xmas'?xmCity('taipei'):''}</g><g class="city night">${nyc()}${FEST==='xmas'?xmCity('nyc'):''}</g>`;
 }
 
 /* ===== content ===== */
@@ -1549,7 +1575,7 @@ const FORTUNES=[
  {fest:'midautumn',rank:'限定籤',title:'中秋籤',poem:['月圓人圓烤肉香','煙燻過後要洗淨'],mean:'中秋烤肉後，回家記得好好洗臉、卸妝。中秋快樂！',city:'night'}
 ];
 /* 節慶期間：月日每年；農曆節日寫明年份 */
-const FESTS=[{k:'xmas',from:'12-01',to:'12-26'},{k:'newyear',from:'12-30',to:'01-03'},{k:'cny',y:2027,from:'02-04',to:'02-12'},{k:'valentine',from:'02-13',to:'02-15'},{k:'mother',y:2027,from:'05-03',to:'05-09'},{k:'qixi',y:2027,from:'08-06',to:'08-09'},{k:'midautumn',y:2027,from:'09-13',to:'09-16'}];
+const FESTS=[{k:'xmas',from:'11-23',to:'12-26'},{k:'newyear',from:'12-30',to:'01-03'},{k:'cny',y:2027,from:'02-04',to:'02-12'},{k:'valentine',from:'02-13',to:'02-15'},{k:'mother',y:2027,from:'05-03',to:'05-09'},{k:'qixi',y:2027,from:'08-06',to:'08-09'},{k:'midautumn',y:2027,from:'09-13',to:'09-16'}];
 function festNow(){const d=new Date(),md=`${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
   for(const f of FESTS){if(f.y&&f.y!==d.getFullYear())continue;const ok=f.from<=f.to?(md>=f.from&&md<=f.to):(md>=f.from||md<=f.to);if(ok)return f.k}return null}
 const NUMS=['一','二','三','四','五','六','七','八','九'];
