@@ -90,6 +90,9 @@ body{background:var(--cream);color:var(--navy);font-family:var(--sans);overflow:
 .brand h1{margin:0;font:700 clamp(24px,4.4vw,34px)/1.15 var(--serif);letter-spacing:.06em;text-wrap:balance}
 .brand p{margin:6px 0 0;font-size:13px;letter-spacing:.04em;opacity:.85}
 .brand .addr{margin-top:2px;font-size:12px;opacity:.7}
+#bgm{pointer-events:auto;margin-left:8px;min-height:30px;padding:0 12px;border-radius:999px;border:1px solid rgba(176,141,87,.55);background:rgba(251,248,243,.8);color:var(--navy);font:700 12px var(--sans);letter-spacing:.06em;cursor:pointer;vertical-align:middle}
+#bgm[aria-pressed=true]{background:var(--navy);color:#E9CF9E;border-color:var(--navy)}
+#bgm:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .clock{pointer-events:auto;display:flex;gap:2px;padding:3px;border-radius:999px;background:rgba(251,248,243,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(176,141,87,.35)}
 .clock button{font:500 12px var(--sans);color:var(--navy);background:none;border:0;border-radius:999px;padding:6px 10px;cursor:pointer;letter-spacing:.04em}
 .clock button[aria-pressed="true"]{background:var(--navy);color:var(--paper)}
@@ -538,7 +541,7 @@ body.reading #toast{bottom:auto;top:calc(env(safe-area-inset-top,0px) + 12px)}
       <h1>無痕美學島</h1>
       <p>會動的診所小島，逛完還能抽一支保養籤</p>
       <p class="addr">安和路一段86號 2樓，八個空間，點進去逛逛</p>
-      <p class="cityname"><span class="dia"></span><span id="cityname">巴黎・白天</span></p>
+      <p class="cityname"><span class="dia"></span><span id="cityname">巴黎・白天</span><button type="button" id="bgm" hidden aria-pressed="false" aria-label="播放聖誕音樂盒">♪ 聖誕音樂</button></p>
     </div>
     <div class="clock" role="group" aria-label="島上的時間與城市">
       <button type="button" data-ph="auto" aria-pressed="true">自動</button>
@@ -1392,6 +1395,24 @@ function endGame(why){
  addEventListener('keydown',ev=>{if(gEl('game').hidden)return;if(ev.key==='ArrowLeft'||ev.key==='a'){gDirs.k=-1;ev.preventDefault()}else if(ev.key==='ArrowRight'||ev.key==='d'){gDirs.k=1;ev.preventDefault()}else if(ev.key==='Escape')closeGame()});
  addEventListener('keyup',ev=>{if((ev.key==='ArrowLeft'||ev.key==='a')&&gDirs.k<0)gDirs.k=0;if((ev.key==='ArrowRight'||ev.key==='d')&&gDirs.k>0)gDirs.k=0});
  addEventListener('resize',()=>{if(G.on){const sz=gSize();G.W=sz.W;G.H=sz.H;G.dpr=sz.dpr}});}
+/* ===== 聖誕音樂盒（公版旋律，網頁即時合成） ===== */
+const BGM={ctx:null,on:false,timer:null,next:0,song:0,idx:0};
+const NT=n=>{const m={C:0,D:2,E:4,F:5,G:7,A:9,B:11}[n[0]],sh=n[1]==='#'?1:0,o=+n[n.length-1];return 440*Math.pow(2,(m+sh+(o+1)*12-69)/12)};
+const SONGS=[
+ {bpm:118,n:[['E5',1],['E5',1],['E5',2],['E5',1],['E5',1],['E5',2],['E5',1],['G5',1],['C5',1.5],['D5',.5],['E5',4],['F5',1],['F5',1],['F5',1.5],['F5',.5],['F5',1],['E5',1],['E5',1],['E5',.5],['E5',.5],['E5',1],['D5',1],['D5',1],['E5',1],['D5',2],['G5',2],
+   ['E5',1],['E5',1],['E5',2],['E5',1],['E5',1],['E5',2],['E5',1],['G5',1],['C5',1.5],['D5',.5],['E5',4],['F5',1],['F5',1],['F5',1.5],['F5',.5],['F5',1],['E5',1],['E5',1],['E5',.5],['E5',.5],['G5',1],['G5',1],['F5',1],['D5',1],['C5',4],[null,2]]},
+ {bpm:132,n:[['G4',1],['C5',1],['C5',.5],['D5',.5],['C5',.5],['B4',.5],['A4',1],['A4',1],['A4',1],['D5',1],['D5',.5],['E5',.5],['D5',.5],['C5',.5],['B4',1],['G4',1],['G4',1],['E5',1],['E5',.5],['F5',.5],['E5',.5],['D5',.5],['C5',1],['A4',1],['G4',.5],['G4',.5],['A4',1],['D5',1],['B4',1],['C5',3],[null,3]]}
+];
+function bgmNote(f,t,dur){const c=BGM.ctx;[[1,.55],[2.001,.18],[4.07,.06]].forEach(([r,g])=>{const o=c.createOscillator(),a=c.createGain();o.type='sine';o.frequency.value=f*r;a.gain.setValueAtTime(0,t);a.gain.linearRampToValueAtTime(g,t+.006);a.gain.exponentialRampToValueAtTime(.0001,t+Math.max(.9,dur*1.6)/(r>1?1.6:1));o.connect(a);a.connect(BGM.bus);o.start(t);o.stop(t+2)})}
+function bgmTick(){const c=BGM.ctx;while(BGM.next<c.currentTime+.25){const S=SONGS[BGM.song],[n,b]=S.n[BGM.idx],d=b*60/S.bpm;if(n)bgmNote(NT(n),BGM.next,d);BGM.next+=d;BGM.idx++;if(BGM.idx>=S.n.length){BGM.idx=0;BGM.song=(BGM.song+1)%SONGS.length}}}
+function bgmStart(){const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+  if(!BGM.ctx){const c=BGM.ctx=new AC(),m=c.createGain(),dl=c.createDelay(),fb=c.createGain(),lp=c.createBiquadFilter();m.gain.value=.16;dl.delayTime.value=.28;fb.gain.value=.28;lp.type='lowpass';lp.frequency.value=2600;
+    BGM.bus=c.createGain();BGM.bus.connect(m);BGM.bus.connect(dl);dl.connect(lp);lp.connect(fb);fb.connect(dl);lp.connect(m);m.connect(c.destination)}
+  BGM.ctx.resume();BGM.on=true;BGM.next=BGM.ctx.currentTime+.1;BGM.timer=setInterval(bgmTick,60);bgmUI();track('island_bgm_on')}
+function bgmStop(){BGM.on=false;clearInterval(BGM.timer);if(BGM.ctx)BGM.ctx.suspend();bgmUI()}
+function bgmUI(){const b=document.getElementById('bgm');if(!b)return;b.setAttribute('aria-pressed',BGM.on);b.textContent=BGM.on?'♪ 音樂播放中':'♪ 聖誕音樂';b.setAttribute('aria-label',BGM.on?'暫停聖誕音樂盒':'播放聖誕音樂盒')}
+document.addEventListener('visibilitychange',()=>{if(!BGM.ctx)return;if(document.hidden)BGM.ctx.suspend();else if(BGM.on)BGM.ctx.resume()});
+
 /* ===== 猜猜我是誰 ===== */
 const YT_LINE='s8604922';
 const YT_KEYS=['店經理','店長','怡婷','小米'];
@@ -2049,6 +2070,7 @@ function applyPhase(){
 
 /* ===== events ===== */
 document.addEventListener('click',e=>{
+  if(e.target.closest('#bgm')){BGM.on?bgmStop():bgmStart();return}
   if(e.target.closest('[data-shout]')){openShout();return}
   const cf=e.target.closest('[data-coffee]');if(cf){const d=cf.dataset.coffee;document.querySelectorAll('[data-coffee]').forEach(b=>b.setAttribute('aria-pressed',b===cf));
     const o=document.getElementById('coffee-out');if(o)o.innerHTML=`<b>杜克勞・詹：</b>一杯${esc(d)}，記下來了！到診所時跟櫃台說一聲就好。`;track('island_coffee_pick',{drink:d});return}
@@ -2114,7 +2136,7 @@ addEventListener('resize',()=>{fitView();if(current&&R[current])focusRoom(curren
 /* ===== boot ===== */
 FEST=HASH0.startsWith('fest-')&&FEST_NAME[HASH0.slice(5)]?HASH0.slice(5):festNow();
 world.dataset.weather=WEATHER;if(FEST)world.dataset.fest=FEST;
-buildSky();buildCities();buildIsland();buildFest();buildWeather();buildPins();renderStamps();fitView();applyPhase();
+buildSky();buildCities();buildIsland();buildFest();{const b=document.getElementById('bgm');if(b)b.hidden=FEST!=='xmas'}buildWeather();buildPins();renderStamps();fitView();applyPhase();
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{fitView()});
 if(FEST)setTimeout(()=>{if(!current)toast(`<p class="t-eye">${FEST_NAME[FEST]}限定</p><b>島上換裝了！</b><span>這幾天抽院長保養籤，有機會抽到${FEST_NAME[FEST]}限定籤。</span>`,7000)},1600);
 if(WEATHER!=='clear')setTimeout(()=>{if(!current)toast(WEATHER==='rain'?'<p class="t-eye">島上天氣</p><b>下雨了</b><span>貓店員都躲到沙發旁邊了。雨天紫外線比較弱，但還是有，防曬別放假。</span>':'<p class="t-eye">島上天氣</p><b>起霧了</b><span>城市看起來朦朦朧朧的。霧散了，紫外線一樣會回來。</span>',7000)},FEST?9500:1600);
