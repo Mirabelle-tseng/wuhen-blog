@@ -329,6 +329,8 @@ body.reading #yttag{opacity:0;pointer-events:none}
 .g-meter i{flex:1;height:10px;border-radius:10px;background:rgba(255,255,255,.7);overflow:hidden;box-shadow:inset 0 0 0 1px rgba(14,51,95,.15)}
 .g-meter b{display:block;height:100%;width:100%;background:linear-gradient(90deg,#E8577A,#F2C14E 60%,#7FC4A0);transition:width .2s}
 #g-cv{display:block;width:100%;height:100%;touch-action:none}
+.g-field,.g-ctrl,.g-top,.g-meter{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.g-ctrl button svg{pointer-events:none}
 .g-ctrl{display:flex;gap:12px;padding:10px 0 calc(env(safe-area-inset-bottom,0px) + 10px)}
 .g-ctrl button{flex:1;min-height:58px;border-radius:18px;border:1px solid var(--gold);background:rgba(251,248,243,.92);color:var(--navy);font:700 22px var(--sans);touch-action:none;-webkit-user-select:none;user-select:none;cursor:pointer}
 .g-ctrl button:active,.g-ctrl button.on{background:var(--navy);color:#E9CF9E}
@@ -582,7 +584,7 @@ body.reading #toast{bottom:auto;top:calc(env(safe-area-inset-top,0px) + 12px)}
   <div class="g-top"><div class="g-hud"><span class="g-lb">地下</span><b id="g-floor">0</b><span class="g-lb">樓</span></div><button type="button" class="t-x" data-gclose aria-label="離開遊戲">×</button></div>
   <div class="g-meter"><span>活力</span><i><b id="g-hp"></b></i></div>
   <div class="g-field" id="g-field"><canvas id="g-cv" aria-label="貓咪下樓梯遊戲畫面"></canvas></div>
-  <div class="g-ctrl"><button type="button" data-gdir="-1" aria-label="往左">◀</button><button type="button" data-gdir="1" aria-label="往右">▶</button></div>
+  <div class="g-ctrl"><button type="button" data-gdir="-1" aria-label="往左"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 L8 12 L15 19" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button type="button" data-gdir="1" aria-label="往右"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5 L16 12 L9 19" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
   <div class="g-card" id="g-card"></div>
 </div>
 
@@ -1444,6 +1446,9 @@ function endGame(why){
  document.addEventListener('pointerup',up);document.addEventListener('pointercancel',up);
  addEventListener('keydown',ev=>{if(gEl('game').hidden)return;if(ev.key==='ArrowLeft'||ev.key==='a'){gDirs.k=-1;ev.preventDefault()}else if(ev.key==='ArrowRight'||ev.key==='d'){gDirs.k=1;ev.preventDefault()}else if(ev.key==='Escape')closeGame()});
  addEventListener('keyup',ev=>{if((ev.key==='ArrowLeft'||ev.key==='a')&&gDirs.k<0)gDirs.k=0;if((ev.key==='ArrowRight'||ev.key==='d')&&gDirs.k>0)gDirs.k=0});
+ ['touchstart','touchmove'].forEach(t=>document.addEventListener(t,ev=>{if(gEl('game').hidden)return;if(ev.target.closest('[data-gdir],#g-cv'))ev.preventDefault()},{passive:false}));
+ document.addEventListener('contextmenu',ev=>{if(!gEl('game').hidden&&ev.target.closest('.g-ctrl,.g-field'))ev.preventDefault()});
+ document.addEventListener('selectstart',ev=>{if(!gEl('game').hidden&&ev.target.closest&&ev.target.closest('.g-ctrl,.g-field'))ev.preventDefault()});
  addEventListener('resize',()=>{if(G.on){const sz=gSize();G.W=sz.W;G.H=sz.H;G.dpr=sz.dpr}});}
 /* ===== 聖誕音樂（公版旋律，GeneralUser GS 音源編曲） ===== */
 const BGM={on:false,el:null};
