@@ -322,7 +322,15 @@ body.reading #yttag{opacity:0;pointer-events:none}
 .g-lb{font-size:12px;letter-spacing:.14em;color:var(--muted)}
 .g-meter{display:flex;align-items:center;gap:10px;margin-top:8px;font-size:12px;letter-spacing:.12em;color:var(--navy)}
 .g-meter i{flex:1;height:10px;border-radius:10px;background:rgba(255,255,255,.7);overflow:hidden;box-shadow:inset 0 0 0 1px rgba(14,51,95,.15)}
-.g-meter b{display:block;height:100%;width:0;background:linear-gradient(90deg,#F2C14E,#E8577A);transition:width .2s}
+.g-meter b{display:block;height:100%;width:100%;background:linear-gradient(90deg,#E8577A,#F2C14E 60%,#7FC4A0);transition:width .2s}
+#g-cv{display:block;width:100%;height:100%;touch-action:none}
+.g-ctrl{display:flex;gap:12px;padding:10px 0 calc(env(safe-area-inset-bottom,0px) + 10px)}
+.g-ctrl button{flex:1;min-height:58px;border-radius:18px;border:1px solid var(--gold);background:rgba(251,248,243,.92);color:var(--navy);font:700 22px var(--sans);touch-action:none;-webkit-user-select:none;user-select:none;cursor:pointer}
+.g-ctrl button:active,.g-ctrl button.on{background:var(--navy);color:#E9CF9E}
+.g-cats{display:flex;justify-content:center;gap:8px;margin:10px 0 12px;flex-wrap:wrap}
+.g-cats button{min-width:64px;min-height:44px;padding:6px 10px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--navy);font:700 13px var(--sans);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
+.g-cats button i{width:22px;height:22px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(14,51,95,.25)}
+.g-cats button[aria-pressed=true]{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold)}
 .g-field{position:relative;flex:1;overflow:hidden;margin-top:8px}
 .g-sun{position:absolute;left:50%;top:-60px;width:120px;height:120px;margin-left:-60px;border-radius:50%;background:radial-gradient(circle,#FCE9B8 0 40%,rgba(252,233,184,0) 70%)}
 .uv{position:absolute;top:0;width:54px;height:54px;margin-left:-27px;border-radius:50%;border:0;padding:0;cursor:pointer;font:700 13px var(--sans);letter-spacing:.04em;color:#fff;background:radial-gradient(circle at 35% 30%,#B9A6FF,#6B4FD8 70%);box-shadow:0 0 0 4px rgba(142,124,240,.25),0 6px 14px rgba(60,40,140,.3);touch-action:manipulation}
@@ -340,7 +348,7 @@ body.reading #yttag{opacity:0;pointer-events:none}
 .g-legend{display:flex;justify-content:center;gap:14px;margin:12px 0 14px;font-size:12.5px;color:var(--muted)}
 .g-legend span{display:flex;flex-direction:column;align-items:center;gap:4px}
 .g-legend i{width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#B9A6FF,#6B4FD8 70%)}
-.g-legend i.b{background:radial-gradient(circle at 35% 30%,#FFD98A,#E89A2E 70%)}
+.g-legend i.b{border-radius:6px;height:14px;margin-top:6px;background:#F2B8C2;box-shadow:inset 0 0 0 1.5px #C8546A}
 .g-legend i.s{border-radius:7px;width:22px;height:28px;background:#fff;box-shadow:0 0 0 2px var(--gold)}
 .g-rank{display:inline-block;margin:4px 0 8px;padding:4px 16px;border-radius:999px;background:var(--navy);color:#E9CF9E;font:700 14px var(--serif);letter-spacing:.2em}
 .g-card .g-big{font:700 48px var(--serif);font-variant-numeric:tabular-nums;margin:0;line-height:1.1}
@@ -546,18 +554,18 @@ body.reading #toast{bottom:auto;top:calc(env(safe-area-inset-top,0px) + 12px)}
   <button type="button" id="npctag" data-npc="doctor" aria-label="和林醫師說說話">林醫師</button>
 
   <nav class="dock" aria-label="空間列表">
-    <div class="dock-row"><button type="button" class="stamps" id="stamps"><span id="st-label">集章</span><span class="st-dots" id="st-dots"></span><span id="st-count">0／6</span></button><button type="button" class="stamps game-btn" data-game>防曬小遊戲</button><a class="stamps blog-btn" href="https://blog.wuhenclinic.tw/" target="_blank" rel="noopener">健康衛教部落格</a></div>
+    <div class="dock-row"><button type="button" class="stamps" id="stamps"><span id="st-label">集章</span><span class="st-dots" id="st-dots"></span><span id="st-count">0／6</span></button><button type="button" class="stamps game-btn" data-game>貓咪下樓梯</button><a class="stamps blog-btn" href="https://blog.wuhenclinic.tw/" target="_blank" rel="noopener">健康衛教部落格</a></div>
     <div class="chips" id="chips"></div>
     <p class="legal">本站為衛教資訊，所有療程需經醫師面診評估，效果因個人膚況而異。無痕美學診所｜台北市大安區安和路一段86號2樓<br>© 2026 無痕美學診所 版權所有，翻印必究。未經書面授權，請勿複製、轉載或改作本站內容與設計。</p>
   </nav>
 </div>
 
 <div id="toast" role="status" hidden></div>
-<div id="game" role="dialog" aria-modal="true" aria-label="防曬大作戰" hidden>
-  <div class="g-top"><div class="g-hud"><span class="g-lb">時間</span><b id="g-time">20</b><span class="g-lb">擋下</span><b id="g-score">0</b></div><button type="button" class="t-x" data-gclose aria-label="離開遊戲">×</button></div>
-  <div class="g-meter"><span>曬傷值</span><i><b id="g-burn"></b></i></div>
-  <div class="g-field" id="g-field"><div class="g-sun" aria-hidden="true"></div></div>
-  <div class="g-face" aria-hidden="true"><svg viewBox="0 0 120 70"><ellipse cx="60" cy="74" rx="44" ry="40" fill="#F1D5C1"/><path d="M16,60 C14,24 106,24 104,60 C96,40 24,40 16,60Z" fill="#2B2420"/><circle cx="44" cy="56" r="3" fill="#2B2420"/><circle cx="76" cy="56" r="3" fill="#2B2420"/><ellipse id="g-blush1" cx="34" cy="64" rx="8" ry="5" fill="#E8577A" opacity="0"/><ellipse id="g-blush2" cx="86" cy="64" rx="8" ry="5" fill="#E8577A" opacity="0"/><path id="g-mouth" d="M52,66 Q60,72 68,66" fill="none" stroke="#B9605A" stroke-width="2.4" stroke-linecap="round"/></svg></div>
+<div id="game" role="dialog" aria-modal="true" aria-label="貓咪下樓梯" hidden>
+  <div class="g-top"><div class="g-hud"><span class="g-lb">地下</span><b id="g-floor">0</b><span class="g-lb">樓</span></div><button type="button" class="t-x" data-gclose aria-label="離開遊戲">×</button></div>
+  <div class="g-meter"><span>活力</span><i><b id="g-hp"></b></i></div>
+  <div class="g-field" id="g-field"><canvas id="g-cv" aria-label="貓咪下樓梯遊戲畫面"></canvas></div>
+  <div class="g-ctrl"><button type="button" data-gdir="-1" aria-label="往左">◀</button><button type="button" data-gdir="1" aria-label="往右">▶</button></div>
   <div class="g-card" id="g-card"></div>
 </div>
 
@@ -1113,7 +1121,7 @@ const EGGS={
  tower:{city:'紐約',t:'螢幕藍光要擔心嗎？',d:'藍光對皮膚的影響還在研究中。比起手機螢幕，戶外的日曬仍是更主要的光老化來源。'}
 };
 const NPCS={
- doctor:{name:'林菀玲醫師',role:'院長',el:'doctor',lines:['嗨，我是林醫師。今天有記得擦防曬嗎？','好的療程，是先聽懂你在意什麼。','不確定要不要做，就先不要做。來聊聊也很好。','我最常說的一句話：先把基礎保養顧好。','看起來自然，比看起來「有做」更重要。','偷偷告訴你，背景城市的地標可以點喔。','逛累了嗎？恢復室有沙發可以坐。','每個空間都逛完，我有準備一個小禮物給你。','下面有個防曬小遊戲，要不要來挑戰看看？','聽說月亮也會說話，晚上來點點看。']},
+ doctor:{name:'林菀玲醫師',role:'院長',el:'doctor',lines:['嗨，我是林醫師。今天有記得擦防曬嗎？','好的療程，是先聽懂你在意什麼。','不確定要不要做，就先不要做。來聊聊也很好。','我最常說的一句話：先把基礎保養顧好。','看起來自然，比看起來「有做」更重要。','偷偷告訴你，背景城市的地標可以點喔。','逛累了嗎？恢復室有沙發可以坐。','每個空間都逛完，我有準備一個小禮物給你。','下面有個貓咪下樓梯小遊戲，要不要陪貓咪跑跑看？','聽說月亮也會說話，晚上來點點看。']},
  nurse:{name:'詩晴',role:'護理師',el:'nurse',look:{top:'#FFFFFF',gown:'#FFFFFF',gtrim:'#6E8FB8',puff:'#FFFFFF',ruff:true,pearls:true,bonnet:'#0E335F',hair:'highpony',eyes:'smile',blush:true},lines:['我是詩晴，正在巡房中～','療程後有任何問題，隨時用 LINE 問我們。','冰敷記得用毛巾包著，不要直接貼皮膚喔。','多喝水，也是保養的一部分。']},
  bella:{name:'Bella',role:'護理師',at:[3.32,1.0],look:{top:'#FFFFFF',gown:'#FFFFFF',gtrim:'#6E8FB8',puff:'#FFFFFF',ruff:true,bonnet:'#0E335F',hair:'pony',item:'tray'},lines:['我是 Bella，治療室準備好囉。','療程前，我會再跟你確認一次注意事項。','器械每次使用後，都會清潔消毒。','有點緊張嗎？過程中不舒服，隨時跟我說。']},
  xiangyu:{name:'祥毓',role:'美容師',at:[4.95,1.78],look:{top:'#E8C4C0',gown:'#E8C4C0',gtrim:'#B08D57',puff:'#F3DCD8',ruff:true,pearls:true,hat:'#F6E7E3',rose:'#C8546A',curls:true,hair:'mid',hairc:'#6B4A3A',item:'cup'},lines:['我是祥毓，歡迎來恢復室休息一下。','要不要喝杯溫水？','回家的保濕步驟有不懂的，都可以問我。','術後照護的細節，還是以醫師的指示為準喔。']},
@@ -1232,64 +1240,116 @@ const SUN_AV=`<svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" he
 const GTIPS=['防曬要擦足夠的量，擦太少，防護效果會打折扣。','流汗、擦汗或游泳之後，記得補擦防曬。','陰天、冬天也有紫外線，防曬不要放假。','耳朵、脖子、手背也常被曬到，別忘了它們。','帽子、陽傘、太陽眼鏡，和防曬乳一起用更安心。','UVA 會穿透雲層和玻璃，坐窗邊也要留意。'];
 let G={on:false};
 const gEl=id=>document.getElementById(id);
+let gCat=null;
+const gDirs={k:0,p:0,b:0};
+function gDir(){return Math.max(-1,Math.min(1,gDirs.k+gDirs.p+gDirs.b))}
 function openGame(){gEl('game').hidden=false;document.body.classList.add('gaming');gameIntro()}
-function closeGame(){G.on=false;gEl('game').hidden=true;document.body.classList.remove('gaming');gEl('g-field').querySelectorAll('.uv').forEach(e=>e.remove())}
+function closeGame(){G.on=false;gEl('game').hidden=true;document.body.classList.remove('gaming');gDirs.k=gDirs.p=gDirs.b=0}
 function gameIntro(){
-  gHud(20,0,0);
-  const best=LS.get('wh-best',0);
+  if(!gCat){gCat=LS.get('wh-gcat','orange');if(!CATLOOK[gCat])gCat='orange'}
+  const best=LS.get('wh-best-stairs',0);gHud(0,10);
   gEl('g-card').hidden=false;
-  gEl('g-card').innerHTML=`<h3>防曬大作戰</h3><p>紫外線從天上掉下來了！在它們碰到臉之前，點掉越多越好。</p>
-   <div class="g-legend"><span><i></i>UVA</span><span><i class="b"></i>UVB</span><span><i class="s"></i>防曬乳：降低曬傷值</span></div>
-   <p>限時 20 秒，曬傷值滿了就結束。${best?`<br>你的最高紀錄：<b>${best}</b>`:''}</p>
-   <div class="g-btns"><button type="button" class="cta gold" data-gstart>開始挑戰</button></div>`;
+  gEl('g-card').innerHTML=`<h3>貓咪下樓梯</h3><p>貓咪要一路往下跑！踩住樓梯別掉下去，也別被上面的紫外線碰到。</p>
+   <div class="g-legend"><span><i class="s"></i>防曬乳：補活力</span><span><i></i>紫外線樓梯：扣活力</span><span><i class="b"></i>軟墊：會彈起來</span></div>
+   <p style="margin-bottom:4px">選一隻貓：</p>
+   <div class="g-cats">${CATS.map(k=>`<button type="button" data-gcat="${k}" aria-pressed="${k===gCat}"><i style="background:${CATLOOK[k].body}"></i>${esc(NPCS[k].name)}</button>`).join('')}</div>
+   <p class="fine">手機按下方 ◀ ▶，或按住畫面左右兩邊；電腦用方向鍵。${best?`<br>你的最高紀錄：地下 <b>${best}</b> 樓`:''}</p>
+   <div class="g-btns"><button type="button" class="cta gold" data-gstart>開始</button></div>`;
 }
-function gHud(left,score,burn){gEl('g-time').textContent=Math.ceil(left);gEl('g-score').textContent=score;gEl('g-burn').style.width=burn+'%';
-  const o=(burn/100*.85).toFixed(2);gEl('g-blush1').setAttribute('opacity',o);gEl('g-blush2').setAttribute('opacity',o);
-  gEl('g-mouth').setAttribute('d',burn>70?'M52,70 Q60,64 68,70':(burn>35?'M52,68 L68,68':'M52,66 Q60,72 68,66'))}
+function gHud(floor,hp){gEl('g-floor').textContent=floor;gEl('g-hp').style.width=(hp*10)+'%'}
+function gSize(){const cv=gEl('g-cv'),r=cv.getBoundingClientRect(),dpr=Math.min(2,devicePixelRatio||1);cv.width=Math.round(r.width*dpr);cv.height=Math.round(r.height*dpr);return {W:r.width,H:r.height,dpr}}
+function gPlat(y){const u=G.u,w=(68+Math.random()*28)*u,r=Math.random(),lvl=Math.min(1,G.dist/(G.u*6000));
+  let type='norm';if(r<.18+.12*lvl)type='uv';else if(r<.28+.12*lvl)type='bounce';
+  const item=type==='norm'&&Math.random()<.16?'spf':null;
+  return {x:10*u+Math.random()*(G.W-20*u-w),y,w,type,item}}
 function startGame(){
-  track('island_game_start');
-  gEl('g-field').querySelectorAll('.uv').forEach(e=>e.remove());
+  track('island_game_start',{cat:gCat});
   gEl('g-card').hidden=true;
-  const now=performance.now();G={on:true,score:0,burn:0,drops:[],start:now,last:now,acc:0,bacc:0};
+  const {W,H,dpr}=gSize(),u=W/360;
+  const now=performance.now();
+  G={on:true,W,H,dpr,u,hp:10,dist:0,floor:0,rise:58*u,plats:[],cat:{x:W/2,y:H*.42,vy:0,on:null,face:1,hurt:0},start:now,last:now,flash:0,gap:72*u};
+  G.plats.push({x:W/2-60*u,y:H*.42,w:120*u,type:'norm',item:null});
+  let y=H*.42;while(y<H+G.gap*2){y+=G.gap;G.plats.push(gPlat(y))}
+  G.cat.on=G.plats[0];
   requestAnimationFrame(gameLoop);
 }
-function gSpawn(kind){
-  const el=document.createElement('button');el.type='button';
-  const uvb=Math.random()<.5;el.className='uv'+(kind==='bonus'?' bonus':(uvb?' b':''));
-  el.textContent=kind==='bonus'?'SPF':(uvb?'UVB':'UVA');el.setAttribute('aria-label',kind==='bonus'?'防曬乳':'紫外線');
-  el.style.left=(10+Math.random()*80)+'%';
-  const d={el,y:-64,kind,dead:false,v:kind==='bonus'?110:0};
-  el.style.transform='translateY(-64px)';
-  el.addEventListener('pointerdown',ev=>{ev.preventDefault();gHit(d)});
-  gEl('g-field').appendChild(el);G.drops.push(d);
-}
-function gHit(d){if(!G.on||d.dead)return;d.dead=true;if(d.kind==='bonus')G.burn=Math.max(0,G.burn-25);else G.score++;d.el.classList.add('pop');setTimeout(()=>d.el.remove(),320)}
 function gameLoop(now){
   if(!G.on)return;
-  const dt=Math.min(.05,(now-G.last)/1000);G.last=now;
-  const left=Math.max(0,20-(now-G.start)/1000),p=1-left/20,H=gEl('g-field').clientHeight;
-  G.acc+=dt;const every=.8-.42*p;while(G.acc>every){G.acc-=every;gSpawn('uv')}
-  G.bacc+=dt;if(G.bacc>5.5){G.bacc=0;gSpawn('bonus')}
-  for(const d of G.drops){if(d.dead)continue;d.y+=(d.v||(150+200*p))*dt;d.el.style.transform=`translateY(${d.y.toFixed(1)}px)`;
-    if(d.y>H-30){d.dead=true;d.el.remove();if(d.kind!=='bonus'){G.burn=Math.min(100,G.burn+12);const f=document.querySelector('.g-face');f.classList.remove('hurt');void f.offsetWidth;f.classList.add('hurt')}}}
-  G.drops=G.drops.filter(d=>!d.dead);
-  gHud(left,G.score,G.burn);
-  if(left<=0||G.burn>=100){endGame(G.burn>=100);return}
+  const dt=Math.min(.04,(now-G.last)/1000);G.last=now;const u=G.u,c=G.cat;
+  G.rise=Math.min(165*u,(58+(now-G.start)/1000*2.6)*u);
+  const dy=G.rise*dt;G.dist+=dy;
+  for(const p of G.plats)p.y-=dy;
+  G.plats=G.plats.filter(p=>p.y>-30*u);
+  let last=G.plats[G.plats.length-1];while(last.y<G.H+G.gap){const np=gPlat(last.y+G.gap*(.85+Math.random()*.3));G.plats.push(np);last=np}
+  const nf=Math.floor(G.dist/G.gap);if(nf>G.floor){G.floor=nf}
+  const d=gDir();if(d)c.face=d;c.x=Math.max(12*u,Math.min(G.W-12*u,c.x+d*190*u*dt));
+  if(c.on){c.y=c.on.y;if(c.x<c.on.x-6*u||c.x>c.on.x+c.on.w+6*u||!G.plats.includes(c.on)){c.on=null;c.vy=0}}
+  if(!c.on){const py=c.y;c.vy=Math.min(620*u,c.vy+1500*u*dt);c.y+=c.vy*dt;
+    if(c.vy>0)for(const p of G.plats){if(py<=p.y+1&&c.y>=p.y&&c.x>=p.x-6*u&&c.x<=p.x+p.w+6*u){c.y=p.y;
+      if(p.type==='bounce'){c.vy=-560*u;c.on=null;break}
+      c.on=p;c.vy=0;
+      if(p.type==='uv'){if(!p.hit){p.hit=1;G.hp-=4;c.hurt=.6;G.flash=.25}}
+      else if(!p.landed){G.hp=Math.min(10,G.hp+1)}
+      p.landed=1;
+      if(p.item==='spf'){p.item=null;G.hp=Math.min(10,G.hp+3);G.spf=(G.spf||0)+1}
+      break}}}
+  const ceil=26*u;
+  if(c.y-30*u<ceil&&c.hurt<=0){G.hp-=3;c.hurt=.8;G.flash=.25;c.on=null;c.vy=80*u;c.y=ceil+32*u}
+  if(c.hurt>0)c.hurt-=dt;if(G.flash>0)G.flash-=dt;
+  gDraw();gHud(G.floor,Math.max(0,G.hp));
+  if(G.hp<=0||c.y>G.H+40*u){endGame(c.y>G.H+40*u?'fall':'hp');return}
   requestAnimationFrame(gameLoop);
 }
-function endGame(burned){
-  G.on=false;gEl('g-field').querySelectorAll('.uv:not(.pop)').forEach(e=>e.remove());
-  const sc=G.score,best=Math.max(sc,LS.get('wh-best',0));LS.set('wh-best',best);track('island_game_end',{score:sc});
-  const rank=sc>=26?'防曬大師':sc>=18?'防曬達人':sc>=10?'防曬好手':'防曬新手';
-  const tip=GTIPS[Math.floor(Math.random()*GTIPS.length)];
-  gEl('g-card').hidden=false;
-  gEl('g-card').innerHTML=`<p class="t-eye" style="margin:0">${burned?'曬傷值滿了！':'時間到！'}</p><p class="g-big">${sc}</p><p style="margin:0 0 4px">擋下的紫外線</p><span class="g-rank">${rank}</span>
-   <p>${sc>=best&&sc>0?'刷新你的最高紀錄！':`最高紀錄：${best}`}</p>
-   <div class="g-tip"><b>林醫師的防曬小提醒</b>${tip}</div>
-   <p class="fine" style="margin-top:10px">截圖分享你的成績，看看朋友能擋下幾個。</p>
-   <div class="g-btns"><button type="button" class="cta" data-share="game">分享成績給朋友</button><button type="button" class="cta gold" data-gstart>再玩一次</button><button type="button" class="cta ghost" data-gclose>回到島上</button></div>`;
-  shareData.game={text:`我在無痕美學島的防曬大作戰擋下了 ${sc} 個紫外線，拿到「${rank}」！你能贏我嗎？`};
+function gDraw(){
+  const cv=gEl('g-cv'),x=cv.getContext('2d'),{W,H,dpr,u}=G;x.setTransform(dpr,0,0,dpr,0,0);
+  const bg=x.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#F6E3E1');bg.addColorStop(1,'#F2EDE6');x.fillStyle=bg;x.fillRect(0,0,W,H);
+  x.strokeStyle='rgba(201,164,100,.28)';x.lineWidth=1;const off=(G.dist*.4)%(40*u);
+  for(let yy=-off;yy<H;yy+=40*u){x.beginPath();x.moveTo(0,yy);x.lineTo(W,yy);x.stroke()}
+  for(let xx=20*u;xx<W;xx+=60*u){x.beginPath();x.moveTo(xx,0);x.lineTo(xx,H);x.stroke()}
+  // ceiling UV
+  x.fillStyle='#6B4FD8';const ceil=26*u;x.fillRect(0,0,W,ceil-10*u);
+  for(let i=0;i<W/(16*u)+1;i++){x.beginPath();x.moveTo(i*16*u,ceil-10*u);x.lineTo(i*16*u+8*u,ceil);x.lineTo(i*16*u+16*u,ceil-10*u);x.fill()}
+  x.fillStyle='#fff';x.font=`700 ${11*u}px "Noto Sans TC",sans-serif`;x.textAlign='center';x.textBaseline='middle';x.fillText('紫外線　UVA・UVB',W/2,(ceil-10*u)/2);
+  for(const p of G.plats){const h=11*u;
+    if(p.type==='uv'){x.fillStyle='#8E7AE6';x.fillRect(p.x,p.y,p.w,h);x.fillStyle='#6B4FD8';for(let i=0;i<p.w/(10*u)-.5;i++){x.beginPath();x.moveTo(p.x+i*10*u+1*u,p.y);x.lineTo(p.x+i*10*u+5*u,p.y-7*u);x.lineTo(p.x+i*10*u+9*u,p.y);x.fill()}}
+    else if(p.type==='bounce'){x.fillStyle='#F2B8C2';x.beginPath();x.roundRect?x.roundRect(p.x,p.y,p.w,h,5*u):x.rect(p.x,p.y,p.w,h);x.fill();x.strokeStyle='#C8546A';x.lineWidth=1.5;x.beginPath();for(let i=0;i<p.w;i+=8*u){x.moveTo(p.x+i,p.y+h*.5);x.lineTo(p.x+i+4*u,p.y+h*.5)}x.stroke()}
+    else{x.fillStyle='#E6D5BC';x.fillRect(p.x,p.y,p.w,h);x.fillStyle='#B08D57';x.fillRect(p.x,p.y,p.w,2.5*u);x.fillRect(p.x,p.y+h-2*u,p.w,2*u)}
+    if(p.item==='spf'){const bx=p.x+p.w/2,by=p.y;x.fillStyle='#FFFFFF';x.strokeStyle='#C9A464';x.lineWidth=1.5;x.beginPath();x.rect(bx-6*u,by-22*u,12*u,18*u);x.fill();x.stroke();x.fillStyle='#0E335F';x.fillRect(bx-3*u,by-26*u,6*u,4*u);x.fillStyle='#C9A464';x.font=`700 ${6*u}px sans-serif`;x.fillText('SPF',bx,by-12*u)}}
+  // cat
+  const c=G.cat,L=CATLOOK[gCat],s=u;if(!(c.hurt>0&&Math.floor(c.hurt*12)%2)){
+  x.save();x.translate(c.x,c.y);x.scale(c.face,1);
+  x.strokeStyle=L.point||L.stripe||L.body;x.lineWidth=4*s;x.lineCap='round';x.beginPath();x.moveTo(-10*s,-10*s);x.quadraticCurveTo(-20*s,-14*s,-16*s,-26*s);x.stroke();
+  x.fillStyle=L.body;x.beginPath();x.ellipse(0,-10*s,12*s,8*s,0,0,Math.PI*2);x.fill();
+  if(L.outline){x.strokeStyle='rgba(14,51,95,.3)';x.lineWidth=1;x.stroke()}
+  if(L.patch){x.fillStyle=L.patch;x.beginPath();x.ellipse(-4*s,-12*s,5*s,4*s,0,0,Math.PI*2);x.fill()}
+  if(L.stripe){x.strokeStyle=L.stripe;x.lineWidth=2*s;for(const sx of[-5,0,5]){x.beginPath();x.moveTo(sx*s,-17*s);x.lineTo(sx*s,-12*s);x.stroke()}}
+  x.fillStyle=L.body;x.beginPath();x.arc(10*s,-20*s,8*s,0,Math.PI*2);x.fill();if(L.outline){x.strokeStyle='rgba(14,51,95,.3)';x.lineWidth=1;x.stroke()}
+  x.fillStyle=L.point||L.body;for(const ex of[4,14]){x.beginPath();x.moveTo((ex-4)*s,-25*s);x.lineTo(ex*s,-32*s);x.lineTo((ex+3)*s,-25*s);x.fill()}
+  if(L.point){x.beginPath();x.ellipse(10*s,-18*s,5*s,4*s,0,0,Math.PI*2);x.fillStyle=L.point;x.globalAlpha=.55;x.fill();x.globalAlpha=1}
+  x.fillStyle=L.eye;x.beginPath();x.arc(8*s,-21*s,1.6*s,0,Math.PI*2);x.arc(14*s,-21*s,1.6*s,0,Math.PI*2);x.fill();
+  x.fillStyle=L.body==='#2A2530'?'#3A3440':L.body;for(const lx of[-7,-2,4,8]){x.fillRect(lx*s,-4*s,3*s,4*s)}
+  x.restore()}
+  if(G.flash>0){x.fillStyle=`rgba(107,79,216,${(G.flash*1.2).toFixed(2)})`;x.fillRect(0,0,W,H)}
 }
+function endGame(why){
+  G.on=false;
+  const sc=G.floor,best=Math.max(sc,LS.get('wh-best-stairs',0));LS.set('wh-best-stairs',best);track('island_game_end',{score:sc,cat:gCat});
+  const rank=sc>=80?'下樓梯大師':sc>=50?'貓步達人':sc>=25?'靈巧貓咪':'新手貓咪';
+  const tip=GTIPS[Math.floor(Math.random()*GTIPS.length)],nm=NPCS[gCat].name;
+  gEl('g-card').hidden=false;
+  gEl('g-card').innerHTML=`<p class="t-eye" style="margin:0">${why==='fall'?`${esc(nm)}掉下去了！`:`${esc(nm)}被紫外線曬累了！`}</p><p class="g-big">地下 ${sc} 樓</p><span class="g-rank">${rank}</span>
+   <p>${sc>=best&&sc>0?'刷新你的最高紀錄！':`最高紀錄：地下 ${best} 樓`}${G.spf?`<br>撿到 ${G.spf} 瓶防曬乳`:''}</p>
+   <div class="g-tip"><b>林醫師的防曬小提醒</b>${tip}</div>
+   <div class="g-btns"><button type="button" class="cta" data-share="game">分享成績給朋友</button><button type="button" class="cta gold" data-gstart>再玩一次</button><button type="button" class="cta ghost" data-gclose>回到島上</button></div>`;
+  shareData.game={text:`我在無痕美學島陪${nm}下樓梯，一路跑到地下 ${sc} 樓，拿到「${rank}」！你能跑多深？`};
+}
+{const setP=(ev,on)=>{const b=ev.target.closest('[data-gdir]');if(b){ev.preventDefault();gDirs.b=on?+b.dataset.gdir:0;b.classList.toggle('on',on);return true}};
+ document.addEventListener('pointerdown',ev=>{if(gEl('game').hidden)return;if(setP(ev,true))return;if(ev.target.id==='g-cv'&&G.on){const r=ev.target.getBoundingClientRect();gDirs.p=ev.clientX<r.left+r.width/2?-1:1;ev.target.setPointerCapture?.(ev.pointerId)}});
+ const up=ev=>{document.querySelectorAll('[data-gdir].on').forEach(b=>b.classList.remove('on'));gDirs.b=0;gDirs.p=0};
+ document.addEventListener('pointerup',up);document.addEventListener('pointercancel',up);
+ addEventListener('keydown',ev=>{if(gEl('game').hidden)return;if(ev.key==='ArrowLeft'||ev.key==='a'){gDirs.k=-1;ev.preventDefault()}else if(ev.key==='ArrowRight'||ev.key==='d'){gDirs.k=1;ev.preventDefault()}else if(ev.key==='Escape')closeGame()});
+ addEventListener('keyup',ev=>{if((ev.key==='ArrowLeft'||ev.key==='a')&&gDirs.k<0)gDirs.k=0;if((ev.key==='ArrowRight'||ev.key==='d')&&gDirs.k>0)gDirs.k=0});
+ addEventListener('resize',()=>{if(G.on){const sz=gSize();G.W=sz.W;G.H=sz.H;G.dpr=sz.dpr}});}
 /* ===== 猜猜我是誰 ===== */
 const YT_LINE='s8604922';
 const YT_KEYS=['店經理','店長','怡婷','小米'];
@@ -1969,6 +2029,7 @@ document.addEventListener('click',e=>{
   if(e.target.closest('[data-qagain]')){quiz={step:0,ans:[]};renderQuiz();return}
   const sh=e.target.closest('[data-share]');if(sh){shareIt(sh.dataset.share);return}
   if(e.target.closest('[data-game]')){openGame();return}
+  {const gc=e.target.closest('[data-gcat]');if(gc){gCat=gc.dataset.gcat;LS.set('wh-gcat',gCat);document.querySelectorAll('[data-gcat]').forEach(b=>b.setAttribute('aria-pressed',b===gc));return}}
   if(e.target.closest('[data-gstart]')){startGame();return}
   if(e.target.closest('[data-gclose]')){closeGame();return}
   if(e.target.closest('[data-sky]')){skyTalk();return}
