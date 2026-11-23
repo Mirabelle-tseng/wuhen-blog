@@ -97,7 +97,7 @@ body{background:var(--cream);color:var(--navy);font-family:var(--sans);overflow:
 
 /* pins */
 #pins{position:absolute;inset:0;pointer-events:none;z-index:4}
-.float{animation:floaty 3.6s ease-in-out infinite}.float-slow{animation:floaty 5s ease-in-out infinite}@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-2.5px)}}
+.float{animation:floaty 3.6s ease-in-out infinite}.chand{animation:floaty 6s ease-in-out infinite}.float-slow{animation:floaty 5s ease-in-out infinite}@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-2.5px)}}
 .pin{position:absolute;left:0;top:0;pointer-events:auto;border:0;background:none;padding:0;cursor:pointer;will-change:transform;transition:opacity .4s}
 .pin .face{display:flex;align-items:center;gap:6px;white-space:nowrap;font:700 13px/1 var(--serif);letter-spacing:.06em;color:var(--navy);
   background:rgba(251,248,243,.95);border:1px solid var(--gold);border-radius:999px;padding:7px 12px 7px 9px;box-shadow:0 6px 16px rgba(14,51,95,.18);
@@ -489,7 +489,7 @@ body.reading #toast{bottom:auto;top:calc(env(safe-area-inset-top,0px) + 12px)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 @media (prefers-reduced-motion:reduce){
-  #bob,#shadow,.ripple,.cloud-move,.twinkle,.spark,.pin .face,.bill,.eye,.egg-dot .ping,.stamps.full,#yttag .dot,.typing i,.tail,.heart,.jiao.toss .jb,.drum.shake,.zz,.rd,.fogb,.sn,.fw,.lantern,.floatup,.bird,.twk,.float,.float-slow{animation:none}
+  #bob,#shadow,.ripple,.cloud-move,.twinkle,.spark,.pin .face,.bill,.eye,.egg-dot .ping,.stamps.full,#yttag .dot,.typing i,.tail,.heart,.jiao.toss .jb,.drum.shake,.zz,.rd,.fogb,.sn,.fw,.lantern,.floatup,.bird,.twk,.float,.float-slow,.chand{animation:none}
   .rd,.sn{display:none}.fw{opacity:1}
   .m-face{transition:none}
   .ripple{opacity:.25}
@@ -616,16 +616,29 @@ function cyl(x,y,z,r,h,c){
 }
 function plant(x,y,s=1){
   const [cx,cy]=iso(x,y,10*s);
-  return cyl(x,y,0,.11*s,10*s,'#E6D9C6')+`<circle cx="${cx-4*s}" cy="${cy-9*s}" r="${8*s}" fill="#7C9877"/><circle cx="${cx+5*s}" cy="${cy-12*s}" r="${7.5*s}" fill="#8EAA88"/><circle cx="${cx}" cy="${cy-18*s}" r="${7*s}" fill="#A3BC9B"/>`;
+  return cyl(x,y,0,.11*s,10*s,'#F2EDE6')+`<circle cx="${cx-4*s}" cy="${cy-9*s}" r="${8*s}" fill="#6F8C6B"/><circle cx="${cx+5*s}" cy="${cy-12*s}" r="${7.5*s}" fill="#809E7B"/><circle cx="${cx}" cy="${cy-18*s}" r="${7*s}" fill="#93AF8D"/>`
+   +[[-6,-11,'#C8546A'],[4,-16,'#E9879A'],[-1,-21,'#C8546A'],[7,-9,'#F2B8C2'],[-4,-17,'#F2B8C2']].map(([dx,dy,c])=>`<circle cx="${cx+dx*s}" cy="${cy+dy*s}" r="${1.7*s}" fill="${c}"/>`).join('')
+   +`<path d="M${cx-4.2*s},${cy+1*s} L${cx+4.2*s},${cy+1*s}" stroke="${GOLD}" stroke-width="${1*s}"/>`;
 }
-const wallY=(x0,x1,y,h)=>poly([iso(x0,y,h),iso(x1,y,h),iso(x1,y,0),iso(x0,y,0)],'#F7F1E7',STK)+poly([iso(x0,y-.07,h),iso(x1,y-.07,h),iso(x1,y,h),iso(x0,y,h)],'#FFFDF9',STK);
-const wallX=(x,y0,y1,h)=>poly([iso(x,y0,h),iso(x,y1,h),iso(x,y1,0),iso(x,y0,0)],'#E8DDCD',STK)+poly([iso(x-.07,y0,h),iso(x,y0,h),iso(x,y1,h),iso(x-.07,y1,h)],'#FFFDF9',STK);
+const GOLD='#C9A464';
+function courtTrimY(x0,x1,y,h){let t='';const ln=(a,b,w=.8,o=.9)=>`<line x1="${a[0].toFixed(1)}" y1="${a[1].toFixed(1)}" x2="${b[0].toFixed(1)}" y2="${b[1].toFixed(1)}" stroke="${GOLD}" stroke-width="${w}" stroke-opacity="${o}"/>`;
+  t+=ln(iso(x0,y,h-2.2),iso(x1,y,h-2.2),.9);if(h>=24){t+=ln(iso(x0,y,h*.34),iso(x1,y,h*.34),.9);
+   const n=Math.max(1,Math.round((x1-x0)/.62));for(let i=0;i<n;i++){const a=x0+(x1-x0)*i/n+.08,b=x0+(x1-x0)*(i+1)/n-.08,z0=h*.34+4,z1=h-6;if(b-a<.12)continue;t+=`<polygon points="${P([iso(a,y,z1),iso(b,y,z1),iso(b,y,z0),iso(a,y,z0)])}" fill="none" stroke="${GOLD}" stroke-width=".7" stroke-opacity=".75"/>`}}
+  return t}
+function courtTrimX(x,y0,y1,h){let t='';const ln=(a,b,w=.8,o=.9)=>`<line x1="${a[0].toFixed(1)}" y1="${a[1].toFixed(1)}" x2="${b[0].toFixed(1)}" y2="${b[1].toFixed(1)}" stroke="${GOLD}" stroke-width="${w}" stroke-opacity="${o}"/>`;
+  t+=ln(iso(x,y0,h-2.2),iso(x,y1,h-2.2),.9);if(h>=24){t+=ln(iso(x,y0,h*.34),iso(x,y1,h*.34),.9);
+   const n=Math.max(1,Math.round((y1-y0)/.62));for(let i=0;i<n;i++){const a=y0+(y1-y0)*i/n+.08,b=y0+(y1-y0)*(i+1)/n-.08,z0=h*.34+4,z1=h-6;if(b-a<.12)continue;t+=`<polygon points="${P([iso(x,a,z1),iso(x,b,z1),iso(x,b,z0),iso(x,a,z0)])}" fill="none" stroke="${GOLD}" stroke-width=".7" stroke-opacity=".75"/>`}}
+  return t}
+const wallY=(x0,x1,y,h)=>poly([iso(x0,y,h),iso(x1,y,h),iso(x1,y,0),iso(x0,y,0)],'#F8EFEA',STK)+courtTrimY(x0,x1,y,h)+poly([iso(x0,y-.07,h),iso(x1,y-.07,h),iso(x1,y,h),iso(x0,y,h)],GOLD,STK);
+const wallX=(x,y0,y1,h)=>poly([iso(x,y0,h),iso(x,y1,h),iso(x,y1,0),iso(x,y0,0)],'#EBDCD5',STK)+courtTrimX(x,y0,y1,h)+poly([iso(x-.07,y0,h),iso(x,y0,h),iso(x,y1,h),iso(x-.07,y1,h)],GOLD,STK);
 const onY=(x0,x1,y,z0,z1,fill,ex='')=>poly([iso(x0,y,z1),iso(x1,y,z1),iso(x1,y,z0),iso(x0,y,z0)],fill,ex);
 const onX=(x,y0,y1,z0,z1,fill,ex='')=>poly([iso(x,y0,z1),iso(x,y1,z1),iso(x,y1,z0),iso(x,y0,z0)],fill,ex);
 function floor(x,y,w,d,c,id){
   let s=`<polygon class="floor" id="floor-${id}" points="${P([iso(x,y,.5),iso(x+w,y,.5),iso(x+w,y+d,.5),iso(x,y+d,.5)])}" fill="${c}" stroke="rgba(14,51,95,.15)" stroke-width=".8"/>`;
   for(let i=1;i<w;i++){const a=iso(x+i,y,.5),b=iso(x+i,y+d,.5);s+=`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="rgba(14,51,95,.07)"/>`}
   for(let j=1;j<d;j++){const a=iso(x,y+j,.5),b=iso(x+w,y+j,.5);s+=`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="rgba(14,51,95,.07)"/>`}
+  {const t=.5;for(let i=0;i<w/t-.01;i++)for(let j=0;j<d/t-.01;j++){if((i+j)%2)continue;const a=x+i*t,b=y+j*t;s+=`<polygon points="${P([iso(a,b,.5),iso(a+t,b,.5),iso(a+t,b+t,.5),iso(a,b+t,.5)])}" fill="rgba(122,90,56,.07)" pointer-events="none"/>`}}
+  {const a=iso(x+.08,y+.08,.5),b=iso(x+w-.08,y+.08,.5),c=iso(x+w-.08,y+d-.08,.5),e=iso(x+.08,y+d-.08,.5);s+=`<polygon points="${P([a,b,c,e])}" fill="none" stroke="${GOLD}" stroke-opacity=".55" stroke-width=".8" pointer-events="none"/>`}
   return s;
 }
 function fig(o){
@@ -637,11 +650,23 @@ function fig(o){
     brush:`<line x1="5" y1="-12" x2="8.5" y2="-20" stroke="#B08D57" stroke-width="1.2" stroke-linecap="round"/><ellipse cx="8.8" cy="-21" rx="1.2" ry="1.8" fill="#E9C9C0"/>`,
     cup:`<rect x="3" y="-16" width="4" height="4.6" rx=".8" fill="#FFFFFF" stroke="rgba(14,51,95,.3)" stroke-width=".5"/>`}[o.item]||'';
   return `<rect x="-10" y="-42" width="20" height="44" fill="transparent"/>
-  <ellipse cx="0" cy="0" rx="7" ry="3" fill="rgba(14,51,95,.22)"/>${back}
-  <g><rect x="${-1-lw}" y="-9" width="${lw}" height="9" rx="1" fill="${o.legs||'#0E335F'}"/><rect x="1" y="-9" width="${lw}" height="9" rx="1" fill="${o.legs||'#0E335F'}"/></g>
-  <rect x="-6.5" y="-23" width="13" height="16" rx="5.5" fill="${top}" stroke="rgba(14,51,95,.25)" stroke-width=".7"/>
+  <ellipse cx="0" cy="0" rx="${o.gown?10:7}" ry="3" fill="rgba(14,51,95,.22)"/>${back}
+  ${o.curls?`<g fill="${hair}"><circle cx="-6.6" cy="-26" r="1.9"/><circle cx="-7" cy="-22.8" r="1.7"/><circle cx="-6.8" cy="-19.8" r="1.5"/><circle cx="6.6" cy="-26" r="1.9"/><circle cx="7" cy="-22.8" r="1.7"/><circle cx="6.8" cy="-19.8" r="1.5"/></g>`:''}
+  ${o.coat?`<path d="M-5.6,-14 L-7.4,-4.5 L-3.4,-6.5Z M5.6,-14 L7.4,-4.5 L3.4,-6.5Z" fill="${top}" stroke="rgba(14,51,95,.25)" stroke-width=".5"/>`:''}
+  ${o.gown?`<ellipse cx="-2.2" cy="-.6" rx="1.8" ry="1" fill="#3B2A20"/><ellipse cx="2.2" cy="-.6" rx="1.8" ry="1" fill="#3B2A20"/>
+  <path d="M-5,-17 C-7,-12 -10.5,-6 -11,-1.6 Q0,1.4 11,-1.6 C10.5,-6 7,-12 5,-17Z" fill="${o.gown}" stroke="rgba(14,51,95,.25)" stroke-width=".6"/>
+  <path d="M-11,-1.6 q1.1,1.6 2.2,0 q1.1,1.6 2.2,0 q1.1,1.6 2.2,0 q1.1,1.6 2.2,0 q1.1,1.6 2.2,0 q1.1,1.6 2.2,0 q1.1,1.6 2.2,0 q1.1,1.6 2.2,0 q1.1,1.6 2.2,0 q1.1,1.6 2.2,0" fill="#FFFDF9" stroke="rgba(14,51,95,.2)" stroke-width=".4"/>
+  ${o.gtrim?`<path d="M-9.6,-5.2 Q0,-2.6 9.6,-5.2" fill="none" stroke="${o.gtrim}" stroke-width="1.1"/><path d="M0,-16 L0,-3" stroke="${o.gtrim}" stroke-width=".8" stroke-dasharray="1.2 1.4"/>`:''}`
+  :`<g><rect x="${-1-lw}" y="-9" width="${lw}" height="9" rx="1" fill="${o.legs||'#0E335F'}"/><rect x="1" y="-9" width="${lw}" height="9" rx="1" fill="${o.legs||'#0E335F'}"/></g>`}
+  <rect x="-6.5" y="-23" width="13" height="${o.gown?9:16}" rx="${o.gown?4:5.5}" fill="${top}" stroke="rgba(14,51,95,.25)" stroke-width=".7"/>
+  ${o.gown&&o.gtrim?`<path d="M-2.6,-22 L0,-14.6 L2.6,-22" fill="${o.gtrim}" opacity=".85"/>`:''}
+  ${o.puff?`<ellipse cx="-6.6" cy="-20.6" rx="2.9" ry="2.6" fill="${o.puff}" stroke="rgba(14,51,95,.25)" stroke-width=".5"/><ellipse cx="6.6" cy="-20.6" rx="2.9" ry="2.6" fill="${o.puff}" stroke="rgba(14,51,95,.25)" stroke-width=".5"/>`:''}
+  ${o.coat?`<g fill="#D9B46A"><circle cx="-2.6" cy="-17" r=".6"/><circle cx="-2.6" cy="-13.6" r=".6"/><circle cx="2.6" cy="-17" r=".6"/><circle cx="2.6" cy="-13.6" r=".6"/></g><path d="M-6.4,-22 L-6.4,-8 M6.4,-22 L6.4,-8" stroke="#D9B46A" stroke-width=".6"/>`:''}
+  ${o.jabot?`<path d="M-1.8,-22.6 q1.8,1.4 3.6,0 q-.4,1.8 -1.8,2.2 q1.6,.6 1.6,2 q-1.6,-.4 -1.6,.2 q0,-.6 -1.6,-.2 q0,-1.4 1.6,-2 q-1.4,-.4 -1.8,-2.2Z" fill="#FFFDF9" stroke="rgba(14,51,95,.25)" stroke-width=".4"/>`:''}
   ${o.trim?`<rect x="-6.5" y="-23" width="13" height="2.6" rx="1.3" fill="${o.trim}"/>`:''}
   ${o.vneck?`<path d="M-3,-23 L0,-19 L3,-23" fill="none" stroke="${o.vneck}" stroke-width="1.2"/>`:''}
+  ${o.ruff?`<path d="M-4.8,-23.4 q1.2,1.6 2.4,0 q1.2,1.6 2.4,0 q1.2,1.6 2.4,0 q1.2,1.6 2.4,0 L4.8,-23.4 Q0,-21.4 -4.8,-23.4Z" fill="#FFFDF9" stroke="rgba(14,51,95,.3)" stroke-width=".4"/>`:''}
+  ${o.pearls?'<g fill="#FFF8EC" stroke="rgba(176,141,87,.8)" stroke-width=".25"><circle cx="-2.4" cy="-21.4" r=".55"/><circle cx="-1.2" cy="-20.7" r=".55"/><circle cx="0" cy="-20.4" r=".6"/><circle cx="1.2" cy="-20.7" r=".55"/><circle cx="2.4" cy="-21.4" r=".55"/></g>':''}
   <circle cx="0" cy="-28.5" r="5.6" fill="${o.skin||'#F1D5C1'}"/>
   ${o.glow?'<ellipse cx="-1.6" cy="-30.6" rx="2" ry="1" fill="#fff" opacity=".55"/><ellipse cx="2.6" cy="-26.6" rx="1.1" ry=".6" fill="#fff" opacity=".45"/>':''}
   <path d="M-5.9,-28.5 A5.9,5.9 0 0 1 5.9,-29.5 L5,-31 Q0,-36.5 -5,-31 Z" fill="${hair}"/>
@@ -653,7 +678,10 @@ function fig(o){
   <path d="M-1,-25.6 Q0,-24.8 1,-25.6" fill="none" stroke="#B9605A" stroke-width=".5" stroke-linecap="round"/>
   ${o.glasses?`<circle cx="-2.2" cy="-28.4" r="1.6" fill="none" stroke="#0E335F" stroke-width=".7"/><circle cx="2.2" cy="-28.4" r="1.6" fill="none" stroke="#0E335F" stroke-width=".7"/>`:''}
   ${o.cap?'<rect x="-3.6" y="-36.2" width="7.2" height="3" rx="1" fill="#fff" stroke="rgba(14,51,95,.3)" stroke-width=".5"/>':''}
-  ${o.pin?`<rect x="2.4" y="-20" width="3" height="1.8" rx=".3" fill="${o.pin}"/>`:''}${item}`;
+  ${o.pin?`<rect x="2.4" y="-20" width="3" height="1.8" rx=".3" fill="${o.pin}"/>`:''}
+  ${o.bonnet?`<path d="M-6.4,-31 Q-6,-37.8 0,-38 Q6,-37.8 6.4,-31 Q3,-34.6 0,-34.6 Q-3,-34.6 -6.4,-31Z" fill="#FFFDF9" stroke="rgba(14,51,95,.3)" stroke-width=".5"/><path d="M-6.4,-31 q.9,-1.4 1.8,-.6 q.9,-1.4 1.8,-.6" fill="none" stroke="rgba(14,51,95,.25)" stroke-width=".4"/><path d="M3.2,-36.4 l2.6,-1.6 l-.2,3.2Z M3.2,-36.4 l-.6,-2.8 l2.8,1.2Z" fill="${o.bonnet}"/><circle cx="3.4" cy="-36.4" r=".9" fill="${o.bonnet}"/>`:''}
+  ${o.hat?`<ellipse cx="0" cy="-33.6" rx="10.4" ry="2.6" fill="${o.hat}" stroke="rgba(14,51,95,.3)" stroke-width=".5"/><path d="M-5,-34 Q-4.6,-39.6 0,-39.8 Q4.6,-39.6 5,-34Z" fill="${o.hat}" stroke="rgba(14,51,95,.3)" stroke-width=".5"/><path d="M-5,-35.4 Q0,-34 5,-35.4" fill="none" stroke="${o.hatband||'#B08D57'}" stroke-width="1.2"/><circle cx="-4.2" cy="-36.2" r="1.6" fill="${o.rose||'#C8546A'}"/><circle cx="-2.4" cy="-35.6" r="1.2" fill="#F2B8C2"/>${o.feather?`<path d="M3,-36 C6,-42 11,-41.6 12,-38.4 C9,-40 6,-38.6 4,-35.4Z" fill="${o.feather}"/>`:''}`:''}
+  ${o.tiara?'<path d="M-3.6,-34.2 L-2.4,-36.6 L-1.2,-34.8 L0,-37.4 L1.2,-34.8 L2.4,-36.6 L3.6,-34.2Z" fill="#D9B46A" stroke="#B08D57" stroke-width=".3"/><circle cx="0" cy="-36.2" r=".55" fill="#F2B8C2"/>':''}${item}`;
 }
 function person(kind){
   const nurse=kind==='nurse';
@@ -690,11 +718,15 @@ function doctorFig(){return `<g transform="scale(1.12)"><rect x="-11" y="-46" wi
   <ellipse cx="0" cy="0" rx="7.5" ry="3" fill="rgba(14,51,95,.22)"/>
   <path d="M-7.6,-35 C-10,-26 -9.4,-18 -8.6,-12.5 Q-6,-10.5 -3.5,-13 L3.5,-13 Q6,-10.5 8.6,-12.5 C9.4,-18 10,-26 7.6,-35Z" fill="${'#231C1A'}"/>
   <g fill="#231C1A"><circle cx="-9" cy="-21" r="2.3"/><circle cx="-8.6" cy="-15" r="2.3"/><circle cx="9" cy="-21" r="2.3"/><circle cx="8.6" cy="-15" r="2.3"/></g>
-  <g><rect x="-4" y="-9" width="3" height="9" rx="1.2" fill="#1E1A1F"/><rect x="1" y="-9" width="3" height="9" rx="1.2" fill="#1E1A1F"/></g>
-  <path d="M-6,-25 L6,-25 L7,-6.5 L-7,-6.5Z" fill="#1E1A1F"/>
+  <ellipse cx="-2.4" cy="-.6" rx="1.9" ry="1" fill="#3B2A20"/><ellipse cx="2.4" cy="-.6" rx="1.9" ry="1" fill="#3B2A20"/>
+  <path d="M-6,-25 L6,-25 C7,-16 11,-6 11.6,-1.6 Q0,1.6 -11.6,-1.6 C-11,-6 -7,-16 -6,-25Z" fill="#F7EFE6" stroke="rgba(14,51,95,.25)" stroke-width=".6"/>
+  <path d="M-11.6,-1.6 q1.16,1.6 2.32,0 q1.16,1.6 2.32,0 q1.16,1.6 2.32,0 q1.16,1.6 2.32,0 q1.16,1.6 2.32,0 q1.16,1.6 2.32,0 q1.16,1.6 2.32,0 q1.16,1.6 2.32,0 q1.16,1.6 2.32,0 q1.16,1.6 2.32,0" fill="#FFFDF9" stroke="rgba(176,141,87,.6)" stroke-width=".45"/>
+  <path d="M-10.4,-5.4 Q0,-2.6 10.4,-5.4" fill="none" stroke="#D9B46A" stroke-width="1"/>
   <path d="M-7.6,-23 Q-7.6,-25.6 -5,-25.6 L-2.6,-25.6 L-1.6,-6 L-8.7,-6Z" fill="#FFFFFF" stroke="rgba(14,51,95,.3)" stroke-width=".6"/>
   <path d="M7.6,-23 Q7.6,-25.6 5,-25.6 L2.6,-25.6 L1.6,-6 L8.7,-6Z" fill="#FFFFFF" stroke="rgba(14,51,95,.3)" stroke-width=".6"/>
-  <path d="M-2.4,-25.6 L0,-21.2 L2.4,-25.6Z" fill="#F3D9C6"/><circle cx="0" cy="-22" r=".8" fill="#D9B46A"/>
+  <path d="M-2.4,-25.6 L0,-21.2 L2.4,-25.6Z" fill="#F3D9C6"/>
+  <path d="M-4.6,-26 q1.15,1.5 2.3,0 q1.15,1.5 2.3,0 q1.15,1.5 2.3,0 q1.15,1.5 2.3,0 L4.6,-26 Q0,-24 -4.6,-26Z" fill="#FFFDF9" stroke="rgba(14,51,95,.3)" stroke-width=".4"/>
+  <g fill="#FFF8EC" stroke="rgba(176,141,87,.8)" stroke-width=".25"><circle cx="-2" cy="-23.4" r=".55"/><circle cx="-1" cy="-22.6" r=".55"/><circle cx="0" cy="-22.3" r=".65"/><circle cx="1" cy="-22.6" r=".55"/><circle cx="2" cy="-23.4" r=".55"/></g>
   <rect x="3.6" y="-20.5" width="3" height="1.8" rx=".3" fill="#B08D57"/>
   <circle cx="-8" cy="-12" r="1.6" fill="#F3D9C6"/><circle cx="8" cy="-12" r="1.6" fill="#F3D9C6"/>
   <ellipse cx="-8" cy="-13.7" rx="1.9" ry=".8" fill="none" stroke="#86C49B" stroke-width=".9"/>
@@ -703,7 +735,8 @@ function doctorFig(){return `<g transform="scale(1.12)"><rect x="-11" y="-46" wi
   <path d="M-7.2,-35 C-8.8,-28 -7,-24.5 -8.6,-20 Q-5.4,-24 -6,-30.5Z M7.2,-35 C8.8,-28 7,-24.5 8.6,-20 Q5.4,-24 6,-30.5Z" fill="#231C1A"/>
   <path d="M-3.8,-32.4 Q-2.5,-33.8 -1.2,-32.4 M1.2,-32.4 Q2.5,-33.8 3.8,-32.4" fill="none" stroke="#231C1A" stroke-width=".85" stroke-linecap="round"/>
   <circle cx="-4" cy="-30.4" r="1.1" fill="#F2A9A0" opacity=".6"/><circle cx="4" cy="-30.4" r="1.1" fill="#F2A9A0" opacity=".6"/>
-  <path d="M-1.7,-29.6 Q0,-27.6 1.7,-29.6Z" fill="#FFFFFF" stroke="#C0605A" stroke-width=".55"/></g>`}
+  <path d="M-1.7,-29.6 Q0,-27.6 1.7,-29.6Z" fill="#FFFFFF" stroke="#C0605A" stroke-width=".55"/>
+  <circle cx="-5.2" cy="-38.6" r="1.9" fill="#C8546A"/><circle cx="-5.2" cy="-38.6" r=".8" fill="#E9879A"/><circle cx="-3.2" cy="-39.8" r="1" fill="#D9B46A"/><circle cx="-6.9" cy="-37.2" r=".7" fill="#FFF8EC"/></g>`}
 const ROOMS=[
  {id:'lobby',name:'大廳櫃台',x:3,y:3,w:3,d:3,floor:'#F5EFE6',pz:58},
  {id:'consult',name:'諮詢區',x:0,y:2,w:2,d:2,floor:'#EFE4D5',pz:56},
@@ -762,6 +795,11 @@ function lobbyBack(){
   [[5.64,4.98],[5.78,5.03]].forEach(([x,y])=>{s+=cyl(x,y,18,.05,4,'#FFFDF9')});
   return s;
 }
+function chandelier(x,y,z){const c=iso(x,y,z);let t=`<g pointer-events="none" transform="translate(${c[0].toFixed(1)},${c[1].toFixed(1)}) scale(1.25)"><g class="chand">`;
+  t+=`<line x1="0" y1="-34" x2="0" y2="-8" stroke="${GOLD}" stroke-width="1"/><ellipse cx="0" cy="0" rx="16" ry="5" fill="none" stroke="${GOLD}" stroke-width="1.6"/><ellipse cx="0" cy="-6" rx="9" ry="3" fill="none" stroke="${GOLD}" stroke-width="1.2"/>`;
+  for(let i=0;i<8;i++){const a=i/8*Math.PI*2,px=Math.cos(a)*16,py=Math.sin(a)*5;t+=`<line x1="${px.toFixed(1)}" y1="${py.toFixed(1)}" x2="${px.toFixed(1)}" y2="${(py+5).toFixed(1)}" stroke="#E6F0F7" stroke-width=".8"/><path d="M${px.toFixed(1)},${(py+5).toFixed(1)} l1.4,2.4 l-1.4,2.4 l-1.4,-2.4Z" fill="#EAF4FB" stroke="rgba(176,141,87,.7)" stroke-width=".3"/><rect x="${(px-.9).toFixed(1)}" y="${(py-6).toFixed(1)}" width="1.8" height="5" fill="#FFFDF9"/><ellipse class="twk" cx="${px.toFixed(1)}" cy="${(py-7.4).toFixed(1)}" rx="1.1" ry="1.8" fill="#F2C14E" style="animation-delay:${(i*.3).toFixed(1)}s"/>`}
+  t+=`<path d="M0,0 l2.4,4 l-2.4,6 l-2.4,-6Z" fill="#EAF4FB" stroke="rgba(176,141,87,.8)" stroke-width=".4"/><circle cx="0" cy="-34" r="1.6" fill="${GOLD}"/>`;
+  return t+`</g></g>`}
 function lobbyFront(){
   let s=box(3.58,3.45,0,1.5,.38,20,'#0E335F',{top:'#B08D57'})+box(3.58,3.83,0,.38,.75,20,'#0E335F',{top:'#B08D57'});
   s+=cyl(4.75,3.62,20,.05,8,'#F2EDE6');
@@ -795,6 +833,7 @@ function buildIsland(){
   {const p=iso(.62,1.55);s+=`<g id="cat-cutie" data-npc="cutie" role="button" tabindex="0" aria-label="摸摸院長的愛貓小可愛" transform="translate(${p[0].toFixed(1)},${p[1].toFixed(1)}) scale(1.3)">${catFig(CATLOOK.cutie)}</g>`}
   ['bella','xiangyu','miqin','xiaojin','zhan'].forEach(k=>{const n=NPCS[k],[x,y]=iso(n.at[0],n.at[1]);s+=`<g id="npc-${k}" data-npc="${k}" role="button" tabindex="0" aria-label="和${n.name}說說話" transform="translate(${x.toFixed(1)},${y.toFixed(1)})${n.flip?' scale(-1,1)':''}">${fig(n.look)}</g>`});
   s+=`<g class="room" data-room="lobby">${lobbyBack()}</g>`;
+  s+=chandelier(5.05,3.75,92);
   s+=`<g id="doctor" data-npc="doctor" role="button" tabindex="0" aria-label="和林醫師說說話">${doctorFig()}</g>`;
   s+=`<g id="nurse" data-npc="nurse" role="button" tabindex="0" aria-label="和護理師詩晴說說話">${fig(NPCS.nurse.look)}</g>`;
   s+=`<g class="room" data-room="lobby">${lobbyFront()}</g><g id="staff" data-npc="yiting" role="button" tabindex="0" aria-label="大廳櫃台的神秘店員">${fig(NPCS.yiting.look)}</g>`;
@@ -1075,18 +1114,18 @@ const EGGS={
 };
 const NPCS={
  doctor:{name:'林菀玲醫師',role:'院長',el:'doctor',lines:['嗨，我是林醫師。今天有記得擦防曬嗎？','好的療程，是先聽懂你在意什麼。','不確定要不要做，就先不要做。來聊聊也很好。','我最常說的一句話：先把基礎保養顧好。','看起來自然，比看起來「有做」更重要。','偷偷告訴你，背景城市的地標可以點喔。','逛累了嗎？恢復室有沙發可以坐。','每個空間都逛完，我有準備一個小禮物給你。','下面有個防曬小遊戲，要不要來挑戰看看？','聽說月亮也會說話，晚上來點點看。']},
- nurse:{name:'詩晴',role:'護理師',el:'nurse',look:{top:'#FFFFFF',vneck:'#0E335F',hair:'highpony',eyes:'smile',blush:true},lines:['我是詩晴，正在巡房中～','療程後有任何問題，隨時用 LINE 問我們。','冰敷記得用毛巾包著，不要直接貼皮膚喔。','多喝水，也是保養的一部分。']},
- bella:{name:'Bella',role:'護理師',at:[3.32,1.0],look:{top:'#FFFFFF',vneck:'#0E335F',hair:'pony',item:'tray'},lines:['我是 Bella，治療室準備好囉。','療程前，我會再跟你確認一次注意事項。','器械每次使用後，都會清潔消毒。','有點緊張嗎？過程中不舒服，隨時跟我說。']},
- xiangyu:{name:'祥毓',role:'美容師',at:[4.95,1.78],look:{top:'#EADFCF',trim:'#B08D57',hair:'mid',thin:true,legs:'#3A2F2A',item:'cup'},lines:['我是祥毓，歡迎來恢復室休息一下。','要不要喝杯溫水？','回家的保濕步驟有不懂的，都可以問我。','術後照護的細節，還是以醫師的指示為準喔。']},
- miqin:{name:'米秦',role:'美容師',at:[1.0,4.62],flip:true,look:{top:'#EADFCF',trim:'#B08D57',hair:'mid',hairc:'#4A3428',eyes:'big',blush:true,item:'brush'},lines:['我是米秦，化妝間這邊請～','補妝前先洗手，刷具也要保持乾淨。','防曬是我每天出門前最重要的一步。','什麼時候可以上妝，離開前記得先問醫師。']},
- xiaojin:{name:'小進',role:'美編',at:[1.58,3.62],look:{top:'#5E7B99',hair:'short',glasses:true,brow:true,item:'tablet',legs:'#2E3E52'},lines:['妳知道島上最亮的是什麼嗎？不是月亮，是剛走進來的妳。','妳有擦防曬嗎？不然怎麼會這麼耀眼。','這座島有七個空間，但我心裡只有一個位置。','妳抽到上上籤了嗎？我覺得遇見妳，就是我的上上籤。','我本來在畫平板，看到妳之後，就忘了要畫什麼。']},
+ nurse:{name:'詩晴',role:'護理師',el:'nurse',look:{top:'#FFFFFF',gown:'#FFFFFF',gtrim:'#6E8FB8',puff:'#FFFFFF',ruff:true,pearls:true,bonnet:'#0E335F',hair:'highpony',eyes:'smile',blush:true},lines:['我是詩晴，正在巡房中～','療程後有任何問題，隨時用 LINE 問我們。','冰敷記得用毛巾包著，不要直接貼皮膚喔。','多喝水，也是保養的一部分。']},
+ bella:{name:'Bella',role:'護理師',at:[3.32,1.0],look:{top:'#FFFFFF',gown:'#FFFFFF',gtrim:'#6E8FB8',puff:'#FFFFFF',ruff:true,bonnet:'#0E335F',hair:'pony',item:'tray'},lines:['我是 Bella，治療室準備好囉。','療程前，我會再跟你確認一次注意事項。','器械每次使用後，都會清潔消毒。','有點緊張嗎？過程中不舒服，隨時跟我說。']},
+ xiangyu:{name:'祥毓',role:'美容師',at:[4.95,1.78],look:{top:'#E8C4C0',gown:'#E8C4C0',gtrim:'#B08D57',puff:'#F3DCD8',ruff:true,pearls:true,hat:'#F6E7E3',rose:'#C8546A',curls:true,hair:'mid',hairc:'#6B4A3A',item:'cup'},lines:['我是祥毓，歡迎來恢復室休息一下。','要不要喝杯溫水？','回家的保濕步驟有不懂的，都可以問我。','術後照護的細節，還是以醫師的指示為準喔。']},
+ miqin:{name:'米秦',role:'美容師',at:[1.0,4.62],flip:true,look:{top:'#C9B6DF',gown:'#C9B6DF',gtrim:'#D9B46A',puff:'#E2D6EF',ruff:true,bonnet:'#C8546A',curls:true,hair:'mid',hairc:'#4A3428',eyes:'big',blush:true,item:'brush'},lines:['我是米秦，化妝間這邊請～','補妝前先洗手，刷具也要保持乾淨。','防曬是我每天出門前最重要的一步。','什麼時候可以上妝，離開前記得先問醫師。']},
+ xiaojin:{name:'小進',role:'美編',at:[1.58,3.62],look:{top:'#2E4A6E',coat:true,jabot:true,hair:'short',glasses:true,brow:true,item:'tablet',legs:'#F2EDE6'},lines:['妳知道島上最亮的是什麼嗎？不是月亮，是剛走進來的妳。','妳有擦防曬嗎？不然怎麼會這麼耀眼。','這座島有七個空間，但我心裡只有一個位置。','妳抽到上上籤了嗎？我覺得遇見妳，就是我的上上籤。','我本來在畫平板，看到妳之後，就忘了要畫什麼。']},
  orange:{name:'橘子',role:'貓店員',el:'cat-orange',persona:'橘貓，愛曬太陽、愛吃',lines:['喵～我最愛曬太陽。不過人類曬太陽，記得要擦防曬喔。','吃飽睡、睡飽吃，作息規律，毛和皮膚都會比較好。','我每天都去水碗報到。你今天水喝夠了嗎？']},
  mochi:{name:'白芳',role:'貓店員',el:'cat-mochi',persona:'白貓，性格高傲',lines:['本喵叫白芳。要摸之前，先說一聲。','白貓的耳朵很怕曬，所以本喵都待在室內。你出門也要防曬，懂嗎？','哼，臉不要用力搓。看看本喵，理毛都很優雅。','本喵允許你摸一下。就一下。']},
  cutie:{name:'小可愛',role:'院長的愛貓',el:'cat-cutie',persona:'布偶貓，院長的愛貓，平常待在院長辦公室',lines:['喵～我是小可愛，院長的愛貓，平常都在院長辦公室陪她。','院長每天都說「先把基礎保養顧好」，我都聽到會背了。','布偶貓的毛很怕打結，就像皮膚怕乾燥，每天都要好好照顧喔。','偷偷告訴你，院長最喜歡我了。']},
  kuro:{name:'黑糖',role:'貓店員',el:'cat-kuro',persona:'黑貓，高冷、只在貓跳台上',lines:['哼，晚上才是我的時間。不過你別熬夜，早點睡。','別一直摸我的臉。你也是，手一直摸臉容易長痘痘。','保持乾淨是基本禮貌。今天卸妝卸乾淨了嗎？']},
  gold:{name:'金金',role:'貓店員',el:'cat-gold',lines:['喵～我是很少出現的金色貓！遇到我，今天會是好運的一天。','偷偷告訴你：好運不能代替防曬喔。','你運氣真好。下次來，不一定還遇得到我。']},
- zhan:{name:'杜克勞・詹',role:'咖啡豆烘焙師',at:[5.22,4.95],look:{top:'#3B2A20',vneck:'#F2EDE6',hair:'short',quiff:true,stubble:true,thin:true,hairc:'#1E1814',skin:'#EBC7AE',eyes:'deep',brow:true,glow:true,legs:'#2B2420',item:'cup'},lines:['我是杜克勞・詹，無痕美學選用的是我們杜克勞的咖啡豆。','想喝拿鐵還是美式？冰的、熱的，都可以跟櫃台說。','豆子在基隆的烘豆廠烘好，再送來診所。','我的店叫杜克勞，名字來自把咖啡樹苗帶到加勒比海的法國軍官。']},
- yiting:{name:'怡婷',role:'店經理',el:'staff',look:{top:'#0E335F',trim:'#B08D57',hair:'wave',hairc:'#5B3D2C',skin:'#F6DECF',eyes:'deep',brow:true,glow:true,pin:'#E9CF9E'}}
+ zhan:{name:'杜克勞・詹',role:'咖啡豆烘焙師',at:[5.22,4.95],look:{top:'#4A2E22',coat:true,jabot:true,hair:'short',quiff:true,stubble:true,thin:true,hairc:'#1E1814',skin:'#EBC7AE',eyes:'deep',brow:true,glow:true,legs:'#2B2420',item:'cup'},lines:['我是杜克勞・詹，無痕美學選用的是我們杜克勞的咖啡豆。','想喝拿鐵還是美式？冰的、熱的，都可以跟櫃台說。','豆子在基隆的烘豆廠烘好，再送來診所。','我的店叫杜克勞，名字來自把咖啡樹苗帶到加勒比海的法國軍官。']},
+ yiting:{name:'怡婷',role:'店經理',el:'staff',look:{top:'#0E335F',gown:'#0E335F',gtrim:'#D9B46A',puff:'#1E4A7E',ruff:true,pearls:true,hat:'#0E335F',hatband:'#D9B46A',rose:'#B08D57',feather:'#F2EDE6',curls:true,hair:'wave',hairc:'#5B3D2C',skin:'#F6DECF',eyes:'deep',brow:true,glow:true}}
 };
 const npcEl=k=>document.getElementById(NPCS[k].el||('npc-'+k));
 const AVATAR_YT=`<svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#E3E9F0"/>
