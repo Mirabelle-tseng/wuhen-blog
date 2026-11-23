@@ -541,7 +541,7 @@ body.reading #toast{bottom:auto;top:calc(env(safe-area-inset-top,0px) + 12px)}
       <h1>無痕美學島</h1>
       <p>會動的診所小島，逛完還能抽一支保養籤</p>
       <p class="addr">安和路一段86號 2樓，八個空間，點進去逛逛</p>
-      <p class="cityname"><span class="dia"></span><span id="cityname">巴黎・白天</span><button type="button" id="bgm" hidden aria-pressed="false" aria-label="播放聖誕音樂盒">♪ 聖誕音樂</button></p>
+      <p class="cityname"><span class="dia"></span><span id="cityname">巴黎・白天</span><button type="button" id="bgm" hidden aria-pressed="false" aria-label="播放聖誕音樂">♪ 聖誕音樂</button></p>
     </div>
     <div class="clock" role="group" aria-label="島上的時間與城市">
       <button type="button" data-ph="auto" aria-pressed="true">自動</button>
@@ -1395,23 +1395,13 @@ function endGame(why){
  addEventListener('keydown',ev=>{if(gEl('game').hidden)return;if(ev.key==='ArrowLeft'||ev.key==='a'){gDirs.k=-1;ev.preventDefault()}else if(ev.key==='ArrowRight'||ev.key==='d'){gDirs.k=1;ev.preventDefault()}else if(ev.key==='Escape')closeGame()});
  addEventListener('keyup',ev=>{if((ev.key==='ArrowLeft'||ev.key==='a')&&gDirs.k<0)gDirs.k=0;if((ev.key==='ArrowRight'||ev.key==='d')&&gDirs.k>0)gDirs.k=0});
  addEventListener('resize',()=>{if(G.on){const sz=gSize();G.W=sz.W;G.H=sz.H;G.dpr=sz.dpr}});}
-/* ===== 聖誕音樂盒（公版旋律，網頁即時合成） ===== */
-const BGM={ctx:null,on:false,timer:null,next:0,song:0,idx:0};
-const NT=n=>{const m={C:0,D:2,E:4,F:5,G:7,A:9,B:11}[n[0]],sh=n[1]==='#'?1:0,o=+n[n.length-1];return 440*Math.pow(2,(m+sh+(o+1)*12-69)/12)};
-const SONGS=[
- {bpm:118,n:[['E5',1],['E5',1],['E5',2],['E5',1],['E5',1],['E5',2],['E5',1],['G5',1],['C5',1.5],['D5',.5],['E5',4],['F5',1],['F5',1],['F5',1.5],['F5',.5],['F5',1],['E5',1],['E5',1],['E5',.5],['E5',.5],['E5',1],['D5',1],['D5',1],['E5',1],['D5',2],['G5',2],
-   ['E5',1],['E5',1],['E5',2],['E5',1],['E5',1],['E5',2],['E5',1],['G5',1],['C5',1.5],['D5',.5],['E5',4],['F5',1],['F5',1],['F5',1.5],['F5',.5],['F5',1],['E5',1],['E5',1],['E5',.5],['E5',.5],['G5',1],['G5',1],['F5',1],['D5',1],['C5',4],[null,2]]},
- {bpm:132,n:[['G4',1],['C5',1],['C5',.5],['D5',.5],['C5',.5],['B4',.5],['A4',1],['A4',1],['A4',1],['D5',1],['D5',.5],['E5',.5],['D5',.5],['C5',.5],['B4',1],['G4',1],['G4',1],['E5',1],['E5',.5],['F5',.5],['E5',.5],['D5',.5],['C5',1],['A4',1],['G4',.5],['G4',.5],['A4',1],['D5',1],['B4',1],['C5',3],[null,3]]}
-];
-function bgmNote(f,t,dur){const c=BGM.ctx;[[1,.55],[2.001,.18],[4.07,.06]].forEach(([r,g])=>{const o=c.createOscillator(),a=c.createGain();o.type='sine';o.frequency.value=f*r;a.gain.setValueAtTime(0,t);a.gain.linearRampToValueAtTime(g,t+.006);a.gain.exponentialRampToValueAtTime(.0001,t+Math.max(.9,dur*1.6)/(r>1?1.6:1));o.connect(a);a.connect(BGM.bus);o.start(t);o.stop(t+2)})}
-function bgmTick(){const c=BGM.ctx;while(BGM.next<c.currentTime+.25){const S=SONGS[BGM.song],[n,b]=S.n[BGM.idx],d=b*60/S.bpm;if(n)bgmNote(NT(n),BGM.next,d);BGM.next+=d;BGM.idx++;if(BGM.idx>=S.n.length){BGM.idx=0;BGM.song=(BGM.song+1)%SONGS.length}}}
-function bgmStart(){const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
-  if(!BGM.ctx){const c=BGM.ctx=new AC(),m=c.createGain(),dl=c.createDelay(),fb=c.createGain(),lp=c.createBiquadFilter();m.gain.value=.16;dl.delayTime.value=.28;fb.gain.value=.28;lp.type='lowpass';lp.frequency.value=2600;
-    BGM.bus=c.createGain();BGM.bus.connect(m);BGM.bus.connect(dl);dl.connect(lp);lp.connect(fb);fb.connect(dl);lp.connect(m);m.connect(c.destination)}
-  BGM.ctx.resume();BGM.on=true;BGM.next=BGM.ctx.currentTime+.1;BGM.timer=setInterval(bgmTick,60);bgmUI();track('island_bgm_on')}
-function bgmStop(){BGM.on=false;clearInterval(BGM.timer);if(BGM.ctx)BGM.ctx.suspend();bgmUI()}
-function bgmUI(){const b=document.getElementById('bgm');if(!b)return;b.setAttribute('aria-pressed',BGM.on);b.textContent=BGM.on?'♪ 音樂播放中':'♪ 聖誕音樂';b.setAttribute('aria-label',BGM.on?'暫停聖誕音樂盒':'播放聖誕音樂盒')}
-document.addEventListener('visibilitychange',()=>{if(!BGM.ctx)return;if(document.hidden)BGM.ctx.suspend();else if(BGM.on)BGM.ctx.resume()});
+/* ===== 聖誕音樂（公版旋律，GeneralUser GS 音源編曲） ===== */
+const BGM={on:false,el:null};
+function bgmStart(){if(!BGM.el){BGM.el=new Audio('xmas_bgm.mp3');BGM.el.loop=true;BGM.el.volume=.55}
+  BGM.el.play().then(()=>{BGM.on=true;bgmUI();track('island_bgm_on')}).catch(()=>{BGM.on=false;bgmUI()})}
+function bgmStop(){BGM.on=false;if(BGM.el)BGM.el.pause();bgmUI()}
+function bgmUI(){const b=document.getElementById('bgm');if(!b)return;b.setAttribute('aria-pressed',BGM.on);b.textContent=BGM.on?'♪ 音樂播放中':'♪ 聖誕音樂';b.setAttribute('aria-label',BGM.on?'暫停聖誕音樂':'播放聖誕音樂')}
+document.addEventListener('visibilitychange',()=>{if(!BGM.el)return;if(document.hidden)BGM.el.pause();else if(BGM.on)BGM.el.play().catch(()=>{})});
 
 /* ===== 猜猜我是誰 ===== */
 const YT_LINE='s8604922';
