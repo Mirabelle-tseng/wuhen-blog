@@ -223,10 +223,10 @@ const sc=document.getElementById('sc'),ctr=()=>{sc.scrollLeft=(sc.scrollWidth-sc
 (function(){const svgEl=document.getElementById('dogs');if(!svgEl)return;
  const K=1.2,P=(a)=>a.map(([x,y])=>[x*K,y*K]);
  const WALK=[
-  {id:'xiaoxiang',img:'npc_staff.webp',ar:124/320,path:P([[470,805],[560,792],[650,805]]),speed:20},
-  {id:'lulu',img:'npc_nurse.webp',ar:118/320,path:P([[700,772],[800,760],[905,778]]),speed:20},
-  {id:'ashan',img:'npc_coat.webp',ar:145/320,path:P([[700,848],[820,840],[950,822]]),speed:24},
-  {id:'meimei',img:'npc_dress.webp',ar:113/320,path:P([[1020,650],[1085,610],[1150,580]]),speed:16}];
+  {id:'xiaoxiang',img:'npc_staff.webp?v=2',ar:.3875,path:P([[470,805],[560,792],[650,805]]),speed:20},
+  {id:'lulu',img:'npc_nurse.webp?v=2',ar:.3694,path:P([[700,772],[800,760],[905,778]]),speed:20},
+  {id:'ashan',img:'npc_coat.webp?v=2',ar:.4528,path:P([[700,848],[820,840],[950,822]]),speed:24},
+  {id:'meimei',img:'npc_dress.webp?v=2',ar:.3542,path:P([[1020,650],[1085,610],[1150,580]]),speed:16}];
  const DOGS=[
   {id:'shiba',name:'柴柴',fur:'#E39A52',fur2:'#C97A35',belly:'#FFF3E2',path:P([[700,848],[820,840],[950,822]]),speed:24,follow:'ashan',lag:70,lines:['汪！（柴柴想找你玩）','汪汪！（尾巴搖不停）','（柴柴躲到陽傘下，牠也知道要防曬）']},
   {id:'maru',name:'小白',fur:'#FAF6EE',fur2:'#E1D8C8',belly:'#FFFFFF',path:P([[1125,880],[1185,905],[1245,932],[1200,950]]),speed:34,lines:['汪～（小白在狗狗小屋門口等你）','（小白把球叼過來了）','汪！（今天也要記得喝水喔）']}];
