@@ -265,25 +265,27 @@ const CLASSIC='/island/classic/';
  const SC={
   dock:{t:'漂浮大門',c:[1080,1000],bg:null,l:[['yiting','歡迎來到無痕美學島！我是店經理怡婷。'],['yiting','診所在安和路一段86號2樓，採預約制，預約時告訴我們人數就好。'],['yiting','捷運信義安和站1號出口走路3到5分鐘，7-11轉角就到。開車可以從文昌街205號轉進地下停車場。']]},
   lobby:{t:'大廳櫃台',c:[520,560],bg:'/island/palace/rooms/lobby.webp',l:[['shiqing','歡迎光臨，我是護理師詩晴。'],['shiqing','今天最在意哪一種膚況？櫃台有三題小測驗，可以先幫你整理成面診小抄。'],['zhan','來看診時，也可以點一杯杜克勞咖啡，拿鐵或美式，冰的熱的都可以。']]},
-  consult:{t:'諮詢區',c:[760,560],bg:'/island/palace/rooms/consult.webp',l:[['xiaojin','我是美編小進，諮詢區的衛教圖卡都是我畫的。'],['xiaojin','面診時把在意的地方、以前做過的療程都說清楚，醫師比較好評估。'],['xiaojin','不知道要問什麼？可以先看看島上的衛教文章。']]},
+  consult:{t:'諮詢區',c:[760,560],bg:'/island/palace/rooms/consult.webp',sweet:1,l:[['shiqing','這裡是諮詢區。面診時把在意的地方、以前做過的療程都說清楚，醫師比較好評估。'],['shiqing','不知道要問什麼？可以先看看島上的衛教文章。'],['xiaojin','__SWEET__']]},
   treatment:{t:'治療室',c:[1790,640],bg:'/island/palace/rooms/treatment.webp',l:[['bella','我是護理師 Bella，這裡是治療室。'],['bella','治療前，醫師和護理師會再跟你確認一次當天的狀況。'],['bella','過程中有任何不舒服，隨時跟我們說。']]},
   recovery:{t:'恢復室',c:[2050,860],bg:'/island/palace/rooms/recovery.webp',l:[['xiangyu','我是美容師祥毓，做完療程可以先在這裡休息一下。'],['xiangyu','回家後怎麼洗臉、什麼時候可以化妝，每個療程不太一樣，請照醫師給的術後說明。'],['xiangyu','有任何不舒服，直接打診所電話 02‑2755‑5673。']]},
   powder:{t:'化妝間',c:[430,1080],bg:'/island/palace/rooms/powder.webp',l:[['miqin','我是美容師米秦，這裡是化妝間。'],['miqin','療程後多久可以上妝，要看做了什麼療程，先問過醫師最安心。'],['miqin','島上有整理好的衛教文章，補妝空檔可以看看。']]},
   director:{t:'院長辦公室',c:[1390,420],bg:'/island/palace/rooms/director.webp',l:[['doctor','你好，我是林菀玲醫師。'],['doctor','每個人的膚況都不一樣，所以一定要當面評估，才知道適合什麼。'],['doctor','有想問我的事，可以寫到院長信箱。'],['cutie','喵～（院長的愛貓小可愛，在辦公桌上伸了個懶腰）']]},
   coffee:{t:'杜克勞咖啡座',c:[810,800],bg:'/island/palace/rooms/coffee.webp',house:1,l:[['zhan','歡迎！我是杜克勞的詹，這裡是我烘豆的地方。'],['zhan','無痕美學選用杜克勞咖啡，診所用的豆子就是從我這裡來的。'],['zhan','來診所的時候，拿鐵或美式都可以點，冰的熱的跟櫃台說一聲就好。']]},
   cats:{t:'貓咖區',c:[1760,1140],bg:'/island/palace/rooms/cats.webp',l:[['orange','喵～歡迎來貓咖區！我是橘子。'],['orange','這是島上的虛擬貓咖，診所裡沒有養貓，對貓過敏也可以放心來。'],['orange','白芳、黑糖、金金也在這裡，摸摸我們再繼續逛吧！']]}};
+const SWEET=['妳知道島上最亮的是什麼嗎？不是月亮，是剛走進來的妳。','妳有擦防曬嗎？不然怎麼會這麼耀眼。','這座島有八個空間，但我心裡只有一個位置。','妳抽到上上籤了嗎？我覺得遇見妳，就是我的上上籤。','我本來在畫平板，看到妳之後，就忘了要畫什麼。'],SWEETX=['聖誕老人問我想要什麼禮物，我說：剛走進來的妳。','聖誕樹上最亮的那顆星，好像跑到妳眼睛裡了。','今年的願望清單只有一行：陪妳逛完這座島。','麋鹿今天會遲到，因為牠們也停下來看妳。','妳不用掛在聖誕襪裡，妳本身就是禮物。'];
+ const sweet=()=>{const d=new Date(),md=(d.getMonth()+1)*100+d.getDate(),L=(md>=1123&&md<=1226)?SWEET.concat(SWEETX):SWEET;return L[Math.floor(Math.random()*L.length)]};
  const el=id=>document.getElementById(id),box=el('sc2');let cur=null,i=0,typing=null;
  function bgFor(sc){const b=el('sc2bg');if(sc.bg){b.className='bg real';b.style.backgroundImage=`url(${sc.bg})`;return}
   b.className='bg';const vw=innerWidth,vh=innerHeight,z=Math.max(vw/1100,vh/950),W=2400*z,H=1792*z;
   b.style.backgroundImage=`url(${IMG})`;b.style.backgroundSize=`${W}px ${H}px`;b.style.backgroundPosition=`${vw/2+20-sc.c[0]*z}px ${vh/2+20-sc.c[1]*z}px`}
- function show(){const [who,txt]=cur.l[i],p=P[who];el('sc2n').textContent=p[0];const im=el('sc2p');
+ function show(){const who=cur.l[i][0],txt=cur.l[i][1]==='__SWEET__'?(cur._sw||(cur._sw=sweet())):cur.l[i][1],p=P[who];el('sc2n').textContent=p[0];const im=el('sc2p');
   if(im.dataset.w!==who){im.src=C+p[1]+'.webp'+CV;im.dataset.w=who;im.className='bust'+(['orange','cutie'].includes(who)?' cat':'');im.style.animation='none';im.offsetWidth;im.style.animation=''}
   const tx=el('sc2tx');clearInterval(typing);let k=0;tx.textContent='';typing=setInterval(()=>{tx.textContent=txt.slice(0,++k);if(k>=txt.length){clearInterval(typing);typing=null}},28);
   const last=i===cur.l.length-1;el('sc2a').hidden=!last;el('sc2nx').hidden=last}
- function open(id){cur=SC[id];if(!cur){openRoomView(id);return}cur.id=id;i=0;el('sc2t').textContent=cur.t;bgFor(cur);box.hidden=false;document.documentElement.style.overflow='hidden';show();
+ function open(id){cur=SC[id];if(!cur){openRoomView(id);return}cur.id=id;cur._sw=null;i=0;el('sc2t').textContent=cur.t;bgFor(cur);box.hidden=false;document.documentElement.style.overflow='hidden';show();
   try{gtag('event','island_scene_open',{room:id})}catch(_){}}
  function close(){box.hidden=true;clearInterval(typing);document.documentElement.style.overflow=''}
- el('sc2box').addEventListener('click',e=>{if(e.target.closest('.acts'))return;if(typing){clearInterval(typing);typing=null;el('sc2tx').textContent=cur.l[i][1];return}if(i<cur.l.length-1){i++;show()}});
+ el('sc2box').addEventListener('click',e=>{if(e.target.closest('.acts'))return;if(typing){clearInterval(typing);typing=null;el('sc2tx').textContent=cur.l[i][1]==='__SWEET__'?cur._sw:cur.l[i][1];return}if(i<cur.l.length-1){i++;show()}});
  el('sc2x').addEventListener('click',close);el('sc2back').addEventListener('click',close);
  el('sc2more').addEventListener('click',()=>{const id=cur.id,h=cur.house;close();if(h&&window.openHouse)openHouse(id);else openRoomView(id)});
  addEventListener('keydown',e=>{if(box.hidden)return;if(e.key==='Escape')close();if(e.key===' '||e.key==='Enter'){e.preventDefault();el('sc2box').click()}});
