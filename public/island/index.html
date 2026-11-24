@@ -269,8 +269,8 @@ const CLASSIC='/island/classic/';
   treatment:{t:'治療室',c:[1790,640],bg:null,l:[['bella','我是護理師 Bella，這裡是治療室。'],['bella','治療前，醫師和護理師會再跟你確認一次當天的狀況。'],['bella','過程中有任何不舒服，隨時跟我們說。']]},
   recovery:{t:'恢復室',c:[2050,860],bg:null,l:[['xiangyu','我是美容師祥毓，做完療程可以先在這裡休息一下。'],['xiangyu','回家後怎麼洗臉、什麼時候可以化妝，每個療程不太一樣，請照醫師給的術後說明。'],['xiangyu','有任何不舒服，直接打診所電話 02‑2755‑5673。']]},
   powder:{t:'化妝間',c:[430,1080],bg:null,l:[['miqin','我是美容師米秦，這裡是化妝間。'],['miqin','療程後多久可以上妝，要看做了什麼療程，先問過醫師最安心。'],['miqin','島上有整理好的衛教文章，補妝空檔可以看看。']]},
-  director:{t:'院長辦公室',c:[1390,420],bg:null,l:[['doctor','你好，我是林菀玲醫師。'],['doctor','每個人的膚況都不一樣，所以一定要當面評估，才知道適合什麼。'],['doctor','有想問我的事，可以寫到院長信箱。']]},
-  cats:{t:'貓咖區',c:[1760,1140],bg:null,l:[['orange','喵～歡迎來貓咖區！我是橘子。'],['orange','這是島上的虛擬貓咖，診所裡沒有養貓，對貓過敏也可以放心來。'],['cutie','喵。（院長的愛貓小可愛，看了你一眼）']]}};
+  director:{t:'院長辦公室',c:[1390,420],bg:null,l:[['doctor','你好，我是林菀玲醫師。'],['doctor','每個人的膚況都不一樣，所以一定要當面評估，才知道適合什麼。'],['doctor','有想問我的事，可以寫到院長信箱。'],['cutie','喵～（院長的愛貓小可愛，在辦公桌上伸了個懶腰）']]},
+  cats:{t:'貓咖區',c:[1760,1140],bg:null,l:[['orange','喵～歡迎來貓咖區！我是橘子。'],['orange','這是島上的虛擬貓咖，診所裡沒有養貓，對貓過敏也可以放心來。'],['orange','白芳、黑糖、金金也在這裡，摸摸我們再繼續逛吧！']]}};
  const el=id=>document.getElementById(id),box=el('sc2');let cur=null,i=0,typing=null;
  function bgFor(sc){const b=el('sc2bg');if(sc.bg){b.className='bg real';b.style.backgroundImage=`url(${sc.bg})`;return}
   b.className='bg';const vw=innerWidth,vh=innerHeight,z=Math.max(vw/1100,vh/950),W=2400*z,H=1792*z;
