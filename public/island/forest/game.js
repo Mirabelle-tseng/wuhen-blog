@@ -1,4 +1,4 @@
-/* 森林蓋木屋 — forest-material Tetris with a dog companion */
+/* 狗狗防曬大作戰 — sun-protection Tetris with a dog companion */
 (function(){
 const FORM='https://docs.google.com/forms/d/e/1FAIpQLSfjXKOn1nvSMdetusW0KpozCOLbfhQbauV6mxngq8V0IxiDgQ/formResponse';
 const F_NAME='entry.439708661',F_SCORE='entry.270775091',F_GAME='entry.709660828';
@@ -12,13 +12,13 @@ function clean(n){n=(n||'').replace(/[\s​]+/g,'').slice(0,8);const low=n.toLow
 
 /* ---------- pieces: forest materials ---------- */
 const MAT={
- I:{name:'水滴',base:'#6FB7D9',dark:'#3F86AD'},
- O:{name:'石頭',base:'#ABA69C',dark:'#7E796F'},
- T:{name:'花',base:'#F2A7B8',dark:'#C9738A'},
- S:{name:'苔蘚',base:'#86B65E',dark:'#5D8A3C'},
- Z:{name:'屋瓦',base:'#C86F4D',dark:'#934630'},
- J:{name:'木頭',base:'#B9824F',dark:'#835532'},
- L:{name:'樹葉',base:'#5F9E52',dark:'#3E7034'}};
+ I:{name:'防曬乳',base:'#FFE3A0',dark:'#D9A441'},
+ O:{name:'遮陽帽',base:'#F3D6AE',dark:'#B88B55'},
+ T:{name:'陽傘',base:'#A8D8EC',dark:'#5E9DBB'},
+ S:{name:'太陽眼鏡',base:'#CDBFF2',dark:'#8C78C9'},
+ Z:{name:'樹蔭',base:'#8FBF67',dark:'#5D8A3C'},
+ J:{name:'補水',base:'#7EC2E2',dark:'#3F86AD'},
+ L:{name:'狗掌印',base:'#F5BE96',dark:'#C98457'}};
 const SHAPES={I:[[0,1],[1,1],[2,1],[3,1]],O:[[1,0],[2,0],[1,1],[2,1]],T:[[1,0],[0,1],[1,1],[2,1]],S:[[1,0],[2,0],[0,1],[1,1]],Z:[[0,0],[1,0],[1,1],[2,1]],J:[[0,0],[0,1],[1,1],[2,1]],L:[[2,0],[0,1],[1,1],[2,1]]};
 const COLS=10,ROWS=20;
 const tex={};
@@ -26,16 +26,14 @@ function rnd(seed){let x=seed;return()=>{x=(x*9301+49297)%233280;return x/233280
 function makeTex(k,c){const cv=document.createElement('canvas');cv.width=cv.height=c;const g=cv.getContext('2d'),m=MAT[k],r=rnd(k.charCodeAt(0)*7);
  const rr=c*.18;g.fillStyle=m.base;g.beginPath();g.roundRect?g.roundRect(1,1,c-2,c-2,rr):g.rect(1,1,c-2,c-2);g.fill();
  g.save();g.clip();
- if(k==='J'){g.strokeStyle='rgba(90,55,25,.45)';g.lineWidth=Math.max(1,c*.05);for(let i=0;i<3;i++){const y=c*(.25+i*.25);g.beginPath();g.moveTo(0,y);g.bezierCurveTo(c*.3,y-c*.08,c*.6,y+c*.08,c,y);g.stroke()}
-   g.beginPath();g.ellipse(c*.68,c*.42,c*.1,c*.06,0,0,7);g.stroke()}
- if(k==='O'){for(let i=0;i<9;i++){g.fillStyle=r()<.5?'rgba(255,255,255,.25)':'rgba(60,55,50,.25)';g.beginPath();g.arc(r()*c,r()*c,c*(.04+r()*.05),0,7);g.fill()}
-   g.strokeStyle='rgba(70,65,60,.35)';g.lineWidth=Math.max(1,c*.04);g.beginPath();g.moveTo(c*.15,c*.6);g.lineTo(c*.45,c*.5);g.lineTo(c*.6,c*.75);g.stroke()}
- if(k==='S'){for(let i=0;i<10;i++){g.fillStyle=r()<.5?'#A3CC77':'#4E7A30';g.beginPath();g.arc(r()*c,r()*c,c*(.05+r()*.06),0,7);g.fill()}}
- if(k==='L'){g.fillStyle='#7DBA68';g.beginPath();g.ellipse(c/2,c/2,c*.32,c*.18,-.7,0,7);g.fill();g.strokeStyle='#3E7034';g.lineWidth=Math.max(1,c*.04);g.beginPath();g.moveTo(c*.27,c*.73);g.lineTo(c*.73,c*.27);g.stroke()}
- if(k==='T'){g.fillStyle='#FFF6F8';for(let i=0;i<5;i++){const a=i/5*Math.PI*2;g.beginPath();g.arc(c/2+Math.cos(a)*c*.17,c/2+Math.sin(a)*c*.17,c*.13,0,7);g.fill()}g.fillStyle='#F2C14E';g.beginPath();g.arc(c/2,c/2,c*.1,0,7);g.fill()}
- if(k==='Z'){g.strokeStyle='rgba(110,45,25,.55)';g.lineWidth=Math.max(1,c*.05);for(let y=0;y<2;y++)for(let x=-1;x<3;x++){g.beginPath();g.arc(x*c*.5+(y%2)*c*.25,y*c*.5+c*.25,c*.25,0,Math.PI);g.stroke()}}
- if(k==='I'){g.fillStyle='rgba(255,255,255,.55)';g.beginPath();g.moveTo(c/2,c*.18);g.bezierCurveTo(c*.75,c*.48,c*.72,c*.78,c/2,c*.8);g.bezierCurveTo(c*.28,c*.78,c*.25,c*.48,c/2,c*.18);g.fill();
-   g.strokeStyle='rgba(255,255,255,.4)';g.lineWidth=Math.max(1,c*.04);g.beginPath();g.moveTo(c*.1,c*.9);g.quadraticCurveTo(c*.3,c*.82,c*.5,c*.9);g.quadraticCurveTo(c*.7,c*.98,c*.9,c*.9);g.stroke()}
+ const W_='#FFFFFF';g.lineCap='round';g.lineJoin='round';
+ if(k==='I'){g.fillStyle=W_;g.beginPath();g.roundRect?g.roundRect(c*.32,c*.3,c*.36,c*.52,c*.08):g.rect(c*.32,c*.3,c*.36,c*.52);g.fill();g.fillStyle='#F08A3C';g.fillRect(c*.4,c*.16,c*.2,c*.15);g.fillStyle='#F7C873';g.fillRect(c*.32,c*.5,c*.36,c*.12)}
+ if(k==='O'){g.fillStyle='#E7BE84';g.beginPath();g.ellipse(c/2,c*.62,c*.38,c*.12,0,0,7);g.fill();g.fillStyle='#F7DDB4';g.beginPath();g.ellipse(c/2,c*.5,c*.2,c*.2,0,Math.PI,0);g.fill();g.fillRect(c*.3,c*.48,c*.4,c*.1);g.fillStyle='#E8577A';g.fillRect(c*.3,c*.5,c*.4,c*.06)}
+ if(k==='T'){g.fillStyle='#F28FA6';g.beginPath();g.moveTo(c*.16,c*.5);g.quadraticCurveTo(c/2,c*.05,c*.84,c*.5);g.closePath();g.fill();g.strokeStyle=W_;g.lineWidth=Math.max(1,c*.05);g.beginPath();g.moveTo(c/2,c*.5);g.lineTo(c/2,c*.8);g.quadraticCurveTo(c/2,c*.88,c*.42,c*.86);g.stroke()}
+ if(k==='S'){g.fillStyle='#3B3550';[c*.32,c*.68].forEach(x=>{g.beginPath();g.ellipse(x,c*.52,c*.15,c*.12,0,0,7);g.fill()});g.strokeStyle='#3B3550';g.lineWidth=Math.max(1,c*.05);g.beginPath();g.moveTo(c*.45,c*.5);g.lineTo(c*.55,c*.5);g.stroke();g.fillStyle='rgba(255,255,255,.6)';[c*.27,c*.63].forEach(x=>{g.beginPath();g.arc(x,c*.48,c*.04,0,7);g.fill()})}
+ if(k==='Z'){g.fillStyle='#B5DA8C';g.beginPath();g.ellipse(c/2,c/2,c*.32,c*.18,-.7,0,7);g.fill();g.strokeStyle='#4E7A30';g.lineWidth=Math.max(1,c*.04);g.beginPath();g.moveTo(c*.27,c*.73);g.lineTo(c*.73,c*.27);g.stroke()}
+ if(k==='J'){g.fillStyle='rgba(255,255,255,.85)';g.beginPath();g.moveTo(c/2,c*.16);g.bezierCurveTo(c*.76,c*.48,c*.74,c*.8,c/2,c*.82);g.bezierCurveTo(c*.26,c*.8,c*.24,c*.48,c/2,c*.16);g.fill()}
+ if(k==='L'){g.fillStyle='#8A5232';g.beginPath();g.ellipse(c/2,c*.62,c*.17,c*.14,0,0,7);g.fill();[[.3,.38],[.43,.28],[.57,.28],[.7,.38]].forEach(([x,y])=>{g.beginPath();g.ellipse(c*x,c*y,c*.065,c*.08,0,0,7);g.fill()})}
  g.restore();
  g.fillStyle='rgba(255,255,255,.28)';g.fillRect(c*.12,c*.08,c*.76,c*.07);
  g.strokeStyle=m.dark;g.lineWidth=Math.max(1,c*.05);g.beginPath();g.roundRect?g.roundRect(1.5,1.5,c-3,c-3,rr):g.rect(1.5,1.5,c-3,c-3);g.stroke();
@@ -44,10 +42,10 @@ function makeTex(k,c){const cv=document.createElement('canvas');cv.width=cv.heig
 /* ---------- DOM ---------- */
 const ICON={L:'<path d="M15 5 8 12l7 7"/>',R:'<path d="m9 5 7 7-7 7"/>',ROT:'<path d="M19 12a7 7 0 1 1-2.05-4.95"/><path d="M19 4v4h-4"/>',D:'<path d="M12 5v13"/><path d="m6 12 6 6 6-6"/>',H:'<path d="m6 6 6 6 6-6"/><path d="m6 12 6 6 6-6"/>'};
 const svg=k=>`<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[k]}</svg>`;
-const root=document.createElement('div');root.id='tg';root.hidden=true;root.setAttribute('role','dialog');root.setAttribute('aria-modal','true');root.setAttribute('aria-label','森林蓋木屋小遊戲');
-root.innerHTML=`<div class="tg-top"><button type="button" class="tg-x" data-tclose aria-label="關閉遊戲">×</button><h2>森林蓋木屋</h2><div class="tg-stat"><span>木屋 <b id="tg-floors">0</b> 層</span><span>分數 <b id="tg-score">0</b></span></div></div>
+const root=document.createElement('div');root.id='tg';root.hidden=true;root.setAttribute('role','dialog');root.setAttribute('aria-modal','true');root.setAttribute('aria-label','狗狗防曬大作戰小遊戲');
+root.innerHTML=`<div class="tg-top"><button type="button" class="tg-x" data-tclose aria-label="關閉遊戲">×</button><h2>狗狗防曬大作戰</h2><button type="button" class="tg-music" onclick="window.toggleForestMusic&&toggleForestMusic()" aria-pressed="false" aria-label="森林音樂">♪</button><div class="tg-stat"><span>防護 <b id="tg-floors">0</b> 排</span><span>分數 <b id="tg-score">0</b></span></div></div>
 <div class="tg-main"><div class="tg-boardwrap"><canvas id="tg-board"></canvas></div>
-<div class="tg-side"><p class="tg-lab">下一塊</p><canvas id="tg-next"></canvas><canvas id="tg-house"></canvas><p class="tg-lab" id="tg-level">第 1 關</p></div></div>
+<div class="tg-side"><p class="tg-lab">下一塊</p><canvas id="tg-next"></canvas><canvas id="tg-house"></canvas><p class="tg-lab pa" id="tg-level">PA+</p></div></div>
 <div class="tg-ctrl"><button type="button" data-k="L" aria-label="向左">${svg('L')}</button><button type="button" data-k="ROT" aria-label="旋轉">${svg('ROT')}</button><button type="button" data-k="R" aria-label="向右">${svg('R')}</button><button type="button" data-k="D" aria-label="加速往下">${svg('D')}</button><button type="button" data-k="H" aria-label="直接落下">${svg('H')}</button></div>
 <div class="tg-card" id="tg-card"></div>`;
 document.body.appendChild(root);
@@ -63,13 +61,14 @@ function rotCells(p){if(p.k==='O')return p.cells;const n=p.k==='I'?4:3;return p.
 function fits(cells,px,py){return cells.every(([x,y])=>{const X=px+x,Y=py+y;return X>=0&&X<COLS&&Y<ROWS&&(Y<0||!S.grid[Y][X])})}
 function reset(){S={grid:Array.from({length:ROWS},()=>Array(COLS).fill(null)),cur:null,next:take(),score:0,lines:0,level:1,on:true,over:false,paused:false,dog:{jump:0,say:0,sad:false},flash:[]};spawn();updStat();}
 function spawn(){S.cur=piece(S.next);S.next=take();if(!fits(S.cur.cells,S.cur.x,S.cur.y))gameOver();drawNext()}
+const PA=()=>'PA'+'+'.repeat(Math.min(4,S.level));
 function speed(){return Math.max(90,820-(S.level-1)*75)}
 function lock(){S.cur.cells.forEach(([x,y])=>{const Y=S.cur.y+y;if(Y>=0)S.grid[Y][S.cur.x+x]=S.cur.k});
  if(S.cur.cells.some(([x,y])=>S.cur.y+y<0)){gameOver();return}
  const full=[];for(let y=0;y<ROWS;y++)if(S.grid[y].every(Boolean))full.push(y);
  if(full.length){full.forEach(y=>{S.grid.splice(y,1);S.grid.unshift(Array(COLS).fill(null))});
   S.lines+=full.length;S.score+=[0,100,300,500,800][full.length]*S.level;S.level=1+Math.floor(S.lines/10);
-  S.dog.jump=1;S.dog.say=1.6;buzz(20)}
+  S.dog.jump=1;S.dog.say=1.6;S.flash=1;buzz(20)}
  updStat();spawn()}
 function move(dx,dy){if(!S.on||S.paused)return false;if(fits(S.cur.cells,S.cur.x+dx,S.cur.y+dy)){S.cur.x+=dx;S.cur.y+=dy;return true}return false}
 function rotate(){if(!S.on||S.paused)return;const r=rotCells(S.cur);for(const k of [0,-1,1,-2,2])if(fits(r,S.cur.x+k,S.cur.y)){S.cur.cells=r;S.cur.x+=k;return}}
@@ -77,7 +76,7 @@ function soft(){if(move(0,1)){S.score+=1;updStat()}else lock();acc=0}
 function hard(){if(!S.on||S.paused)return;let n=0;while(move(0,1))n++;S.score+=n*2;lock();acc=0;buzz(8)}
 function ghostY(){let y=S.cur.y;while(fits(S.cur.cells,S.cur.x,y+1))y++;return y}
 function buzz(ms){try{navigator.vibrate&&navigator.vibrate(ms)}catch(_){}}
-function updStat(){$('tg-floors').textContent=S.lines;$('tg-score').textContent=S.score;$('tg-level').textContent='第 '+S.level+' 關'}
+function updStat(){$('tg-floors').textContent=S.lines;$('tg-score').textContent=S.score;$('tg-level').textContent=PA()}
 
 /* ---------- layout ---------- */
 function layout(){const W=root.clientWidth,H=root.clientHeight;const top=root.querySelector('.tg-top').offsetHeight,ctrl=root.querySelector('.tg-ctrl').offsetHeight;
@@ -100,16 +99,22 @@ function drawNext(){if(!S.next)return;const w=nc.width/dpr,h=nc.height/dpr;nx.cl
  const xs=cs.map(a=>a[0]),ys=cs.map(a=>a[1]),cw=(Math.max(...xs)-Math.min(...xs)+1)*c,ch=(Math.max(...ys)-Math.min(...ys)+1)*c;
  const ox=(w-cw)/2-Math.min(...xs)*c,oy=(h-14-ch)/2-Math.min(...ys)*c;cs.forEach(([x,y])=>nx.drawImage(tex[S.next]||makeTex(S.next,c*dpr),ox+x*c,oy+y*c,c,c));
  nx.font='600 11px "Noto Sans TC",sans-serif';nx.fillStyle='#6B7A8C';nx.textAlign='center';nx.fillText(MAT[S.next].name,w/2,h-4)}
-function drawHouse(t){const w=hc.width/dpr,h=hc.height/dpr;hx.clearRect(0,0,w,h);
- const ground=h-8;hx.fillStyle='#86B65E';hx.beginPath();hx.ellipse(w/2,ground,w*.48,7,0,0,7);hx.fill();
- const floors=S.lines||0,maxShow=Math.max(1,Math.floor((h-110)/9)),shown=Math.min(floors,maxShow),fh=Math.min(14,Math.max(6,(h-110)/Math.max(shown,1)));
- const hw=w*.52,x0=w*.12;let y=ground-2;
- for(let i=0;i<shown;i++){y-=fh;hx.fillStyle=i%2?'#B9824F':'#A97342';hx.fillRect(x0,y,hw,fh);hx.strokeStyle='rgba(90,55,25,.4)';hx.lineWidth=1;hx.strokeRect(x0+.5,y+.5,hw-1,fh-1);
-  if(fh>=8){hx.fillStyle='#FFE3A3';hx.fillRect(x0+hw*.2,y+fh*.25,hw*.16,fh*.5);hx.fillRect(x0+hw*.64,y+fh*.25,hw*.16,fh*.5)}}
- if(floors>shown){hx.font='700 11px "Noto Sans TC",sans-serif';hx.fillStyle='#8A6A3A';hx.textAlign='center';hx.fillText('↑ '+floors+' 層',x0+hw/2,y-30)}
- hx.fillStyle='#C86F4D';hx.beginPath();hx.moveTo(x0-6,y);hx.lineTo(x0+hw/2,y-24);hx.lineTo(x0+hw+6,y);hx.closePath();hx.fill();
- if(floors===0){hx.font='500 11px "Noto Sans TC",sans-serif';hx.fillStyle='#6B7A8C';hx.textAlign='center';hx.fillText('消一排蓋一層',w/2,26)}
- drawDog(w*.72,ground-2,t)}
+function drawHouse(t){const w=hc.width/dpr,h=hc.height/dpr;hx.clearRect(0,0,w,h);const g=hx,lv=Math.min(4,S.level);
+ const sky=g.createLinearGradient(0,0,0,h);sky.addColorStop(0,'#FFF4D6');sky.addColorStop(1,'#E6F2F8');g.fillStyle=sky;g.fillRect(0,0,w,h);
+ const sx=w*.72,sy=30,ang=t/3000;g.save();g.translate(sx,sy);g.rotate(ang);g.strokeStyle='#F6B93B';g.lineWidth=2.4;g.lineCap='round';for(let i=0;i<10;i++){g.rotate(Math.PI/5);g.beginPath();g.moveTo(15,0);g.lineTo(21,0);g.stroke()}g.restore();
+ g.fillStyle='#F9C74F';g.beginPath();g.arc(sx,sy,12,0,7);g.fill();g.fillStyle='#E07A2E';g.font='700 8px sans-serif';g.textAlign='center';g.fillText('UV',sx,sy+3);
+ const ground=h-8,r=Math.min(w*.4,46),ux=w*.45,uy=ground-58;
+ const cols=['#F28FA6','#F7A86B','#8FCB8A','#7EB8E8'];const fl=S.flash||0;
+ g.strokeStyle='rgba(246,185,59,'+(0.6-lv*.1)+')';g.lineWidth=2;g.setLineDash([5,5]);g.lineDashOffset=-t/40;
+ for(let i=0;i<5;i++){const ex=ux-r+i*r*.5,ey=uy-r*.25;g.beginPath();g.moveTo(sx-8+i*3,sy+14);g.lineTo(ex,ey);g.stroke()}g.setLineDash([]);
+ if(fl>0){g.fillStyle='rgba(255,255,255,'+fl*.85+')';g.beginPath();g.ellipse(ux,uy-r*.25,r*1.2,r*.65,0,Math.PI,0);g.fill()}
+ g.fillStyle=cols[lv-1];g.beginPath();g.moveTo(ux-r,uy);g.quadraticCurveTo(ux,uy-r*1.05,ux+r,uy);g.closePath();g.fill();
+ g.fillStyle='rgba(255,255,255,.35)';for(let i=0;i<3;i++){const a=ux-r+i*r*.67;g.beginPath();g.moveTo(a+r*.12,uy);g.quadraticCurveTo(a+r*.34,uy-r*.6,a+r*.56,uy);g.closePath();g.fill()}
+ g.strokeStyle='#6B4A33';g.lineWidth=2;g.beginPath();g.moveTo(ux,uy);g.lineTo(ux,ground);g.stroke();
+ g.fillStyle='#8FBF67';g.fillRect(0,ground,w,h-ground);g.fillStyle='rgba(40,70,40,.18)';g.beginPath();g.ellipse(ux,ground+1,r*.95,5,0,0,7);g.fill();
+ 
+ if(S.lines===0){g.font='500 11px "Noto Sans TC",sans-serif';g.fillStyle='#6B7A8C';g.textAlign='center';g.fillText('消一排',w/2,uy-r-30);g.fillText('擋一波紫外線',w/2,uy-r-15)}
+ drawDog(ux-2,ground-1,t)}
 function drawDog(cx,gy,t){const d=S.dog;const jump=d.jump>0?Math.sin((1-d.jump)*Math.PI)*16:0;const by=gy-jump,wag=Math.sin(t/90)*(d.say>0?.9:.35);const g=hx;
  g.fillStyle='rgba(40,40,40,.12)';g.beginPath();g.ellipse(cx,gy,13-jump*.3,3,0,0,7);g.fill();
  g.save();g.translate(cx,by);
@@ -129,7 +134,7 @@ function drawDog(cx,gy,t){const d=S.dog;const jump=d.jump>0?Math.sin((1-d.jump)*
 /* ---------- loop ---------- */
 function loop(t){raf=requestAnimationFrame(loop);const dt=Math.min(100,t-(last||t));last=t;
  if(S.on&&!S.paused){acc+=dt;if(acc>=speed()){acc=0;if(!move(0,1))lock()}}
- if(S.dog.jump>0)S.dog.jump=Math.max(0,S.dog.jump-dt/600);if(S.dog.say>0)S.dog.say=Math.max(0,S.dog.say-dt/1000);
+ if(S.dog.jump>0)S.dog.jump=Math.max(0,S.dog.jump-dt/600);if(S.dog.say>0)S.dog.say=Math.max(0,S.dog.say-dt/1000);if(S.flash>0)S.flash=Math.max(0,S.flash-dt/500);
  drawBoard();drawHouse(t)}
 
 /* ---------- leaderboard ---------- */
@@ -142,7 +147,7 @@ const ymNow=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth
 function rkTop(){const all=[...(RK.rows||[]),...RK.mine].filter(x=>RK.tab==='all'||x.ym===ymNow()),best={};all.forEach(x=>{const k=x.name.toLowerCase();if(!best[k]||x.score>best[k].score)best[k]=x});return Object.values(best).sort((a,b)=>b.score-a.score).slice(0,10)}
 function rkList(){if(RK.rows==null)return '<p class="tg-fine">排行榜讀取中…</p>';const top=rkTop(),me=(LS.get('wh-rank-name','')||'').toLowerCase();
  if(!top.length)return `<p class="tg-fine">${RK.tab==='month'?'這個月':'目前'}還沒有人上榜，當第一名吧！</p>`;
- return `<ol class="tg-lb">${top.map((x,i)=>`<li class="${x.name.toLowerCase()===me?'me':''}"><b>${i+1}</b><span>${esc(x.name)}</span><span>${x.score} 層</span></li>`).join('')}</ol>`}
+ return `<ol class="tg-lb">${top.map((x,i)=>`<li class="${x.name.toLowerCase()===me?'me':''}"><b>${i+1}</b><span>${esc(x.name)}</span><span>${x.score} 排</span></li>`).join('')}</ol>`}
 function rkBox(){return `<div class="tg-tabs"><button type="button" data-rt="month" aria-pressed="${RK.tab==='month'}">本月排行</button><button type="button" data-rt="all" aria-pressed="${RK.tab==='all'}">總排行</button></div><div id="tg-lbl">${rkList()}</div>`}
 function rkRefresh(){const l=$('tg-lbl');if(l)l.innerHTML=rkList();root.querySelectorAll('[data-rt]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.rt===RK.tab))}
 async function rkSubmit(){const inp=$('tg-name'),msg=$('tg-msg'),btn=$('tg-send');const n=clean(inp.value);
@@ -156,18 +161,19 @@ async function rkSubmit(){const inp=$('tg-name'),msg=$('tg-msg'),btn=$('tg-send'
 /* ---------- screens ---------- */
 const card=$('tg-card');
 function intro(){S.on=false;card.hidden=false;const best=LS.get('wh-best-tetris',0);
- card.innerHTML=`<h3>森林蓋木屋</h3><p>用森林裡的木頭、石頭、苔蘚、樹葉、花、水滴和屋瓦拼拼看。<br>每消掉一整排，木屋就蓋高一層，狗狗也會開心地叫一聲。</p>
- <ul class="tg-how"><li><b>${svg('L')}${svg('R')}</b>左右移動</li><li><b>${svg('ROT')}</b>旋轉</li><li><b>${svg('D')}</b>加速往下</li><li><b>${svg('H')}</b>直接落下</li></ul><p class="tg-fine">手機也可以直接在方塊區滑動：左右滑移動、點一下旋轉、快速往下滑直接落下。</p><p class="tg-fine">電腦可以用方向鍵，空白鍵直接落下。${best?`你的最佳紀錄：${best} 層`:''}</p>
- <div class="tg-btns"><button type="button" class="tg-go" data-tstart>開始蓋木屋</button><button type="button" class="tg-ghost" data-tboard>看排行榜</button></div>`}
-function board(){card.hidden=false;card.innerHTML=`<h3>森林蓋木屋排行榜</h3><div id="tg-rkbox">${rkBox()}</div><p class="tg-fine">以木屋層數排名，同一個暱稱只算最好的一次。新成績約幾分鐘後會出現在大家的排行榜上。</p><div class="tg-btns"><button type="button" class="tg-go" data-tstart>開始蓋木屋</button><button type="button" class="tg-ghost" data-tclose>回到森林</button></div>`;rkLoad().then(rkRefresh)}
+ card.innerHTML=`<h3>狗狗防曬大作戰</h3><p>太陽出來了！用防曬乳、遮陽帽、陽傘、太陽眼鏡、樹蔭、補水和狗掌印拼拼看。<br>每消掉一整排，就幫柴犬擋下一波紫外線。擋越多，陽傘的防護等級就從 PA+ 升到 PA++++。</p>
+ <ul class="tg-how"><li><b>${svg('L')}${svg('R')}</b>左右移動</li><li><b>${svg('ROT')}</b>旋轉</li><li><b>${svg('D')}</b>加速往下</li><li><b>${svg('H')}</b>直接落下</li></ul><p class="tg-fine">手機也可以直接在方塊區滑動：左右滑移動、點一下旋轉、快速往下滑直接落下。</p><p class="tg-fine">電腦可以用方向鍵，空白鍵直接落下。${best?`你的最佳紀錄：${best} 排`:''}</p>
+ <div class="tg-btns"><button type="button" class="tg-go" data-tstart>開始防曬</button><button type="button" class="tg-ghost" data-tboard>看排行榜</button></div>`}
+function board(){card.hidden=false;card.innerHTML=`<h3>狗狗防曬大作戰排行榜</h3><div id="tg-rkbox">${rkBox()}</div><p class="tg-fine">以擋下的紫外線排數排名，同一個暱稱只算最好的一次。新成績約幾分鐘後會出現在大家的排行榜上。</p><div class="tg-btns"><button type="button" class="tg-go" data-tstart>開始防曬</button><button type="button" class="tg-ghost" data-tclose>回到森林</button></div>`;rkLoad().then(rkRefresh)}
+const TIPS=['PA 是對 UVA 的防護等級，+ 越多代表防護力越高。','SPF 看的是對 UVB 的防護，兩個都要看。','陰天也有紫外線，出門一樣要防曬。','流汗、擦汗或玩水之後，記得補擦防曬。','帽子、陽傘、太陽眼鏡可以和防曬乳一起搭配。','做完療程後的防曬方式，請依照醫師的術後說明。'];
 function gameOver(){S.on=false;S.over=true;S.dog.sad=true;const fl=S.lines,best=Math.max(fl,LS.get('wh-best-tetris',0));LS.set('wh-best-tetris',best);track('island_tetris_end',{floors:fl,score:S.score});
- const title=fl>=40?'森林建築大師':fl>=20?'木屋工頭':fl>=8?'認真小木匠':'新手小木匠';const nm=LS.get('wh-rank-name','');
- card.hidden=false;card.innerHTML=`<p class="tg-k">木屋蓋好了</p><h3>${fl} 層・${title}</h3><p>分數 ${S.score}・最佳紀錄 ${best} 層</p>
+ const title=fl>=30?'PA++++ 守護者':fl>=20?'防曬達人':fl>=10?'防曬小達人':'防曬新手';const tip=TIPS[Math.floor(Math.random()*TIPS.length)];const nm=LS.get('wh-rank-name','');
+ card.hidden=false;card.innerHTML=`<p class="tg-k">紫外線太強了</p><h3>擋下 ${fl} 排・${title}</h3><p>分數 ${S.score}・最佳紀錄 ${best} 排</p><p class="tg-tip"><b>樹醫生阿杉的防曬小知識</b>${tip}</p>
  ${fl>0?`<div class="tg-sub"><label for="tg-name">留下暱稱上排行榜</label><div class="tg-row"><input id="tg-name" maxlength="8" placeholder="最多 8 個字" value="${esc(nm)}" autocomplete="nickname"><button type="button" id="tg-send" class="tg-go sm">送出成績</button></div><p class="tg-msg" id="tg-msg"></p></div>`:''}
- <div id="tg-rkbox">${rkBox()}</div><div class="tg-btns"><button type="button" class="tg-go" data-tstart>再蓋一次</button><button type="button" class="tg-ghost" data-tclose>回到森林</button></div>`;
+ <div id="tg-rkbox">${rkBox()}</div><div class="tg-btns"><button type="button" class="tg-go" data-tstart>再玩一次</button><button type="button" class="tg-ghost" data-tclose>回到森林</button></div>`;
  const sb=$('tg-send');if(sb)sb.addEventListener('click',rkSubmit);rkLoad().then(rkRefresh)}
 function start(){card.hidden=true;newBag();reset();acc=0;S.sent=false;track('island_tetris_start')}
-function open(){root.hidden=false;document.documentElement.style.overflow='hidden';layout();if(!S.grid)reset(),S.on=false;intro();cancelAnimationFrame(raf);last=0;raf=requestAnimationFrame(loop);track('island_tetris_open');rkLoad()}
+function open(){root.hidden=false;try{document.querySelector('.tg-music').setAttribute('aria-pressed',document.getElementById('music').getAttribute('aria-pressed'))}catch(_){}document.documentElement.style.overflow='hidden';layout();if(!S.grid)reset(),S.on=false;intro();cancelAnimationFrame(raf);last=0;raf=requestAnimationFrame(loop);track('island_tetris_open');rkLoad()}
 function close(){root.hidden=true;document.documentElement.style.overflow='';S.on=false;cancelAnimationFrame(raf)}
 window.openTetris=open;
 
