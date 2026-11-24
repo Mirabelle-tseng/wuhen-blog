@@ -100,7 +100,7 @@ body{background:var(--cream);color:var(--navy);font-family:var(--sans);overflow:
 
 /* pins */
 #pins{position:absolute;inset:0;pointer-events:none;z-index:4}
-.float{animation:floaty 3.6s ease-in-out infinite}.chand{animation:floaty 6s ease-in-out infinite}.float-slow{animation:floaty 5s ease-in-out infinite}@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-2.5px)}}
+.float{animation:floaty 3.6s ease-in-out infinite}.fall{animation:fall .9s linear infinite}@keyframes fall{to{stroke-dashoffset:-24}}.mist{animation:mist 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}@keyframes mist{50%{transform:scale(1.15);opacity:.25}}.chand{animation:floaty 6s ease-in-out infinite}.float-slow{animation:floaty 5s ease-in-out infinite}@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-2.5px)}}
 .pin{position:absolute;left:0;top:0;pointer-events:auto;border:0;background:none;padding:0;cursor:pointer;will-change:transform;transition:opacity .4s}
 .pin .face{display:flex;align-items:center;gap:6px;white-space:nowrap;font:700 13px/1 var(--serif);letter-spacing:.06em;color:var(--navy);
   background:rgba(251,248,243,.95);border:1px solid var(--gold);border-radius:999px;padding:7px 12px 7px 9px;box-shadow:0 6px 16px rgba(14,51,95,.18);
@@ -516,7 +516,7 @@ body.reading #toast{bottom:auto;top:calc(env(safe-area-inset-top,0px) + 12px)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 @media (prefers-reduced-motion:reduce){
-  #bob,#shadow,.ripple,.cloud-move,.twinkle,.spark,.pin .face,.bill,.eye,.egg-dot .ping,.stamps.full,#yttag .dot,.typing i,.tail,.heart,.jiao.toss .jb,.drum.shake,.zz,.rd,.fogb,.sn,.fw,.lantern,.floatup,.bird,.twk,.float,.float-slow,.chand{animation:none}
+  #bob,#shadow,.ripple,.cloud-move,.twinkle,.spark,.pin .face,.bill,.eye,.egg-dot .ping,.stamps.full,#yttag .dot,.typing i,.tail,.heart,.jiao.toss .jb,.drum.shake,.zz,.rd,.fogb,.sn,.fw,.lantern,.floatup,.bird,.twk,.float,.float-slow,.chand,.fall,.mist{animation:none}
   .rd,.sn{display:none}.spin,.bigflake{animation:none}.fw{opacity:1}
   .m-face{transition:none}
   .ripple{opacity:.25}
@@ -528,8 +528,8 @@ body.reading #toast{bottom:auto;top:calc(env(safe-area-inset-top,0px) + 12px)}
   <svg id="scene" viewBox="40 20 720 660" preserveAspectRatio="xMidYMid meet" role="img" aria-label="無痕美學診所 2 樓的立體小島地圖，可點選八個空間">
     <defs>
       <radialGradient id="g-glow"><stop offset="0" stop-color="#FFD891" stop-opacity=".75"/><stop offset="1" stop-color="#FFD891" stop-opacity="0"/></radialGradient>
-      <linearGradient id="g-rockL" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1B4677"/><stop offset="1" stop-color="#0B2443"/></linearGradient>
-      <linearGradient id="g-rockR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#123A66"/><stop offset="1" stop-color="#081B35"/></linearGradient>
+      <linearGradient id="g-rockL" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6E6A6E"/><stop offset=".55" stop-color="#4A4752"/><stop offset="1" stop-color="#2B2A36"/></linearGradient><linearGradient id="g-fall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E9F7FF" stop-opacity=".95"/><stop offset=".7" stop-color="#BFE6F7" stop-opacity=".8"/><stop offset="1" stop-color="#BFE6F7" stop-opacity="0"/></linearGradient>
+      <linearGradient id="g-rockR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#57535B"/><stop offset=".55" stop-color="#3A3843"/><stop offset="1" stop-color="#1F1E29"/></linearGradient>
     </defs>
     <g id="stars"></g>
     <g id="sun" data-sky role="button" tabindex="0" aria-label="太陽和月亮"><circle class="halo" r="48"/><circle class="core" r="24"/></g>
@@ -842,6 +842,29 @@ function lobbyFront(){
   return s;
 }
 
+function prng(seed){let x=seed;return()=>{x=(x*9301+49297)%233280;return x/233280}}
+function rockFacets(poly,seed,n){const r=prng(seed);let xs=poly.map(p=>p[0]),ys=poly.map(p=>p[1]);const x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys);let t=`<clipPath id="rc${seed}"><polygon points="${P(poly)}"/></clipPath><g clip-path="url(#rc${seed})">`;
+  for(let i=0;i<n;i++){const cx=x0+r()*(x1-x0),cy=y0+r()*(y1-y0),w=14+r()*34,h=10+r()*22;const a=[cx-w/2,cy],b=[cx-w*.1,cy-h*.6],c=[cx+w/2,cy-h*.2],d=[cx+w*.2,cy+h*.5];
+    t+=`<polygon points="${P([a,b,c,d])}" fill="${r()<.5?'rgba(255,255,255,.07)':'rgba(0,0,0,.14)'}" stroke="rgba(0,0,0,.18)" stroke-width=".6"/>`}
+  for(let k=1;k<5;k++){const yy=y0+(y1-y0)*k/5.5;let d=`M${x0},${yy}`;for(let x=x0;x<=x1;x+=18)d+=` L${x},${yy+(r()*8-4)}`;t+=`<path d="${d}" fill="none" stroke="rgba(0,0,0,.2)" stroke-width="1"/>`}
+  return t+`</g>`}
+function grassLip(a,b,seed,drop){const r=prng(seed);let d=`M${a[0]},${a[1]} L${b[0]},${b[1]}`;const n=Math.max(4,Math.round(Math.hypot(b[0]-a[0],b[1]-a[1])/9));
+  for(let i=n;i>=0;i--){const x=a[0]+(b[0]-a[0])*i/n,y=a[1]+(b[1]-a[1])*i/n;d+=` L${x.toFixed(1)},${(y+drop*(.55+r()*.9)).toFixed(1)}`}
+  let t=`<path d="${d}Z" fill="#6FA34C"/>`;
+  for(let i=0;i<n;i+=2+Math.floor(r()*3)){const x=a[0]+(b[0]-a[0])*i/n,y=a[1]+(b[1]-a[1])*i/n;t+=`<path d="M${x.toFixed(1)},${(y+drop).toFixed(1)} q${(r()*4-2).toFixed(1)},${(6+r()*10).toFixed(1)} ${(r()*3-1.5).toFixed(1)},${(10+r()*14).toFixed(1)}" fill="none" stroke="#5E8F40" stroke-width="1.6" stroke-linecap="round"/>`}
+  return t}
+function slabSides(x0,y0,x1,y1,th,seed){let t='';
+  t+=poly([iso(x0,y1,0),iso(x1,y1,0),iso(x1,y1,-th),iso(x0,y1,-th)],'#7B5B43','stroke="rgba(40,25,15,.4)" stroke-width=".8"');
+  t+=poly([iso(x1,y0,0),iso(x1,y1,0),iso(x1,y1,-th),iso(x1,y0,-th)],'#654935','stroke="rgba(40,25,15,.4)" stroke-width=".8"');
+  const r=prng(seed);for(let i=0;i<(x1-x0)*4;i++){const c=iso(x0+r()*(x1-x0),y1,-th*(.35+r()*.55));t+=`<ellipse cx="${c[0].toFixed(1)}" cy="${c[1].toFixed(1)}" rx="${(2+r()*3).toFixed(1)}" ry="${(1.4+r()*1.6).toFixed(1)}" fill="rgba(60,45,35,.55)"/>`}
+  for(let i=0;i<(y1-y0)*4;i++){const c=iso(x1,y0+r()*(y1-y0),-th*(.35+r()*.55));t+=`<ellipse cx="${c[0].toFixed(1)}" cy="${c[1].toFixed(1)}" rx="${(2+r()*3).toFixed(1)}" ry="${(1.4+r()*1.6).toFixed(1)}" fill="rgba(40,30,25,.55)"/>`}
+  t+=grassLip(iso(x0,y1,0),iso(x1,y1,0),seed+1,7)+grassLip(iso(x1,y1,0),iso(x1,y0,0),seed+2,7);
+  return t}
+function waterfall(a,b,len,seed){const w=b[0]-a[0];let t=`<g pointer-events="none"><path d="M${a[0]},${a[1]} L${b[0]},${b[1]} L${b[0]+2},${b[1]+len} L${a[0]-2},${a[1]+len}Z" fill="url(#g-fall)"/>`;
+  for(let i=0;i<6;i++){const x=a[0]+w*(i+.5)/6,y=a[1]+(b[1]-a[1])*(i+.5)/6;t+=`<line class="fall" x1="${x.toFixed(1)}" y1="${y.toFixed(1)}" x2="${x.toFixed(1)}" y2="${(y+len*.85).toFixed(1)}" stroke="#FFFFFF" stroke-opacity=".75" stroke-width="1.2" stroke-dasharray="10 14" style="animation-delay:${(-i*.23).toFixed(2)}s"/>`}
+  const mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2+len*.82;t+=`<ellipse class="mist" cx="${mx}" cy="${my}" rx="${Math.abs(w)*.9+8}" ry="7" fill="#FFFFFF" opacity=".45"/></g>`;return t}
+function pine(x,y,h,c){const [px,py]=iso(x,y,0);return `<rect x="${px-1.6}" y="${py-6}" width="3.2" height="6" fill="#6B4A33"/><polygon points="${px-h*.3},${py-5} ${px+h*.3},${py-5} ${px},${py-h*.62}" fill="${c||'#3E7A45'}"/><polygon points="${px-h*.24},${py-h*.38} ${px+h*.24},${py-h*.38} ${px},${py-h}" fill="${c?c:'#4C8C50'}"/>`}
+function roundTree(x,y,r){const [px,py]=iso(x,y,0);return `<rect x="${px-1.6}" y="${py-7}" width="3.2" height="7" fill="#6B4A33"/><circle cx="${px}" cy="${py-r-5}" r="${r}" fill="#5E9A4F"/><circle cx="${px-r*.35}" cy="${py-r-8}" r="${r*.6}" fill="#73B05E"/>`}
 function buildIsland(){
   const m=.4, th=22;
   let s='';
@@ -851,12 +874,21 @@ function buildIsland(){
   for(let i=jag.length-1;i>=1;i--){const t=i/jag.length;L.push([tip[0]+(Lb[0]-tip[0])*t+jag[i][0],tip[1]+(Lb[1]-tip[1])*t+jag[i][1]*.35])}
   const jr=[[0,0],[6,10],[2,18],[8,26],[3,34],[6,40]];
   const R2=[Fb,Rb];for(let i=1;i<jr.length;i++){const t=1-i/jr.length;R2.push([tip[0]+(Rb[0]-tip[0])*t+jr[i][0],tip[1]+(Rb[1]-tip[1])*t+jr[i][1]*.35])}R2.push(tip);
-  s+=`<polygon points="${P(L)}" fill="url(#g-rockL)"/><polygon points="${P(R2)}" fill="url(#g-rockR)"/>`;
-  s+=`<path d="M${Lb[0]+60},${Lb[1]+30} Q${Fb[0]-80},${Fb[1]+40} ${Fb[0]-10},${Fb[1]+70}" fill="none" stroke="#B08D57" stroke-opacity=".35" stroke-width="1.2"/>`;
-  s+=`<path d="M${Rb[0]-70},${Rb[1]+34} Q${Fb[0]+90},${Fb[1]+44} ${Fb[0]+12},${Fb[1]+92}" fill="none" stroke="#B08D57" stroke-opacity=".25" stroke-width="1.2"/>`;
-  s+=poly([iso(-m,6+m,0),iso(6+m,6+m,0),iso(6+m,6+m,-th),iso(-m,6+m,-th)],'#D9CBB4',STK);
-  s+=poly([iso(6+m,-m,0),iso(6+m,6+m,0),iso(6+m,6+m,-th),iso(6+m,-m,-th)],'#C2AF91',STK);
-  s+=poly([iso(-m,-m,0),iso(6+m,-m,0),iso(6+m,6+m,0),iso(-m,6+m,0)],'#E4DBCB','stroke="#B08D57" stroke-width="1.6" stroke-linejoin="round"');
+  s+=`<polygon points="${P(L)}" fill="url(#g-rockL)"/><polygon points="${P(R2)}" fill="url(#g-rockR)"/>`+rockFacets(L,11,26)+rockFacets(R2,23,26);
+  /* vines hanging off the rock */
+  {const r=prng(5);for(let i=0;i<9;i++){const t=.1+i*.1,a=[Lb[0]+(Fb[0]-Lb[0])*t,Lb[1]+(Fb[1]-Lb[1])*t+2];s+=`<path d="M${a[0].toFixed(1)},${a[1].toFixed(1)} q${(r()*6-3).toFixed(1)},${(14+r()*20).toFixed(1)} ${(r()*4-2).toFixed(1)},${(26+r()*30).toFixed(1)}" fill="none" stroke="#5E8F40" stroke-width="1.8" stroke-linecap="round" opacity=".85"/>`}
+   for(let i=0;i<9;i++){const t=.1+i*.1,a=[Fb[0]+(Rb[0]-Fb[0])*t,Fb[1]+(Rb[1]-Fb[1])*t+2];s+=`<path d="M${a[0].toFixed(1)},${a[1].toFixed(1)} q${(r()*6-3).toFixed(1)},${(14+r()*20).toFixed(1)} ${(r()*4-2).toFixed(1)},${(22+r()*28).toFixed(1)}" fill="none" stroke="#4E7E36" stroke-width="1.8" stroke-linecap="round" opacity=".85"/>`}}
+  s+=slabSides(-m,-m,6+m,6+m,th,31);
+  s+=poly([iso(-m,-m,0),iso(6+m,-m,0),iso(6+m,6+m,0),iso(-m,6+m,0)],'#8DBE63','stroke="#6FA34C" stroke-width="1.4" stroke-linejoin="round"');
+  {const r=prng(41);for(let i=0;i<70;i++){const side=i%4,u=r()*(6+2*m)-m,v=-m+r()*m;const [x,y]=side===0?[u,v]:side===1?[v,u]:side===2?[u,6+r()*m]:[6+r()*m,u];const c=iso(x,y,0);s+=`<path d="M${c[0].toFixed(1)},${c[1].toFixed(1)} l-1.4,-3.4 M${c[0].toFixed(1)},${c[1].toFixed(1)} l1.2,-3" stroke="#6FA34C" stroke-width="1" stroke-linecap="round"/>`}}
+  /* waterfalls + source pools */
+  {const pl=iso(4.75,6.22,0);s+=`<ellipse cx="${pl[0]}" cy="${pl[1]}" rx="15" ry="6" fill="#9ED8EE" stroke="#E9F7FF" stroke-width="1"/>`;
+   s+=waterfall(iso(4.55,6+m,0),iso(4.95,6+m,0),150,1);
+   const pr=iso(6.22,1.9,0);s+=`<ellipse cx="${pr[0]}" cy="${pr[1]}" rx="15" ry="6" fill="#9ED8EE" stroke="#E9F7FF" stroke-width="1"/>`;
+   s+=waterfall(iso(6+m,1.7,0),iso(6+m,2.1,0),130,2)}
+  /* trees along the back edges */
+  {let t='';const cols=['#3E7A45','#2F6B3F','#4C8C50'];[.3,1.1,1.9,2.9,3.7,4.6,5.4].forEach((y,i)=>{t+=(i%3===1?roundTree(-.22,y,8):pine(-.22,y,40+(i%3)*9,cols[i%3]))});
+   [.4,1.3,2.2,3.1,4.0,4.9,5.8].forEach((x,i)=>{t+=(i%3===2?roundTree(x,-.22,8):pine(x,-.22,42+(i%2)*10,cols[(i+1)%3]))});s+=t}
   ROOMS.filter(r=>r.id!=='cats'&&r.id!=='dock').forEach(r=>{s+=`<g class="room" data-room="${r.id}">${floor(r.x,r.y,r.w,r.d,r.floor,r.id)}</g>`});
   s+=poly([iso(2,2,.5),iso(6,2,.5),iso(6,3,.5),iso(3,3,.5),iso(3,6,.5),iso(2,6,.5)],'#E7DDCC','stroke="rgba(14,51,95,.12)" stroke-width=".8"');
   {const a=iso(2.5,6,.6),b=iso(2.5,2.5,.6),c=iso(6,2.5,.6);s+=`<polyline points="${a} ${b} ${c}" fill="none" stroke="#B08D57" stroke-opacity=".65" stroke-width="1.4" stroke-dasharray="3 7" stroke-linecap="round"/>`}
@@ -937,10 +969,10 @@ function catIsland(){
     const a=iso(6.46,y,9),c=iso(6.82,y,6),b=iso(7.18,y,9);s+=`<path d="M${a[0]},${a[1]} Q${c[0]},${c[1]+3} ${b[0]},${b[1]}" fill="none" stroke="#B08D57" stroke-width="1"/>`});
   /* rock + slab */
   const L=iso(x0-m,y0+w+m,-th),F=iso(x0+w+m,y0+w+m,-th),Rr=iso(x0+w+m,y0-m,-th),tip=[F[0]+3,F[1]+78];
-  s+=`<polygon points="${P([L,F,tip])}" fill="url(#g-rockL)"/><polygon points="${P([F,Rr,tip])}" fill="url(#g-rockR)"/>`;
-  s+=poly([iso(x0-m,y0+w+m,0),iso(x0+w+m,y0+w+m,0),iso(x0+w+m,y0+w+m,-th),iso(x0-m,y0+w+m,-th)],'#D9CBB4',STK);
-  s+=poly([iso(x0+w+m,y0-m,0),iso(x0+w+m,y0+w+m,0),iso(x0+w+m,y0+w+m,-th),iso(x0+w+m,y0-m,-th)],'#C2AF91',STK);
-  s+=poly([iso(x0-m,y0-m,0),iso(x0+w+m,y0-m,0),iso(x0+w+m,y0+w+m,0),iso(x0-m,y0+w+m,0)],'#E4DBCB','stroke="#B08D57" stroke-width="1.4" stroke-linejoin="round"');
+  s+=`<polygon points="${P([L,F,tip])}" fill="url(#g-rockL)"/><polygon points="${P([F,Rr,tip])}" fill="url(#g-rockR)"/>`+rockFacets([L,F,tip],51,10)+rockFacets([F,Rr,tip],61,10);
+  s+=slabSides(x0-m,y0-m,x0+w+m,y0+w+m,th,71);
+  s+=poly([iso(x0-m,y0-m,0),iso(x0+w+m,y0-m,0),iso(x0+w+m,y0+w+m,0),iso(x0-m,y0+w+m,0)],'#8DBE63','stroke="#6FA34C" stroke-width="1.2" stroke-linejoin="round"');
+  s+=pine(x0+w+.05,y0-.05,34,'#2F6B3F')+roundTree(x0-.05,y0-.08,6);
   let r=floor(x0,y0,w,w,'#F1E3D3','cats');
   r+=wallY(x0,x0+w,y0,30)+wallX(x0,y0,4.0,30);
   r+=onY(x0+.85,x0+1.55,y0,13,25,'#BFD6E6','stroke="#FFFDF9" stroke-width="2"');
