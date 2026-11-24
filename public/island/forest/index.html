@@ -189,17 +189,17 @@ window.toggleForestMusic=()=>setMusic(!BGM.on);
 document.getElementById('music').addEventListener('click',()=>setMusic(!BGM.on));
 document.addEventListener('visibilitychange',()=>{if(!BGM.a)return;if(document.hidden)BGM.a.pause();else if(BGM.on)BGM.a.play().catch(()=>{})});
 const sc=document.getElementById('sc'),ctr=()=>{sc.scrollLeft=(sc.scrollWidth-sc.clientWidth)/2};ctr();requestAnimationFrame(ctr);addEventListener('load',ctr);
-/* ---- walkers: islanders + dogs ---- */
+/* ---- walkers: islanders + dogs (natural motion) ---- */
 (function(){const svgEl=document.getElementById('dogs');if(!svgEl)return;
  const K=1.2,P=(a)=>a.map(([x,y])=>[x*K,y*K]);
  const WALK=[
-  {id:'xiaoxiang',img:'npc_staff.webp',ar:124/320,path:P([[470,805],[560,792],[650,805]]),speed:22},
+  {id:'xiaoxiang',img:'npc_staff.webp',ar:124/320,path:P([[470,805],[560,792],[650,805]]),speed:20},
   {id:'lulu',img:'npc_nurse.webp',ar:118/320,path:P([[700,772],[800,760],[905,778]]),speed:20},
   {id:'ashan',img:'npc_coat.webp',ar:145/320,path:P([[700,848],[820,840],[950,822]]),speed:24},
   {id:'meimei',img:'npc_dress.webp',ar:113/320,path:P([[1020,650],[1085,610],[1150,580]]),speed:16}];
  const DOGS=[
   {id:'shiba',name:'柴柴',fur:'#E39A52',fur2:'#C97A35',belly:'#FFF3E2',path:P([[700,848],[820,840],[950,822]]),speed:24,follow:'ashan',lag:70,lines:['汪！（柴柴想找你玩）','汪汪！（尾巴搖不停）','（柴柴躲到陽傘下，牠也知道要防曬）']},
-  {id:'maru',name:'小白',fur:'#FAF6EE',fur2:'#E1D8C8',belly:'#FFFFFF',path:P([[1135,884],[1185,905],[1240,930]]),speed:26,lines:['汪～（小白在狗狗小屋門口等你）','（小白把球叼過來了）','汪！（今天也要記得喝水喔）']}];
+  {id:'maru',name:'小白',fur:'#FAF6EE',fur2:'#E1D8C8',belly:'#FFFFFF',path:P([[1125,880],[1185,905],[1245,932],[1200,950]]),speed:34,lines:['汪～（小白在狗狗小屋門口等你）','（小白把球叼過來了）','汪！（今天也要記得喝水喔）']}];
  function dogSVG(d){return `<g class="dog" data-dog="${d.id}" role="button" tabindex="0" aria-label="摸摸${d.name}"><ellipse cx="0" cy="2" rx="30" ry="7" fill="rgba(40,40,30,.22)"/>
   <g class="flip"><g class="bob">
    <path class="tail" d="M-22,-30 C-36,-40 -38,-56 -26,-58 C-22,-52 -28,-44 -18,-36Z" fill="${d.fur}" stroke="${d.fur2}" stroke-width="1.5"/>
@@ -207,45 +207,78 @@ const sc=document.getElementById('sc'),ctr=()=>{sc.scrollLeft=(sc.scrollWidth-sc
    <ellipse cx="-2" cy="-24" rx="27" ry="16" fill="url(#dg-${d.id})" stroke="${d.fur2}" stroke-width="1.5"/>
    <ellipse cx="4" cy="-17" rx="14" ry="7" fill="${d.belly}"/>
    <rect class="leg l3" x="-14" y="-14" width="8" height="17" rx="4" fill="${d.fur}" stroke="${d.fur2}" stroke-width="1"/><rect class="leg l4" x="16" y="-14" width="8" height="17" rx="4" fill="${d.fur}" stroke="${d.fur2}" stroke-width="1"/>
-   <g transform="translate(26,-40)"><path d="M-13,-8 L-10,-24 L-2,-12Z M3,-12 L11,-24 L13,-7Z" fill="${d.fur}" stroke="${d.fur2}" stroke-width="1.5"/><path d="M-9,-11 L-8,-19 L-4,-13Z M5,-13 L9,-19 L10,-11Z" fill="#F2B2A0"/>
+   <g class="head" transform="translate(26,-40)"><path d="M-13,-8 L-10,-24 L-2,-12Z M3,-12 L11,-24 L13,-7Z" fill="${d.fur}" stroke="${d.fur2}" stroke-width="1.5"/><path d="M-9,-11 L-8,-19 L-4,-13Z M5,-13 L9,-19 L10,-11Z" fill="#F2B2A0"/>
     <circle r="16" fill="url(#dg-${d.id})" stroke="${d.fur2}" stroke-width="1.5"/><ellipse cx="5" cy="6" rx="10" ry="7.5" fill="${d.belly}"/>
     <circle cx="-4" cy="-2" r="2.3" fill="#2B2420"/><circle cx="8" cy="-2" r="2.3" fill="#2B2420"/><circle cx="-3.3" cy="-2.8" r=".8" fill="#fff"/><circle cx="8.7" cy="-2.8" r=".8" fill="#fff"/>
     <ellipse cx="7" cy="3.5" rx="2.6" ry="2" fill="#2B2420"/><path d="M4,7 Q7,10 10,7" fill="none" stroke="#2B2420" stroke-width="1.2" stroke-linecap="round"/>
     <circle cx="-9" cy="5" r="3" fill="#F5A3A3" opacity=".55"/></g>
   </g></g></g>`}
 
- const H=118;
- function npcSVG(w){const h=H,wd=h*w.ar;return `<g class="dog walker" data-npc="${w.id}" role="button" tabindex="0" aria-label="和${NPC[w.id].name}說說話"><ellipse cx="0" cy="2" rx="${wd*.42}" ry="7" fill="rgba(40,40,30,.25)"/><g class="flip"><g class="bob"><image href="${w.img}" x="${-wd/2}" y="${-h}" width="${wd}" height="${h}"/></g></g></g>`}
+
+ const H=118,LEG=.2; /* legs = bottom 20% of sprite */
+ function npcSVG(w){const h=H,wd=h*w.ar,ly=-h*LEG,id=w.id;
+  return `<g class="dog walker" data-npc="${id}" role="button" tabindex="0" aria-label="和${NPC[id].name}說說話">
+   <defs><clipPath id="cb-${id}"><rect x="${-wd}" y="${-h-10}" width="${wd*2}" height="${h-h*LEG+12}"/></clipPath>
+   <clipPath id="cl-${id}"><rect x="${-wd}" y="${ly-2}" width="${wd}" height="${h*LEG+4}"/></clipPath><clipPath id="cr-${id}"><rect x="0" y="${ly-2}" width="${wd}" height="${h*LEG+4}"/></clipPath></defs>
+   <ellipse class="shadow" cx="0" cy="1" rx="${wd*.36}" ry="6" fill="rgba(40,40,30,.25)"/><rect x="${-wd/2}" y="${-h}" width="${wd}" height="${h}" fill="transparent"/>
+   <g class="flip"><g class="legL"><image href="${w.img}" x="${-wd/2}" y="${-h}" width="${wd}" height="${h}" clip-path="url(#cl-${id})"/></g><g class="legR"><image href="${w.img}" x="${-wd/2}" y="${-h}" width="${wd}" height="${h}" clip-path="url(#cr-${id})"/></g>
+   <g class="body"><image href="${w.img}" x="${-wd/2}" y="${-h}" width="${wd}" height="${h}" clip-path="url(#cb-${id})"/></g></g></g>`}
  let defs='<defs>'+DOGS.map(d=>`<radialGradient id="dg-${d.id}" cx=".4" cy=".35" r=".75"><stop offset="0" stop-color="${d.belly}" stop-opacity=".55"/><stop offset=".45" stop-color="${d.fur}"/><stop offset="1" stop-color="${d.fur2}"/></radialGradient>`).join('')+'</defs>';
  svgEl.innerHTML=defs+WALK.map(npcSVG).join('')+DOGS.map(dogSVG).join('');
- const mk=(d,sel,kind)=>{const segs=[];let tot=0;for(let i=0;i<d.path.length-1;i++){const a=d.path[i],b=d.path[i+1],l=Math.hypot(b[0]-a[0],b[1]-a[1]);segs.push({a,b,l});tot+=l}
-   return {d,kind,el:svgEl.querySelector(sel),segs,tot,pos:Math.random()*tot,dir:Math.random()<.5?1:-1,pause:0,walking:false}};
- const all=[...WALK.map(w=>mk(w,`[data-npc="${w.id}"]`,'npc')),...DOGS.map(d=>mk(d,`[data-dog="${d.id}"]`,'dog'))];
- const byId=Object.fromEntries(all.map(s=>[s.d.id,s]));
+ const rnd=(a,b)=>a+Math.random()*(b-a);
+ function poly(path){const segs=[];let tot=0;for(let i=0;i<path.length-1;i++){const a=path[i],b=path[i+1],l=Math.hypot(b[0]-a[0],b[1]-a[1]);segs.push({a,b,l});tot+=l}return{segs,tot}}
+ function ptAt(pl,p){p=Math.max(0,Math.min(pl.tot,p));for(const g of pl.segs){if(p<=g.l)return [g.a[0]+(g.b[0]-g.a[0])*p/g.l,g.a[1]+(g.b[1]-g.a[1])*p/g.l];p-=g.l}return pl.segs[pl.segs.length-1].b}
+ const mk=(d,kind)=>{const pl=poly(d.path),p0=ptAt(pl,Math.random()*pl.tot);
+  return {d,kind,pl,el:svgEl.querySelector(kind==='npc'?`[data-npc="${d.id}"]`:`[data-dog="${d.id}"]`),x:p0[0],y:p0[1],vx:0,vy:0,tx:p0[0],ty:p0[1],
+   wait:rnd(.5,3),face:Math.random()<.5?1:-1,phase:Math.random()*6,act:'idle',actT:0,hold:0,
+   max:kind==='dog'?d.speed*1.25:d.speed*.9}};
+ const all=[...WALK.map(w=>mk(w,'npc')),...DOGS.map(d=>mk(d,'dog'))],byId=Object.fromEntries(all.map(a=>[a.d.id,a]));
  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;let last=0;
- function at(s,p){p=Math.max(0,Math.min(s.tot,p));for(const g of s.segs){if(p<=g.l)return [g.a[0]+(g.b[0]-g.a[0])*p/g.l,g.a[1]+(g.b[1]-g.a[1])*p/g.l];p-=g.l}return s.segs[s.segs.length-1].b}
- function frame(t){const dt=Math.min(60,t-(last||t))/1000;last=t;
-  all.forEach(s=>{const lead=s.d.follow&&byId[s.d.follow];
-   if(lead){const prev=s.pos;s.pos=Math.max(0,Math.min(s.tot,lead.pos-lead.dir*s.d.lag));s.walking=Math.abs(s.pos-prev)>.01;if(s.walking)s.dir=s.pos>prev?1:-1;}
-   else{s.walking=false;if(s.pause>0)s.pause-=dt;else if(!reduce){s.pos+=s.dir*s.d.speed*dt;s.walking=true;if(s.pos>=s.tot||s.pos<=0){s.pos=Math.max(0,Math.min(s.tot,s.pos));s.dir*=-1;s.pause=1.5+Math.random()*2.5}else if(Math.random()<dt*.06)s.pause=1+Math.random()*2}}
-   const [x,y]=at(s,s.pos),sc=(s.kind==='dog'?1.0:.95)+(y/1626)*.2;s.y=y;
-   s.el.setAttribute('transform',`translate(${x.toFixed(1)},${y.toFixed(1)}) scale(${sc.toFixed(3)})`);
-   s.el.querySelector('.flip').setAttribute('transform',s.dir<0?'scale(-1,1)':'');
-   const ph=t/(s.kind==='dog'?110:170),bob=s.walking?-Math.abs(Math.sin(ph))*(s.kind==='dog'?2.5:4):0;
-   if(s.kind==='npc'){s.el.querySelector('.bob').setAttribute('transform',`translate(0,${bob.toFixed(2)}) rotate(${s.walking?(Math.sin(ph)*3).toFixed(2):0} 0 0)`)}
-   else{const sw=s.walking?Math.sin(ph)*16:0;s.el.querySelectorAll('.leg').forEach((l,i)=>{const bx=+l.getAttribute('x')+4,a=(i%2?sw:-sw);l.setAttribute('transform',`rotate(${a.toFixed(1)} ${bx} -14)`)});
-    s.el.querySelector('.bob').setAttribute('transform',`translate(0,${bob.toFixed(2)})`);s.el.querySelector('.tail').setAttribute('transform',`rotate(${(Math.sin(t/(s.walking?140:90))*14).toFixed(1)} -20 -34)`)}});
-  const order=[...all].sort((a,b)=>a.y-b.y);let need=false;order.forEach((s,i)=>{if(svgEl.children[i+1]!==s.el)need=true});if(need)order.forEach(s=>svgEl.appendChild(s.el));
+ function pickTarget(a){const p=ptAt(a.pl,Math.random()*a.pl.tot);a.tx=p[0]+rnd(-6,6);a.ty=p[1]+rnd(-3,3)}
+ function think(a,dt){
+  if(a.hold>0){a.hold-=dt;a.tx=a.x;a.ty=a.y;return}
+  const lead=a.d.follow&&byId[a.d.follow];
+  if(lead){const moving=Math.hypot(lead.vx,lead.vy)>3;
+    if(moving){const off=-lead.face*a.d.lag;a.tx=lead.x+off+rnd(-1,1);a.ty=lead.y+16;a.act='walk'}
+    else{if(a.wait>0){a.wait-=dt}else{const ang=rnd(0,6.28),r=rnd(25,60);a.tx=lead.x+Math.cos(ang)*r;a.ty=lead.y+6+Math.sin(ang)*r*.35;a.wait=rnd(1.5,4);a.act=Math.random()<.35?'sniff':'walk'}}
+    return}
+  const dist=Math.hypot(a.tx-a.x,a.ty-a.y);
+  if(dist<4){if(a.wait>0){a.wait-=dt;if(a.kind==='npc'&&Math.random()<dt*.25)a.face*=-1}else{pickTarget(a);a.wait=a.kind==='dog'?rnd(.8,3):rnd(1.5,4.5);a.act=a.kind==='dog'&&Math.random()<.3?'sniff':'walk'}}}
+ function frame(t){const dt=Math.min(50,t-(last||t))/1000;last=t;
+  all.forEach(a=>{if(!reduce)think(a,dt);
+   const dx=a.tx-a.x,dy=a.ty-a.y,dist=Math.hypot(dx,dy);
+   const want=dist<3?0:Math.min(a.max,dist*1.6+4); /* slow down when arriving */
+   const dvx=dist?dx/dist*want:0,dvy=dist?dy/dist*want:0,k=Math.min(1,dt*(a.kind==='dog'?4:2.5));
+   a.vx+=(dvx-a.vx)*k;a.vy+=(dvy-a.vy)*k;a.x+=a.vx*dt;a.y+=a.vy*dt;
+   const sp=Math.hypot(a.vx,a.vy);if(Math.abs(a.vx)>2)a.face=a.vx>0?1:-1;
+   const stride=a.kind==='dog'?20:16;a.phase+=sp*dt/stride*Math.PI;const amt=Math.min(1,sp/(a.max*.6));
+   const sc=(a.kind==='dog'?1.0:.95)+(a.y/1626)*.2;
+   a.el.setAttribute('transform',`translate(${a.x.toFixed(1)},${a.y.toFixed(1)}) scale(${sc.toFixed(3)})`);
+   a.el.querySelector('.flip').setAttribute('transform',a.face<0?'scale(-1,1)':'');
+   if(a.kind==='npc'){const s1=Math.sin(a.phase),breathe=Math.sin(t/900)*.006;
+    const lift=v=>Math.max(0,v)*3.2*amt;
+    a.el.querySelector('.legL').setAttribute('transform',`translate(0,${(-lift(s1)).toFixed(2)})`);
+    a.el.querySelector('.legR').setAttribute('transform',`translate(0,${(-lift(-s1)).toFixed(2)})`);
+    const bob=-Math.abs(Math.cos(a.phase))*2.2*amt,tilt=s1*1.6*amt+ (a.face*amt*1.2);
+    a.el.querySelector('.body').setAttribute('transform',`translate(0,${bob.toFixed(2)}) rotate(${tilt.toFixed(2)} 0 ${(-H*LEG).toFixed(1)}) scale(1,${(1+breathe).toFixed(4)})`);
+    a.el.querySelector('.shadow').setAttribute('rx',(H*a.d.ar*.36*(1-.08*Math.abs(Math.cos(a.phase))*amt)).toFixed(1))}
+   else{const s1=Math.sin(a.phase)*22*amt,sniff=a.act==='sniff'&&sp<4;
+    const legs=a.el.querySelectorAll('.leg');/* diagonal trot: l1+l4 vs l2+l3 */
+    [s1,-s1,-s1,s1].forEach((ang,i)=>{const l=legs[i],bx=+l.getAttribute('x')+4;l.setAttribute('transform',`rotate(${ang.toFixed(1)} ${bx} -14)`)});
+    const bob=-Math.abs(Math.sin(a.phase))*2.4*amt;a.el.querySelector('.bob').setAttribute('transform',`translate(0,${bob.toFixed(2)})`);
+    const head=a.el.querySelector('.head');head.setAttribute('transform',`translate(26,${(-40+(sniff?10:0)+Math.sin(a.phase*2)*1.2*amt).toFixed(2)}) rotate(${sniff?(18+Math.sin(t/120)*4).toFixed(1):(Math.sin(t/1400)*4).toFixed(1)})`);
+    a.el.querySelector('.tail').setAttribute('transform',`rotate(${(Math.sin(t/(sp>4?110:160))*(sp>4?10:18)).toFixed(1)} -20 -34)`)}});
+  const order=[...all].sort((p,q)=>p.y-q.y);let need=false;order.forEach((a,i)=>{if(svgEl.children[i+1]!==a.el)need=true});if(need)order.forEach(a=>svgEl.appendChild(a.el));
   requestAnimationFrame(frame)}
  requestAnimationFrame(frame);
  const idx={};
- function talk(s,name,lines){const k=s.d.id;idx[k]=((idx[k]??-1)+1)%lines.length;s.pause=4;
+ function talk(a,name,lines){const k=a.d.id;idx[k]=((idx[k]??-1)+1)%lines.length;a.hold=4;
   document.getElementById('bub-n').textContent=name;document.getElementById('bub-t').textContent=lines[idx[k]];
-  const r=s.el.getBoundingClientRect(),stg=s.el.closest('.stage').getBoundingClientRect(),vr=sc.getBoundingClientRect();bub.hidden=false;
+  const r=a.el.getBoundingClientRect(),stg=a.el.closest('.stage').getBoundingClientRect(),vr=sc.getBoundingClientRect();bub.hidden=false;
   const w=bub.offsetWidth,cx=r.left+r.width/2-stg.left,lo=vr.left-stg.left+8+w/2,hi=vr.right-stg.left-8-w/2,x=Math.max(lo,Math.min(hi,cx));
   bub.style.left=x+'px';bub.style.top=(r.top-stg.top-6)+'px';bub.style.setProperty('--ax',(w/2+cx-x)+'px');clearTimeout(bt);bt=setTimeout(()=>bub.hidden=true,5500)}
- all.forEach(s=>s.el.addEventListener('click',e=>{e.stopPropagation();
-  if(s.kind==='npc'){const n=NPC[s.d.id];talk(s,n.name,n.lines);try{gtag('event','island_forest_npc',{npc:s.d.id})}catch(_){}}
-  else{talk(s,s.d.name,s.d.lines);const lead=s.d.follow&&byId[s.d.follow];if(lead)lead.pause=4;try{gtag('event','island_forest_dog',{dog:s.d.id})}catch(_){}}}))})();
+ all.forEach(a=>a.el.addEventListener('click',e=>{e.stopPropagation();
+  if(a.kind==='npc'){const n=NPC[a.d.id];talk(a,n.name,n.lines);try{gtag('event','island_forest_npc',{npc:a.d.id})}catch(_){}}
+  else{talk(a,a.d.name,a.d.lines);const lead=a.d.follow&&byId[a.d.follow];if(lead)lead.hold=4;try{gtag('event','island_forest_dog',{dog:a.d.id})}catch(_){}}}))})();
 
 </script><script src="game.js?v=6" defer></script></body></html>
