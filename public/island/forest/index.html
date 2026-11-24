@@ -182,7 +182,7 @@ let postsCache;async function loadPosts(){const ul=document.getElementById('post
 if(getB().ig&&getB().fb&&getB().blog)NPC.laoxiang.lines.unshift('三枚徽章都蓋滿了？你比我還熟這座森林了。謝謝你常來玩！');
 
 const BGM={a:null,on:false};
-function setMusic(on){BGM.on=on;if(on){if(!BGM.a){BGM.a=new Audio('forest_bgm.mp3');BGM.a.loop=true;BGM.a.volume=.55}BGM.a.play().catch(()=>{BGM.on=false;syncMusic()});try{gtag('event','island_forest_music',{on:1})}catch(e){}}else if(BGM.a)BGM.a.pause();syncMusic()}
+function setMusic(on){BGM.on=on;if(on){if(!BGM.a){BGM.a=new Audio('forest_bgm.mp3?v=2');BGM.a.loop=true;BGM.a.volume=.55}BGM.a.play().catch(()=>{BGM.on=false;syncMusic()});try{gtag('event','island_forest_music',{on:1})}catch(e){}}else if(BGM.a)BGM.a.pause();syncMusic()}
 function syncMusic(){document.querySelectorAll('#music,.tg-music').forEach(b=>{b.setAttribute('aria-pressed',BGM.on);if(b.id==='music')b.textContent=BGM.on?'♪ 音樂播放中':'♪ 森林音樂'})}
 window.toggleForestMusic=()=>setMusic(!BGM.on);
 document.getElementById('music').addEventListener('click',()=>setMusic(!BGM.on));
