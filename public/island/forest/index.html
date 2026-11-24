@@ -33,7 +33,7 @@ nav.chips a:hover{border-color:var(--gold)}
 .npc:hover,.npc:focus-visible{background:radial-gradient(rgba(255,240,200,.55),transparent 70%);outline:none}
 .bubble{position:absolute;z-index:5;transform:translate(-50%,calc(-100% - 6px));max-width:min(260px,70vw);background:#FFFDF8;border:1.5px solid var(--gold);border-radius:14px;padding:9px 13px;box-shadow:0 6px 18px rgba(40,30,10,.22);font-size:14px;line-height:1.55;color:#2B2F3A;animation:pop .18s ease-out}
 .bubble b{display:block;font-size:12px;color:#8A6A3A;margin-bottom:2px}
-.bubble::after{content:"";position:absolute;left:50%;bottom:-7px;width:12px;height:12px;background:#FFFDF8;border-right:1.5px solid var(--gold);border-bottom:1.5px solid var(--gold);transform:translateX(-50%) rotate(45deg)}
+.bubble::after{content:"";position:absolute;left:var(--ax,50%);bottom:-7px;width:12px;height:12px;background:#FFFDF8;border-right:1.5px solid var(--gold);border-bottom:1.5px solid var(--gold);transform:translateX(-50%) rotate(45deg)}
 @keyframes pop{from{opacity:0;transform:translate(-50%,calc(-100% + 4px))}}
 .tip{text-align:center;font-size:13px;color:var(--ink);margin:6px 0 0}
 .fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
@@ -56,7 +56,9 @@ document.querySelectorAll('[data-room]').forEach(a=>a.addEventListener('click',(
 const NPC={"laoxiang": {"name": "木屋管家・老橡", "lines": ["歡迎來森林這一邊！房間都一樣，只是換成了木屋。", "想進哪一間，點屋頂上的牌子就好。", "走累了，長椅隨便坐，不用客氣。"]}, "xiaosong": {"name": "愛爬樹的小松", "lines": ["我在陽台上可以看到整座島喔！", "貓咖區在瀑布旁邊，那裡的貓最愛曬太陽。", "下雪的時候，屋頂會變得白白的。"]}, "ashan": {"name": "樹醫生・阿杉", "lines": ["我是樹醫生，專門幫森林裡的樹看診。", "樹皮曬太久也會乾，人也一樣，出門記得防曬。", "不過皮膚的事，還是要找診所的醫師當面看喔。"]}, "lulu": {"name": "照顧小動物的露露", "lines": ["我負責照顧森林裡的小動物。", "有看到貓咖區旁邊的小兔子嗎？牠是我的好朋友。", "渴了就到瀑布邊歇一下，記得多喝水。"]}, "meimei": {"name": "愛堆雪人的莓莓", "lines": ["我在跟聖誕樹拍照！", "那兩個雪人都是我堆的，帥不帥？", "聖誕節快到了，記得跟重要的人說聲謝謝。"]}},idx={},bub=document.getElementById('bub');let bt;
 document.querySelectorAll('.npc').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const k=b.dataset.npc,n=NPC[k];idx[k]=((idx[k]??-1)+1)%n.lines.length;
  document.getElementById('bub-n').textContent=n.name;document.getElementById('bub-t').textContent=n.lines[idx[k]];
- bub.style.left=b.style.left;bub.style.top=`calc(${b.style.top} - 5.5%)`;bub.hidden=false;bub.style.animation='none';bub.offsetWidth;bub.style.animation='';
+ bub.style.top=`calc(${b.style.top} - 5.5%)`;bub.hidden=false;
+ {const st=b.parentElement.getBoundingClientRect(),vr=sc.getBoundingClientRect(),br=b.getBoundingClientRect(),cx=br.left+br.width/2-st.left,w=bub.offsetWidth,
+   lo=vr.left-st.left+8+w/2,hi=vr.right-st.left-8-w/2,x=Math.max(lo,Math.min(hi,cx));bub.style.left=x+'px';bub.style.setProperty('--ax',(w/2+cx-x)+'px')}bub.style.animation='none';bub.offsetWidth;bub.style.animation='';
  clearTimeout(bt);bt=setTimeout(()=>bub.hidden=true,6000);try{gtag('event','island_forest_npc',{npc:k})}catch(_){}}));
 document.addEventListener('click',()=>bub.hidden=true);
 const sc=document.getElementById('sc'),ctr=()=>{sc.scrollLeft=(sc.scrollWidth-sc.clientWidth)/2};ctr();requestAnimationFrame(ctr);addEventListener('load',ctr);
