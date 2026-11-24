@@ -2038,7 +2038,7 @@ function fitView(){
   if(a<.8){
     const tEl=document.querySelector('.top'),dEl=document.querySelector('.dock');
     const top=(tEl?tEl.getBoundingClientRect().bottom:0)+40,bot=(dEl?dEl.getBoundingClientRect().top:H)-6;
-    const band=Math.max(bot-top,H*.35),X0=55,X1=735,Y0=28,Y1=530;
+    const band=Math.max(bot-top,H*.35),X0=40,X1=770,Y0=28,Y1=530;
     const k=Math.min(W/(X1-X0),band/(Y1-Y0)),vw=W/k,vh=H/k;
     svg.setAttribute('viewBox',`${(X0+X1)/2-vw/2} ${(Y0+Y1)/2-(top+band/2)/k} ${vw} ${vh}`);
     return;
