@@ -526,7 +526,8 @@ html.embed,html.embed body{background:var(--paper)!important}
 html.embed #world,html.embed #toast{display:none!important}
 html.embed #panel{inset:0!important;width:100%!important;height:100%!important;border-radius:0!important;transform:none!important;visibility:visible!important;box-shadow:none!important;transition:none!important}
 html.embed #panel:not(.open){display:none!important}
-#game>.g-top,#game>.g-meter,#game>.g-field,#game>.g-ctrl{width:100%;max-width:520px;margin-left:auto;margin-right:auto}
+#game>.g-top,#game>.g-meter,#game>.g-field,#game>.g-ctrl{width:100%;max-width:400px;margin-left:auto;margin-right:auto}
+@media (min-width:761px){#game{justify-content:center}#game>.g-field{flex:0 0 auto!important;height:min(600px,calc(100vh - 230px))!important}#game .g-ctrl::after{content:'鍵盤：← → 或 A／D 移動';display:block;position:absolute;left:0;right:0;bottom:-22px;text-align:center;font-size:12px;color:#56657A}#game .g-ctrl{position:relative;margin-bottom:26px}}
 </style>
 
 <div id="world" data-phase="day">
@@ -1372,7 +1373,7 @@ function gPlat(y){const u=G.u,w=(68+Math.random()*28)*u,r=Math.random(),lvl=Math
 function startGame(){
   track('island_game_start',{cat:gCat});
   gEl('g-card').hidden=true;
-  const {W,H,dpr}=gSize(),u=W/360;
+  const {W,H,dpr}=gSize(),u=Math.min(W/360,H/560);
   const now=performance.now();
   G={on:true,W,H,dpr,u,hp:10,dist:0,floor:0,rise:58*u,plats:[],cat:{x:W/2,y:H*.42,vy:0,on:null,face:1,hurt:0},start:now,last:now,flash:0,gap:72*u};
   G.plats.push({x:W/2-60*u,y:H*.42,w:120*u,type:'norm',item:null});
