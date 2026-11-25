@@ -161,7 +161,7 @@ Object.assign(HOUSES,{
  sun:{k:'防曬花園',t:'Bella 的日常防曬筆記',who:'Bella・護理師',say:'花園裡的花也怕曬過頭，我幫它們搭了小陽傘。',body:`<p>日常防曬可以從這幾件小事開始：</p><ul class="list"><li>出門前 15–30 分鐘擦防曬，量要夠</li><li>流汗、擦汗或長時間在戶外，記得補擦</li><li>陰天也有紫外線，帽子、陽傘、太陽眼鏡一起用</li><li>保濕跟防曬一樣重要，臉乾的時候先補保濕</li></ul><p class="note">做完療程後的防曬和保養方式，請依照醫師給你的術後說明。</p>`,go:['https://blog.wuhenclinic.tw/blog/','blog2','看更多衛教文章']},
  rest:{k:'林間休息屋',t:'回家後怎麼照顧',who:'Bella・護理師',say:'休息屋的椅子很軟，坐一下再走吧。',body:`<p>做完療程回家，最常被問的是：什麼時候可以洗臉、化妝、運動？每個療程不一樣，醫師會依你的狀況說明。</p><p>森林書屋有整理好的術後照顧文章，主島的恢復室也有更完整的說明。</p><p class="note">有任何不舒服，直接打診所電話 02-2755-5673。</p>`,go:['/island/#recovery','line2','到主島恢復室看看']},
  animal:{k:'狗狗小屋',t:'森林裡的狗狗',who:'杜克勞・詹',say:'我每天帶柴柴和小白出來散步，牠們聽到腳步聲就會跑來門口，尾巴搖不停。',body:`<p>主島有貓店員，森林這邊則是狗狗的地盤。狗狗小屋住著詹老闆帶來散步的柴柴和小白，最喜歡在瀑布邊玩水，玩累了就趴在小屋門口曬太陽。</p><p>想看菀玲醫師的店貓，主島的貓咖區有四隻貓店員在等你。</p>`,go:['/island/#cats','line2','到主島貓咖區看貓']},
- water:{k:'天氣保養站',t:'台北今天，怎麼保養？',who:'Bella・護理師',say:'我每天出門前都先看天氣，再決定今天怎麼保養。',body:`<div id="wx" class="wx"><p class="note">正在讀取台北今天的天氣…</p></div><h3 class="wx-h">今天喝了幾杯水？</h3><div class="drops" id="drops"></div><p class="note" id="dropmsg"></p>`,init:()=>{initWx();initWater()}},
+ water:{k:'天氣保養站',t:'台北今天，怎麼保養？',who:'Bella・護理師',say:'我每天出門前都先看天氣，再決定今天怎麼保養。',body:`<div id="wx" class="wx"><p class="note">正在讀取台北今天的天氣…</p></div>`,init:initWx},
  quiz:{k:'樹屋測驗',t:'你的保養習慣像哪一種樹？',who:'詩晴・護理師',say:'答三題就知道！我自己是松樹型的。',body:'<div id="quiz"></div>',init:initQuiz}
 });
 
