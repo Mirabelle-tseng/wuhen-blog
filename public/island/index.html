@@ -333,7 +333,7 @@ const SWEET=['妳知道島上最亮的是什麼嗎？不是月亮，是剛走進
  const DAY={src:img.getAttribute('src'),set:img.getAttribute('srcset')};
  const md=(new Date().getMonth()+1)*100+new Date().getDate(),isX=/fest-xmas|xmas/.test(location.search+location.hash)||(md>=1123&&md<=1226);
  const PH=['dawn','day','dusk','night'],LB={dawn:'🌅 清晨',day:'☀️ 白天',dusk:'🌇 黃昏',night:'🌙 夜晚'};
- function apply(k){const r=document.documentElement;PH.forEach(x=>r.classList.toggle(x,x===k));const t=k==='day'?(isX?set('xmas'):DAY):set(k);
+ function apply(k){const r=document.documentElement;PH.forEach(x=>r.classList.toggle(x,x===k));const t=k==='day'?(isX?set('xmas'):DAY):k==='night'&&isX?set('xmas-night'):set(k);
   img.setAttribute('srcset',t.set);img.setAttribute('src',t.src);btn.textContent=LB[k]}
  const now=new Date(),m=now.getHours()*60+now.getMinutes(),q=location.search+location.hash;
  let k=PH.find(x=>q.includes(x))||(m>=300&&m<480?'dawn':m<990?'day':m<1110?'dusk':'night');if(m<300)k='night';
