@@ -269,7 +269,7 @@ body.reading #yttag{opacity:0;pointer-events:none}
 @keyframes hup{to{transform:translate(-50%,-260%) scale(1.4);opacity:0}}
 .catlist{display:grid;gap:10px}
 .catcard{display:grid;grid-template-columns:56px 1fr;gap:4px 12px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:14px;background:#fff}
-.cat-av{width:56px;height:56px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;grid-row:span 2}
+.cat-av{width:56px;height:56px;border-radius:50%;background:var(--cream);overflow:hidden;display:flex;align-items:center;justify-content:center;grid-row:span 2}
 .cat-av svg{width:44px;height:auto}
 .cat-tx{min-width:0}
 .cat-tx b{font:700 16px var(--serif);letter-spacing:.08em;margin-right:8px}
@@ -528,6 +528,8 @@ html.embed #panel{inset:0!important;width:100%!important;height:100%!important;b
 html.embed #panel:not(.open){display:none!important}
 #game>.g-top,#game>.g-meter,#game>.g-field,#game>.g-ctrl{width:100%;max-width:400px;margin-left:auto;margin-right:auto}
 @media (min-width:761px){#game{justify-content:center}#game>.g-field{flex:0 0 auto!important;height:min(600px,calc(100vh - 230px))!important}#game .g-ctrl::after{content:'鍵盤：← → 或 A／D 移動';display:block;position:absolute;left:0;right:0;bottom:-22px;text-align:center;font-size:12px;color:#56657A}#game .g-ctrl{position:relative;margin-bottom:26px}}
+html.embed #panel .p-head{background:linear-gradient(180deg,rgba(251,248,242,0) 0,rgba(251,248,242,.85) 45%,rgba(251,248,242,.98) 70%),var(--hero) center/cover no-repeat;padding-top:64px!important}
+html.embed #panel .p-head h2{text-shadow:0 1px 0 #fff}
 </style>
 
 <div id="world" data-phase="day">
@@ -736,22 +738,7 @@ function person(kind){
   ${nurse?'<rect x="-3.6" y="-36.2" width="7.2" height="3" rx="1" fill="#fff" stroke="rgba(14,51,95,.3)" stroke-width=".5"/>':''}`;
 }
 
-const AVATAR=`<svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#E9DFD2"/>
-<path d="M24,40 C19,58 16,76 19,100 L81,100 C84,76 81,58 76,40 C74,16 26,16 24,40Z" fill="#231C1A"/>
-<g fill="#231C1A"><circle cx="20" cy="62" r="7"/><circle cx="17" cy="77" r="7.5"/><circle cx="20" cy="92" r="7"/><circle cx="80" cy="60" r="7"/><circle cx="83" cy="75" r="7.5"/><circle cx="80" cy="90" r="7"/></g>
-<rect x="44" y="60" width="12" height="14" fill="#EBCBB6"/>
-<path d="M12,100 C14,82 28,73 50,73 C72,73 86,82 88,100Z" fill="#FFFFFF"/>
-<path d="M37,74 Q50,72 63,74 L58,100 L42,100Z" fill="#1E1A1F"/>
-<path d="M42,73 L50,88 L58,73Z" fill="#F3D9C6"/>
-<path d="M43,74 Q50,84 57,74" fill="none" stroke="#B08D57" stroke-width="1"/><circle cx="50" cy="83.5" r="2" fill="#D9B46A"/>
-<path d="M37,74 L45,100 M63,74 L55,100" stroke="#D8DEE5" stroke-width="1.4"/>
-<rect x="64" y="84" width="9" height="4" rx="1" fill="#B08D57"/>
-<ellipse cx="50" cy="46" rx="15.5" ry="17" fill="#F3D9C6"/>
-<path d="M33,44 C30,24 46,20 54,23 C66,25 71,34 67,47 C64,37 57,32 49,33 C42,35 38,41 35,53Z" fill="#231C1A"/>
-<path d="M35,40 C30,52 33,62 29,72 C37,64 38,52 37,44Z M66,40 C70,52 67,62 72,72 C64,64 63,52 64,44Z" fill="#231C1A"/>
-<path d="M41,47.5 Q44,44.5 47,47.5 M53,47.5 Q56,44.5 59,47.5" fill="none" stroke="#231C1A" stroke-width="1.8" stroke-linecap="round"/>
-<circle cx="40" cy="53.5" r="3.2" fill="#F2A9A0" opacity=".5"/><circle cx="60" cy="53.5" r="3.2" fill="#F2A9A0" opacity=".5"/>
-<path d="M44,55.5 Q50,62 56,55.5 Q50,58.5 44,55.5Z" fill="#FFFFFF" stroke="#C0605A" stroke-width="1"/></svg>`;
+const AVATAR=`<img src="/island/palace/chars/doctor.webp?v=2" alt="" style="width:100%;height:100%;object-fit:cover;object-position:50% 10%;background:#E3E9F0">`;
 function doctorFig(){return `<g transform="scale(1.12)"><rect x="-11" y="-46" width="22" height="48" fill="transparent"/>
   <ellipse cx="0" cy="0" rx="7.5" ry="3" fill="rgba(14,51,95,.22)"/>
   <path d="M-7.6,-35 C-10,-26 -9.4,-18 -8.6,-12.5 Q-6,-10.5 -3.5,-13 L3.5,-13 Q6,-10.5 8.6,-12.5 C9.4,-18 10,-26 7.6,-35Z" fill="${'#231C1A'}"/>
@@ -1965,7 +1952,7 @@ const VIEW={
  cats:()=>`<p class="lead">逛累了嗎？來貓咖坐一下。</p><p class="sub">喝口水、摸摸貓，放鬆一下再繼續逛。</p>
    <div class="box"><b>先說清楚</b><p>這是島上的虛擬貓咖。無痕美學診所內沒有養貓，對貓過敏也可以放心來診所。</p></div>
    <h3 class="h3">島上的四隻貓</h3>
-   <div class="catlist">${CATS.map(k=>{const c=NPCS[k];return `<div class="catcard"><span class="cat-av"><svg viewBox="-12 -18 25 22" aria-hidden="true">${catFig(CATLOOK[k])}</svg></span><div class="cat-tx"><b>${c.name}</b><span class="cat-p">${c.persona}</span><p class="cat-say" id="say-${k}">${c.lines[0]}</p></div><button type="button" class="pet" data-pet="${k}">摸摸${c.name}</button></div>`}).join('')}</div>
+   <div class="catlist">${CATS.map(k=>{const c=NPCS[k];return `<div class="catcard"><span class="cat-av"><img src="/island/palace/chars/${k}.webp?v=2" alt="" style="width:100%;height:100%;object-fit:cover;object-position:50% 15%;border-radius:50%"></span><div class="cat-tx"><b>${c.name}</b><span class="cat-p">${c.persona}</span><p class="cat-say" id="say-${k}">${c.lines[0]}</p></div><button type="button" class="pet" data-pet="${k}">摸摸${c.name}</button></div>`}).join('')}</div>
    <h3 class="h3">今天的貓咖菜單</h3>
    <ul class="dlist"><li><b>一杯溫開水</b>：慢慢喝，療程後也很適合。</li><li><b>三分鐘放空</b>：放下手機，看看窗外的城市。</li><li><b>今晚早點睡</b>：從關掉螢幕開始。</li></ul>
    <p class="fine">貓店員說的是一般保養常識，個人狀況請以醫師面診評估為準。</p>`,
@@ -2118,7 +2105,7 @@ function loop(now){
 /* ===== panel ===== */
 const panel=document.getElementById('panel');
 let current=null;
-function openRoom(id,fromHash){
+function openRoom(id,fromHash){if(EMBED){const _m={dock:'dock',lobby:'lobby',consult:'consult',treatment:'treatment',recovery:'recovery',powder:'powder',director:'director',cats:'cats'};const _id=arguments[0];if(_m[_id])document.getElementById('panel').style.setProperty('--hero',`url(/island/palace/rooms/${_m[_id]}.webp)`);}
   if(!R[id])return;
   if(current!==id)track('island_room_open',{room:id});
   current=id;
