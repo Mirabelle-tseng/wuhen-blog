@@ -328,7 +328,9 @@ const SWEET=['妳知道島上最亮的是什麼嗎？不是月亮，是剛走進
 (function(){const img=document.querySelector('.stage img'),btn=document.getElementById('dn');
  const DAY={src:img.getAttribute('src'),set:img.getAttribute('srcset')};
  const NIGHT={src:'/island/palace/palace-night.webp',set:'/island/palace/palace-night-1400.webp 1400w, /island/palace/palace-night.webp 2400w, /island/palace/palace-night-3600.webp 3600w'};
- function apply(n){document.documentElement.classList.toggle('night',n);const t=n?NIGHT:DAY;img.setAttribute('srcset',t.set);img.setAttribute('src',t.src);btn.textContent=n?'☀️ 白天':'🌙 夜晚'}
+ const XMAS={src:'/island/palace/palace-xmas.webp',set:'/island/palace/palace-xmas-1400.webp 1400w, /island/palace/palace-xmas.webp 2400w, /island/palace/palace-xmas-3600.webp 3600w'};
+ const md=(new Date().getMonth()+1)*100+new Date().getDate(),isX=/fest-xmas|xmas/.test(location.search+location.hash)||(md>=1123&&md<=1226);
+ function apply(n){document.documentElement.classList.toggle('night',n);const t=n?NIGHT:(isX?XMAS:DAY);img.setAttribute('srcset',t.set);img.setAttribute('src',t.src);btn.textContent=n?'☀️ 白天':'🌙 夜晚'}
  const h=new Date().getHours(),q=location.search+location.hash;let night=/night/.test(q)?true:/day/.test(q)?false:(h>=18||h<6);
  apply(night);btn.addEventListener('click',()=>{night=!night;apply(night);try{gtag('event','island_daynight',{night})}catch(_){}})})();
 /* deep links: /island/#recovery etc. */
