@@ -327,7 +327,7 @@ const sc=document.getElementById('sc'),ctr=()=>{sc.scrollLeft=(sc.scrollWidth-sc
 (function(){const svgEl=document.getElementById('dogs');if(!svgEl)return;
  const K=1,P=(a)=>a.map(([x,y])=>[x*K,y*K]);
  const WALK=[
-  {id:'lulu',img:'/island/palace/walk_bella.webp',ar:0.625,path:P([[1110,1050],[1260,1085],[1400,1040]]),speed:20},
+  {id:'lulu',img:'/island/palace/walk_bella.webp?v=2',ar:0.5944,path:P([[1110,1050],[1260,1085],[1400,1040]]),speed:20},
   {id:'ashan',img:'/island/palace/walk_zhan.webp',ar:0.5111,path:P([[1440,870],[1480,950],[1420,1030]]),speed:24}];
  const DOGS=[
   {id:'shiba',name:'柴柴',fur:'#E39A52',fur2:'#C97A35',belly:'#FFF3E2',path:P([[1440,870],[1480,950],[1420,1030]]),speed:24,follow:'ashan',lag:70,lines:['汪！（柴柴想找你玩）','汪汪！（尾巴搖不停）','（柴柴躲到陽傘下，牠也知道要防曬）']},
