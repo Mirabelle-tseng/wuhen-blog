@@ -145,6 +145,14 @@ html{touch-action:manipulation}
 #sc2 .acts[hidden],#sc2 .nx[hidden]{display:none}#sc2 .acts{display:flex;gap:8px;margin-top:10px}#sc2 .acts button{flex:1;padding:12px;border-radius:12px;font:inherit;font-weight:700;font-size:15px;cursor:pointer}
 #sc2 .acts .a1{background:#0E335F;color:#fff;border:0}#sc2 .acts .a2{background:#fff;color:#0E335F;border:1.5px solid #B08D57}
 @media (min-width:761px){#sc2 .bust{left:calc(50% - 380px);bottom:150px}}
+#sc2 .bust.shadow{filter:brightness(0) drop-shadow(0 8px 18px rgba(0,0,0,.3));opacity:.85}
+#sc2 .yt form{display:flex;gap:8px;margin-top:10px}#sc2 .yt input{flex:1;min-width:0;padding:10px 12px;border-radius:10px;border:1.5px solid #D8CCB8;font:inherit;font-size:16px}
+#sc2 .yt form button{padding:10px 18px;border-radius:10px;border:0;background:#0E335F;color:#fff;font:inherit;font-weight:700;cursor:pointer}
+#sc2 .yt .hint{font-size:13px;color:#8A6A3A;margin:8px 0 0}
+#sc2 .yt .lid{display:flex;align-items:center;gap:8px;margin-top:8px;background:#F3ECE1;border-radius:10px;padding:8px 12px}#sc2 .yt .lid code{flex:1;font-size:16px;color:#0E335F}
+#sc2 .yt .lid button,#sc2 .yt .btns a,#sc2 .yt .btns button{padding:8px 12px;border-radius:10px;font:inherit;font-size:14px;font-weight:700;cursor:pointer;text-decoration:none;text-align:center}
+#sc2 .yt .lid button{border:1px solid #B08D57;background:#fff;color:#0E335F}
+#sc2 .yt .btns{display:flex;gap:8px;margin-top:10px}#sc2 .yt .btns>*{flex:1}#sc2 .yt .btns a{background:#06C755;color:#fff;border:0}#sc2 .yt .btns button{background:#fff;color:#0E335F;border:1.5px solid #B08D57}
 @media (max-width:760px){.music{position:static;margin:0 0 10px 8px}.stage img{-webkit-mask-image:linear-gradient(transparent,#000 10%,#000 82%,transparent);mask-image:linear-gradient(transparent,#000 10%,#000 82%,transparent)}.back{position:static;margin:0 auto 10px;display:inline-flex}header{display:flex;flex-wrap:wrap;justify-content:center;align-items:center}header>div{width:100%;text-align:center}.cards{grid-template-columns:repeat(2,1fr);gap:8px}.card{padding:10px 6px;align-items:center;text-align:center}.card b{font-size:13px}.card small{display:none}.card.game{grid-column:1/-1}.card.game small{display:block}}
 @media (max-width:760px){.scroller{overflow:hidden}.stage{width:122%;max-width:none;margin-left:-11%}.hs.tag{font-size:8px;padding:.3em .7em}.sheet h2{font-size:21px}.bubble{font-size:13px}}
 @media (prefers-reduced-motion:reduce){}
@@ -252,7 +260,7 @@ const CLASSIC='/island/classic/';
  function close(){rv.hidden=true;document.documentElement.style.overflow=''}
  window.openRoomView=open;
  document.getElementById('rv-x').addEventListener('click',close);
- addEventListener('message',e=>{if(e.origin===location.origin&&e.data==='wh-close')close()});
+ addEventListener('message',e=>{if(e.origin!==location.origin)return;if(e.data==='wh-close')close();if(e.data==='wh-findyt'){close();window.openMystery&&openMystery()}});
  document.querySelectorAll('a.room[data-room]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();open(a.dataset.room)}));
  document.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();open(b.dataset.open)}));
  addEventListener('keydown',e=>{if(e.key==='Escape'&&!rv.hidden)close()});
@@ -261,10 +269,10 @@ const CLASSIC='/island/classic/';
 
 /* ---- room scenes with character dialogue ---- */
 (function(){const C='/island/palace/chars/',CV='?v=2',IMG='/island/palace/palace-3600.webp';
- const P={doctor:['林菀玲醫師・院長','doctor'],shiqing:['詩晴・護理師','shiqing'],yiting:['怡婷・店經理','yiting'],bella:['Bella・護理師','bella'],xiangyu:['祥毓・美容師','xiangyu'],miqin:['米秦・美容師','miqin'],xiaojin:['小進・美編','xiaojin'],zhan:['杜克勞・詹（咖啡師）','zhan'],orange:['橘子・貓店員','orange'],cutie:['小可愛・院長的愛貓','cutie']};
+ const P={doctor:['林菀玲醫師・院長','doctor'],shiqing:['詩晴・護理師','shiqing'],yiting:['怡婷・店經理','yiting'],bella:['Bella・護理師','bella'],xiangyu:['祥毓・美容師','xiangyu'],miqin:['米秦・美容師','miqin'],xiaojin:['小進・美編','xiaojin'],zhan:['杜克勞・詹（咖啡師）','zhan'],orange:['橘子・貓店員','orange'],cutie:['小可愛・院長的愛貓','cutie'],mystery:['？？？','yiting']};
  const SC={
-  dock:{t:'漂浮大門',c:[1080,1000],bg:'/island/palace/rooms/dock.webp',l:[['yiting','歡迎來到無痕美學島！我是店經理怡婷。'],['yiting','診所在安和路一段86號2樓，採預約制，預約時告訴我們人數就好。'],['yiting','捷運信義安和站1號出口走路3到5分鐘，7-11轉角就到。開車可以從文昌街205號轉進地下停車場。']]},
-  lobby:{t:'大廳櫃台',c:[520,560],bg:'/island/palace/rooms/lobby.webp',l:[['shiqing','歡迎光臨，我是護理師詩晴。'],['shiqing','今天最在意哪一種膚況？櫃台有三題小測驗，可以先幫你整理成面診小抄。'],['zhan','來看診時，也可以點一杯杜克勞咖啡，拿鐵或美式，冰的熱的都可以。']]},
+  dock:{t:'漂浮大門',c:[1080,1000],bg:'/island/palace/rooms/dock.webp',l:[['shiqing','歡迎來到無痕美學島！我是護理師詩晴。'],['shiqing','診所在安和路一段86號2樓，採預約制，預約時告訴我們人數就好。'],['shiqing','捷運信義安和站1號出口走路3到5分鐘，7-11轉角就到。開車可以從文昌街205號轉進地下停車場。']]},
+  lobby:{t:'大廳櫃台',c:[520,560],bg:'/island/palace/rooms/lobby.webp',l:[['shiqing','歡迎光臨，我是護理師詩晴。'],['shiqing','今天最在意哪一種膚況？櫃台有三題小測驗，可以先幫你整理成面診小抄。'],['zhan','來看診時，也可以點一杯杜克勞咖啡，拿鐵或美式，冰的熱的都可以。'],['mystery','__YT__']]},
   consult:{t:'諮詢區',c:[760,560],bg:'/island/palace/rooms/consult.webp',sweet:1,l:[['shiqing','這裡是諮詢區。面診時把在意的地方、以前做過的療程都說清楚，醫師比較好評估。'],['shiqing','不知道要問什麼？可以先看看島上的衛教文章。'],['xiaojin','__SWEET__']]},
   treatment:{t:'治療室',c:[1790,640],bg:'/island/palace/rooms/treatment.webp',l:[['bella','我是護理師 Bella，這裡是治療室。'],['bella','治療前，醫師和護理師會再跟你確認一次當天的狀況。'],['bella','過程中有任何不舒服，隨時跟我們說。']]},
   recovery:{t:'恢復室',c:[2050,860],bg:'/island/palace/rooms/recovery.webp',l:[['xiangyu','我是美容師祥毓，做完療程可以先在這裡休息一下。'],['xiangyu','回家後怎麼洗臉、什麼時候可以化妝，每個療程不太一樣，請照醫師給的術後說明。'],['xiangyu','有任何不舒服，直接打診所電話 02‑2755‑5673。']]},
@@ -278,19 +286,33 @@ const SWEET=['妳知道島上最亮的是什麼嗎？不是月亮，是剛走進
  function bgFor(sc){const b=el('sc2bg');if(sc.bg){b.className='bg real';b.style.backgroundImage=`url(${sc.bg})`;return}
   b.className='bg';const vw=innerWidth,vh=innerHeight,z=Math.max(vw/1100,vh/950),W=2400*z,H=1792*z;
   b.style.backgroundImage=`url(${IMG})`;b.style.backgroundSize=`${W}px ${H}px`;b.style.backgroundPosition=`${vw/2+20-sc.c[0]*z}px ${vh/2+20-sc.c[1]*z}px`}
- function show(){const who=cur.l[i][0],txt=cur.l[i][1]==='__SWEET__'?(cur._sw||(cur._sw=sweet())):cur.l[i][1],p=P[who];el('sc2n').textContent=p[0];const im=el('sc2p');
+
+ const YT_KEYS=['店經理','店長','怡婷','小米'],YT_HINTS=['提示一：我站在大廳櫃台，大家有事都會先來找我。','提示二：我是這間診所的「長」，但不是院長喔。','提示三：部落格上有個筆名就是我，跟一種穀物有關。'],YT_LINE='s8604922';
+ const ytKnown=()=>{try{return JSON.parse(localStorage.getItem('wh-yt')||'false')}catch(_){return false}};let ytTries=0;
+ function ytReveal(lead){const im=el('sc2p');im.src=C+'yiting.webp'+CV;im.dataset.w='yiting';im.className='bust';el('sc2n').textContent='怡婷・店經理';
+  el('sc2tx').innerHTML=`<span class="yt">${lead}我是店經理怡婷，大家也叫我小米。這是我的 LINE ID，加我聊聊吧：<span class="lid"><code>${YT_LINE}</code><button type="button" data-copy>複製</button></span><span class="btns"><a href="https://line.me/ti/p/~${YT_LINE}" target="_blank" rel="noopener" data-ytline>加 LINE 好友</a><button type="button" data-ytchat>與我對談</button></span></span>`;
+  el('sc2tx').querySelector('[data-copy]').onclick=e=>{e.stopPropagation();try{navigator.clipboard.writeText(YT_LINE);e.target.textContent='已複製'}catch(_){}};
+  el('sc2tx').querySelector('[data-ytline]').onclick=e=>{e.stopPropagation();try{gtag('event','island_yt_line_click')}catch(_){}};
+  el('sc2tx').querySelector('[data-ytchat]').onclick=e=>{e.stopPropagation();close();openRoomView('yiting')}}
+ function ytAsk(){const im=el('sc2p');im.src=C+'yiting.webp'+CV;im.dataset.w='mystery';im.className='bust shadow';el('sc2n').textContent='？？？';
+  if(ytKnown()){ytReveal('嗨，又見面了！');return}
+  el('sc2tx').innerHTML=`<span class="yt">猜猜我是誰？說出我的名字或職稱，就告訴你一個小秘密。<form id="ytf" novalidate><input id="yti" maxlength="12" placeholder="輸入你的答案" autocomplete="off" aria-label="猜猜我是誰"><button type="submit">猜</button></form><span class="hint" id="yth">${ytTries?YT_HINTS[Math.min(ytTries,3)-1]:'猜不到？猜錯會給你提示。'}</span></span>`;
+  const f=el('ytf');f.addEventListener('click',e=>e.stopPropagation());f.addEventListener('submit',e=>{e.preventDefault();const t=el('yti').value.replace(/\s/g,'');if(!t)return;
+   if(YT_KEYS.some(k=>t.includes(k))){try{localStorage.setItem('wh-yt','true')}catch(_){}try{gtag('event','island_whoami_solved',{tries:ytTries+1})}catch(_){}ytReveal('答對了！');return}
+   ytTries++;el('yth').textContent=`「${t.slice(0,8)}」不是喔～ ${YT_HINTS[Math.min(ytTries,3)-1]}`;el('yti').value='';el('yti').focus()})}
+ function show(){if(cur.l[i][1]==='__YT__'){clearInterval(typing);typing=null;ytAsk();el('sc2a').hidden=false;el('sc2nx').hidden=true;return}const who=cur.l[i][0],txt=cur.l[i][1]==='__SWEET__'?(cur._sw||(cur._sw=sweet())):cur.l[i][1],p=P[who];el('sc2n').textContent=p[0];const im=el('sc2p');
   if(im.dataset.w!==who){im.src=C+p[1]+'.webp'+CV;im.dataset.w=who;im.className='bust'+(['orange','cutie'].includes(who)?' cat':'');im.style.animation='none';im.offsetWidth;im.style.animation=''}
   const tx=el('sc2tx');clearInterval(typing);let k=0;tx.textContent='';typing=setInterval(()=>{tx.textContent=txt.slice(0,++k);if(k>=txt.length){clearInterval(typing);typing=null}},28);
   const last=i===cur.l.length-1;el('sc2a').hidden=!last;el('sc2nx').hidden=last}
  function open(id){cur=SC[id];if(!cur){openRoomView(id);return}cur.id=id;cur._sw=null;i=0;el('sc2t').textContent=cur.t;bgFor(cur);box.hidden=false;document.documentElement.style.overflow='hidden';show();
   try{gtag('event','island_scene_open',{room:id})}catch(_){}}
  function close(){box.hidden=true;clearInterval(typing);document.documentElement.style.overflow=''}
- el('sc2box').addEventListener('click',e=>{if(e.target.closest('.acts'))return;if(typing){clearInterval(typing);typing=null;el('sc2tx').textContent=cur.l[i][1]==='__SWEET__'?cur._sw:cur.l[i][1];return}if(i<cur.l.length-1){i++;show()}});
+ el('sc2box').addEventListener('click',e=>{if(e.target.closest('.acts')||e.target.closest('.yt'))return;if(typing){clearInterval(typing);typing=null;el('sc2tx').textContent=cur.l[i][1]==='__SWEET__'?cur._sw:cur.l[i][1];return}if(i<cur.l.length-1){i++;show()}});
  el('sc2x').addEventListener('click',close);el('sc2back').addEventListener('click',close);
  el('sc2more').addEventListener('click',()=>{const id=cur.id,h=cur.house;close();if(h&&window.openHouse)openHouse(id);else openRoomView(id)});
- addEventListener('keydown',e=>{if(box.hidden)return;if(e.key==='Escape')close();if(e.key===' '||e.key==='Enter'){e.preventDefault();el('sc2box').click()}});
+ addEventListener('keydown',e=>{if(box.hidden)return;if(e.target.closest&&e.target.closest('input,textarea,button,a'))return;if(e.key==='Escape')close();if(e.key===' '||e.key==='Enter'){e.preventDefault();el('sc2box').click()}});
  addEventListener('resize',()=>{if(!box.hidden)bgFor(cur)});
- window.openScene=open;document.querySelectorAll('[data-scene]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();open(b.dataset.scene)}));
+ window.openScene=open;window.openMystery=()=>{open('lobby');i=cur.l.length-1;show()};document.querySelectorAll('[data-scene]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();open(b.dataset.scene)}));
  document.querySelectorAll('a.room[data-room]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();open(a.dataset.room)},true));
 })();
 /* deep links: /island/#recovery etc. */

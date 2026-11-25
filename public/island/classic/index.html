@@ -1257,23 +1257,7 @@ const NPCS={
  yiting:{name:'怡婷',role:'店經理',el:'staff',look:{top:'#0E335F',gown:'#0E335F',gtrim:'#D9B46A',puff:'#1E4A7E',ruff:true,pearls:true,hat:'#0E335F',hatband:'#D9B46A',rose:'#B08D57',feather:'#F2EDE6',curls:true,hair:'wave',hairc:'#5B3D2C',skin:'#F6DECF',eyes:'deep',brow:true,glow:true}}
 };
 const npcEl=k=>document.getElementById(NPCS[k].el||('npc-'+k));
-const AVATAR_YT=`<svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#E3E9F0"/>
-<path d="M25,40 C20,58 22,74 18,100 L82,100 C78,74 80,58 75,40 C73,17 27,17 25,40Z" fill="#5B3D2C"/>
-<g fill="#5B3D2C"><circle cx="21" cy="66" r="6"/><circle cx="19" cy="82" r="6.5"/><circle cx="79" cy="66" r="6"/><circle cx="81" cy="82" r="6.5"/></g>
-<rect x="44" y="60" width="12" height="14" fill="#EFD0BD"/>
-<path d="M12,100 C14,82 28,73 50,73 C72,73 86,82 88,100Z" fill="#0E335F"/>
-<path d="M41,73 L50,90 L59,73Z" fill="#FFFFFF"/><path d="M41,73 L50,90 L59,73" fill="none" stroke="#B08D57" stroke-width="1.6"/>
-<rect x="64" y="84" width="10" height="4.5" rx="1" fill="#E9CF9E"/>
-<path d="M34.5,46 C34.5,31 42,28.5 50,28.5 C58,28.5 65.5,31 65.5,46 C65.5,58 58,64.5 50,64.5 C42,64.5 34.5,58 34.5,46Z" fill="#F6DECF"/>
-<ellipse cx="43" cy="39" rx="5" ry="2.4" fill="#fff" opacity=".5"/><ellipse cx="57" cy="54" rx="3" ry="1.5" fill="#fff" opacity=".35"/>
-<path d="M33,47 C30,25 45,20 53,22 C65,23 71,32 67,47 C65,38 58,32 50,33 C44,35 39,38 36,52Z" fill="#5B3D2C"/>
-<path d="M39.5,42 Q43,40 46.5,41.6 M53.5,41.6 Q57,40 60.5,42" fill="none" stroke="#5B3D2C" stroke-width="1.5" stroke-linecap="round"/>
-<ellipse cx="43" cy="47" rx="2.6" ry="2.2" fill="#4A3426"/><ellipse cx="57" cy="47" rx="2.6" ry="2.2" fill="#4A3426"/>
-<circle cx="43.8" cy="46.2" r=".9" fill="#fff"/><circle cx="57.8" cy="46.2" r=".9" fill="#fff"/>
-<path d="M39.5,45 Q43,43.2 46.5,45 M53.5,45 Q57,43.2 60.5,45" fill="none" stroke="#2B2420" stroke-width="1.2" stroke-linecap="round"/>
-<path d="M50,47 L48.6,53.6 Q50,54.6 51.6,53.8" fill="none" stroke="#D7A98E" stroke-width="1"/>
-<circle cx="40" cy="54" r="3" fill="#F2A9A0" opacity=".35"/><circle cx="60" cy="54" r="3" fill="#F2A9A0" opacity=".35"/>
-<path d="M45,57.5 Q50,61.5 55,57.5" fill="none" stroke="#B9605A" stroke-width="1.6" stroke-linecap="round"/></svg>`;
+const AVATAR_YT=`<img src="/island/palace/chars/yiting.webp?v=2" alt="" style="width:100%;height:100%;object-fit:cover;object-position:50% 12%;background:#E3E9F0">`;
 const QUIZ=[
  {q:'照鏡子時，你最先注意到的是？',a:[['輪廓變鬆、線條往下','sag'],['斑點、膚色不均','spot'],['毛孔、凹凸不平','pore'],['乾燥、細紋、上妝卡粉','dry']]},
  {q:'這個困擾大概多久了？',a:[['最近幾個月才注意到','最近幾個月才注意到'],['大概一兩年了','大概有一兩年了'],['好幾年了','已經好幾年了']]},
@@ -2190,7 +2174,7 @@ document.addEventListener('click',e=>{
   if(e.target.closest('[data-skip]')&&chat.resolve){answer('','先不留');return}
   if(e.target.closest('[data-chatagain]')){openChat();return}
   if(e.target.closest('[data-bclose]')){document.getElementById('bubble').hidden=true;return}
-  if(e.target.closest('[data-findyt]')){closeRoom();setTimeout(()=>say('yiting'),450);return}
+  if(e.target.closest('[data-findyt]')){if(EMBED){parent.postMessage('wh-findyt','*');return}closeRoom();setTimeout(()=>say('yiting'),450);return}
   if(e.target.closest('[data-chat]')){document.getElementById('bubble').hidden=true;openChat();return}
   const ct=e.target.closest('[data-copytext]');if(ct){try{navigator.clipboard.writeText(ct.dataset.copytext).then(()=>{ct.textContent='已複製'},()=>{})}catch(_){}return}
   const cs=e.target.closest('[data-copysum]');if(cs){const t=cs.dataset.copysum;try{navigator.clipboard.writeText(t).then(()=>{cs.textContent='已複製'},()=>{cs.textContent='請手動選取上方內容'})}catch(_){cs.textContent='請手動選取上方內容'}return}
