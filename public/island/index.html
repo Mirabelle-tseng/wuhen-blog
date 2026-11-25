@@ -254,11 +254,11 @@ const IZ={z:1,tx:0,ty:0};
 /* ---- room viewer (classic island panels in embed mode) ---- */
 const CLASSIC='/island/classic/';
 (function(){const rv=document.getElementById('rv'),f=document.getElementById('rv-f');let loaded=false;
- function open(id){rv.hidden=false;document.documentElement.style.overflow='hidden';
+ function open(id){rv.hidden=false;document.documentElement.style.overflow='hidden';setTimeout(()=>{try{f.contentWindow.focus()}catch(_){}},350);
   if(loaded&&f.contentWindow&&f.contentWindow.openRoom){try{const w=f.contentWindow;try{w.G.on=false}catch(_){}w.document.getElementById('game').hidden=true;w.closeRoom(true);if(id==='game')w.openGame();else if(id==='shout')w.openShout(true);else w.openRoom(id,true);return}catch(_){}}
   f.src=CLASSIC+'?embed=1#'+id;loaded=true;try{gtag('event','island_room_open',{room:id,from:'palace'})}catch(_){}}
  function close(){rv.hidden=true;document.documentElement.style.overflow=''}
- window.openRoomView=open;
+ window.openRoomView=open;f.addEventListener('load',()=>{try{f.contentWindow.focus()}catch(_){}});
  document.getElementById('rv-x').addEventListener('click',close);
  addEventListener('message',e=>{if(e.origin!==location.origin)return;if(e.data==='wh-close')close();if(e.data==='wh-findyt'){close();window.openMystery&&openMystery()}});
  document.querySelectorAll('a.room[data-room]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();open(a.dataset.room)}));
