@@ -134,6 +134,21 @@ html{touch-action:manipulation}
 @keyframes spin{to{transform:rotate(360deg)}}.mill:hover #millbadge rect{fill:#fff}
 #millbadge{animation:bob 3s ease-in-out infinite}@keyframes bob{50%{transform:translate(0,-410px)}}
 @media (prefers-reduced-motion:reduce){.blades,#millbadge{animation:none}}
+#sc2{position:fixed;inset:0;z-index:35;display:flex;flex-direction:column;justify-content:flex-end;background:#2F4A2A;overflow:hidden}#sc2[hidden]{display:none}
+#sc2 .bg{position:absolute;inset:-20px;background-repeat:no-repeat;filter:blur(3px) brightness(.92);transform:scale(1.05)}
+#sc2 .bg.real{filter:none;inset:0;transform:none;background-size:cover!important;background-position:center!important}
+#sc2 .top{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:calc(10px + env(safe-area-inset-top)) 14px 10px;background:linear-gradient(rgba(14,51,95,.75),transparent);color:#fff;z-index:3}
+#sc2 .top b{font-family:"Noto Serif TC",serif;font-size:20px;letter-spacing:.15em;text-shadow:0 2px 6px rgba(0,0,0,.35)}
+#sc2 .top button{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.7);color:#fff;border-radius:999px;padding:6px 14px;font:inherit;font-size:13px;cursor:pointer}
+#sc2 .bust{position:absolute;left:4%;bottom:calc(150px + env(safe-area-inset-bottom));height:min(36vh,330px);max-width:80vw;object-fit:contain;object-position:left bottom;z-index:2;filter:drop-shadow(0 8px 18px rgba(0,0,0,.3));animation:bustIn .35s ease-out}
+@keyframes bustIn{from{transform:translateY(20px);opacity:0}}
+#sc2 .box{position:relative;z-index:4;margin:0 12px calc(14px + env(safe-area-inset-bottom));max-width:760px;align-self:center;width:calc(100% - 24px);background:rgba(251,248,242,.97);border:2px solid #C9A464;border-radius:18px;padding:16px 18px 14px;box-shadow:0 10px 30px rgba(0,0,0,.25);cursor:pointer;min-height:118px}
+#sc2 .nm{position:absolute;top:-16px;left:18px;background:#0E335F;color:#fff;border:1.5px solid #C9A464;border-radius:999px;padding:4px 14px;font-size:14px;font-weight:700}
+#sc2 .tx{font-size:16px;line-height:1.8;color:#2B2F3A;margin:6px 0 0;min-height:58px}
+#sc2 .nx{position:absolute;right:16px;bottom:10px;color:#B08D57;font-size:13px;animation:blink 1s infinite}@keyframes blink{50%{opacity:.2}}
+#sc2 .acts[hidden],#sc2 .nx[hidden]{display:none}#sc2 .acts{display:flex;gap:8px;margin-top:10px}#sc2 .acts button{flex:1;padding:12px;border-radius:12px;font:inherit;font-weight:700;font-size:15px;cursor:pointer}
+#sc2 .acts .a1{background:#0E335F;color:#fff;border:0}#sc2 .acts .a2{background:#fff;color:#0E335F;border:1.5px solid #B08D57}
+@media (min-width:761px){#sc2 .bust{left:calc(50% - 380px);bottom:150px}}
 @media (max-width:760px){.music{position:static;margin:0 0 10px 8px}.stage img{-webkit-mask-image:linear-gradient(transparent,#000 10%,#000 82%,transparent);mask-image:linear-gradient(transparent,#000 10%,#000 82%,transparent)}.back{position:static;margin:0 auto 10px;display:inline-flex}header{display:flex;flex-wrap:wrap;justify-content:center;align-items:center}header>div{width:100%;text-align:center}.cards{grid-template-columns:repeat(2,1fr);gap:8px}.card{padding:11px 12px}}
 @media (max-width:760px){.scroller{overflow:hidden}.stage{width:122%;max-width:none;margin-left:-11%}.hs.tag{font-size:8.5px;padding:.32em .75em}.sheet h2{font-size:21px}.bubble{font-size:13px}}
 @media (prefers-reduced-motion:reduce){}
@@ -163,7 +178,7 @@ html{touch-action:manipulation}
 </g></svg><svg class="fx dogs" id="dogs" viewBox="0 0 2400 1626" preserveAspectRatio="none" aria-hidden="false"></svg><div class="bubble" id="bub" hidden><b id="bub-n"></b><span id="bub-t"></span></div></div></div>
 <p class="tip">點小屋和島民聊聊・雙指可放大</p>
 <section class="list-wrap"><h2 class="sec">島上還有</h2><div class="cards"><button type="button" class="card game" onclick="openTetris()"><b>狗狗防曬大作戰</b><small>小遊戲・有排行榜</small></button><button type="button" class="card" data-house="gate"><b>森林入口</b><small>怎麼逛・交通</small></button><button type="button" class="card" data-house="ig"><b>IG 小屋</b><small>追蹤 IG</small></button><button type="button" class="card" data-house="fb"><b>FB 小屋</b><small>追蹤粉專</small></button><button type="button" class="card" data-house="blog"><b>森林書屋</b><small>最新衛教</small></button><button type="button" class="card" data-house="coffee"><b>杜克勞咖啡屋</b><small>拿鐵・美式</small></button><button type="button" class="card" data-house="sun"><b>防曬花園</b><small>日常防曬</small></button><button type="button" class="card" data-house="rest"><b>林間休息屋</b><small>療程後照顧</small></button><button type="button" class="card" data-house="water"><b>天氣風車</b><small>台北今日天氣</small></button><button type="button" class="card" data-house="quiz"><b>樹屋測驗</b><small>三題小測驗</small></button><button type="button" class="card" data-house="animal"><b>狗狗小屋</b><small>森林的狗狗</small></button></div><p class="badges" id="badges"></p></section><p class="to-main"><a href="/island/">回主島逛逛 →</a></p>
-<div class="sheet-bg" id="sheetbg" hidden></div><section class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sh-t"><button type="button" class="sh-x" id="shx" aria-label="關閉">×</button><p class="sh-k" id="sh-k"></p><h2 id="sh-t"></h2><div id="sh-b"></div></section><p class="legal">本站為衛教資訊，所有療程需經醫師面診評估，效果因個人膚況而異。無痕美學診所｜台北市大安區安和路一段86號2樓<br>© 2026 無痕美學診所 版權所有，翻印必究。未經書面授權，請勿複製、轉載或改作本站內容與設計。</p>
+<div class="sheet-bg" id="sheetbg" hidden></div><section class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sh-t"><button type="button" class="sh-x" id="shx" aria-label="關閉">×</button><p class="sh-k" id="sh-k"></p><h2 id="sh-t"></h2><div id="sh-b"></div></section><div id="sc2" hidden role="dialog" aria-modal="true" aria-label="小屋"><div class="bg" id="sc2bg"></div><div class="top"><button type="button" id="sc2x">← 回到森林</button><b id="sc2t"></b><span style="width:80px"></span></div><img class="bust" id="sc2p" alt=""><div class="box" id="sc2box"><span class="nm" id="sc2n"></span><p class="tx" id="sc2tx"></p><span class="nx" id="sc2nx">▼ 點一下繼續</span><div class="acts" id="sc2a" hidden><button type="button" class="a1" id="sc2more">看完整介紹</button><button type="button" class="a2" id="sc2back">回到森林</button></div></div></div><p class="legal">本站為衛教資訊，所有療程需經醫師面診評估，效果因個人膚況而異。無痕美學診所｜台北市大安區安和路一段86號2樓<br>© 2026 無痕美學診所 版權所有，翻印必究。未經書面授權，請勿複製、轉載或改作本站內容與設計。</p>
 <script>
 document.querySelectorAll('[data-room]').forEach(a=>a.addEventListener('click',()=>{try{gtag('event','island_forest_click',{room:a.dataset.room})}catch(e){}}));
 const NPC={"xiaoxiang": {"name": "詩晴・護理師", "lines": ["歡迎來逛逛！每棟建築的牌子都可以點。", "IG 和 FB 可以看到診所最近在忙什麼。", "想先了解自己的保養習慣？小測驗只要三題。"]}, "lulu": {"name": "Bella・護理師", "lines": ["出門前記得擦防曬，流汗之後要補擦喔。", "療程後怎麼照顧，請照醫師給的術後說明。", "皮膚有狀況的話，還是要找醫師當面看。"]}, "ashan": {"name": "杜克勞・詹（咖啡師）", "lines": ["我每天都帶柴柴和小白出來散步。", "無痕美學選用杜克勞咖啡，拿鐵或美式，冰熱都可以。", "散完步來杯咖啡，剛剛好。"]}, "meimei": {"name": "米秦・美容師", "lines": ["療程後多久可以上妝，先問過醫師最安心。", "今天水喝夠了嗎？天氣保養站可以記錄喔。", "聖誕節快到了，記得跟重要的人說聲謝謝。"]}},idx={},bub=document.getElementById('bub');let bt;
@@ -249,7 +264,7 @@ function openHouse(id){const h=HOUSES[id];document.getElementById('sh-k').textCo
  if(id==='blog')loadPosts();sheet.querySelector('.sh-x').focus()}
 function closeHouse(){sheet.hidden=sbg.hidden=true}
 document.getElementById('shx').addEventListener('click',closeHouse);sbg.addEventListener('click',closeHouse);addEventListener('keydown',e=>{if(e.key==='Escape')closeHouse()});
-document.querySelectorAll('[data-house]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();openHouse(b.dataset.house)}));
+document.querySelectorAll('[data-house]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const h=b.dataset.house;if(h!=='water'&&window.openForestScene)openForestScene(h);else openHouse(h)}));
 let postsCache;async function loadPosts(){const ul=document.getElementById('posts');try{if(!postsCache){const x=new DOMParser().parseFromString(await (await fetch('/rss.xml')).text(),'text/xml');
  postsCache=[...x.querySelectorAll('item')].map(i=>({t:i.querySelector('title')?.textContent||'',l:i.querySelector('link')?.textContent||'#',d:new Date(i.querySelector('pubDate')?.textContent||0)})).sort((a,b)=>b.d-a.d).slice(0,6)}
  ul.innerHTML=postsCache.map(p=>`<li><a href="${p.l}" target="_blank" rel="noopener"><strong>${p.t.replace(/</g,'&lt;')}</strong><small>${isNaN(p.d)?'':p.d.toLocaleDateString('zh-TW')}</small></a></li>`).join('')}catch(e){ul.innerHTML='<li><a href="https://blog.wuhenclinic.tw/blog/" target="_blank" rel="noopener"><strong>到部落格看所有文章</strong></a></li>'}}
@@ -292,6 +307,38 @@ const IZ={z:1,tx:0,ty:0};
  m.addEventListener('click',e=>{e.stopPropagation();open()});m.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}});
  wxGet().then(d=>{const [ic]=WXC(d.c),w=d.wind||0,sec=Math.max(.8,Math.min(9,22/(w+2.5)));document.getElementById('blades').style.setProperty('--spin',sec.toFixed(2)+'s');
   document.getElementById('millt').textContent=`${ic} ${Math.round(d.t)}°`}).catch(()=>{document.getElementById('millt').textContent='☁️ 天氣'})})();
+
+/* ---- forest house scenes (interior + bust + dialogue) ---- */
+(function(){const C='/island/palace/chars/',IMG='/island/forest/forest-3600.webp',IW=2400,IH=1626,ROOMBG='/island/forest/rooms/';
+ const P={shiqing:'詩晴・護理師',bella:'Bella・護理師',zhan:'杜克勞・詹（咖啡師）',miqin:'米秦・美容師',xiangyu:'祥毓・美容師',xiaojin:'小進・美編'};
+ const SC={
+  gate:{t:'森林入口',l:[['shiqing','歡迎來到森林版！點小屋的牌子，就能進去看看。'],['shiqing','這裡有 IG、FB、衛教文章、咖啡屋和小測驗，風車還能看台北今天的天氣。'],['shiqing','想看診所真正的八個空間，可以回主島逛逛。']]},
+  ig:{t:'IG 小屋',l:[['miqin','這裡是 IG 小屋。診所日常、療程小知識都會放在 IG。'],['miqin','追蹤 @wuhen_clinic，新貼文就不會錯過。']]},
+  fb:{t:'FB 小屋',l:[['shiqing','FB 小屋到了。衛教文章和診所公告，會先放在粉專。'],['shiqing','有想問的事，也可以在粉專留言給我們。']]},
+  blog:{t:'森林書屋',l:[['bella','書屋的書架上，都是我們整理好的衛教文章。'],['bella','文章會一直更新，有空就來翻翻。']]},
+  coffee:{t:'杜克勞咖啡屋',l:[['zhan','歡迎來我的森林咖啡屋。'],['zhan','無痕美學選用杜克勞咖啡，診所的豆子就是從我這裡來的。'],['zhan','來診所的時候，拿鐵或美式都可以點，冰的熱的跟櫃台說一聲就好。']]},
+  sun:{t:'防曬花園',l:[['bella','花園裡的花也怕曬過頭，所以我幫它們搭了小陽傘。'],['bella','出門前擦好防曬，流汗或擦汗之後記得補擦。陰天也有紫外線喔。']]},
+  rest:{t:'林間休息屋',l:[['xiangyu','走累了嗎？休息屋的椅子很軟，坐一下再走吧。'],['xiangyu','療程後回家怎麼照顧，每個療程不一樣，請照醫師給的術後說明。'],['xiangyu','有任何不舒服，直接打診所電話 02‑2755‑5673。']]},
+  quiz:{t:'樹屋測驗',l:[['miqin','樹屋上有個小測驗，三題就知道你的保養習慣像哪一種樹。'],['miqin','這是好玩的小測驗，不是皮膚檢測喔。']]},
+  animal:{t:'狗狗小屋',l:[['zhan','這是柴柴和小白的家，我每天都帶牠們出來散步。'],['zhan','牠們最喜歡在瀑布邊玩水，玩累了就趴在門口曬太陽。']]}};
+ const SWEET=['妳知道森林裡最亮的是什麼嗎？不是星星，是剛走進來的妳。','妳有擦防曬嗎？不然怎麼會這麼耀眼。','這座森林有好多小屋，但我心裡只有一個位置。','我本來在畫平板，看到妳之後，就忘了要畫什麼。','聖誕老人問我想要什麼禮物，我說：剛走進來的妳。'];
+ const el=id=>document.getElementById(id),box=el('sc2');let cur=null,i=0,typing=null,hasBg={};
+ function center(id){const t=document.querySelector(`.stage [data-house="${id}"]`);if(!t)return [IW/2,IH/2];return [parseFloat(t.style.left)/100*IW,parseFloat(t.style.top)/100*IH]}
+ function bgFor(id){const b=el('sc2bg');if(hasBg[id]){b.className='bg real';b.style.backgroundImage=`url(${ROOMBG}${id}.webp)`;b.style.backgroundSize='';b.style.backgroundPosition='';return}
+  b.className='bg real';b.style.backgroundImage='radial-gradient(ellipse at 50% 30%,rgba(255,214,150,.55),transparent 60%),repeating-linear-gradient(90deg,#8A5F3E 0 46px,#7A5236 46px 48px),linear-gradient(#9A6B45,#5E3E28)';b.style.backgroundSize='';b.style.backgroundPosition=''}
+ function show(){const [who,raw]=cur.l[i],txt=raw==='__SWEET__'?(cur._sw||(cur._sw=SWEET[Math.floor(Math.random()*SWEET.length)])):raw;el('sc2n').textContent=P[who];const im=el('sc2p');
+  if(im.dataset.w!==who){im.src=C+who+'.webp?v=2';im.dataset.w=who;im.style.animation='none';im.offsetWidth;im.style.animation=''}
+  const tx=el('sc2tx');clearInterval(typing);let k=0;tx.textContent='';typing=setInterval(()=>{tx.textContent=txt.slice(0,++k);if(k>=txt.length){clearInterval(typing);typing=null}},28);
+  const last=i===cur.l.length-1;el('sc2a').hidden=!last;el('sc2nx').hidden=last}
+ function open(id){const base=SC[id];if(!base){openHouse(id);return}cur=Object.assign({},base,{id,_sw:null,l:base.l.slice()});if(Math.random()<.45)cur.l.push(['xiaojin','__SWEET__']);
+  i=0;el('sc2t').textContent=cur.t;bgFor(id);box.hidden=false;document.documentElement.style.overflow='hidden';show();try{gtag('event','island_forest_scene',{house:id})}catch(_){}}
+ function close(){box.hidden=true;clearInterval(typing);document.documentElement.style.overflow=''}
+ el('sc2box').addEventListener('click',e=>{if(e.target.closest('.acts'))return;const t=cur.l[i][1];if(typing){clearInterval(typing);typing=null;el('sc2tx').textContent=t==='__SWEET__'?cur._sw:t;return}if(i<cur.l.length-1){i++;show()}});
+ el('sc2x').addEventListener('click',close);el('sc2back').addEventListener('click',close);el('sc2more').addEventListener('click',()=>{const id=cur.id;close();openHouse(id)});
+ addEventListener('keydown',e=>{if(box.hidden)return;if(e.target.closest&&e.target.closest('input,textarea,button,a'))return;if(e.key==='Escape')close();if(e.key===' '||e.key==='Enter'){e.preventDefault();el('sc2box').click()}});
+ addEventListener('resize',()=>{if(!box.hidden)bgFor(cur.id)});
+ Object.keys(SC).forEach(id=>{const im=new Image();im.onload=()=>hasBg[id]=true;im.src=ROOMBG+id+'.webp'});
+ window.openForestScene=open;})();
 const sc=document.getElementById('sc'),ctr=()=>{sc.scrollLeft=(sc.scrollWidth-sc.clientWidth)/2};ctr();requestAnimationFrame(ctr);addEventListener('load',ctr);
 /* ---- walkers: islanders + dogs (natural motion) ---- */
 (function(){const svgEl=document.getElementById('dogs');if(!svgEl)return;
