@@ -165,7 +165,7 @@ html{touch-action:manipulation}
 <div class="sheet-bg" id="sheetbg" hidden></div><section class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sh-t"><button type="button" class="sh-x" id="shx" aria-label="關閉">×</button><p class="sh-k" id="sh-k"></p><h2 id="sh-t"></h2><div id="sh-b"></div></section><div id="rv" hidden><div class="rv-bar"><button type="button" id="rv-x">← 回到島上</button><span>無痕美學島</span></div><iframe id="rv-f" title="診所空間介紹"></iframe></div><div id="sc2" hidden role="dialog" aria-modal="true" aria-label="房間"><div class="bg" id="sc2bg"></div><div class="top"><button type="button" id="sc2x">← 回到島上</button><b id="sc2t"></b><span style="width:70px"></span></div><img class="bust" id="sc2p" alt=""><div class="box" id="sc2box"><span class="nm" id="sc2n"></span><p class="tx" id="sc2tx"></p><span class="nx" id="sc2nx">▼ 點一下繼續</span><div class="acts" id="sc2a" hidden><button type="button" class="a1" id="sc2more">看完整介紹</button><button type="button" class="a2" id="sc2back">回到島上</button></div></div></div><p class="legal">本站為衛教資訊，所有療程需經醫師面診評估，效果因個人膚況而異。無痕美學診所｜台北市大安區安和路一段86號2樓<br>© 2026 無痕美學診所 版權所有，翻印必究。未經書面授權，請勿複製、轉載或改作本站內容與設計。</p>
 <script>
 document.querySelectorAll('[data-room]').forEach(a=>a.addEventListener('click',()=>{try{gtag('event','island_palace_click',{room:a.dataset.room})}catch(e){}}));
-const NPC={"xiaoxiang": {"name": "森林嚮導・小橡", "lines": ["歡迎來森林這一邊！每間小屋的牌子都可以點。", "IG 小屋和 FB 小屋，可以看到診所最近在忙什麼。", "樹屋測驗只要三題，看看你是哪一種樹。"]}, "lulu": {"name": "森林護理師・露露", "lines": ["我是森林護理師露露，負責提醒大家照顧自己。", "出門前記得擦防曬，流汗之後要補擦喔。", "皮膚有狀況的話，還是要找醫師當面看。"]}, "ashan": {"name": "愛散步的阿杉", "lines": ["我每天都帶柴柴和小白出來散步。", "散完步去杜克勞咖啡屋喝杯拿鐵，剛剛好。", "狗狗小屋就在瀑布旁邊，牠們最愛玩水。"]}, "meimei": {"name": "愛堆雪人的莓莓", "lines": ["那兩個雪人都是我堆的，帥不帥？", "補水小站可以記錄今天喝了幾杯水喔。", "聖誕節快到了，記得跟重要的人說聲謝謝。"]}},idx={},bub=document.getElementById('bub');let bt;
+const NPC={"xiaoxiang": {"name": "詩晴・護理師", "lines": ["歡迎來逛逛！每棟建築的牌子都可以點。", "IG 和 FB 可以看到診所最近在忙什麼。", "想先了解自己的保養習慣？小測驗只要三題。"]}, "lulu": {"name": "Bella・護理師", "lines": ["出門前記得擦防曬，流汗之後要補擦喔。", "療程後怎麼照顧，請照醫師給的術後說明。", "皮膚有狀況的話，還是要找醫師當面看。"]}, "ashan": {"name": "杜克勞・詹（咖啡師）", "lines": ["我每天都帶柴柴和小白出來散步。", "無痕美學選用杜克勞咖啡，拿鐵或美式，冰熱都可以。", "散完步來杯咖啡，剛剛好。"]}, "meimei": {"name": "米秦・美容師", "lines": ["療程後多久可以上妝，先問過醫師最安心。", "今天水喝夠了嗎？補水小站可以記錄喔。", "聖誕節快到了，記得跟重要的人說聲謝謝。"]}},idx={},bub=document.getElementById('bub');let bt;
 document.querySelectorAll('.npc').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const k=b.dataset.npc,n=NPC[k];idx[k]=((idx[k]??-1)+1)%n.lines.length;
  document.getElementById('bub-n').textContent=n.name;document.getElementById('bub-t').textContent=n.lines[idx[k]];
  bub.style.top=`calc(${b.style.top} - 5.5%)`;bub.hidden=false;
@@ -175,18 +175,18 @@ document.querySelectorAll('.npc').forEach(b=>b.addEventListener('click',e=>{e.st
 document.addEventListener('click',()=>bub.hidden=true);
 
 const HOUSES={
- ig:{k:'IG 小屋',t:'在 IG 跟我們見面',who:'森林嚮導・小橡',say:'我每天都會去 IG 小屋看看有沒有新照片！',body:'<p>療程前後的小知識、診所日常、店貓的樣子，都放在 IG。</p>',go:['https://www.instagram.com/wuhen_clinic','ig','到 IG 追蹤 @wuhen_clinic']},
- fb:{k:'FB 小屋',t:'在 FB 粉專聊聊',who:'森林嚮導・小橡',say:'有什麼想問的，粉專留言也找得到我們。',body:'<p>衛教文章、診所公告和活動資訊，會先放在 FB 粉專。</p>',go:['https://www.facebook.com/share/1BKkoKfUPg/','fb','到 FB 粉專按讚追蹤']},
- blog:{k:'宮廷書房',t:'最新衛教文章',who:'森林護理師・露露',say:'書架上的書會一直換新，有空就來翻翻。',body:'<ul class="posts" id="posts"><li><small>書架整理中…</small></li></ul>',go:['https://blog.wuhenclinic.tw/blog/','blog','逛整座書屋（健康衛教部落格）']}};
+ ig:{k:'IG 小屋',t:'在 IG 跟我們見面',who:'詩晴・護理師',say:'我每天都會去 IG 小屋看看有沒有新照片！',body:'<p>療程前後的小知識、診所日常、店貓的樣子，都放在 IG。</p>',go:['https://www.instagram.com/wuhen_clinic','ig','到 IG 追蹤 @wuhen_clinic']},
+ fb:{k:'FB 小屋',t:'在 FB 粉專聊聊',who:'詩晴・護理師',say:'有什麼想問的，粉專留言也找得到我們。',body:'<p>衛教文章、診所公告和活動資訊，會先放在 FB 粉專。</p>',go:['https://www.facebook.com/share/1BKkoKfUPg/','fb','到 FB 粉專按讚追蹤']},
+ blog:{k:'宮廷書房',t:'最新衛教文章',who:'Bella・護理師',say:'書架上的書會一直換新，有空就來翻翻。',body:'<ul class="posts" id="posts"><li><small>書架整理中…</small></li></ul>',go:['https://blog.wuhenclinic.tw/blog/','blog','逛整座書屋（健康衛教部落格）']}};
 
 Object.assign(HOUSES,{
- gate:{k:'島嶼指南',t:'第一次來無痕美學島？',who:'森林嚮導・小橡',say:'每間小屋的牌子都可以點，慢慢逛，不趕時間。',body:`<p>點建築上的牌子就能進去逛：診所的八個空間、IG、FB、衛教文章，還有咖啡屋、防曬花園和補水小站。</p><p><strong>來診所：</strong>安和路一段86號2樓，預約制。捷運信義安和站 1 號出口步行 3–5 分鐘（7-11 轉角）。開車可從文昌街205號轉進，中信銀行大樓後方有地下停車場，對面也有平面停車場。</p>`,go:['https://lin.ee/QTZzv7U','line','LINE 預約諮詢']},
- coffee:{k:'杜克勞咖啡座',t:'無痕美學選用杜克勞咖啡',who:'愛散步的阿杉',say:'帶狗狗散完步，來這裡喝杯熱拿鐵剛剛好。',body:`<p>診所裡的咖啡豆，來自詹老闆的杜克勞咖啡。</p><p>來診所時可以點<strong>拿鐵</strong>或<strong>美式</strong>，冰的熱的都可以，跟櫃台說一聲就好。</p><p>想認識詹老闆，可以回主島的咖啡角落找他聊聊。</p>`,go:['/island/','line2','回主島找杜克勞・詹']},
- sun:{k:'防曬花園',t:'露露的日常防曬筆記',who:'森林護理師・露露',say:'花園裡的花也怕曬過頭，我幫它們搭了小陽傘。',body:`<p>日常防曬可以從這幾件小事開始：</p><ul class="list"><li>出門前 15–30 分鐘擦防曬，量要夠</li><li>流汗、擦汗或長時間在戶外，記得補擦</li><li>陰天也有紫外線，帽子、陽傘、太陽眼鏡一起用</li><li>保濕跟防曬一樣重要，臉乾的時候先補保濕</li></ul><p class="note">做完療程後的防曬和保養方式，請依照醫師給你的術後說明。</p>`,go:['https://blog.wuhenclinic.tw/blog/','blog2','看更多衛教文章']},
- rest:{k:'林間休息屋',t:'回家後怎麼照顧',who:'森林護理師・露露',say:'休息屋的椅子很軟，坐一下再走吧。',body:`<p>做完療程回家，最常被問的是：什麼時候可以洗臉、化妝、運動？每個療程不一樣，醫師會依你的狀況說明。</p><p>森林書屋有整理好的術後照顧文章，主島的恢復室也有更完整的說明。</p><p class="note">有任何不舒服，直接打診所電話 02‑2755‑5673。</p>`,go:['/island/#recovery','line2','到主島恢復室看看']},
- animal:{k:'狗狗小屋',t:'森林裡的狗狗',who:'愛散步的阿杉',say:'我每天帶柴柴和小白出來散步，牠們聽到腳步聲就會跑來門口，尾巴搖不停。',body:`<p>主島有貓店員，森林這邊則是狗狗的地盤。狗狗小屋住著露露照顧的幾隻狗狗，最喜歡在瀑布邊玩水，玩累了就趴在小屋門口曬太陽。</p><p>想看菀玲醫師的店貓，主島的貓咖區有四隻貓店員在等你。</p>`,go:['/island/#cats','line2','到主島貓咖區看貓']},
- water:{k:'補水小站',t:'今天喝水了嗎？',who:'愛堆雪人的莓莓',say:'我每喝一杯水，就幫雪人加一顆鈕扣！',body:`<p>每喝一杯水就點一下水滴，幫自己記一下今天喝了幾杯。</p><div class="drops" id="drops"></div><p class="note" id="dropmsg"></p>`,init:initWater},
- quiz:{k:'樹屋測驗',t:'你的保養習慣像哪一種樹？',who:'森林嚮導・小橡',say:'答三題就知道！我自己是松樹型的。',body:'<div id="quiz"></div>',init:initQuiz}
+ gate:{k:'島嶼指南',t:'第一次來無痕美學島？',who:'詩晴・護理師',say:'每間小屋的牌子都可以點，慢慢逛，不趕時間。',body:`<p>點建築上的牌子就能進去逛：診所的八個空間、IG、FB、衛教文章，還有咖啡屋、防曬花園和補水小站。</p><p><strong>來診所：</strong>安和路一段86號2樓，預約制。捷運信義安和站 1 號出口步行 3–5 分鐘（7-11 轉角）。開車可從文昌街205號轉進，中信銀行大樓後方有地下停車場，對面也有平面停車場。</p>`,go:['https://lin.ee/QTZzv7U','line','LINE 預約諮詢']},
+ coffee:{k:'杜克勞咖啡座',t:'無痕美學選用杜克勞咖啡',who:'杜克勞・詹',say:'帶狗狗散完步，來這裡喝杯熱拿鐵剛剛好。',body:`<p>診所裡的咖啡豆，來自詹老闆的杜克勞咖啡。</p><p>來診所時可以點<strong>拿鐵</strong>或<strong>美式</strong>，冰的熱的都可以，跟櫃台說一聲就好。</p><p>想認識詹老闆，可以回主島的咖啡角落找他聊聊。</p>`,go:['/island/','line2','回主島找杜克勞・詹']},
+ sun:{k:'防曬花園',t:'Bella 的日常防曬筆記',who:'Bella・護理師',say:'花園裡的花也怕曬過頭，我幫它們搭了小陽傘。',body:`<p>日常防曬可以從這幾件小事開始：</p><ul class="list"><li>出門前 15–30 分鐘擦防曬，量要夠</li><li>流汗、擦汗或長時間在戶外，記得補擦</li><li>陰天也有紫外線，帽子、陽傘、太陽眼鏡一起用</li><li>保濕跟防曬一樣重要，臉乾的時候先補保濕</li></ul><p class="note">做完療程後的防曬和保養方式，請依照醫師給你的術後說明。</p>`,go:['https://blog.wuhenclinic.tw/blog/','blog2','看更多衛教文章']},
+ rest:{k:'林間休息屋',t:'回家後怎麼照顧',who:'Bella・護理師',say:'休息屋的椅子很軟，坐一下再走吧。',body:`<p>做完療程回家，最常被問的是：什麼時候可以洗臉、化妝、運動？每個療程不一樣，醫師會依你的狀況說明。</p><p>森林書屋有整理好的術後照顧文章，主島的恢復室也有更完整的說明。</p><p class="note">有任何不舒服，直接打診所電話 02‑2755‑5673。</p>`,go:['/island/#recovery','line2','到主島恢復室看看']},
+ animal:{k:'狗狗小屋',t:'森林裡的狗狗',who:'杜克勞・詹',say:'我每天帶柴柴和小白出來散步，牠們聽到腳步聲就會跑來門口，尾巴搖不停。',body:`<p>主島有貓店員，森林這邊則是狗狗的地盤。狗狗小屋住著詹老闆帶來散步的柴柴和小白，最喜歡在瀑布邊玩水，玩累了就趴在小屋門口曬太陽。</p><p>想看菀玲醫師的店貓，主島的貓咖區有四隻貓店員在等你。</p>`,go:['/island/#cats','line2','到主島貓咖區看貓']},
+ water:{k:'補水小站',t:'今天喝水了嗎？',who:'米秦・美容師',say:'我每喝一杯水，就幫雪人加一顆鈕扣！',body:`<p>每喝一杯水就點一下水滴，幫自己記一下今天喝了幾杯。</p><div class="drops" id="drops"></div><p class="note" id="dropmsg"></p>`,init:initWater},
+ quiz:{k:'樹屋測驗',t:'你的保養習慣像哪一種樹？',who:'詩晴・護理師',say:'答三題就知道！我自己是松樹型的。',body:'<div id="quiz"></div>',init:initQuiz}
 });
 function initWater(){const key='wh-water-'+new Date().toISOString().slice(0,10);let n=0;try{n=+localStorage.getItem(key)||0}catch(e){}
  const box=document.getElementById('drops'),msg=document.getElementById('dropmsg');
@@ -327,8 +327,8 @@ const sc=document.getElementById('sc'),ctr=()=>{sc.scrollLeft=(sc.scrollWidth-sc
 (function(){const svgEl=document.getElementById('dogs');if(!svgEl)return;
  const K=1,P=(a)=>a.map(([x,y])=>[x*K,y*K]);
  const WALK=[
-  {id:'lulu',img:'/island/palace/npc_nurse.webp?v=2',ar:.3694,path:P([[1110,1050],[1260,1085],[1400,1040]]),speed:20},
-  {id:'ashan',img:'/island/palace/npc_coat.webp?v=2',ar:.4528,path:P([[1440,870],[1480,950],[1420,1030]]),speed:24}];
+  {id:'lulu',img:'/island/palace/walk_bella.webp',ar:0.625,path:P([[1110,1050],[1260,1085],[1400,1040]]),speed:20},
+  {id:'ashan',img:'/island/palace/walk_zhan.webp',ar:0.5111,path:P([[1440,870],[1480,950],[1420,1030]]),speed:24}];
  const DOGS=[
   {id:'shiba',name:'柴柴',fur:'#E39A52',fur2:'#C97A35',belly:'#FFF3E2',path:P([[1440,870],[1480,950],[1420,1030]]),speed:24,follow:'ashan',lag:70,lines:['汪！（柴柴想找你玩）','汪汪！（尾巴搖不停）','（柴柴躲到陽傘下，牠也知道要防曬）']},
   {id:'maru',name:'小白',fur:'#FAF6EE',fur2:'#E1D8C8',belly:'#FFFFFF',path:P([[1830,1180],[1920,1172],[2000,1150]]),speed:34,lines:['汪～（小白在狗狗小屋門口等你）','（小白把球叼過來了）','汪！（今天也要記得喝水喔）']}];

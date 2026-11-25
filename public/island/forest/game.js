@@ -168,7 +168,7 @@ function board(){card.hidden=false;card.innerHTML=`<h3>狗狗防曬大作戰排�
 const TIPS=['PA 是對 UVA 的防護等級，+ 越多代表防護力越高。','SPF 看的是對 UVB 的防護，兩個都要看。','陰天也有紫外線，出門一樣要防曬。','流汗、擦汗或玩水之後，記得補擦防曬。','帽子、陽傘、太陽眼鏡可以和防曬乳一起搭配。','做完療程後的防曬方式，請依照醫師的術後說明。'];
 function gameOver(){S.on=false;S.over=true;S.dog.sad=true;const fl=S.lines,best=Math.max(fl,LS.get('wh-best-tetris',0));LS.set('wh-best-tetris',best);track('island_tetris_end',{floors:fl,score:S.score});
  const title=fl>=30?'PA++++ 守護者':fl>=20?'防曬達人':fl>=10?'防曬小達人':'防曬新手';const tip=TIPS[Math.floor(Math.random()*TIPS.length)];const nm=LS.get('wh-rank-name','');
- card.hidden=false;card.innerHTML=`<p class="tg-k">紫外線太強了</p><h3>擋下 ${fl} 排・${title}</h3><p>分數 ${S.score}・最佳紀錄 ${best} 排</p><p class="tg-tip"><b>樹醫生阿杉的防曬小知識</b>${tip}</p>
+ card.hidden=false;card.innerHTML=`<p class="tg-k">紫外線太強了</p><h3>擋下 ${fl} 排・${title}</h3><p>分數 ${S.score}・最佳紀錄 ${best} 排</p><p class="tg-tip"><b>護理師 Bella 的防曬小知識</b>${tip}</p>
  ${fl>0?`<div class="tg-sub"><label for="tg-name">留下暱稱上排行榜</label><div class="tg-row"><input id="tg-name" maxlength="8" placeholder="最多 8 個字" value="${esc(nm)}" autocomplete="nickname"><button type="button" id="tg-send" class="tg-go sm">送出成績</button></div><p class="tg-msg" id="tg-msg"></p></div>`:''}
  <div id="tg-rkbox">${rkBox()}</div><div class="tg-btns"><button type="button" class="tg-go" data-tstart>再玩一次</button><button type="button" class="tg-ghost" data-tclose>回到森林</button></div>`;
  const sb=$('tg-send');if(sb)sb.addEventListener('click',rkSubmit);rkLoad().then(rkRefresh)}
