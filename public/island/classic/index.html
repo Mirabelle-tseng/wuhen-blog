@@ -1017,7 +1017,7 @@ function catIsland(){
   r+=cyl(x0+1.45,y0+.9,0,.04,9,'#8C6A44')+(()=>{const c=iso(x0+1.45,y0+.9,9);return `<ellipse cx="${c[0]}" cy="${c[1]}" rx="10" ry="5" fill="#E8DCCB" stroke="rgba(14,51,95,.2)" stroke-width=".6"/>`})()+cyl(x0+1.4,y0+.86,9,.035,3.5,'#FFFFFF')+cyl(x0+1.52,y0+.94,9,.035,3,'#B08D57');
   [[x0+.22,y0+1.35,'#7FA6C4'],[x0+.22,y0+1.58,'#E9C9C0']].forEach(([x,y,c])=>{const p=iso(x,y,0);r+=`<ellipse cx="${p[0]}" cy="${p[1]}" rx="4.4" ry="2.2" fill="${c}" stroke="rgba(14,51,95,.25)" stroke-width=".5"/>`});
   {const p=iso(x0+.9,y0+1.3,.8);r+=`<circle cx="${p[0]}" cy="${p[1]-2}" r="2.2" fill="#E8577A"/><path d="M${p[0]+2},${p[1]-2} q4,2 7,0" fill="none" stroke="#E8577A" stroke-width=".6"/>`}
-  r+=`<g id="cat-orange" data-npc="orange" role="button" tabindex="0" aria-label="摸摸橘子" transform="translate(${iso(7.95,4.45).join(',')})">${catFig({body:'#E6A35A',stripe:'#C9783A',eye:'#2B2420'})}</g>`;
+  r+=`<g id="cat-orange" data-npc="orange" role="button" tabindex="0" aria-label="摸摸小橘" transform="translate(${iso(7.95,4.45).join(',')})">${catFig({body:'#E6A35A',stripe:'#C9783A',eye:'#2B2420'})}</g>`;
   r+=`<g id="cat-mochi" data-npc="mochi" role="button" tabindex="0" aria-label="摸摸白芳" transform="translate(${iso(8.2,5.0).join(',')}) scale(-1,1)">${catFig({body:'#FFFFFF',patch:'#E9B98C',eye:'#5C8FBF',outline:true})}</g>`;
   if(RARE)r+=`<g id="cat-gold" data-npc="gold" role="button" tabindex="0" aria-label="摸摸金色貓" transform="translate(${iso(8.6,4.2).join(',')})"><g class="goldglow">${catFig({body:'#E9C46A',stripe:'#C9A23E',eye:'#2B2420'})}</g></g>`;
   r+=plant(x0+1.62,y0+1.62,.85);
@@ -1249,7 +1249,7 @@ const NPCS={
  xiangyu:{name:'祥毓',role:'美容師',at:[4.95,1.78],look:{top:'#E8C4C0',gown:'#E8C4C0',gtrim:'#B08D57',puff:'#F3DCD8',ruff:true,pearls:true,hat:'#F6E7E3',rose:'#C8546A',curls:true,hair:'mid',hairc:'#6B4A3A',item:'cup'},lines:['我是祥毓，歡迎來恢復室休息一下。','要不要喝杯溫水？','回家的保濕步驟有不懂的，都可以問我。','術後照護的細節，還是以醫師的指示為準喔。']},
  miqin:{name:'米秦',role:'美容師',at:[1.0,4.62],flip:true,look:{top:'#C9B6DF',gown:'#C9B6DF',gtrim:'#D9B46A',puff:'#E2D6EF',ruff:true,bonnet:'#C8546A',curls:true,hair:'mid',hairc:'#4A3428',eyes:'big',blush:true,item:'brush'},lines:['我是米秦，化妝間這邊請～','補妝前先洗手，刷具也要保持乾淨。','防曬是我每天出門前最重要的一步。','什麼時候可以上妝，離開前記得先問醫師。']},
  xiaojin:{name:'小進',xlines:['聖誕老人問我想要什麼禮物，我說：剛走進來的妳。','聖誕樹上最亮的那顆星，好像跑到妳眼睛裡了。','今年的願望清單只有一行：陪妳逛完這座島。','麋鹿今天會遲到，因為牠們也停下來看妳。','妳不用掛在聖誕襪裡，妳本身就是禮物。','天氣冷，記得保濕。手要是冷了，我口袋借妳。'],role:'美編',at:[1.58,3.62],look:{top:'#2E4A6E',coat:true,jabot:true,hair:'short',glasses:true,brow:true,item:'tablet',legs:'#F2EDE6'},lines:['妳知道島上最亮的是什麼嗎？不是月亮，是剛走進來的妳。','妳有擦防曬嗎？不然怎麼會這麼耀眼。','這座島有七個空間，但我心裡只有一個位置。','妳抽到上上籤了嗎？我覺得遇見妳，就是我的上上籤。','我本來在畫平板，看到妳之後，就忘了要畫什麼。']},
- orange:{name:'橘子',role:'貓店員',el:'cat-orange',persona:'橘貓，愛曬太陽、愛吃',lines:['喵～我最愛曬太陽。不過人類曬太陽，記得要擦防曬喔。','吃飽睡、睡飽吃，作息規律，毛和皮膚都會比較好。','我每天都去水碗報到。你今天水喝夠了嗎？']},
+ orange:{name:'小橘',role:'貓店員',el:'cat-orange',persona:'橘貓，愛曬太陽、愛吃',lines:['喵～我最愛曬太陽。不過人類曬太陽，記得要擦防曬喔。','吃飽睡、睡飽吃，作息規律，毛和皮膚都會比較好。','我每天都去水碗報到。你今天水喝夠了嗎？']},
  mochi:{name:'白芳',role:'貓店員',el:'cat-mochi',persona:'白貓，性格高傲',lines:['本喵叫白芳。要摸之前，先說一聲。','白貓的耳朵很怕曬，所以本喵都待在室內。你出門也要防曬，懂嗎？','哼，臉不要用力搓。看看本喵，理毛都很優雅。','本喵允許你摸一下。就一下。']},
  cutie:{name:'小可愛',role:'院長的愛貓',el:'cat-cutie',persona:'布偶貓，院長的愛貓，平常待在院長辦公室',lines:['喵～我是小可愛，院長的愛貓，平常都在院長辦公室陪她。','院長每天都說「先把基礎保養顧好」，我都聽到會背了。','布偶貓的毛很怕打結，就像皮膚怕乾燥，每天都要好好照顧喔。','偷偷告訴你，院長最喜歡我了。']},
  kuro:{name:'黑糖',role:'貓店員',el:'cat-kuro',persona:'黑貓，高冷、只在貓跳台上',lines:['哼，晚上才是我的時間。不過你別熬夜，早點睡。','別一直摸我的臉。你也是，手一直摸臉容易長痘痘。','保持乾淨是基本禮貌。今天卸妝卸乾淨了嗎？']},

@@ -269,7 +269,7 @@ const CLASSIC='/island/classic/';
 
 /* ---- room scenes with character dialogue ---- */
 (function(){const C='/island/palace/chars/',CV='?v=2',IMG='/island/palace/palace-3600.webp';
- const P={doctor:['林菀玲醫師・院長','doctor'],shiqing:['詩晴・護理師','shiqing'],yiting:['怡婷・店經理','yiting'],bella:['Bella・護理師','bella'],xiangyu:['祥毓・美容師','xiangyu'],miqin:['米秦・美容師','miqin'],xiaojin:['小進・美編','xiaojin'],zhan:['杜克勞・詹（咖啡師）','zhan'],orange:['橘子・貓店員','orange'],cutie:['小可愛・院長的愛貓','cutie'],mochi:['白芳・貓店員','mochi'],kuro:['黑糖・貓店員','kuro'],gold:['金金・貓店員','gold'],mystery:['？？？','yiting']};
+ const P={doctor:['林菀玲醫師・院長','doctor'],shiqing:['詩晴・護理師','shiqing'],yiting:['怡婷・店經理','yiting'],bella:['Bella・護理師','bella'],xiangyu:['祥毓・美容師','xiangyu'],miqin:['米秦・美容師','miqin'],xiaojin:['小進・美編','xiaojin'],zhan:['杜克勞・詹（咖啡師）','zhan'],orange:['小橘・貓店員','orange'],cutie:['小可愛・院長的愛貓','cutie'],mochi:['白芳・貓店員','mochi'],kuro:['黑糖・貓店員','kuro'],gold:['金金・貓店員','gold'],mystery:['？？？','yiting']};
  const SC={
   dock:{t:'漂浮大門',c:[1080,1000],bg:'/island/palace/rooms/dock.webp',l:[['shiqing','歡迎來到無痕美學島！我是護理師詩晴。'],['shiqing','診所在安和路一段86號2樓，採預約制，預約時告訴我們人數就好。'],['shiqing','捷運信義安和站1號出口走路3到5分鐘，7-11轉角就到。開車可以從文昌街205號轉進地下停車場。']]},
   lobby:{t:'大廳櫃台',c:[520,560],bg:'/island/palace/rooms/lobby.webp',l:[['shiqing','歡迎光臨，我是護理師詩晴。'],['shiqing','今天最在意哪一種膚況？櫃台有三題小測驗，可以先幫你整理成面診小抄。'],['zhan','來看診時，也可以點一杯杜克勞咖啡，拿鐵或美式，冰的熱的都可以。'],['mystery','__YT__']]},
@@ -279,7 +279,7 @@ const CLASSIC='/island/classic/';
   powder:{t:'化妝間',c:[430,1080],bg:'/island/palace/rooms/powder.webp',l:[['miqin','我是美容師米秦，這裡是化妝間。'],['miqin','療程後多久可以上妝，要看做了什麼療程，先問過醫師最安心。'],['miqin','島上有整理好的衛教文章，補妝空檔可以看看。']]},
   director:{t:'院長辦公室',c:[1390,420],bg:'/island/palace/rooms/director.webp',l:[['doctor','你好，我是林菀玲醫師。'],['doctor','每個人的膚況都不一樣，所以一定要當面評估，才知道適合什麼。'],['doctor','有想問我的事，可以寫到院長信箱。'],['cutie','喵～（院長的愛貓小可愛，在辦公桌上伸了個懶腰）']]},
   coffee:{t:'杜克勞咖啡座',c:[810,800],bg:'/island/palace/rooms/coffee.webp',house:1,l:[['zhan','歡迎！我是杜克勞的詹，這裡是我烘豆的地方。'],['zhan','無痕美學選用杜克勞咖啡，診所用的豆子就是從我這裡來的。'],['zhan','來診所的時候，拿鐵或美式都可以點，冰的熱的跟櫃台說一聲就好。']]},
-  cats:{t:'貓咖區',c:[1760,1140],bg:'/island/palace/rooms/cats.webp',l:[['orange','喵～歡迎來貓咖區！我是橘子，最愛曬太陽。不過人類曬太陽，記得要擦防曬喔。'],['orange','這是島上的虛擬貓咖，診所裡沒有養貓，對貓過敏也可以放心來。'],['mochi','本喵叫白芳。白貓的耳朵很怕曬，所以本喵都待在室內。你出門也要防曬，懂嗎？'],['kuro','我是黑糖。晚上才是我的時間，不過你別熬夜，早點睡。'],['gold','喵～我是很少出現的金金！遇到我今天會好運，不過好運不能代替防曬喔。']]}};
+  cats:{t:'貓咖區',c:[1760,1140],bg:'/island/palace/rooms/cats.webp',l:[['orange','喵～歡迎來貓咖區！我是小橘，最愛曬太陽。不過人類曬太陽，記得要擦防曬喔。'],['orange','這是島上的虛擬貓咖，診所裡沒有養貓，對貓過敏也可以放心來。'],['mochi','本喵叫白芳。白貓的耳朵很怕曬，所以本喵都待在室內。你出門也要防曬，懂嗎？'],['kuro','我是黑糖。晚上才是我的時間，不過你別熬夜，早點睡。'],['gold','喵～我是很少出現的金金！遇到我今天會好運，不過好運不能代替防曬喔。']]}};
 const SWEET=['妳知道島上最亮的是什麼嗎？不是月亮，是剛走進來的妳。','妳有擦防曬嗎？不然怎麼會這麼耀眼。','這座島有八個空間，但我心裡只有一個位置。','妳抽到上上籤了嗎？我覺得遇見妳，就是我的上上籤。','我本來在畫平板，看到妳之後，就忘了要畫什麼。'],SWEETX=['聖誕老人問我想要什麼禮物，我說：剛走進來的妳。','聖誕樹上最亮的那顆星，好像跑到妳眼睛裡了。','今年的願望清單只有一行：陪妳逛完這座島。','麋鹿今天會遲到，因為牠們也停下來看妳。','妳不用掛在聖誕襪裡，妳本身就是禮物。'];
  const sweet=()=>{const d=new Date(),md=(d.getMonth()+1)*100+d.getDate(),L=(md>=1123&&md<=1226)?SWEET.concat(SWEETX):SWEET;return L[Math.floor(Math.random()*L.length)]};
  const el=id=>document.getElementById(id),box=el('sc2');let cur=null,i=0,typing=null;
