@@ -154,6 +154,9 @@ html{touch-action:manipulation}
 #sc2 .yt .lid button{border:1px solid #B08D57;background:#fff;color:#0E335F}
 #sc2 .yt .btns{display:flex;gap:8px;margin-top:10px}#sc2 .yt .btns>*{flex:1}#sc2 .yt .btns a{background:#06C755;color:#fff;border:0}#sc2 .yt .btns button{background:#fff;color:#0E335F;border:1.5px solid #B08D57}
 @media (min-width:761px){.cards{display:flex!important;flex-wrap:wrap;justify-content:center}.cards .card{width:200px}}
+html.dawn body{background:linear-gradient(180deg,#C9B8E3 0,#E5C9E0 400px,#F3E1EA 800px,#F8F1EE 100%)!important;background-color:#F8F1EE!important}
+html.dusk body{background:linear-gradient(180deg,#8E6FA6 0,#D58C7E 380px,#F1B07C 760px,#F7E3CF 100%)!important;background-color:#F7E3CF!important}
+html.dusk h1{color:#3A2350}html.dusk .sub{color:#4A3355}
 html.night body{background:linear-gradient(180deg,#0B1D3E 0,#13305C 420px,#1B3A66 800px,#1E3558 100%)!important;background-color:#1E3558!important}
 html.night h1{color:#F3E6C6}html.night .sub,html.night .tip,html.night .sec{color:#C9D6E6}
 html.night .to-main a{color:#F3E6C6}html.night .card.game{border:1.5px solid #C9A464;box-shadow:0 0 18px rgba(233,207,158,.25)}html.night .legal{color:#9FB2C8}
@@ -324,15 +327,17 @@ const SWEET=['妳知道島上最亮的是什麼嗎？不是月亮，是剛走進
  document.querySelectorAll('a.room[data-room]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();open(a.dataset.room)},true));
 })();
 
-/* ---- day / night ---- */
+/* ---- four phases: dawn / day / dusk / night ---- */
 (function(){const img=document.querySelector('.stage img'),btn=document.getElementById('dn');
+ const set=k=>({src:`/island/palace/palace-${k}.webp`,set:`/island/palace/palace-${k}-1400.webp 1400w, /island/palace/palace-${k}.webp 2400w, /island/palace/palace-${k}-3600.webp 3600w`});
  const DAY={src:img.getAttribute('src'),set:img.getAttribute('srcset')};
- const NIGHT={src:'/island/palace/palace-night.webp',set:'/island/palace/palace-night-1400.webp 1400w, /island/palace/palace-night.webp 2400w, /island/palace/palace-night-3600.webp 3600w'};
- const XMAS={src:'/island/palace/palace-xmas.webp',set:'/island/palace/palace-xmas-1400.webp 1400w, /island/palace/palace-xmas.webp 2400w, /island/palace/palace-xmas-3600.webp 3600w'};
  const md=(new Date().getMonth()+1)*100+new Date().getDate(),isX=/fest-xmas|xmas/.test(location.search+location.hash)||(md>=1123&&md<=1226);
- function apply(n){document.documentElement.classList.toggle('night',n);const t=n?NIGHT:(isX?XMAS:DAY);img.setAttribute('srcset',t.set);img.setAttribute('src',t.src);btn.textContent=n?'☀️ 白天':'🌙 夜晚'}
- const h=new Date().getHours(),q=location.search+location.hash;let night=/night/.test(q)?true:/day/.test(q)?false:(h>=18||h<6);
- apply(night);btn.addEventListener('click',()=>{night=!night;apply(night);try{gtag('event','island_daynight',{night})}catch(_){}})})();
+ const PH=['dawn','day','dusk','night'],LB={dawn:'🌅 清晨',day:'☀️ 白天',dusk:'🌇 黃昏',night:'🌙 夜晚'};
+ function apply(k){const r=document.documentElement;PH.forEach(x=>r.classList.toggle(x,x===k));const t=k==='day'?(isX?set('xmas'):DAY):set(k);
+  img.setAttribute('srcset',t.set);img.setAttribute('src',t.src);btn.textContent=LB[k]}
+ const now=new Date(),m=now.getHours()*60+now.getMinutes(),q=location.search+location.hash;
+ let k=PH.find(x=>q.includes(x))||(m>=300&&m<480?'dawn':m<990?'day':m<1110?'dusk':'night');if(m<300)k='night';
+ apply(k);btn.addEventListener('click',()=>{k=PH[(PH.indexOf(k)+1)%4];apply(k);try{gtag('event','island_phase',{phase:k})}catch(_){}})})();
 /* deep links: /island/#recovery etc. */
 (function(){const ROOMS=['dock','lobby','consult','treatment','recovery','powder','director','cats','game','shout','yiting'];const h=location.hash.slice(1);if(ROOMS.includes(h))setTimeout(()=>(window.openScene&&['dock','lobby','consult','treatment','recovery','powder','director','cats'].includes(h)?openScene(h):openRoomView(h)),400)})();
 /* christmas snow 11/23-12/26 */
